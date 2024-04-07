@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import { type PropsWithChildren } from 'react';
 
@@ -7,7 +7,10 @@ import QueryProvider from '@/providers/query-provider';
 
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const wantedSansVariable = localFont({
+  src: '../public/fonts/WantedSansVariable.woff2',
+  display: 'swap',
+});
 
 const metadata: Metadata = {
   title: '블꾸',
@@ -18,7 +21,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="ko-KR">
       <QueryProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={wantedSansVariable.className}>{children}</body>
       </QueryProvider>
     </html>
   );
