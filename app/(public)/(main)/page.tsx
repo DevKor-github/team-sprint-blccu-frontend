@@ -1,5 +1,5 @@
 const RootPage = () => {
-  return <main>Hello World 👋</main>;
+  return <div>RootPage</div>;
 };
 
 export default RootPage;
