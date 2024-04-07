@@ -16,7 +16,7 @@ const metadata: Metadata = {
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
-    <html lang="en">
+    <html lang="ko-KR">
       <QueryProvider>
         <body className={inter.className}>{children}</body>
       </QueryProvider>
