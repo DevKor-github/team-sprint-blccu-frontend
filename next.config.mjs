@@ -6,6 +6,10 @@ const nextConfig = {
         source: '/@:username',
         destination: '/users/:username',
       },
+      {
+        source: '/@:username/:slug/:path*',
+        destination: '/users/:username/posts/:slug/:path*',
+      },
     ];
   },
 };
