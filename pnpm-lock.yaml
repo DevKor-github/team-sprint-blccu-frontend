@@ -43,6 +43,9 @@ devDependencies:
   eslint-config-next:
     specifier: 14.1.4
     version: 14.1.4(eslint@8.57.0)(typescript@5.4.4)
+  eslint-plugin-no-relative-import-paths:
+    specifier: ^1.5.3
+    version: 1.5.3
   postcss:
     specifier: ^8
     version: 8.4.38
@@ -1370,6 +1373,10 @@ packages:
       minimatch: 3.1.2
       object.entries: 1.1.8
       object.fromentries: 2.0.8
+    dev: true
+
+  /eslint-plugin-no-relative-import-paths@1.5.3:
+    resolution: {integrity: sha512-z7c7Km1U0zdLyPziWeRKSsN2mPaGaBHDjfXn98B8XjRIhFi2bPqduRYcxWih1kI5al5tQtiChXVmspLkB0wNsQ==}
     dev: true
 
   /eslint-plugin-react-hooks@4.6.0(eslint@8.57.0):
