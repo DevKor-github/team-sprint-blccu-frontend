@@ -1,5 +1,5 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": ["next/core-web-vitals", "plugin:storybook/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -8,7 +8,10 @@
   "rules": {
     "no-relative-import-paths/no-relative-import-paths": [
       "error",
-      { "allowSameFolder": true, "prefix": "@" }
+      {
+        "allowSameFolder": true,
+        "prefix": "@"
+      }
     ],
     "@typescript-eslint/consistent-type-imports": [
       "error",
@@ -23,6 +26,7 @@
       {
         "fixMixedExportsWithInlineTypeSpecifier": false
       }
-    ]
+    ],
+    "react/no-unescaped-entities": "off"
   }
 }
