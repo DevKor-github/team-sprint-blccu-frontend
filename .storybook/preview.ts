@@ -1,3 +1,4 @@
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/react';
 
 import '@/app/globals.css';
@@ -12,6 +13,12 @@ const preview: Preview = {
     },
     nextjs: {
       appDirectory: true,
+    },
+    viewport: {
+      viewports: {
+        ...MINIMAL_VIEWPORTS,
+      },
+      defaultViewport: 'mobile2',
     },
   },
 };
