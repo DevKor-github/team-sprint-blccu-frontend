@@ -12,7 +12,7 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "sta": "sta -p https://api.example.com/api-docs-json -o types -n __generated__.d.ts --no-client"
+    "sta": "sta -p https://api.example.com/api-docs-json -o types -n __generated__.d.ts --axios"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
