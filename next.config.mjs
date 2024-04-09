@@ -13,7 +13,7 @@ const nextConfig = {
         destination: '/users/:username/posts/:slug/:path*',
       },
       {
-        source: '/api/:path*',
+        source: '/proxy-api/:path*',
         destination: `${API_URL}/:path*`,
       },
     ];
