@@ -21,11 +21,11 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="ko-KR">
-      <QueryProvider>
-        <body className={cn(wantedSansVariable.className, 'bg-slate-100')}>
+      <body className={cn(wantedSansVariable.className, 'bg-slate-100')}>
+        <QueryProvider>
           <div className="mx-auto min-h-dvh max-w-lg bg-white">{children}</div>
-        </body>
-      </QueryProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 };
