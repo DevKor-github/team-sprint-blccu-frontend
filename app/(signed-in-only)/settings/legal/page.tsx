@@ -1,5 +1,5 @@
-const LicensePage = () => {
-  return <div>LicensePage</div>;
+const LegalPage = () => {
+  return <div>LegalPage</div>;
 };
 
-export default LicensePage;
+export default LegalPage;
