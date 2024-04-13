@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import localFont from 'next/font/local';
+import { Noto_Sans_KR } from 'next/font/google';
 
 import { type PropsWithChildren } from 'react';
 
@@ -8,9 +8,9 @@ import QueryProvider from '@/providers/query-provider';
 
 import './globals.css';
 
-const wantedSansVariable = localFont({
-  src: '../public/fonts/WantedSansVariable.woff2',
-  display: 'swap',
+const notoSansKr = Noto_Sans_KR({
+  weight: ['400', '500', '700', '900'],
+  subsets: ['latin'],
 });
 
 const metadata: Metadata = {
@@ -21,7 +21,7 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="ko-KR">
-      <body className={cn(wantedSansVariable.className, 'bg-slate-100')}>
+      <body className={cn(notoSansKr.className, 'bg-slate-100')}>
         <QueryProvider>
           <div className="mx-auto min-h-dvh max-w-lg bg-white">{children}</div>
         </QueryProvider>
