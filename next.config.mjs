@@ -9,6 +9,18 @@ const nextConfig = {
         destination: '/users/:username',
       },
       {
+        source: '/@:username/followers',
+        destination: '/users/:username/followers',
+      },
+      {
+        source: '/@:username/following',
+        destination: '/users/:username/following',
+      },
+      {
+        source: '/@:username/select-category',
+        destination: '/users/:username/select-category',
+      },
+      {
         source: '/@:username/:slug/:path*',
         destination: '/users/:username/posts/:slug/:path*',
       },
