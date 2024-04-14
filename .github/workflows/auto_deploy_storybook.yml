@@ -49,7 +49,10 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: '**The latest updates on your storybook**. [Visit Preview ↗︎](${{ steps.chromatic.outputs.storybookUrl }})'
+      # - name: Create comment PR
+      #   uses: thollander/actions-comment-pull-request@v2
+      #   with:
+      #     message: '**The latest updates on your storybook**. [Visit Preview ↗︎](${{ steps.chromatic.outputs.storybookUrl }})'
+
+      - name: Echo Storybook URL
+        run: echo ${{ steps.chromatic.outputs.storybookUrl }}
