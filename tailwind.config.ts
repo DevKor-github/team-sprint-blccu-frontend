@@ -18,6 +18,21 @@ const config = {
     },
     extend: {
       colors: {
+        blccu: {
+          white: 'var(--blccu-white)',
+          neutral: {
+            200: 'var(--blccu-neutral-200)',
+            400: 'var(--blccu-neutral-400)',
+            600: 'var(--blccu-neutral-600)',
+            800: 'var(--blccu-neutral-800)',
+          },
+          black: 'var(--blccu-black)',
+          red: 'var(--blccu-red)',
+          input: 'var(--blccu-input)',
+          ring: 'var(--blccu-ring)',
+          background: 'var(--blccu-background)',
+          foreground: 'var(--blccu-foreground)',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
