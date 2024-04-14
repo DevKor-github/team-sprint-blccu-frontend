@@ -139,6 +139,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.0.1
     version: 10.4.19(postcss@8.4.38)
+  chromatic:
+    specifier: ^11.3.0
+    version: 11.3.0
   eslint:
     specifier: ^8
     version: 8.57.0
