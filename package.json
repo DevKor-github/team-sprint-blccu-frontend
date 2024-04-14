@@ -12,7 +12,8 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "sta": "sta -p https://api.example.com/api-docs-json -o types -n __generated__.d.ts --axios"
+    "sta": "sta -p https://api.example.com/api-docs-json -o types -n __generated__.d.ts --axios",
+    "chromatic": "npx chromatic --project-token=chpt_1234567890"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
