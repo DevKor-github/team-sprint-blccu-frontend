@@ -61,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "autoprefixer": "^10.0.1",
+    "chromatic": "^11.3.0",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "eslint-plugin-no-relative-import-paths": "^1.5.3",
