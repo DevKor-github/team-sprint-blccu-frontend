@@ -10,22 +10,25 @@ const meta: Meta<typeof RadioGroup> = {
 
 type Story = StoryObj<typeof RadioGroup>;
 
-// Ref: https://ui.shadcn.com/docs/components/radio-group
 const Example: Story = {
   render: () => (
-    <RadioGroup defaultValue="comfortable">
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="default" id="r1" />
-        <Label htmlFor="r1">Default</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="comfortable" id="r2" />
-        <Label htmlFor="r2">Comfortable</Label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <RadioGroupItem value="compact" id="r3" />
-        <Label htmlFor="r3">Compact</Label>
-      </div>
+    <RadioGroup defaultValue="excessive-error">
+      <Label htmlFor="r1" className="flex items-center justify-between py-2">
+        <p className="font-normal">과도한 오류</p>
+        <RadioGroupItem value="excessive-error" id="r1" />
+      </Label>
+      <Label htmlFor="r2" className="flex items-center justify-between py-2">
+        <p className="font-normal">탈퇴 후 재가입</p>
+        <RadioGroupItem value="rejoin-after-leave" id="r2" />
+      </Label>
+      <Label htmlFor="r3" className="flex items-center justify-between py-2">
+        <p className="font-normal">기타 문제</p>
+        <RadioGroupItem value="other" id="r3" />
+      </Label>
+      <Label htmlFor="r4" className="flex items-center justify-between py-2">
+        <p className="font-normal">선택 못함</p>
+        <RadioGroupItem value="disabled" id="r4" disabled />
+      </Label>
     </RadioGroup>
   ),
 };
