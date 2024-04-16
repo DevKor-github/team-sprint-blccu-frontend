@@ -21,10 +21,10 @@ const SelectTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'flex w-full items-center justify-between rounded-md bg-background px-4 py-3 text-sm transition',
-      'border border-blccu-input',
+      'border border-blccu-input bg-blccu-input/20',
       'placeholder:text-blccu-neutral-600',
       'focus:border-blccu-black focus:outline-none focus:ring-2 focus:ring-blccu-ring',
-      'disabled:bg-blccu-neutral-200/50 disabled:cursor-not-allowed disabled:opacity-50',
+      'disabled:cursor-not-allowed disabled:bg-blccu-neutral-200/50 disabled:opacity-50',
       '[&>span]:line-clamp-1',
       className,
     )}
