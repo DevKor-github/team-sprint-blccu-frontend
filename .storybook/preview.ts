@@ -18,7 +18,7 @@ const preview: Preview = {
       viewports: {
         ...MINIMAL_VIEWPORTS,
       },
-      defaultViewport: 'mobile2',
+      defaultViewport: 'mobile1',
     },
   },
 };
