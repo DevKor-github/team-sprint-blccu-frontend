@@ -9,7 +9,7 @@ import QueryProvider from '@/providers/query-provider';
 import './globals.css';
 
 const notoSansKr = Noto_Sans_KR({
-  weight: ['400', '500', '700', '900'],
+  weight: ['200', '400', '500', '700', '900'],
   subsets: ['latin'],
 });
 
