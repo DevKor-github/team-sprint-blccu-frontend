@@ -12,27 +12,12 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const meta: Meta<typeof Select> = {
-  title: 'Components/Select',
-  component: Select,
+const meta: Meta<typeof ButtonRadioGroup> = {
+  title: 'Unstable/ButtonRadioGroup',
+  component: ButtonRadioGroup,
 };
 
-type Story = StoryObj<typeof Select>;
-
-const Disabled: Story = {
-  render: () => (
-    <Select>
-      <SelectTrigger className="w-full" disabled>
-        <SelectValue placeholder="카테고리를 선택하세요." />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="none">선택 안함</SelectItem>
-        <SelectItem value="diary">일기</SelectItem>
-        <SelectItem value="review">리뷰</SelectItem>
-      </SelectContent>
-    </Select>
-  ),
-};
+type Story = StoryObj<typeof ButtonRadioGroup>;
 
 const Example: Story = {
   render: () => (
@@ -79,5 +64,5 @@ const Example: Story = {
   ),
 };
 
-export { Disabled, Example };
+export { Example };
 export default meta;
