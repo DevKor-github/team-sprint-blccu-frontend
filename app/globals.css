@@ -5,17 +5,17 @@
 @layer base {
   /* blccu design token (color) */
   :root {
-    --blccu-white: #ffffff;
-    --blccu-neutral-200: #eaeaea;
-    --blccu-neutral-400: #a6a6a6;
-    --blccu-neutral-600: #5b5b5b;
-    --blccu-neutral-800: #1a1a1a;
-    --blccu-black: #000000;
+    --blccu-white: 255 255 255; /* #ffffff */
+    --blccu-neutral-200: 234 234 234; /* #eaeaea */
+    --blccu-neutral-400: 166 166 166; /* #a6a6a6 */
+    --blccu-neutral-600: 91 91 91; /* #5b5b5b */
+    --blccu-neutral-800: 26 26 26; /* #1a1a1a */
+    --blccu-black: 0 0 0; /* #000000 */
 
-    --blccu-red: #ff4141;
+    --blccu-red: 255 65 65; /* #ff4141 */
 
     --blccu-input: var(--blccu-neutral-200);
-    --blccu-ring: #c0c0c0;
+    --blccu-ring: 192 192 192; /* #c0c0c0 */
 
     --blccu-background: var(--blccu-white);
     --blccu-foreground: var(--blccu-neutral-800);

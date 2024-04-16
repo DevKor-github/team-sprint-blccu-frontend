@@ -19,19 +19,19 @@ const config = {
     extend: {
       colors: {
         blccu: {
-          white: 'var(--blccu-white)',
+          white: 'rgb(var(--blccu-white) / <alpha-value>)',
           neutral: {
-            200: 'var(--blccu-neutral-200)',
-            400: 'var(--blccu-neutral-400)',
-            600: 'var(--blccu-neutral-600)',
-            800: 'var(--blccu-neutral-800)',
+            200: 'rgb(var(--blccu-neutral-200) / <alpha-value>)',
+            400: 'rgb(var(--blccu-neutral-400) / <alpha-value>)',
+            600: 'rgb(var(--blccu-neutral-600) / <alpha-value>)',
+            800: 'rgb(var(--blccu-neutral-800) / <alpha-value>)',
           },
-          black: 'var(--blccu-black)',
-          red: 'var(--blccu-red)',
-          input: 'var(--blccu-input)',
-          ring: 'var(--blccu-ring)',
-          background: 'var(--blccu-background)',
-          foreground: 'var(--blccu-foreground)',
+          black: 'rgb(var(--blccu-black) / <alpha-value>)',
+          red: 'rgb(var(--blccu-red) / <alpha-value>)',
+          input: 'rgb(var(--blccu-input) / <alpha-value>)',
+          ring: 'rgb(var(--blccu-ring) / <alpha-value>)',
+          background: 'rgb(var(--blccu-background) / <alpha-value>)',
+          foreground: 'rgb(var(--blccu-foreground) / <alpha-value>)',
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -85,6 +85,9 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      fontSize: {
+        '2xs': '0.625rem' /* 10px */,
       },
     },
   },
