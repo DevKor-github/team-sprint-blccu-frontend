@@ -20,6 +20,19 @@ const preview: Preview = {
       },
       defaultViewport: 'mobile1',
     },
+    options: {
+      storySort: {
+        includeNames: true,
+        order: [
+          'Components',
+          ['*', ['Playground', '*']],
+          'Unstable',
+          ['*', ['Playground', '*']],
+          'Experimental',
+          ['*', ['Playground', '*']],
+        ],
+      },
+    },
   },
 };
 
