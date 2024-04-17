@@ -30,6 +30,20 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      /* for development only */
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      /* for development only - images with fixed width & height */
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
