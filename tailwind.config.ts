@@ -32,6 +32,10 @@ const config = {
           ring: 'rgb(var(--blccu-ring) / <alpha-value>)',
           background: 'rgb(var(--blccu-background) / <alpha-value>)',
           foreground: 'rgb(var(--blccu-foreground) / <alpha-value>)',
+          kakao: {
+            background: 'rgb(var(--blccu-kakao-background) / <alpha-value>)',
+            foreground: 'rgb(var(--blccu-kakao-foreground) / <alpha-value>)',
+          },
         },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

@@ -19,6 +19,9 @@
 
     --blccu-background: var(--blccu-white);
     --blccu-foreground: var(--blccu-neutral-800);
+
+    --blccu-kakao-background: 254 229 0; /* #fee500 */
+    --blccu-kakao-foreground: 0 0 0; /* #000000 */
   }
 
   :root {
