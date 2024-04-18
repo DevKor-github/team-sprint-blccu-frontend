@@ -93,6 +93,9 @@ const config = {
       fontSize: {
         '2xs': '0.625rem' /* 10px */,
       },
+      fontFamily: {
+        'noto-sans-kr': ['var(--font-noto-sans-kr)'],
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
