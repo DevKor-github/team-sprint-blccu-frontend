@@ -9,6 +9,11 @@ const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
+const copyCurrentUrl = () => {
+  const currentUrl = window.location.href;
+  navigator.clipboard.writeText(currentUrl);
+};
+
 /**
  * @note
  * below is for development only
@@ -108,6 +113,7 @@ const generateCategories = (size: number) => {
 
 export {
   cn,
+  copyCurrentUrl,
   generateCategories,
   generateCategory,
   generatePost,
