@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
-import { SetReasonStep } from '@/app/(signed-in-only)/settings/manage-account/leave/_steps/set-reason-step';
-import { WatchRecordsStep } from '@/app/(signed-in-only)/settings/manage-account/leave/_steps/watch-records-step';
+import { SetReasonStep } from '@/app/(signed-in-only)/leave/_steps/set-reason-step';
+import { WatchRecordsStep } from '@/app/(signed-in-only)/leave/_steps/watch-records-step';
 import { ROUTES } from '@/constants/routes';
 import { FunnelStep, useFunnel } from '@/hooks/use-funnel';
 
