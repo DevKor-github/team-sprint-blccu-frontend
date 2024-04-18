@@ -1,4 +1,7 @@
+import Link from 'next/link';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/utils';
 
 type HorizontalScrollablePostCardProps = {
@@ -25,10 +28,12 @@ const HorizontalScrollablePostCard = ({
       }}
     >
       <div className="absolute bottom-0 flex w-full items-center gap-2 rounded-b-lg bg-blccu-white px-2 py-3">
-        <Avatar size="xs">
-          <AvatarImage src={avatar} alt="avatar" />
-          <AvatarFallback className="bg-blccu-neutral-400" />
-        </Avatar>
+        <Link href={ROUTES.USERNAME_OF(username)}>
+          <Avatar size="xs">
+            <AvatarImage src={avatar} alt="avatar" />
+            <AvatarFallback className="bg-blccu-neutral-400" />
+          </Avatar>
+        </Link>
         <div className="flex w-full flex-col">
           <h3 className="line-clamp-1 text-sm">{title}</h3>
           <p className="line-clamp-1 text-2xs font-light text-blccu-neutral-600">
