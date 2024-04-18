@@ -3,6 +3,7 @@ import { Noto_Sans_KR } from 'next/font/google';
 
 import { type PropsWithChildren } from 'react';
 
+import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
 import QueryProvider from '@/providers/query-provider';
 
@@ -25,6 +26,13 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       <body className={cn(notoSansKr.className, 'bg-slate-100')}>
         <QueryProvider>
           <div className="mx-auto min-h-dvh max-w-md bg-white">{children}</div>
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              className:
+                'font-noto-sans-kr' /* FIXME: font-serif는 적용되는데, custom font는 적용이 안된다. */,
+            }}
+          />
         </QueryProvider>
       </body>
     </html>
