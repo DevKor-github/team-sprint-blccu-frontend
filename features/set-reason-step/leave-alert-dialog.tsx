@@ -1,7 +1,5 @@
 import { useRouter } from 'next/navigation';
 
-import { type ReactNode } from 'react';
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,12 +11,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { ROUTES } from '@/constants/routes';
+import { type PropsWithTrigger } from '@/types/props';
 
-type LeaveAlertDialogProps = {
-  trigger: ReactNode;
-};
-
-const LeaveAlertDialog = ({ trigger }: LeaveAlertDialogProps) => {
+const LeaveAlertDialog = ({ trigger }: PropsWithTrigger) => {
   /**
    * @note
    * - 개발 시 Link와 Button을 구분하고 있습니다. (Button 모양이라도 단순 페이지 이동인 경우 Link 사용)
