@@ -8,6 +8,7 @@ import {
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
+import { QUERY_KEY } from '@/constants/query';
 import { ROUTES } from '@/constants/routes';
 import { generateCategories, generateUser } from '@/lib/utils';
 
@@ -48,8 +49,16 @@ const SelectCategoryPage = ({
               <StackedCategoryCard category="전체글" count={total} />
             </div>
           </Link>
-          {sortedCategoriesDesc.map(({ name, count }, index) => (
-            <Link href={ROUTES.USER_HANDLE_OF(handle)} key={index}>
+          {sortedCategoriesDesc.map(({ id, name, count }, index) => (
+            <Link
+              href={{
+                pathname: ROUTES.USER_HANDLE_OF(handle),
+                query: {
+                  [QUERY_KEY.CATEGORY_ID]: id,
+                },
+              }}
+              key={index}
+            >
               <div className="px-4">
                 <StackedCategoryCard category={name} count={count} />
               </div>

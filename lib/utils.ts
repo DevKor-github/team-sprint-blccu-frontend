@@ -3,7 +3,7 @@ import { type UUID } from 'crypto';
 import { twMerge } from 'tailwind-merge';
 
 import { BLCCU_DUMMY_DATASET } from '@/constants/dummy';
-import { type Post, type User } from '@/types/mocking-entity';
+import { type Category, type Post, type User } from '@/types/mocking-entity';
 
 const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -100,11 +100,11 @@ const generateUuid = (): UUID => {
   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 };
 
-const generateCategory = () => {
-  const name = sample(BLCCU_DUMMY_DATASET.CATEGORIES);
+const generateCategory = (): Category => {
+  const { id, name } = sample(BLCCU_DUMMY_DATASET.CATEGORIES);
   const count = randomInt(0, 100);
 
-  return { name, count };
+  return { id, name, count };
 };
 
 const generateCategories = (size: number) => {
