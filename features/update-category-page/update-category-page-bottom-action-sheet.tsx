@@ -2,8 +2,6 @@
 
 import Link from 'next/link';
 
-import { type ReactNode } from 'react';
-
 import {
   BottomActionSheet,
   BottomActionSheetContent,
@@ -14,16 +12,11 @@ import {
 } from '@/components/ui-unstable/bottom-action-sheet';
 import { ROUTES } from '@/constants/routes';
 import { generateUuid } from '@/lib/utils';
+import { type PropsWithTrigger } from '@/types/props';
 
 const categoryId = generateUuid();
 
-type UpdateCategoryPageBottomActionSheetProps = {
-  trigger: ReactNode;
-};
-
-const UpdateCategoryPageBottomActionSheet = ({
-  trigger,
-}: UpdateCategoryPageBottomActionSheetProps) => {
+const UpdateCategoryPageBottomActionSheet = ({ trigger }: PropsWithTrigger) => {
   return (
     <BottomActionSheet>
       <BottomActionSheetTrigger asChild>{trigger}</BottomActionSheetTrigger>
