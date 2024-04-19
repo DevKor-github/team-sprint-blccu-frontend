@@ -1,5 +1,3 @@
-import { type ReactNode } from 'react';
-
 import { type Meta, type StoryObj } from '@storybook/react';
 
 import {
@@ -21,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import { LeaveAlertDialog } from '@/features/set-reason-step/leave-alert-dialog';
 
 const meta: Meta<typeof AlertDialogContent> = {
   title: 'Components/AlertDialog',
@@ -57,30 +56,6 @@ const Playground: Story = {
       </AlertDialogContent>
     </AlertDialog>
   ),
-};
-
-type LeaveAlertDialogProps = {
-  trigger: ReactNode;
-};
-
-const LeaveAlertDialog = ({ trigger }: LeaveAlertDialogProps) => {
-  return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
-      <AlertDialogContent variant="destructive" side="bottom">
-        <AlertDialogHeader>
-          <AlertDialogDescription>계정을 삭제합니다.</AlertDialogDescription>
-          <AlertDialogDescription>
-            이는 되돌릴 수 없습니다.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>취소하기</AlertDialogCancel>
-          <AlertDialogAction>삭제하기</AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  );
 };
 
 const Example: Story = {
