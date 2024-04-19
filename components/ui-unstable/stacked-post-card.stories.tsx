@@ -11,6 +11,11 @@ const meta: Meta<typeof StackedPostCard> = {
         type: 'text',
       },
     },
+    userHandle: {
+      control: {
+        type: 'text',
+      },
+    },
     title: {
       control: {
         type: 'text',
@@ -39,6 +44,7 @@ type Story = StoryObj<typeof StackedPostCard>;
 const Playground: Story = {
   args: {
     username: '유파랑',
+    userHandle: 'yoo-parang',
     title: '비오는 날이 좋아 ☂',
     description:
       '벚꽃이 떨어지는게 아쉽긴 해도 비오는 날은 역시 좋은 것 같아요! 톡톡 떨어지는 소리가 마음을 편안하게 해주는 것 같아요. 여러분은 어떤 날씨를 좋아하시나요?',
@@ -51,6 +57,7 @@ const Playground: Story = {
 const exampleData = [
   {
     username: '유파랑',
+    userHandle: 'yoo-parang',
     title: '비오는 날이 좋아 ☂',
     description:
       '벚꽃이 떨어지는게 아쉽긴 해도 비오는 날은 역시 좋은 것 같아요! 톡톡 떨어지는 소리가 마음을 편안하게 해주는 것 같아요. 여러분은 어떤 날씨를 좋아하시나요?',
@@ -60,6 +67,7 @@ const exampleData = [
   },
   {
     username: '이야옹',
+    userHandle: 'meow',
     title: '우리집 고양이 자랑합니다 (*ΦωΦ*)Ψ',
     description:
       '우리집에 고양이 있어용ㅎㅎ 귀엽죠  아직 7개월 애기입니당... 매일 매일 쑥쑥 크네영 너무 귀여워요ㅠㅠ',
@@ -69,6 +77,7 @@ const exampleData = [
   },
   {
     username: 'zero',
+    userHandle: 'zero',
     title: 'ⓑⓘⓡⓣⓗ ⓓⓐⓨ🎂',
     description:
       '저 생일이에요.....🎂 혹시 다른 분도 생일이시라면 축하드립니당ㅎㅎㅎ 오늘 딱히 한 거는 없지만 그래도 기쁩니다! 여러분도 행복하세요~',
@@ -78,6 +87,7 @@ const exampleData = [
   },
   {
     username: '유파랑',
+    userHandle: 'yoo-parang',
     title: '비오는 날이 좋아 ☂',
     description:
       '벚꽃이 떨어지는게 아쉽긴 해도 비오는 날은 역시 좋은 것 같아요! 톡톡 떨어지는 소리가 마음을 편안하게 해주는 것 같아요. 여러분은 어떤 날씨를 좋아하시나요?',
@@ -87,8 +97,8 @@ const exampleData = [
   },
   {
     username: '이야옹',
-    title:
-      '우리집 고양이 자랑합니다 (*ΦωΦ*)Ψ 우리집 고양이 자랑합니다 (*ΦωΦ*)Ψ',
+    userHandle: 'meow',
+    title: '우리집 고양이 자랑합니다 (*ΦωΦ*)Ψ',
     description:
       '우리집에 고양이 있어용ㅎㅎ 귀엽죠  아직 7개월 애기입니당... 매일 매일 쑥쑥 크네영 너무 귀여워요ㅠㅠ',
     thumbnail:
@@ -97,6 +107,7 @@ const exampleData = [
   },
   {
     username: 'zero',
+    userHandle: 'zero',
     title: 'ⓑⓘⓡⓣⓗ ⓓⓐⓨ🎂',
     description:
       '저 생일이에요.....🎂 혹시 다른 분도 생일이시라면 축하드립니당ㅎㅎㅎ 오늘 딱히 한 거는 없지만 그래도 기쁩니다! 여러분도 행복하세요~',
@@ -106,6 +117,7 @@ const exampleData = [
   },
   {
     username: '유파랑',
+    userHandle: 'yoo-parang',
     title: '비오는 날이 좋아 ☂',
     description:
       '벚꽃이 떨어지는게 아쉽긴 해도 비오는 날은 역시 좋은 것 같아요! 톡톡 떨어지는 소리가 마음을 편안하게 해주는 것 같아요. 여러분은 어떤 날씨를 좋아하시나요?',

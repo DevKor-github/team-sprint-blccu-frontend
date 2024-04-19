@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 
 type HorizontalScrollablePostCardProps = {
   username: string;
+  userHandle: string;
   avatar: string;
   title: string;
   thumbnail: string;
@@ -13,6 +14,7 @@ type HorizontalScrollablePostCardProps = {
 
 const HorizontalScrollablePostCard = ({
   username,
+  userHandle,
   avatar,
   title,
   thumbnail,
@@ -28,7 +30,7 @@ const HorizontalScrollablePostCard = ({
       }}
     >
       <div className="absolute bottom-0 flex w-full items-center gap-2 rounded-b-lg bg-blccu-white px-2 py-3">
-        <Link href={ROUTES.USERNAME_OF(username)}>
+        <Link href={ROUTES.USER_HANDLE_OF(userHandle)}>
           <Avatar size="xs">
             <AvatarImage src={avatar} alt="avatar" />
             <AvatarFallback className="bg-blccu-neutral-400" />

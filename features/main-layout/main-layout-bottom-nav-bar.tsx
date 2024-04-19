@@ -7,7 +7,7 @@ import { cn, generateUser } from '@/lib/utils';
 
 const me = generateUser();
 
-const { username } = me;
+const { handle } = me;
 
 const MainLayoutBottomNavBar = () => {
   return (
@@ -38,7 +38,7 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.USERNAME_OF(username)}>
+          <Link href={ROUTES.USER_HANDLE_OF(handle)}>
             <div className="p-5">
               <User className="h-5 w-5" />
             </div>

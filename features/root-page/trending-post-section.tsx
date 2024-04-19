@@ -24,6 +24,7 @@ const TrendingPostSection = () => {
                 <HorizontalScrollablePostCard
                   key={index}
                   username={author.username}
+                  userHandle={author.handle}
                   avatar={author.profileImage}
                   title={title}
                   thumbnail={thumbnail}

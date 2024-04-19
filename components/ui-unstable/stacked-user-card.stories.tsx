@@ -17,6 +17,11 @@ const meta: Meta<typeof StackedUserCard> = {
         type: 'text',
       },
     },
+    userHandle: {
+      control: {
+        type: 'text',
+      },
+    },
     description: {
       control: {
         type: 'text',
@@ -37,6 +42,7 @@ const Playground: Story = {
     avatar:
       'https://preview.free3d.com/img/2018/04/2269230414092568255/4t4ll0dg.jpg',
     username: '이오리',
+    userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
     right: <Button size="sm">팔로우</Button>,
@@ -48,6 +54,7 @@ const exampleData = [
     avatar:
       'https://preview.free3d.com/img/2018/04/2269230414092568255/4t4ll0dg.jpg',
     username: '이오리',
+    userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
     right: <Button size="sm">팔로우</Button>,
@@ -56,6 +63,7 @@ const exampleData = [
     avatar:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Loutre_g%C3%A9ante_gros_plan.jpg/1200px-Loutre_g%C3%A9ante_gros_plan.jpg',
     username: '김수달',
+    userHandle: 'kim-sudal',
     description: '여러분과 함께 즐거운 시간을 보내고 싶어요.',
     right: (
       <Button size="sm" variant="secondary">
@@ -67,12 +75,14 @@ const exampleData = [
     avatar:
       'https://images.chosun.com/resizer/ebyov8zMQwFBKMq6NLp3W0MAtCs=/500x475/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/NRVFQKTQC5DCXNDXPJMTONFHJA.jpg',
     username: '양가람',
+    userHandle: 'yang-garam',
     description: '여행을 좋아하는 양가람입니다.',
   },
   {
     avatar:
       'https://preview.free3d.com/img/2018/04/2269230414092568255/4t4ll0dg.jpg',
     username: '이오리',
+    userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
     right: <Button size="sm">팔로우</Button>,
@@ -81,6 +91,7 @@ const exampleData = [
     avatar:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Loutre_g%C3%A9ante_gros_plan.jpg/1200px-Loutre_g%C3%A9ante_gros_plan.jpg',
     username: '김수달',
+    userHandle: 'kim-sudal',
     description: '여러분과 함께 즐거운 시간을 보내고 싶어요.',
     right: (
       <Button size="sm" variant="secondary">
@@ -92,6 +103,7 @@ const exampleData = [
     avatar:
       'https://images.chosun.com/resizer/ebyov8zMQwFBKMq6NLp3W0MAtCs=/500x475/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/NRVFQKTQC5DCXNDXPJMTONFHJA.jpg',
     username: '양가람',
+    userHandle: 'yang-garam',
     description: '여행을 좋아하는 양가람입니다.',
     right: <Button size="sm">팔로우</Button>,
   },
@@ -99,6 +111,7 @@ const exampleData = [
     avatar:
       'https://preview.free3d.com/img/2018/04/2269230414092568255/4t4ll0dg.jpg',
     username: '이오리',
+    userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
   },

@@ -7,7 +7,7 @@ import { IconButton } from '@/components/ui/icon-button';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { copyCurrentUrl } from '@/lib/utils';
 
-const UsernamePageShareAction = () => {
+const UserHandlePageShareAction = () => {
   const handleClick = () => {
     copyCurrentUrl();
 
@@ -21,4 +21,4 @@ const UsernamePageShareAction = () => {
   );
 };
 
-export { UsernamePageShareAction };
+export { UserHandlePageShareAction };

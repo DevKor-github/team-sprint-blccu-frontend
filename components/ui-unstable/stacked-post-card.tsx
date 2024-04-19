@@ -10,6 +10,7 @@ import { ROUTES } from '@/constants/routes';
 
 type StackedPostCardProps = {
   username: string;
+  userHandle: string;
   title: string;
   description: string;
   thumbnail: string;
@@ -18,6 +19,7 @@ type StackedPostCardProps = {
 
 const StackedPostCard = ({
   username,
+  userHandle,
   title,
   description,
   thumbnail,
@@ -34,7 +36,7 @@ const StackedPostCard = ({
             {description}
           </p>
           <div className="flex items-center gap-2">
-            <Link href={ROUTES.USERNAME_OF(username)}>
+            <Link href={ROUTES.USER_HANDLE_OF(userHandle)}>
               <p className="line-clamp-1 max-w-28 text-2xs font-light text-blccu-neutral-400">
                 {username}
               </p>

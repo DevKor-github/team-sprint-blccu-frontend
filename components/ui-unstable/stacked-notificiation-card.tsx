@@ -15,7 +15,7 @@ type StackedNotificationCardProps = {
 };
 
 const StackedNotificationCard = ({
-  user: { username, profileImage },
+  user: { username, handle, profileImage },
   type,
   sentAt,
 }: StackedNotificationCardProps) => {
@@ -29,14 +29,14 @@ const StackedNotificationCard = ({
   return (
     <div className="flex items-center gap-2">
       <div className="flex flex-1 items-center gap-4">
-        <Link href={ROUTES.USERNAME_OF(username)}>
+        <Link href={ROUTES.USER_HANDLE_OF(handle)}>
           <Avatar size="xs">
             <AvatarImage src={profileImage} alt="avatar" />
             <AvatarFallback className="bg-blccu-neutral-400" />
           </Avatar>
         </Link>
         <div className="break-all text-sm">
-          <Link href={ROUTES.USERNAME_OF(username)}>
+          <Link href={ROUTES.USER_HANDLE_OF(handle)}>
             <span className="font-bold">{username}</span>
           </Link>
           <span>{notificationTypeDescriptor}</span>

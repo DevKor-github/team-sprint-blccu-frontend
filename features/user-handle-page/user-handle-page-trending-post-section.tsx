@@ -5,20 +5,20 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { getUsernamePageTrendingPostSectionTitleDescriptor } from '@/lib/get-descriptor';
+import { getUserHandlePageTrendingPostSectionTitleDescriptor } from '@/lib/get-descriptor';
 import { generatePosts } from '@/lib/utils';
 import { type User } from '@/types/mocking-entity';
 
-type UsernamePageTrendingPostSectionProps = {
+type UserHandlePageTrendingPostSectionProps = {
   user: User;
 };
 
-const UsernamePageTrendingPostSection = ({
+const UserHandlePageTrendingPostSection = ({
   user,
-}: UsernamePageTrendingPostSectionProps) => {
+}: UserHandlePageTrendingPostSectionProps) => {
   const posts = generatePosts(10, user);
 
-  const titleDescriptor = getUsernamePageTrendingPostSectionTitleDescriptor(
+  const titleDescriptor = getUserHandlePageTrendingPostSectionTitleDescriptor(
     user.username,
   );
 
@@ -36,6 +36,7 @@ const UsernamePageTrendingPostSection = ({
                 <HorizontalScrollablePostCard
                   key={index}
                   username={author.username}
+                  userHandle={author.handle}
                   avatar={author.profileImage}
                   title={title}
                   thumbnail={thumbnail}
@@ -50,4 +51,4 @@ const UsernamePageTrendingPostSection = ({
   );
 };
 
-export { UsernamePageTrendingPostSection };
+export { UserHandlePageTrendingPostSection };

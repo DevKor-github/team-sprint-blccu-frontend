@@ -8,6 +8,7 @@ import { ROUTES } from '@/constants/routes';
 type StackedUserCardProps = {
   avatar: string;
   username: string;
+  userHandle: string;
   description?: string;
   right?: ReactNode;
 };
@@ -15,13 +16,14 @@ type StackedUserCardProps = {
 const StackedUserCard = ({
   avatar,
   username,
+  userHandle,
   description,
   right,
 }: StackedUserCardProps) => {
   return (
     <div className="flex items-center gap-4">
       <Link
-        href={ROUTES.USERNAME_OF(username)}
+        href={ROUTES.USER_HANDLE_OF(userHandle)}
         className="flex flex-1 items-center gap-4 py-2"
       >
         <Avatar>
