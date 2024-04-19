@@ -22,6 +22,7 @@ const FollowerPostSection = () => {
               <StackedPostCard
                 key={index}
                 username={author.username}
+                userHandle={author.handle}
                 title={title}
                 description={description}
                 thumbnail={thumbnail}

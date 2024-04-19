@@ -12,6 +12,11 @@ const meta: Meta<typeof HorizontalScrollablePostCard> = {
         type: 'text',
       },
     },
+    userHandle: {
+      control: {
+        type: 'text',
+      },
+    },
     avatar: {
       control: {
         type: 'text',
@@ -35,6 +40,7 @@ type Story = StoryObj<typeof HorizontalScrollablePostCard>;
 const Playground: Story = {
   args: {
     username: 'purple LUV',
+    userHandle: 'purple-luv',
     avatar:
       'https://contents.lotteon.com/itemimage/_v131313/LO/20/52/07/65/85/_2/05/20/76/58/7/LO2052076585_2052076587_1.jpg/dims/resizef/720X720',
     title: '여름, 복숭아',
@@ -46,6 +52,7 @@ const Playground: Story = {
 const exampleData = [
   {
     username: 'purple LUV',
+    userHandle: 'purple-luv',
     avatar:
       'https://contents.lotteon.com/itemimage/_v131313/LO/20/52/07/65/85/_2/05/20/76/58/7/LO2052076585_2052076587_1.jpg/dims/resizef/720X720',
     title: '여름, 복숭아',
@@ -54,6 +61,7 @@ const exampleData = [
   },
   {
     username: 'J soo',
+    userHandle: 'j-soo',
     avatar:
       'https://entertainimg.kbsmedia.co.kr/cms/uploads/PERSON_20240206075441_1b54f931528a9d36c98db236a5e19d74.jpg',
     title: '영화 추천해요!',
@@ -62,6 +70,7 @@ const exampleData = [
   },
   {
     username: '유파랑',
+    userHandle: 'yoo-parang',
     avatar:
       'https://www.altius-group.com.au/hs-fs/hubfs/website-2023/services/people-and-employee-services/Altius_Group_People_and_Employee_Services_Employee_Assistance_Program%20.webp?width=800&height=800&name=Altius_Group_People_and_Employee_Services_Employee_Assistance_Program%20.webp',
     title: '비오는 날이 좋아 ☂',

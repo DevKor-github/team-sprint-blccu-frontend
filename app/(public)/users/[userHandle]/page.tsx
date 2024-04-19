@@ -6,9 +6,9 @@ import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-import { PostByCategorySection } from '@/features/username-page/post-by-category-section';
-import { UsernamePageShareAction } from '@/features/username-page/username-page-share-action';
-import { UsernamePageTrendingPostSection } from '@/features/username-page/username-page-trending-post-section';
+import { PostByCategorySection } from '@/features/user-handle-page/post-by-category-section';
+import { UserHandlePageShareAction } from '@/features/user-handle-page/user-handle-page-share-action';
+import { UserHandlePageTrendingPostSection } from '@/features/user-handle-page/user-handle-page-trending-post-section';
 import {
   getFollowerDescriptor,
   getFollowingDescriptor,
@@ -30,19 +30,19 @@ const {
 const followerDescriptor = getFollowerDescriptor(followerCount);
 const followingDescriptor = getFollowingDescriptor(followingCount);
 
-type UsernamePageProps = {
+type UserHandlePageProps = {
   params: {
     username: string;
   };
 };
 
-const UsernamePage = ({ params: { username: _ } }: UsernamePageProps) => {
+const UserHandlePage = ({ params: { username: _ } }: UserHandlePageProps) => {
   return (
     <div>
       <AppBar className="justify-between border-none bg-transparent text-white">
         <AppBarBack />
         <div className="flex items-center">
-          <UsernamePageShareAction />
+          <UserHandlePageShareAction />
           <Link href={ROUTES.SETTINGS}>
             <div className="px-3 py-4">
               <Settings className="h-5 w-5" />
@@ -88,9 +88,9 @@ const UsernamePage = ({ params: { username: _ } }: UsernamePageProps) => {
         </div>
       </div>
       <PostByCategorySection user={user} />
-      <UsernamePageTrendingPostSection user={user} />
+      <UserHandlePageTrendingPostSection user={user} />
     </div>
   );
 };
 
-export default UsernamePage;
+export default UserHandlePage;

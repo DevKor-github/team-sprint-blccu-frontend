@@ -17,16 +17,16 @@ const sortedCategoriesDesc = categories.sort((a, b) => b.count - a.count);
 
 const me = generateUser();
 
-const { username } = me;
+const { handle } = me;
 
 type SelectCategoryPageProps = {
   params: {
-    username: string;
+    userHandle: string;
   };
 };
 
 const SelectCategoryPage = ({
-  params: { username: _ },
+  params: { userHandle: _ },
 }: SelectCategoryPageProps) => {
   const total = sortedCategoriesDesc.reduce((acc, { count }) => acc + count, 0);
 
@@ -43,13 +43,13 @@ const SelectCategoryPage = ({
       </AppBar>
       <div className="pt-14">
         <div className="flex flex-col pt-2">
-          <Link href={ROUTES.USERNAME_OF(username)}>
+          <Link href={ROUTES.USER_HANDLE_OF(handle)}>
             <div className="px-4">
               <StackedCategoryCard category="전체글" count={total} />
             </div>
           </Link>
           {sortedCategoriesDesc.map(({ name, count }, index) => (
-            <Link href={ROUTES.USERNAME_OF(username)} key={index}>
+            <Link href={ROUTES.USER_HANDLE_OF(handle)} key={index}>
               <div className="px-4">
                 <StackedCategoryCard category={name} count={count} />
               </div>

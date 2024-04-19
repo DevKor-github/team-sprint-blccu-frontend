@@ -17,14 +17,14 @@ const ROUTES = {
   ROOT: '/',
   SEARCH_USER: '/search-user',
 
-  /* username page */
-  USERNAME_OF: (username: string) => `/@${username}`,
-  SELECT_CATEGORY_OF: (username: string) => `/@${username}/select-category`,
-  FOLLOWERS_OF: (username: string) => `/@${username}/followers`,
-  FOLLOWING_OF: (username: string) => `/@${username}/following`,
-  POST_OF: (username: string, slug: string) => `/@${username}/${slug}`,
-  COMMENTS_OF: (username: string, slug: string) =>
-    `/@${username}/${slug}/comments`,
+  /* user handle page */
+  USER_HANDLE_OF: (userHandle: string) => `/@${userHandle}`,
+  SELECT_CATEGORY_OF: (userHandle: string) => `/@${userHandle}/select-category`,
+  FOLLOWERS_OF: (userHandle: string) => `/@${userHandle}/followers`,
+  FOLLOWING_OF: (userHandle: string) => `/@${userHandle}/following`,
+  POST_OF: (userHandle: string, slug: string) => `/@${userHandle}/${slug}`,
+  COMMENTS_OF: (userHandle: string, slug: string) =>
+    `/@${userHandle}/${slug}/comments`,
 
   /* -------------------------------------------------------------------------------------------------
    * signed-in-only layout

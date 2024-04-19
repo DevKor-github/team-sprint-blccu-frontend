@@ -29,6 +29,7 @@ const UserSearchResult = () => {
             key={index}
             avatar={profileImage}
             username={username}
+            userHandle={handle}
             description={description}
             right={FollowingButton[index]}
           />

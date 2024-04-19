@@ -29,7 +29,7 @@ const getBannerSignedInUsernameDescriptor = (username: string) => {
   return `${username}님`;
 };
 
-const getUsernamePageTrendingPostSectionTitleDescriptor = (
+const getUserHandlePageTrendingPostSectionTitleDescriptor = (
   username: string,
 ) => {
   return `${username}님의 인기글`;
@@ -54,5 +54,5 @@ export {
   getFollowingDescriptor,
   getNotificationTypeDescriptor,
   getSignUpMethodDescriptor,
-  getUsernamePageTrendingPostSectionTitleDescriptor,
+  getUserHandlePageTrendingPostSectionTitleDescriptor,
 };

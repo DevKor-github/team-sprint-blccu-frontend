@@ -7,9 +7,7 @@ import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
 import { generateUsers, sampleSize } from '@/lib/utils';
 
-const USERS_COUNT = 21;
-
-const users = generateUsers(USERS_COUNT);
+const users = generateUsers(21);
 
 const FollowingButtons = [
   <Button key="follow-button" size="sm">
@@ -20,20 +18,20 @@ const FollowingButtons = [
   </Button>,
 ];
 
-const FollowingButton = sampleSize(FollowingButtons, USERS_COUNT);
+const FollowingButton = sampleSize(FollowingButtons, 21);
 
-type FollowersPageProps = {
+type FollowingPageProps = {
   params: {
     username: string;
   };
 };
 
-const FollowersPage = ({ params: { username: _ } }: FollowersPageProps) => {
+const FollowingPage = ({ params: { username: _ } }: FollowingPageProps) => {
   return (
     <div>
       <AppBar>
         <AppBarBack />
-        <AppBarTitle>팔로워 목록</AppBarTitle>
+        <AppBarTitle>팔로잉 목록</AppBarTitle>
       </AppBar>
       <div className="pt-14">
         <div className="mt-4 flex flex-col gap-2 px-4">
@@ -46,6 +44,7 @@ const FollowersPage = ({ params: { username: _ } }: FollowersPageProps) => {
                 key={index}
                 avatar={profileImage}
                 username={username}
+                userHandle={handle}
                 description={description}
                 right={FollowingButton[index]}
               />
@@ -57,4 +56,4 @@ const FollowersPage = ({ params: { username: _ } }: FollowersPageProps) => {
   );
 };
 
-export default FollowersPage;
+export default FollowingPage;
