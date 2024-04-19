@@ -51,42 +51,44 @@ const pastNotifications = sortedNotificationsRecentFirst.slice(
 
 const NotificationsPage = () => {
   return (
-    <div className="pb-6">
+    <>
       <AppBar>
         <AppBarBack />
         <AppBarTitle>알림</AppBarTitle>
       </AppBar>
-      <Section className="px-4">
-        <SectionTitle>오늘 알림</SectionTitle>
-        <SectionContent>
-          <div className="flex flex-col gap-4 rounded-lg p-4 shadow-lg">
-            {todayNotifications.map(({ user, type, sentAt }, index) => (
-              <StackedNotificationCard
-                key={index}
-                user={user}
-                type={type}
-                sentAt={sentAt}
-              />
-            ))}
-          </div>
-        </SectionContent>
-      </Section>
-      <Section className="px-4">
-        <SectionTitle>지난 알림</SectionTitle>
-        <SectionContent>
-          <div className="flex flex-col gap-4 rounded-lg p-4 shadow-lg">
-            {pastNotifications.map(({ user, type, sentAt }, index) => (
-              <StackedNotificationCard
-                key={index}
-                user={user}
-                type={type}
-                sentAt={sentAt}
-              />
-            ))}
-          </div>
-        </SectionContent>
-      </Section>
-    </div>
+      <div className="pb-6 pt-14">
+        <Section className="px-4">
+          <SectionTitle>오늘 알림</SectionTitle>
+          <SectionContent>
+            <div className="flex flex-col gap-4 rounded-lg p-4 shadow-lg">
+              {todayNotifications.map(({ user, type, sentAt }, index) => (
+                <StackedNotificationCard
+                  key={index}
+                  user={user}
+                  type={type}
+                  sentAt={sentAt}
+                />
+              ))}
+            </div>
+          </SectionContent>
+        </Section>
+        <Section className="px-4">
+          <SectionTitle>지난 알림</SectionTitle>
+          <SectionContent>
+            <div className="flex flex-col gap-4 rounded-lg p-4 shadow-lg">
+              {pastNotifications.map(({ user, type, sentAt }, index) => (
+                <StackedNotificationCard
+                  key={index}
+                  user={user}
+                  type={type}
+                  sentAt={sentAt}
+                />
+              ))}
+            </div>
+          </SectionContent>
+        </Section>
+      </div>
+    </>
   );
 };
 
