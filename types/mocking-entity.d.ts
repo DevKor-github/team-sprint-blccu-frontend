@@ -19,4 +19,10 @@ type Post = {
 
 type NotificationType = 'like' | 'comment' | 'follow';
 
-export type { NotificationType, Post, User };
+type Category = {
+  id: number;
+  name: string;
+  count: number;
+};
+
+export type { Category, NotificationType, Post, User };

@@ -15,7 +15,7 @@ const SectionTitle = ({
   className,
 }: PropsWithChildren & PropsWithClassName) => {
   return (
-    <h2 className={cn('ml-1 text-lg font-bold', className)}>{children}</h2>
+    <div className={cn('ml-1 text-lg font-bold', className)}>{children}</div>
   );
 };
 

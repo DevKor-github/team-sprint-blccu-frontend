@@ -208,7 +208,7 @@ const BLCCU_DUMMY_DATASET = {
     '마케팅',
     '코딩',
     '데이터',
-  ],
+  ].map((category, index) => ({ id: index + 1, name: category })),
 };
 
 export { BLCCU_DUMMY_DATASET };
