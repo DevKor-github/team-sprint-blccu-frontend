@@ -16,7 +16,7 @@ const notoSansKr = Noto_Sans_KR({
 });
 
 const metadata: Metadata = {
-  title: '블꾸',
+  title: '블꾸 - 나만의 커스텀 블로그',
   description: '커스텀 극대화 블로그 블꾸에서 당신만의 블로그를 꾸며보세요!',
 };
 
