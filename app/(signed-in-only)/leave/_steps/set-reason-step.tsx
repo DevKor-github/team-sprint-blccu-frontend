@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { ROUTES } from '@/constants/routes';
+import { LeaveAlertDialog } from '@/features/set-reason-step/leave-alert-dialog';
 
 type SetReasonStepProps = {
   onNext: () => void;
@@ -59,9 +60,13 @@ const SetReasonStep = ({ onNext }: SetReasonStepProps) => {
           />
         </div>
         <div className="flex w-full gap-2 px-4 pb-4">
-          <Button variant="destructive" className="flex-1" onClick={onNext}>
-            탈퇴하기
-          </Button>
+          <LeaveAlertDialog
+            trigger={
+              <Button variant="destructive" className="flex-1">
+                탈퇴하기
+              </Button>
+            }
+          />
           <Button
             className="flex-1"
             onClick={() => router.push(ROUTES.MANAGE_ACCOUNT)}
