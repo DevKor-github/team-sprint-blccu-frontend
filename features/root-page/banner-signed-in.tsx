@@ -26,7 +26,7 @@ const BannerSignedIn = () => {
       <div className="flex items-center justify-between">
         <p className="text-xs text-blccu-white">지금 블꾸하러 가기</p>
         <Link href={ROUTES.WRITE}>
-          <Button size="sm" variant="secondary">
+          <Button size="sm" variant="secondary" radius="full">
             글쓰기
           </Button>
         </Link>

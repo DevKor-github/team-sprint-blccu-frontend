@@ -65,7 +65,7 @@ const Example: Story = {
           <p className="text-sm text-blccu-neutral-600">치피치피차파차파</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button>팔로우</Button>
+          <Button radius="full">팔로우</Button>
           <IconButton>
             <List className="h-5 w-5" />
           </IconButton>
