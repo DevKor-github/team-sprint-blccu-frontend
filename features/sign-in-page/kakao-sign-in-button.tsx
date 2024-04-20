@@ -11,11 +11,11 @@ const KakaoSignInButton = ({ children }: PropsWithChildren) => {
         'text-sm font-medium',
         'transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blccu-ring focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        'rounded-[12px] bg-blccu-kakao-background px-4 py-3 text-blccu-kakao-foreground/85',
-        'shadow-sm',
+        'rounded-[12px] bg-blccu-kakao-background px-7 py-3 text-blccu-kakao-foreground/85',
+        'shadow-lg',
       )}
     >
-      <KakaoLogo className="mr-3 h-4 w-4" />
+      <KakaoLogo className="mr-4 h-4 w-4" />
       <p className="mx-auto flex-1">{children}</p>
     </button>
   );
