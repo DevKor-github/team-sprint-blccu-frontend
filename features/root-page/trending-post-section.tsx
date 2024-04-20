@@ -32,7 +32,7 @@ const TrendingPostSection = () => {
               ),
             )}
           </div>
-          <ScrollBar orientation="horizontal" />
+          <ScrollBar orientation="horizontal" className="hidden" />
         </ScrollArea>
       </SectionContent>
     </Section>
