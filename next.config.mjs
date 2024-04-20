@@ -5,24 +5,24 @@ const nextConfig = {
 
     return [
       {
-        source: '/@:username',
-        destination: '/users/:username',
+        source: '/@:userHandle',
+        destination: '/users/:userHandle',
       },
       {
-        source: '/@:username/followers',
-        destination: '/users/:username/followers',
+        source: '/@:userHandle/followers',
+        destination: '/users/:userHandle/followers',
       },
       {
-        source: '/@:username/following',
-        destination: '/users/:username/following',
+        source: '/@:userHandle/following',
+        destination: '/users/:userHandle/following',
       },
       {
-        source: '/@:username/select-category',
-        destination: '/users/:username/select-category',
+        source: '/@:userHandle/select-category',
+        destination: '/users/:userHandle/select-category',
       },
       {
-        source: '/@:username/:slug/:path*',
-        destination: '/users/:username/posts/:slug/:path*',
+        source: '/@:userHandle/:slug/:path*',
+        destination: '/users/:userHandle/posts/:slug/:path*',
       },
       {
         source: '/proxy-api/:path*',
