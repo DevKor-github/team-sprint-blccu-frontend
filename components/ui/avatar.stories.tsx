@@ -53,7 +53,7 @@ const Example: Story = {
         </div>
       </div>
       <div className="flex flex-col items-center gap-1">
-        <Button>팔로우</Button>
+        <Button radius="full">팔로우</Button>
         <p className="text-xs text-blccu-neutral-600">팔로워 172</p>
       </div>
     </section>
@@ -90,7 +90,7 @@ const Example2: Story = {
           <p className="text-sm text-blccu-neutral-600">치피치피차파차파</p>
         </div>
         <div className="flex items-center gap-2">
-          <Button>팔로우</Button>
+          <Button radius="full">팔로우</Button>
           <IconButton>
             <List className="h-5 w-5" />
           </IconButton>

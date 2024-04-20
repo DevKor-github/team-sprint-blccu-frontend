@@ -12,10 +12,10 @@ const USERS_COUNT = 21;
 const users = generateUsers(USERS_COUNT);
 
 const FollowingButtons = [
-  <Button key="follow-button" size="sm">
+  <Button key="follow-button" size="sm" radius="full">
     팔로우
   </Button>,
-  <Button key="following-button" variant="secondary" size="sm">
+  <Button key="following-button" variant="secondary" size="sm" radius="full">
     팔로잉
   </Button>,
 ];

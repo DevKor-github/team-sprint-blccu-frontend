@@ -45,7 +45,11 @@ const Playground: Story = {
     userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
-    right: <Button size="sm">팔로우</Button>,
+    right: (
+      <Button size="sm" radius="full">
+        팔로우
+      </Button>
+    ),
   },
 };
 
@@ -57,7 +61,11 @@ const exampleData = [
     userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
-    right: <Button size="sm">팔로우</Button>,
+    right: (
+      <Button size="sm" radius="full">
+        팔로우
+      </Button>
+    ),
   },
   {
     avatar:
@@ -66,7 +74,7 @@ const exampleData = [
     userHandle: 'kim-sudal',
     description: '여러분과 함께 즐거운 시간을 보내고 싶어요.',
     right: (
-      <Button size="sm" variant="secondary">
+      <Button size="sm" variant="secondary" radius="full">
         팔로잉
       </Button>
     ),
@@ -85,7 +93,11 @@ const exampleData = [
     userHandle: 'lee-ori',
     description:
       '인테리어나 집꾸미기에 관심이 많아요! 여러분의 집도 함께 꾸며드릴까요?',
-    right: <Button size="sm">팔로우</Button>,
+    right: (
+      <Button size="sm" radius="full">
+        팔로우
+      </Button>
+    ),
   },
   {
     avatar:
@@ -94,7 +106,7 @@ const exampleData = [
     userHandle: 'kim-sudal',
     description: '여러분과 함께 즐거운 시간을 보내고 싶어요.',
     right: (
-      <Button size="sm" variant="secondary">
+      <Button size="sm" variant="secondary" radius="full">
         팔로잉
       </Button>
     ),
@@ -105,7 +117,11 @@ const exampleData = [
     username: '양가람',
     userHandle: 'yang-garam',
     description: '여행을 좋아하는 양가람입니다.',
-    right: <Button size="sm">팔로우</Button>,
+    right: (
+      <Button size="sm" radius="full">
+        팔로우
+      </Button>
+    ),
   },
   {
     avatar:

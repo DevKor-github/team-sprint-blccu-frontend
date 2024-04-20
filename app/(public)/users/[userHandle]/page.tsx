@@ -79,7 +79,9 @@ const UserHandlePage = ({ params: { username: _ } }: UserHandlePageProps) => {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <EditUserProfileSheet trigger={<Button>프로필 수정</Button>} />
+            <EditUserProfileSheet
+              trigger={<Button radius="full">프로필 편집</Button>}
+            />
             <Link href={ROUTES.SELECT_CATEGORY_OF(handle)}>
               <div className="p-4">
                 <List className="h-5 w-5" />
