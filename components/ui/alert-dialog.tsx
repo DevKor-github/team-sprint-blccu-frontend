@@ -31,8 +31,8 @@ const AlertDialogOverlay = React.forwardRef<
       className={cn(
         'fixed inset-0 z-50',
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        context.variant === 'default' && 'bg-blccu-black/80',
-        context.variant === 'destructive' && 'bg-blccu-white/80',
+        context.variant === 'default' && 'bg-blccu-black/50',
+        context.variant === 'destructive' && 'bg-blccu-neutral-200/50',
         className,
       )}
       {...props}
@@ -43,13 +43,9 @@ const AlertDialogOverlay = React.forwardRef<
 AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 
 const alertDialogVariants = cva(
-  /**
-   * @note
-   * - mx-8이 먹히지 않아, 임시로 w-[calc(100vw-32px)]를 사용하였습니다.
-   * - {@link BottomActionSheetContent}에서는 mx-4가 잘 작동한 바 있습니다.
-   */
   cn(
-    'fixed z-50 bg-blccu-background shadow-lg rounded-lg w-[calc(100vw-32px)]',
+    'fixed z-50 bg-blccu-background shadow-lg rounded-lg',
+    'w-[calc(100vw-32px)] over-blccu-screen-width:w-[calc(448px-32px)]',
     'duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-left-1/2',
     'flex flex-col',
   ),

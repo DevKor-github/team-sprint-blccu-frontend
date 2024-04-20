@@ -19,7 +19,7 @@ const BottomActionSheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      'fixed inset-0 z-50 bg-blccu-black/40',
+      'fixed inset-0 z-50 bg-blccu-black/50',
       'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       className,
     )}
@@ -31,7 +31,7 @@ BottomActionSheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const bottomActionSheetVariants = cva(
   cn(
-    'fixed z-50 gap-4 mx-6 mb-6 shadow-lg transition',
+    'fixed z-50 gap-4 mb-6 shadow-lg transition',
     'ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',
     'flex flex-col gap-2',
   ),
@@ -39,7 +39,8 @@ const bottomActionSheetVariants = cva(
     variants: {
       side: {
         bottom: cn(
-          'inset-x-0 bottom-0',
+          'inset-x-0 mx-auto bottom-0',
+          'w-[calc(100vw-16px)] over-blccu-screen-width:w-[calc(448px-16px)]',
           'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
         ),
       },
@@ -100,7 +101,7 @@ const BottomActionSheetItem = ({
 };
 
 const BottomActionSheetSeparator = () => {
-  return <div className="h-[0.5px] bg-blccu-black/40" />;
+  return <div className="h-[0.5px] bg-blccu-black/50" />;
 };
 
 export {
