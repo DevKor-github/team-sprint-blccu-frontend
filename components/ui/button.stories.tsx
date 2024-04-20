@@ -14,6 +14,10 @@ const meta: Meta<typeof Button> = {
       options: ['default', 'sm'],
       control: { type: 'radio' },
     },
+    radius: {
+      options: ['default', 'full'],
+      control: { type: 'radio' },
+    },
     disabled: {
       control: { type: 'boolean' },
     },

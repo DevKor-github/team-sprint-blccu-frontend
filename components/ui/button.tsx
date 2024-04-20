@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
   cn(
-    'inline-flex items-center justify-center whitespace-nowrap rounded-lg',
+    'inline-flex items-center justify-center whitespace-nowrap',
     'text-sm font-medium',
     'transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blccu-ring focus-visible:ring-offset-2',
     'disabled:cursor-not-allowed disabled:opacity-50',
@@ -24,10 +24,15 @@ const buttonVariants = cva(
         default: 'h-10 px-6',
         sm: 'h-9 text-xs px-5',
       },
+      radius: {
+        default: 'rounded-lg',
+        full: 'rounded-full',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'default',
+      radius: 'default',
     },
   },
 );
@@ -39,11 +44,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, radius, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, className, radius }))}
         ref={ref}
         {...props}
       />
