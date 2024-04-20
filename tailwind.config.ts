@@ -96,6 +96,9 @@ const config = {
       fontFamily: {
         'noto-sans-kr': ['var(--font-noto-sans-kr)'],
       },
+      screens: {
+        'over-blccu-screen-width': '448px',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
