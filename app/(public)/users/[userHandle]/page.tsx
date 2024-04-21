@@ -1,14 +1,15 @@
 import Link from 'next/link';
 
-import { List, Settings } from 'lucide-react';
+import { List, Settings, Share2 } from 'lucide-react';
 
 import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
+import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
 import { EditUserProfileSheet } from '@/features/user-handle-page/edit-user-profile-sheet';
 import { PostByCategorySection } from '@/features/user-handle-page/post-by-category-section';
-import { UserHandlePageShareAction } from '@/features/user-handle-page/user-handle-page-share-action';
 import { UserHandlePageTrendingPostSection } from '@/features/user-handle-page/user-handle-page-trending-post-section';
 import {
   getFollowerDescriptor,
@@ -43,7 +44,11 @@ const UserHandlePage = ({ params: { username: _ } }: UserHandlePageProps) => {
       <AppBar className="justify-between border-none bg-transparent text-white">
         <AppBarBack />
         <div className="flex items-center">
-          <UserHandlePageShareAction />
+          <CopyCurrentPageTrigger asChild>
+            <IconButton size="lg">
+              <Share2 className="h-5 w-5" />
+            </IconButton>
+          </CopyCurrentPageTrigger>
           <Link href={ROUTES.SETTINGS}>
             <div className="px-3 py-4">
               <Settings className="h-5 w-5" />
