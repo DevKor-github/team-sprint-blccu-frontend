@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { HorizontalScrollablePostCard } from '@/components/ui-unstable/horizontal-scrollable-post-card';
 import {
   Section,
@@ -5,6 +7,7 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { ROUTES } from '@/constants/routes';
 import { getUserHandlePageTrendingPostSectionTitleDescriptor } from '@/lib/get-descriptor';
 import { generatePosts } from '@/lib/utils';
 import { type User } from '@/types/mocking-entity';
@@ -33,14 +36,15 @@ const UserHandlePageTrendingPostSection = ({
                 { author, title, slug, description, thumbnail, createdAt },
                 index,
               ) => (
-                <HorizontalScrollablePostCard
-                  key={index}
-                  username={author.username}
-                  userHandle={author.handle}
-                  avatar={author.profileImage}
-                  title={title}
-                  thumbnail={thumbnail}
-                />
+                <Link href={ROUTES.POST_OF(author.handle, slug)} key={index}>
+                  <HorizontalScrollablePostCard
+                    username={author.username}
+                    userHandle={author.handle}
+                    avatar={author.profileImage}
+                    title={title}
+                    thumbnail={thumbnail}
+                  />
+                </Link>
               ),
             )}
           </div>
