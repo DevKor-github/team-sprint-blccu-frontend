@@ -30,7 +30,7 @@ const AlertDialogOverlay = React.forwardRef<
     <AlertDialogPrimitive.Overlay
       className={cn(
         'fixed inset-0 z-50',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+        'backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         context.variant === 'default' && 'bg-blccu-black/50',
         context.variant === 'destructive' && 'bg-blccu-neutral-200/50',
         className,
