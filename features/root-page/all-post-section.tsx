@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
 import {
@@ -7,6 +9,7 @@ import {
   SectionContent,
   SectionTitle,
 } from '@/components/ui-unstable/section';
+import { ROUTES } from '@/constants/routes';
 import { generatePosts } from '@/lib/utils';
 
 const posts = generatePosts(42);
@@ -25,13 +28,10 @@ const AllPostSection = () => {
             }}
           >
             <Masonry gutter="10px">
-              {posts.map(({ thumbnail }, index) => (
-                <img
-                  key={index}
-                  src={thumbnail}
-                  alt="photo"
-                  className="rounded-md"
-                />
+              {posts.map(({ author, slug, thumbnail }, index) => (
+                <Link href={ROUTES.POST_OF(author.handle, slug)} key={index}>
+                  <img src={thumbnail} alt="photo" className="rounded-md" />
+                </Link>
               ))}
             </Masonry>
           </ResponsiveMasonry>

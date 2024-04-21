@@ -34,8 +34,8 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
   const posts = generatePosts(5, user);
 
   return (
-    <Section className="mx-4">
-      <SectionTitle>
+    <Section>
+      <SectionTitle className="mx-4">
         <div className="flex items-center gap-0.5">
           {categoryName}
           <Link href={ROUTES.SELECT_CATEGORY_OF(user.handle)}>
@@ -46,21 +46,24 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
         </div>
       </SectionTitle>
       <SectionContent>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col">
           {posts.map(
             (
               { author, title, slug, description, thumbnail, createdAt },
               index,
             ) => (
-              <StackedPostCard
-                key={index}
-                username={author.username}
-                userHandle={author.handle}
-                title={title}
-                description={description}
-                thumbnail={thumbnail}
-                date={createdAt}
-              />
+              <Link href={ROUTES.POST_OF(author.handle, slug)} key={index}>
+                <div className="px-4 py-3">
+                  <StackedPostCard
+                    username={author.username}
+                    userHandle={author.handle}
+                    title={title}
+                    description={description}
+                    thumbnail={thumbnail}
+                    date={createdAt}
+                  />
+                </div>
+              </Link>
             ),
           )}
         </div>
