@@ -11,7 +11,7 @@ const meta: Meta<typeof Button> = {
       control: { type: 'radio' },
     },
     size: {
-      options: ['default', 'sm'],
+      options: ['default', 'sm', 'none'],
       control: { type: 'radio' },
     },
     radius: {
