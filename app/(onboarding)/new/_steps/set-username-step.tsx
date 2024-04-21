@@ -17,7 +17,7 @@ const SetUsernameStep = ({ onNext }: SetUsernameStepProps) => {
     <>
       <AppBar>
         <AppBarBack />
-        <AppBarTitle>카카오 로그인</AppBarTitle>
+        <AppBarTitle>회원가입</AppBarTitle>
       </AppBar>
       <div className="flex h-dvh flex-col justify-between px-4 pt-14">
         <div className="mt-6 flex flex-col gap-4">
