@@ -1,3 +1,5 @@
+import { type UUID } from 'crypto';
+
 type User = {
   username: string;
   handle: string;
@@ -25,4 +27,30 @@ type Category = {
   count: number;
 };
 
-export type { Category, NotificationType, Post, User };
+type Comment = {
+  uuid: UUID;
+  user: User;
+  content: string;
+};
+
+type Reply = {
+  uuid: UUID;
+  user: User;
+  content: string;
+  parent: UUID;
+};
+
+type CommentWithReplies = {
+  comment: Comment;
+  replies: Reply[];
+};
+
+export type {
+  Category,
+  Comment,
+  CommentWithReplies,
+  NotificationType,
+  Post,
+  Reply,
+  User,
+};

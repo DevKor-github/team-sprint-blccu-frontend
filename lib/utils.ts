@@ -3,7 +3,14 @@ import { type UUID } from 'crypto';
 import { twMerge } from 'tailwind-merge';
 
 import { BLCCU_DUMMY_DATASET } from '@/constants/dummy';
-import { type Category, type Post, type User } from '@/types/mocking-entity';
+import {
+  type Category,
+  type Comment,
+  type CommentWithReplies,
+  type Post,
+  type Reply,
+  type User,
+} from '@/types/mocking-entity';
 
 const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -111,11 +118,38 @@ const generateCategories = (size: number) => {
   return Array.from({ length: size }, () => generateCategory());
 };
 
+const generateCommentWithReplies = (): CommentWithReplies => {
+  const replyCount = randomInt(0, 5);
+
+  const uuid = generateUuid();
+
+  const comment: Comment = {
+    uuid,
+    user: generateUser(),
+    content: sample(BLCCU_DUMMY_DATASET.COMMENTS),
+  };
+
+  const replies: Reply[] = Array.from({ length: replyCount }, () => ({
+    uuid: generateUuid(),
+    user: generateUser(),
+    content: sample(BLCCU_DUMMY_DATASET.COMMENTS),
+    parent: uuid,
+  }));
+
+  return { comment, replies };
+};
+
+const generateCommentsWithReplies = (size: number): CommentWithReplies[] => {
+  return Array.from({ length: size }, () => generateCommentWithReplies());
+};
+
 export {
   cn,
   copyCurrentUrl,
   generateCategories,
   generateCategory,
+  generateCommentWithReplies,
+  generateCommentsWithReplies,
   generatePost,
   generatePosts,
   generateUser,
