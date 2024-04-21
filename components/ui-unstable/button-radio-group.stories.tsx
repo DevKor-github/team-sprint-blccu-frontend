@@ -42,7 +42,7 @@ const Example: Story = {
             공개
           </ButtonRadioGroupItem>
           <ButtonRadioGroupItem value="friend" className="flex-1">
-            친구 공개
+            팔로워 공개
           </ButtonRadioGroupItem>
           <ButtonRadioGroupItem value="private" className="flex-1">
             비공개

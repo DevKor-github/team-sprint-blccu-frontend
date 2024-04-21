@@ -14,7 +14,7 @@ const posts = generatePosts(10);
 const FollowerPostSection = () => {
   return (
     <Section>
-      <SectionTitle className="mx-4">친구 최신글</SectionTitle>
+      <SectionTitle className="mx-4">팔로워 최신글</SectionTitle>
       <SectionContent>
         <div className="flex flex-col">
           {posts.map(
