@@ -35,6 +35,10 @@ const getUserHandlePageTrendingPostSectionTitleDescriptor = (
   return `${username}님의 인기글`;
 };
 
+const getPostPageAllPostSectionTitleDescriptor = (username: string) => {
+  return `${username}님의 전체글`;
+};
+
 const getNotificationTypeDescriptor = (type: NotificationType) => {
   switch (type) {
     case 'like':
@@ -53,6 +57,7 @@ export {
   getFollowerDescriptor,
   getFollowingDescriptor,
   getNotificationTypeDescriptor,
+  getPostPageAllPostSectionTitleDescriptor,
   getSignUpMethodDescriptor,
   getUserHandlePageTrendingPostSectionTitleDescriptor,
 };

@@ -42,20 +42,26 @@ const AppBarBack = ({ onClick }: AppBarBackProps) => {
 
 type AppBarTitleProps = {
   align?: 'center' | 'left';
-} & PropsWithChildren;
+} & PropsWithChildren &
+  PropsWithClassName;
 
-const AppBarTitle = ({ align = 'left', children }: AppBarTitleProps) => {
+const AppBarTitle = ({
+  align = 'left',
+  children,
+  className,
+}: AppBarTitleProps) => {
   return (
-    <p
+    <div
       className={cn(
         'text-lg font-bold',
         align === 'center' &&
           'absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
         align === 'left' && 'ml-2',
+        className,
       )}
     >
       {children}
-    </p>
+    </div>
   );
 };
 
