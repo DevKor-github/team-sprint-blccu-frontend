@@ -90,6 +90,10 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      backgroundPatterns: {
+        checkerboard:
+          'linear-gradient(to bottom, transparent 19px, #f2f2f2 19px) 0 0 / 100vw 20px repeat-y, linear-gradient(to right, transparent 19px, #f2f2f2 19px) 0 0 / 20px 100vh repeat-x white;',
+      },
       fontSize: {
         '2xs': '0.625rem' /* 10px */,
       },
@@ -101,7 +105,18 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    function ({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = {
+        '.bg-checkerboard': {
+          background: 'theme("backgroundPatterns.checkerboard")',
+        },
+        // Add more custom background classes for each pattern
+      };
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
 } satisfies Config;
 
 export default config;
