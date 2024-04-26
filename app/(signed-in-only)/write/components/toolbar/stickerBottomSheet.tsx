@@ -23,7 +23,7 @@ const StickerBottomSheet = () => {
   const dummyStickerData = [
     {
       id: 1,
-      src: 'https://picsum.photos/600/600',
+      src: '/Burger.png',
       x: 200,
       y: 200,
       w: 200,
@@ -31,15 +31,7 @@ const StickerBottomSheet = () => {
     },
     {
       id: 2,
-      src: 'https://picsum.photos/600/600',
-      x: 200,
-      y: 200,
-      w: 200,
-      h: 200,
-    },
-    {
-      id: 2,
-      src: 'https://picsum.photos/600/600',
+      src: 'Doughnut.png',
       x: 200,
       y: 200,
       w: 200,
@@ -47,7 +39,7 @@ const StickerBottomSheet = () => {
     },
     {
       id: 3,
-      src: 'https://picsum.photos/600/600',
+      src: 'Egg.png',
       x: 200,
       y: 200,
       w: 200,
@@ -55,7 +47,7 @@ const StickerBottomSheet = () => {
     },
     {
       id: 4,
-      src: 'https://picsum.photos/600/600',
+      src: 'Pizza.png',
       x: 200,
       y: 200,
       w: 200,
@@ -86,16 +78,16 @@ const StickerBottomSheet = () => {
   return (
     <div>
       <div
-        className="fixed left-[50%] top-0 z-50 h-[50%] w-[32rem] max-w-lg -translate-x-[50%] bg-opacity-100"
+        className="fixed left-[50%] top-0 z-50 h-[50%] w-[32rem] max-w-md -translate-x-[50%] bg-opacity-100"
         onClick={() => {
           setFocused('init');
         }}
       />
-      <div className="fixed bottom-0 left-[50%] z-50 h-[50%] w-[32rem] max-w-lg -translate-x-[50%] rounded-[20px_20px_0px_0px] bg-[#FFFFFF] shadow-[8px_-40px_40px_#0000000a]">
+      <div className="fixed bottom-0 left-[50%] z-50 h-[50%] w-[32rem] max-w-md -translate-x-[50%] rounded-[20px_20px_0px_0px] bg-[#FFFFFF] shadow-[8px_-40px_40px_#0000000a]">
         <div className="container flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-4 overflow-x-auto">
             {data.map((item) => (
-              <div className="px-4 py-2" key={item.id}>
+              <div className="px-3 py-2" key={item.id}>
                 {item.name}
               </div>
             ))}
@@ -108,7 +100,7 @@ const StickerBottomSheet = () => {
               src={dummyStickerData[0].src}
               id={dummyStickerData[0].id.toString()}
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
               onClick={addStickerOnClick}
             />
           </div>
@@ -117,7 +109,8 @@ const StickerBottomSheet = () => {
               src={dummyStickerData[1].src}
               id={dummyStickerData[1].id.toString()}
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
+              onClick={addStickerOnClick}
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
@@ -125,7 +118,8 @@ const StickerBottomSheet = () => {
               src={dummyStickerData[2].src}
               id={dummyStickerData[2].id.toString()}
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
+              onClick={addStickerOnClick}
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
@@ -133,46 +127,44 @@ const StickerBottomSheet = () => {
               src={dummyStickerData[3].src}
               id={dummyStickerData[3].id.toString()}
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
+              onClick={addStickerOnClick}
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
             <img
               src="https://picsum.photos/600/600"
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
             <img
               src="https://picsum.photos/600/600"
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
             <img
               src="https://picsum.photos/600/600"
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
             <img
               src="https://picsum.photos/600/600"
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
             />
           </div>
           <div className="flex flex-col items-center justify-center space-y-2 rounded-lg">
             <img
               src="https://picsum.photos/600/600"
               alt="sticker"
-              className="h-24 w-24 rounded-lg object-cover"
+              className="h-20 w-20 rounded-lg object-contain"
             />
-          </div>
-          <div className="flex flex-col items-center justify-center space-y-2 rounded-lg bg-gray-100 p-4 dark:bg-gray-800">
-            Sticker3
           </div>
         </div>
       </div>

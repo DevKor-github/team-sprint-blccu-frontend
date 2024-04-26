@@ -14,7 +14,7 @@ const Sticker = ({ clientId }: { clientId: string }) => {
   );
 
   const [position, setPosition] = useState({ x: 200, y: 200 });
-  const [size, setSize] = useState({ width: 200, height: 200 });
+  const [size, setSize] = useState({ width: 150, height: 150 });
   const mode = useModeStore((state: any) => state.mode);
   const freeze = () => {
     if (mode === 'write') return 'none';
@@ -43,7 +43,7 @@ const Sticker = ({ clientId }: { clientId: string }) => {
       <img
         src={stickerProps.src}
         alt="sticker"
-        className="h-full w-full object-cover"
+        className="h-full w-full object-contain"
       />
       {/* Top left */}
       <div
