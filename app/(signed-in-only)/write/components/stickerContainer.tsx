@@ -1,6 +1,7 @@
 'use client';
 
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+
 import Sticker from './sticker';
 
 const StickerContainer = () => {

@@ -1,6 +1,7 @@
 'use client';
 
 import useModeStore from '@/app/(signed-in-only)/write/store/mode';
+
 import Body from './body';
 import Title from './title';
 

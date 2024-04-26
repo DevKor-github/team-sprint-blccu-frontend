@@ -15,6 +15,7 @@ import StarterKit from '@tiptap/starter-kit';
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
+
 import './placeholder.css';
 
 const Body = () => {

@@ -3,9 +3,8 @@
 import React from 'react';
 
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
-import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
-
 import useCurrentImageIdStore from '@/app/(signed-in-only)/write/store/imageId';
+import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
 
 const EditorToolbar = () => {
   const focused = useFocusedStore((state: any) => state.focused);
