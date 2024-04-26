@@ -1,13 +1,19 @@
 'use client';
 
-import React from 'react';
+import { AlignLeft, ArrowDownToLine, Image, Type } from 'lucide-react';
 
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import useCurrentImageIdStore from '@/app/(signed-in-only)/write/store/imageId';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
+import {
+  EditorBottomNavBar,
+  EditorBottomNavBarItem,
+  EditorBottomNavBarItemButton,
+} from '@/components/ui-unstable/editor-bottom-nav-bar';
 
 const EditorToolbar = () => {
   const focused = useFocusedStore((state: any) => state.focused);
+  const setFocused = useFocusedStore((state: any) => state.setFocused);
 
   const selectedEditor = useSelectedEditorStore(
     (state: any) => state.selectedEditor,
@@ -21,21 +27,12 @@ const EditorToolbar = () => {
     (state: any) => state.increaseImageId,
   );
 
-  const isFocused = (target: string | null) => {
-    if (focused === target) {
-      return 'text-[#FFFFFF]';
-    }
-    return 'text-[#A6A6A6]';
-  };
-
-  const setFocused = useFocusedStore((state: any) => state.setFocused);
-
-  const imageOnClickHandler = () => {
+  const handleImageButtonClick = () => {
     setFocused('image');
     document.getElementById('imageInput')?.click();
   };
 
-  const imageInputOnChangeHandler = async (e: any) => {
+  const handleImageInputChange = async (e: any) => {
     const url = 'https://picsum.photos/200/300';
     /*
         const files = e.target.files
@@ -54,42 +51,51 @@ const EditorToolbar = () => {
   };
 
   return (
-    <div className="fixed bottom-0 left-[50%] flex h-[10%] w-[100vw] max-w-lg -translate-x-[50%] items-center justify-center bg-[#1A1A1A]">
-      <div className="m-auto">
-        {/* <img src='' alt='사진' /> */}
-        <div
-          className={isFocused('image')}
-          onClick={() => imageOnClickHandler()}
+    <EditorBottomNavBar>
+      <EditorBottomNavBarItem>
+        <EditorBottomNavBarItemButton
+          isSelected={focused === 'image'}
+          onClick={handleImageButtonClick}
         >
-          사진
-        </div>
-        <input
-          id="imageInput"
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onClick={(e) => imageInputOnChangeHandler(e)}
-        />
-      </div>
-      <div className="m-auto">
-        {/* <img src='' alt='텍스트' /> */}
-        <div className={isFocused('text')} onClick={() => setFocused('text')}>
-          텍스트
-        </div>
-      </div>
-      <div className="m-auto">
-        {/* <img src='' alt='정렬' /> */}
-        <div className={isFocused('align')} onClick={() => setFocused('align')}>
-          정렬
-        </div>
-      </div>
-      <div className="m-auto">
-        {/* <img src='' alt='임시저장' /> */}
-        <div className={isFocused('save')} onClick={() => setFocused('save')}>
-          임시 저장
-        </div>
-      </div>
-    </div>
+          <Image className="h-6 w-6" />
+          <p className="text-xs">사진</p>
+          <input
+            id="imageInput"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onClick={handleImageInputChange}
+          />
+        </EditorBottomNavBarItemButton>
+      </EditorBottomNavBarItem>
+      <EditorBottomNavBarItem>
+        <EditorBottomNavBarItemButton
+          isSelected={focused === 'text'}
+          onClick={() => setFocused('text')}
+        >
+          <Type className="h-6 w-6" />
+          <p className="text-xs">텍스트</p>
+        </EditorBottomNavBarItemButton>
+      </EditorBottomNavBarItem>
+      <EditorBottomNavBarItem>
+        <EditorBottomNavBarItemButton
+          isSelected={focused === 'align'}
+          onClick={() => setFocused('align')}
+        >
+          <AlignLeft className="h-6 w-6" />
+          <p className="text-xs">정렬</p>
+        </EditorBottomNavBarItemButton>
+      </EditorBottomNavBarItem>
+      <EditorBottomNavBarItem>
+        <EditorBottomNavBarItemButton
+          isSelected={focused === 'save'}
+          onClick={() => setFocused('save')}
+        >
+          <ArrowDownToLine className="h-6 w-6" />
+          <p className="text-xs">임시 저장</p>
+        </EditorBottomNavBarItemButton>
+      </EditorBottomNavBarItem>
+    </EditorBottomNavBar>
   );
 };
 
