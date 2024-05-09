@@ -74,79 +74,79 @@ const BLCCU_DUMMY_DATASET = {
   POST: {
     BASICS: [
       {
+        id: 1,
         title: '눈사람 만드는 법',
-        slug: 'how-to-build-a-snowman',
         description: '오늘같은 날씨엔 눈사람 만드는 것이 최고죠! 🌨',
       },
       {
+        id: 2,
         title: '비오는 날이 좋아 ☂',
-        slug: 'rainy-day-lover',
         description:
           '벚꽃이 떨어지는게 아쉽긴 해도 비오는 날은 역시 좋은 것 같아요! 톡톡 떨어지는 소리가 마음을 편안하게 해주는 것 같아요. 여러분은 어떤 날씨를 좋아하시나요?',
       },
       {
+        id: 3,
         title: '우리집 고양이 자랑합니다 (*ΦωΦ*)Ψ',
-        slug: 'our-cat-is-cute',
         description:
           '우리집에 고양이 있어용ㅎㅎ 귀엽죠  아직 7개월 애기입니당... 매일 매일 쑥쑥 크네영 너무 귀여워요ㅠㅠ',
       },
       {
+        id: 4,
         title: 'ⓑⓘⓡⓣⓗ ⓓⓐⓨ🎂',
-        slug: 'happy-birthday-to-me',
         description:
           '저 생일이에요.....🎂 혹시 다른 분도 생일이시라면 축하드립니당ㅎㅎㅎ 오늘 딱히 한 거는 없지만 그래도 기쁩니다! 여러분도 행복하세요~',
       },
       {
+        id: 5,
         title: '나만의 티타임',
-        slug: 'tea-time',
         description:
           '차 한 잔의 여유로움이 필요할 때가 있죠. 오늘은 어떤 차를 마셔볼까요?',
       },
       {
+        id: 6,
         title: '캔들과 함께하는 힐링타임',
-        slug: 'candle-and-relax',
         description:
           '캔들 하나로도 힐링을 느낄 수 있어요. 오늘은 어떤 향기로 힐링을 받아볼까요?',
       },
       {
+        id: 7,
         title: '아늑한 방 꾸미기',
-        slug: 'is-cozy-room-possible',
         description:
           '아늑한 방 꾸미기를 해보고 싶어요. 여러분은 어떤 방 꾸미기를 좋아하시나요? 함께 공유해주세요! 🏡',
       },
       {
+        id: 8,
         title: '내가 좋아하는 향기',
-        slug: 'my-favorite-fragrance',
         description:
           '향기는 기분을 좋게 해주는 마법 같은 것이에요. 여러분은 어떤 향기를 좋아하시나요? 저는 나무 향기를 좋아해요!',
       },
       {
+        id: 9,
         title: '주방에서의 우정',
-        slug: 'friendship-in-the-kitchen',
         description:
           '친구들과 함께 요리하는 것이 얼마나 즐거운 일인지 알고 계신가요? 오늘은 친구들과 함께 요리하는 시간을 가져보세요!',
       },
       {
+        id: 10,
         title: '선생님의 꽃',
-        slug: 'life-or-death-of-a-cactus',
         description:
           '선생님께서 선물해주신 선물이 살아있는지 죽어있는지 궁금하시다면? 바로 이 글을 확인해보세요!',
       },
       {
+        id: 11,
         title: '올해의 선생님',
-        slug: 'teacher-of-the-year',
         description:
           '올해의 선생님을 뽑아보자! 여러분이 생각하시는 올해의 선생님은 누구인가요?',
       },
       {
+        id: 12,
         title: '나무 심는 법',
-        slug: 'practical-tips-for-planting-trees',
         description:
           '나무를 심는 방법을 알고 싶나요? 먼저, 나무를 심으려면 당연히 나무를 심을 곳을 정해야 해요. 그 다음으로는 씨앗을 찾아야합니다. 여러분은 어떤 나무를 심고 싶으신가요?',
       },
       {
+        id: 13,
         title: '케이크는 해답이다',
-        slug: 'cake-is-the-answer',
         description:
           '케이크를 먹으면 기분이 좋아지는 것 같아요. 제가 좋아하는 케이크는 초코케이크인데, 오늘은 딸기케이크가 너무 먹고 싶어요.',
       },

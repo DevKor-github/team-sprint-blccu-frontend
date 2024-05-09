@@ -29,10 +29,10 @@ const PostPageAllPostSection = ({ user }: PostPageAllPostSectionProps) => {
         <div className="flex flex-col">
           {posts.map(
             (
-              { author, title, slug, description, thumbnail, createdAt },
+              { author, title, id: postId, description, thumbnail, createdAt },
               index,
             ) => (
-              <Link href={ROUTES.POST_OF(author.handle, slug)} key={index}>
+              <Link href={ROUTES.POST_OF(author.handle, postId)} key={index}>
                 <div className="px-4 py-3">
                   <StackedPostCard
                     username={author.username}

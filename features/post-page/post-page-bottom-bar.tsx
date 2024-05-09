@@ -14,7 +14,7 @@ import { cn, generatePost, randomInt } from '@/lib/utils';
 
 const post = generatePost();
 
-const { slug, author } = post;
+const { id: postId, author } = post;
 
 const initialLikeCount = randomInt(0, 1000);
 const commentCount = randomInt(0, 30);
@@ -49,7 +49,7 @@ const PostPageBottomBar = () => {
           />
           <p className="text-sm">{likeCount.toLocaleString()}</p>
         </Button>
-        <Link href={ROUTES.COMMENTS_OF(author.handle, slug)}>
+        <Link href={ROUTES.COMMENTS_OF(author.handle, postId)}>
           <div className="flex items-center gap-1 px-2 py-1">
             <MessageCircleMore className="h-4 w-4" />
             <p className="text-sm">{commentCount.toLocaleString()}</p>

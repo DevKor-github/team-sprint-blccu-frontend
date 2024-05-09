@@ -33,10 +33,17 @@ const UserHandlePageTrendingPostSection = ({
           <div className="mr-4 flex gap-3 pb-4">
             {posts.map(
               (
-                { author, title, slug, description, thumbnail, createdAt },
+                {
+                  author,
+                  title,
+                  id: postId,
+                  description,
+                  thumbnail,
+                  createdAt,
+                },
                 index,
               ) => (
-                <Link href={ROUTES.POST_OF(author.handle, slug)} key={index}>
+                <Link href={ROUTES.POST_OF(author.handle, postId)} key={index}>
                   <HorizontalScrollablePostCard
                     username={author.username}
                     userHandle={author.handle}

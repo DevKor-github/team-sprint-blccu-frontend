@@ -15,7 +15,7 @@ import { generateCommentsWithReplies } from '@/lib/utils';
 type CommentsPageProps = {
   params: {
     userHandle: string;
-    slug: string;
+    postId: number;
   };
 };
 
@@ -26,7 +26,7 @@ const commentsWithReplies = generateCommentsWithReplies(
 );
 
 const CommentsPage = ({
-  params: { userHandle: _, slug: __ },
+  params: { userHandle: _, postId: __ },
 }: CommentsPageProps) => {
   return (
     <>

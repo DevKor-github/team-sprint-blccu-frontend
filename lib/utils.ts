@@ -77,13 +77,13 @@ const generateUser = (): User => {
 const generatePost = (initialAuthor?: User): Post => {
   const author = initialAuthor ?? generateUser();
 
-  const { title, slug, description } = sample(BLCCU_DUMMY_DATASET.POST.BASICS);
+  const { title, id, description } = sample(BLCCU_DUMMY_DATASET.POST.BASICS);
 
   const thumbnail = sample(BLCCU_DUMMY_DATASET.POST.THUMBNAIL_IMAGES);
 
   const createdAt = randomDate(new Date(2023, 11, 1), new Date());
 
-  return { author, title, slug, description, thumbnail, createdAt };
+  return { author, title, id, description, thumbnail, createdAt };
 };
 
 const generateUsers = (size: number): User[] => {
