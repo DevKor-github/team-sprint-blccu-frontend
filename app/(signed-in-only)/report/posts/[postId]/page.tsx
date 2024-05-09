@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { type UUID } from 'crypto';
 import { toast } from 'sonner';
 
 import {
@@ -24,7 +23,7 @@ const { author, id: postId } = post;
 
 type ReportPostIdPageProps = {
   params: {
-    postId: UUID;
+    postId: number;
   };
 };
 

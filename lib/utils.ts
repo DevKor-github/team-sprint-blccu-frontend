@@ -1,5 +1,4 @@
 import { type ClassValue, clsx } from 'clsx';
-import { type UUID } from 'crypto';
 import { twMerge } from 'tailwind-merge';
 
 import { BLCCU_DUMMY_DATASET } from '@/constants/dummy';
@@ -44,6 +43,10 @@ const sampleSize = <T extends unknown>(array: T[], size: number): T[] => {
 
 const randomInt = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const generateId = () => {
+  return randomInt(1, 142857);
 };
 
 const randomDate = (start: Date, end: Date) => {
@@ -98,15 +101,6 @@ const generatePosts = (size: number, initialAuthor?: User): Post[] => {
   return Array.from({ length: size }, () => generatePost());
 };
 
-const generateUuid = (): UUID => {
-  const s4 = () =>
-    Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-
-  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-};
-
 const generateCategory = (): Category => {
   const { id, name } = sample(BLCCU_DUMMY_DATASET.CATEGORIES);
   const count = randomInt(0, 100);
@@ -121,19 +115,19 @@ const generateCategories = (size: number) => {
 const generateCommentWithReplies = (): CommentWithReplies => {
   const replyCount = randomInt(0, 5);
 
-  const uuid = generateUuid();
+  const id = generateId();
 
   const comment: Comment = {
-    uuid,
+    id,
     user: generateUser(),
     content: sample(BLCCU_DUMMY_DATASET.COMMENTS),
   };
 
   const replies: Reply[] = Array.from({ length: replyCount }, () => ({
-    uuid: generateUuid(),
+    id: generateId(),
     user: generateUser(),
     content: sample(BLCCU_DUMMY_DATASET.COMMENTS),
-    parent: uuid,
+    parent: id,
   }));
 
   return { comment, replies };
@@ -150,11 +144,11 @@ export {
   generateCategory,
   generateCommentWithReplies,
   generateCommentsWithReplies,
+  generateId,
   generatePost,
   generatePosts,
   generateUser,
   generateUsers,
-  generateUuid,
   randomDate,
   randomInt,
   sample,

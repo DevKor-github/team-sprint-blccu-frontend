@@ -1,5 +1,3 @@
-import { type UUID } from 'crypto';
-
 const ROUTES = {
   /* -------------------------------------------------------------------------------------------------
    * not-signed-in-only layout
@@ -31,16 +29,16 @@ const ROUTES = {
    * -----------------------------------------------------------------------------------------------*/
   UPDATE_CATEGORY: '/update-category',
   CREATE_CATEGORY: '/create-category',
-  CATEGORY_ID_EDIT_OF: (categoryId: UUID) =>
+  CATEGORY_ID_EDIT_OF: (categoryId: number) =>
     `/update-category/${categoryId}/edit`,
   NOTIFICATIONS: '/notifications',
-  REPORT_COMMENT_ID_OF: (commentId: UUID) => `/report/comments/${commentId}`,
-  REPORT_POST_ID_OF: (postId: UUID) => `/report/posts/${postId}`,
+  REPORT_COMMENT_ID_OF: (commentId: number) => `/report/comments/${commentId}`,
+  REPORT_POST_ID_OF: (postId: number) => `/report/posts/${postId}`,
 
   /* settings page */
   SETTINGS: '/settings',
   ANNOUNCEMENTS: '/settings/announcements',
-  ANNOUNCEMENT_ID_OF: (announcementId: UUID) =>
+  ANNOUNCEMENT_ID_OF: (announcementId: number) =>
     `/settings/announcements/${announcementId}`,
   LEGAL: '/settings/legal',
   TERMS_OF_USE: '/settings/legal/terms-of-use',
