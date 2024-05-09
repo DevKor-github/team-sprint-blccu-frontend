@@ -11,10 +11,10 @@ import {
   BottomActionSheetTrigger,
 } from '@/components/ui-unstable/bottom-action-sheet';
 import { ROUTES } from '@/constants/routes';
-import { generateUuid } from '@/lib/utils';
+import { generateId } from '@/lib/utils';
 import { type PropsWithTrigger } from '@/types/props';
 
-const uuid = generateUuid();
+const id = generateId();
 
 const ReportPostBottomActionSheet = ({ trigger }: PropsWithTrigger) => {
   return (
@@ -22,7 +22,7 @@ const ReportPostBottomActionSheet = ({ trigger }: PropsWithTrigger) => {
       <BottomActionSheetTrigger asChild>{trigger}</BottomActionSheetTrigger>
       <BottomActionSheetContent>
         <BottomActionSheetGroup>
-          <Link href={ROUTES.REPORT_POST_ID_OF(uuid)}>
+          <Link href={ROUTES.REPORT_POST_ID_OF(id)}>
             <BottomActionSheetItem className="text-blccu-red">
               신고하기
             </BottomActionSheetItem>

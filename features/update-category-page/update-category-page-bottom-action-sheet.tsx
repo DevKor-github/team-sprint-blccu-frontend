@@ -11,10 +11,10 @@ import {
   BottomActionSheetTrigger,
 } from '@/components/ui-unstable/bottom-action-sheet';
 import { ROUTES } from '@/constants/routes';
-import { generateUuid } from '@/lib/utils';
+import { generateId } from '@/lib/utils';
 import { type PropsWithTrigger } from '@/types/props';
 
-const categoryId = generateUuid();
+const categoryId = generateId();
 
 const UpdateCategoryPageBottomActionSheet = ({ trigger }: PropsWithTrigger) => {
   return (

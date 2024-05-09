@@ -1,5 +1,3 @@
-import { type UUID } from 'crypto';
-
 type User = {
   username: string;
   handle: string;
@@ -28,16 +26,16 @@ type Category = {
 };
 
 type Comment = {
-  uuid: UUID;
+  id: number;
   user: User;
   content: string;
 };
 
 type Reply = {
-  uuid: UUID;
+  id: number;
   user: User;
   content: string;
-  parent: UUID;
+  parent: number;
 };
 
 type CommentWithReplies = {
