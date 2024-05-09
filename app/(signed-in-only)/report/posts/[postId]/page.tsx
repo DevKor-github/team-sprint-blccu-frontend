@@ -20,7 +20,7 @@ import { generatePost } from '@/lib/utils';
 
 const post = generatePost();
 
-const { author, slug } = post;
+const { author, id: postId } = post;
 
 type ReportPostIdPageProps = {
   params: {
@@ -34,7 +34,7 @@ const ReportPostIdPage = ({ params: { postId: _ } }: ReportPostIdPageProps) => {
   const handleClick = () => {
     toast.success(TOAST_MESSAGES.REPORT_POST_SUCCESS);
 
-    router.push(ROUTES.POST_OF(author.handle, slug));
+    router.push(ROUTES.POST_OF(author.handle, postId));
   };
 
   return (

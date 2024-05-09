@@ -11,9 +11,9 @@ type User = {
 };
 
 type Post = {
+  id: number;
   author: User;
   title: string;
-  slug: string;
   description: string;
   thumbnail: string;
   createdAt: Date;

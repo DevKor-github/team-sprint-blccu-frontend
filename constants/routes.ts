@@ -22,9 +22,9 @@ const ROUTES = {
   SELECT_CATEGORY_OF: (userHandle: string) => `/@${userHandle}/select-category`,
   FOLLOWERS_OF: (userHandle: string) => `/@${userHandle}/followers`,
   FOLLOWING_OF: (userHandle: string) => `/@${userHandle}/following`,
-  POST_OF: (userHandle: string, slug: string) => `/@${userHandle}/${slug}`,
-  COMMENTS_OF: (userHandle: string, slug: string) =>
-    `/@${userHandle}/${slug}/comments`,
+  POST_OF: (userHandle: string, postId: number) => `/@${userHandle}/${postId}`,
+  COMMENTS_OF: (userHandle: string, postId: number) =>
+    `/@${userHandle}/${postId}/comments`,
 
   /* -------------------------------------------------------------------------------------------------
    * signed-in-only layout

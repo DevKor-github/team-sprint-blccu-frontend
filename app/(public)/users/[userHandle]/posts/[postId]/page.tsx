@@ -23,11 +23,11 @@ const { author, thumbnail } = post;
 type PostPageProps = {
   params: {
     userHandle: string;
-    slug: string;
+    postId: number;
   };
 };
 
-const PostPage = ({ params: { userHandle: _, slug: __ } }: PostPageProps) => {
+const PostPage = ({ params: { userHandle: _, postId: __ } }: PostPageProps) => {
   return (
     <>
       <AppBar className="border-b-0 bg-blccu-white/90 backdrop-blur-lg">
