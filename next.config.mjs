@@ -21,8 +21,8 @@ const nextConfig = {
         destination: '/users/:userHandle/select-category',
       },
       {
-        source: '/@:userHandle/:slug/:path*',
-        destination: '/users/:userHandle/posts/:slug/:path*',
+        source: '/@:userHandle/:postId/:path*',
+        destination: '/users/:userHandle/posts/:postId/:path*',
       },
       {
         source: '/proxy-api/:path*',

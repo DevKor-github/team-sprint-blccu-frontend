@@ -28,8 +28,8 @@ const AllPostSection = () => {
             }}
           >
             <Masonry gutter="10px">
-              {posts.map(({ author, slug, thumbnail }, index) => (
-                <Link href={ROUTES.POST_OF(author.handle, slug)} key={index}>
+              {posts.map(({ author, id: postId, thumbnail }, index) => (
+                <Link href={ROUTES.POST_OF(author.handle, postId)} key={index}>
                   <img src={thumbnail} alt="photo" className="rounded-md" />
                 </Link>
               ))}

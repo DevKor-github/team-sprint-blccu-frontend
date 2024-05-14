@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { type UUID } from 'crypto';
 import { toast } from 'sonner';
 
 import {
@@ -20,11 +19,11 @@ import { generatePost } from '@/lib/utils';
 
 const post = generatePost();
 
-const { author, slug } = post;
+const { author, id: postId } = post;
 
 type ReportPostIdPageProps = {
   params: {
-    postId: UUID;
+    postId: number;
   };
 };
 
@@ -34,7 +33,7 @@ const ReportPostIdPage = ({ params: { postId: _ } }: ReportPostIdPageProps) => {
   const handleClick = () => {
     toast.success(TOAST_MESSAGES.REPORT_POST_SUCCESS);
 
-    router.push(ROUTES.POST_OF(author.handle, slug));
+    router.push(ROUTES.POST_OF(author.handle, postId));
   };
 
   return (

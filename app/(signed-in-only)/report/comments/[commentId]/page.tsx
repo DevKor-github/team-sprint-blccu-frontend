@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { type UUID } from 'crypto';
 import { toast } from 'sonner';
 
 import {
@@ -20,11 +19,11 @@ import { generatePost } from '@/lib/utils';
 
 const post = generatePost();
 
-const { author, slug } = post;
+const { author, id: postId } = post;
 
 type ReportCommentIdPageProps = {
   params: {
-    postId: UUID;
+    postId: number;
   };
 };
 
@@ -36,7 +35,7 @@ const ReportCommentIdPage = ({
   const handleClick = () => {
     toast.success(TOAST_MESSAGES.REPORT_COMMENT_SUCCESS);
 
-    router.push(ROUTES.COMMENTS_OF(author.handle, slug));
+    router.push(ROUTES.COMMENTS_OF(author.handle, postId));
   };
 
   return (

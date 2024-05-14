@@ -1,5 +1,3 @@
-import { type UUID } from 'crypto';
-
 const ROUTES = {
   /* -------------------------------------------------------------------------------------------------
    * not-signed-in-only layout
@@ -22,25 +20,25 @@ const ROUTES = {
   SELECT_CATEGORY_OF: (userHandle: string) => `/@${userHandle}/select-category`,
   FOLLOWERS_OF: (userHandle: string) => `/@${userHandle}/followers`,
   FOLLOWING_OF: (userHandle: string) => `/@${userHandle}/following`,
-  POST_OF: (userHandle: string, slug: string) => `/@${userHandle}/${slug}`,
-  COMMENTS_OF: (userHandle: string, slug: string) =>
-    `/@${userHandle}/${slug}/comments`,
+  POST_OF: (userHandle: string, postId: number) => `/@${userHandle}/${postId}`,
+  COMMENTS_OF: (userHandle: string, postId: number) =>
+    `/@${userHandle}/${postId}/comments`,
 
   /* -------------------------------------------------------------------------------------------------
    * signed-in-only layout
    * -----------------------------------------------------------------------------------------------*/
   UPDATE_CATEGORY: '/update-category',
   CREATE_CATEGORY: '/create-category',
-  CATEGORY_ID_EDIT_OF: (categoryId: UUID) =>
+  CATEGORY_ID_EDIT_OF: (categoryId: number) =>
     `/update-category/${categoryId}/edit`,
   NOTIFICATIONS: '/notifications',
-  REPORT_COMMENT_ID_OF: (commentId: UUID) => `/report/comments/${commentId}`,
-  REPORT_POST_ID_OF: (postId: UUID) => `/report/posts/${postId}`,
+  REPORT_COMMENT_ID_OF: (commentId: number) => `/report/comments/${commentId}`,
+  REPORT_POST_ID_OF: (postId: number) => `/report/posts/${postId}`,
 
   /* settings page */
   SETTINGS: '/settings',
   ANNOUNCEMENTS: '/settings/announcements',
-  ANNOUNCEMENT_ID_OF: (announcementId: UUID) =>
+  ANNOUNCEMENT_ID_OF: (announcementId: number) =>
     `/settings/announcements/${announcementId}`,
   LEGAL: '/settings/legal',
   TERMS_OF_USE: '/settings/legal/terms-of-use',
