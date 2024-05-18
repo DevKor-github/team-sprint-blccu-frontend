@@ -2,27 +2,21 @@
 
 import { useRouter } from 'next/navigation';
 
-import { SetBackgroundImageStep } from '@/app/(onboarding)/new/_steps/set-background-image-step';
-import { SetDescriptionStep } from '@/app/(onboarding)/new/_steps/set-description-step';
-import { SetProfileImageStep } from '@/app/(onboarding)/new/_steps/set-profile-image-step';
+import { SetProfileStep } from '@/app/(onboarding)/new/_steps/set-profile-step';
 import { SetUsernameStep } from '@/app/(onboarding)/new/_steps/set-username-step';
 import { ROUTES } from '@/constants/routes';
 import { FunnelStep, useFunnel } from '@/hooks/use-funnel';
 
 enum NewPageFunnelSteps {
   SetUsername = 'set-username',
-  SetProfileImage = 'set-profile-image',
-  SetBackgroundImage = 'set-background-image',
-  SetDescription = 'set-description',
+  SetProfile = 'set-profile',
 }
 
 const NewPage = () => {
   const { Funnel, setStep } = useFunnel({
     steps: [
       NewPageFunnelSteps.SetUsername,
-      NewPageFunnelSteps.SetProfileImage,
-      NewPageFunnelSteps.SetBackgroundImage,
-      NewPageFunnelSteps.SetDescription,
+      NewPageFunnelSteps.SetProfile,
     ] as const,
     initialStep: NewPageFunnelSteps.SetUsername,
   });
@@ -33,21 +27,11 @@ const NewPage = () => {
     <Funnel>
       <FunnelStep name={NewPageFunnelSteps.SetUsername}>
         <SetUsernameStep
-          onNext={() => setStep(NewPageFunnelSteps.SetProfileImage)}
+          onNext={() => setStep(NewPageFunnelSteps.SetProfile)}
         />
       </FunnelStep>
-      <FunnelStep name={NewPageFunnelSteps.SetProfileImage}>
-        <SetProfileImageStep
-          onNext={() => setStep(NewPageFunnelSteps.SetBackgroundImage)}
-        />
-      </FunnelStep>
-      <FunnelStep name={NewPageFunnelSteps.SetBackgroundImage}>
-        <SetBackgroundImageStep
-          onNext={() => setStep(NewPageFunnelSteps.SetDescription)}
-        />
-      </FunnelStep>
-      <FunnelStep name={NewPageFunnelSteps.SetDescription}>
-        <SetDescriptionStep onNext={() => router.push(ROUTES.ROOT)} />
+      <FunnelStep name={NewPageFunnelSteps.SetProfile}>
+        <SetProfileStep onNext={() => router.push(ROUTES.ROOT)} />
       </FunnelStep>
     </Funnel>
   );
