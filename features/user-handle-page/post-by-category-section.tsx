@@ -3,41 +3,44 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
+import { useQuery } from '@tanstack/react-query';
 import { ChevronDown } from 'lucide-react';
 
+import { type UserResponseDto } from '@/__generated__/data-contracts';
 import {
   Section,
   SectionContent,
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
-import { BLCCU_DUMMY_DATASET } from '@/constants/dummy';
 import { QUERY_KEY } from '@/constants/query';
 import { ROUTES } from '@/constants/routes';
-import { generatePosts } from '@/lib/utils';
-import { type User } from '@/types/mocking-entity';
+import { queries } from '@/queries';
 
 type PostByCategorySectionProps = {
-  user: User;
+  user: UserResponseDto;
 };
 
 const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
   const searchParams = useSearchParams();
-  const categoryIdParam = searchParams.get(QUERY_KEY.CATEGORY_ID);
+  const categoryId = searchParams.get(QUERY_KEY.CATEGORY_ID) ?? undefined;
 
-  const categoryId = categoryIdParam ? parseInt(categoryIdParam) : null;
+  const { data: postData } = useQuery(
+    queries.posts.userByCategory(user.kakaoId, categoryId),
+  );
+  const { data: categoryData } = useQuery({
+    ...queries.users.category(categoryId),
+    enabled: categoryId !== undefined,
+  });
 
-  const categoryName =
-    BLCCU_DUMMY_DATASET.CATEGORIES.find(({ id }) => id === categoryId)?.name ??
-    '전체글';
-
-  const posts = generatePosts(5, user);
+  const categoryName = categoryData?.data.name ?? '전체글';
+  const posts = postData?.data.data ?? [];
 
   return (
     <Section>
       <SectionTitle className="mx-4">
         <div className="flex items-center gap-0.5">
-          {categoryName}
+          <div>{categoryName}</div>
           <Link href={ROUTES.SELECT_CATEGORY_OF(user.handle)}>
             <div className="p-2">
               <ChevronDown className="h-5 w-5" />
@@ -47,25 +50,13 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
       </SectionTitle>
       <SectionContent>
         <div className="flex flex-col">
-          {posts.map(
-            (
-              { author, title, id: postId, description, thumbnail, createdAt },
-              index,
-            ) => (
-              <Link href={ROUTES.POST_OF(author.handle, postId)} key={index}>
-                <div className="px-4 py-3">
-                  <StackedPostCard
-                    username={author.username}
-                    userHandle={author.handle}
-                    title={title}
-                    description={description}
-                    thumbnail={thumbnail}
-                    date={createdAt}
-                  />
-                </div>
-              </Link>
-            ),
-          )}
+          {posts.map((post) => (
+            <Link href={ROUTES.POST_OF(user.handle, post.id)} key={post.id}>
+              <div className="px-4 py-3">
+                <StackedPostCard post={post} />
+              </div>
+            </Link>
+          ))}
         </div>
       </SectionContent>
     </Section>

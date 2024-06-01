@@ -1,5 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
+
+import { type UserPrimaryResponseDto } from '@/__generated__/data-contracts';
 import { HorizontalScrollablePostCard } from '@/components/ui-unstable/horizontal-scrollable-post-card';
 import {
   Section,
@@ -9,21 +14,22 @@ import {
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { ROUTES } from '@/constants/routes';
 import { getUserHandlePageTrendingPostSectionTitleDescriptor } from '@/lib/get-descriptor';
-import { generatePosts } from '@/lib/utils';
-import { type User } from '@/types/mocking-entity';
+import { queries } from '@/queries';
 
 type UserHandlePageTrendingPostSectionProps = {
-  user: User;
+  user: UserPrimaryResponseDto;
 };
 
 const UserHandlePageTrendingPostSection = ({
   user,
 }: UserHandlePageTrendingPostSectionProps) => {
-  const posts = generatePosts(10, user);
+  const { data } = useQuery(queries.posts.userTrending(user.kakaoId));
 
   const titleDescriptor = getUserHandlePageTrendingPostSectionTitleDescriptor(
     user.username,
   );
+
+  const posts = data?.data.data ?? [];
 
   return (
     <Section className="ml-4 pb-6">
@@ -31,29 +37,11 @@ const UserHandlePageTrendingPostSection = ({
       <SectionContent>
         <ScrollArea>
           <div className="mr-4 flex gap-3 pb-4">
-            {posts.map(
-              (
-                {
-                  author,
-                  title,
-                  id: postId,
-                  description,
-                  thumbnail,
-                  createdAt,
-                },
-                index,
-              ) => (
-                <Link href={ROUTES.POST_OF(author.handle, postId)} key={index}>
-                  <HorizontalScrollablePostCard
-                    username={author.username}
-                    userHandle={author.handle}
-                    avatar={author.profileImage}
-                    title={title}
-                    thumbnail={thumbnail}
-                  />
-                </Link>
-              ),
-            )}
+            {posts.map((post) => (
+              <Link href={ROUTES.POST_OF(user.handle, post.id)} key={post.id}>
+                <HorizontalScrollablePostCard post={post} />
+              </Link>
+            ))}
           </div>
           <ScrollBar orientation="horizontal" className="hidden" />
         </ScrollArea>
