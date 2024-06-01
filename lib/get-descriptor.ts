@@ -1,15 +1,15 @@
 import { type NotificationType } from '@/types/mocking-entity';
 
-const getFollowerDescriptor = (followerCount: number) => {
-  if (followerCount === 0) {
+const getFollowerDescriptor = (followerCount: number | undefined) => {
+  if (followerCount === 0 || followerCount === undefined) {
     return '팔로워 없음';
   }
 
   return `팔로워 ${followerCount.toLocaleString()}`;
 };
 
-const getFollowingDescriptor = (followingCount: number) => {
-  if (followingCount === 0) {
+const getFollowingDescriptor = (followingCount: number | undefined) => {
+  if (followingCount === 0 || followingCount === undefined) {
     return '팔로잉 없음';
   }
 
