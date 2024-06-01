@@ -8,6 +8,7 @@ import {
   type ReactElement,
   isValidElement,
   useCallback,
+  useMemo,
 } from 'react';
 
 import { QUERY_KEY } from '@/constants/query';
@@ -27,9 +28,9 @@ const FunnelStep = <Steps extends NonEmptyArray<string>>({
 };
 
 /**
- * Funnel
+ * TargetFunnel
  */
-type FunnelProps<Steps extends NonEmptyArray<string>> = {
+type TargetFunnelProps<Steps extends NonEmptyArray<string>> = {
   steps: Steps;
   step: Steps[number];
   children:
@@ -37,11 +38,11 @@ type FunnelProps<Steps extends NonEmptyArray<string>> = {
     | ReactElement<FunnelStepProps<Steps>>[];
 };
 
-const Funnel = <Steps extends NonEmptyArray<string>>({
+const TargetFunnel = <Steps extends NonEmptyArray<string>>({
   steps,
   step,
   children,
-}: FunnelProps<Steps>) => {
+}: TargetFunnelProps<Steps>) => {
   const validChildren = Children.toArray(children)
     .filter(isValidElement)
     .filter((child) =>
@@ -63,8 +64,8 @@ type UseFunnelParams<Steps extends NonEmptyArray<string>> = {
   initialStep: Steps[number];
 };
 
-type RouteFunnelProps<Steps extends NonEmptyArray<string>> = Omit<
-  FunnelProps<Steps>,
+type FunnelProps<Steps extends NonEmptyArray<string>> = Omit<
+  TargetFunnelProps<Steps>,
   'steps' | 'step'
 >;
 
@@ -82,13 +83,29 @@ const useFunnel = <Steps extends NonEmptyArray<string>>({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const RouteFunnel = (props: RouteFunnelProps<Steps>) => {
-    const searchParams = useSearchParams();
+  const Funnel = useMemo(
+    () =>
+      Object.assign(
+        function (props: FunnelProps<Steps>) {
+          // eslint-disable-next-line react-hooks/rules-of-hooks
+          const searchParams = useSearchParams();
 
-    const step = searchParams.get(QUERY_KEY.FUNNEL_STEP) ?? initialStep;
+          const step = searchParams.get(QUERY_KEY.FUNNEL_STEP) ?? initialStep;
 
-    return <Funnel<Steps> steps={steps} step={step} {...props} />;
-  };
+          return <TargetFunnel<Steps> steps={steps} step={step} {...props} />;
+        },
+        {
+          Step: FunnelStep,
+        },
+      ),
+
+    /**
+     * @note useMemo를 사용하지 않으면 입력 변경 시마다 새로 컴포넌트가 생성되어 input focus를 잃어버립니다.
+     * @see https://github.com/toss/slash/blob/0a9a89e0dd6a3d8f86264d0ec4bb062d075337ea/packages/react/use-funnel/src/useFunnel.tsx#L57
+     */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   const setStep = (step: Steps[number]) => {
     const queryString = createQueryString(QUERY_KEY.FUNNEL_STEP, step);
@@ -111,9 +128,9 @@ const useFunnel = <Steps extends NonEmptyArray<string>>({
   );
 
   return {
-    Funnel: RouteFunnel,
+    Funnel,
     setStep,
   } as const;
 };
 
-export { FunnelStep, useFunnel };
+export { useFunnel };

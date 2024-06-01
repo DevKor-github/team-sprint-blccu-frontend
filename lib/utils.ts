@@ -137,6 +137,10 @@ const generateCommentsWithReplies = (size: number): CommentWithReplies[] => {
   return Array.from({ length: size }, () => generateCommentWithReplies());
 };
 
+const getValues = <T extends Record<string, any>>(obj: T) => {
+  return Object.values(obj) as [(typeof obj)[keyof T]];
+};
+
 export {
   cn,
   copyCurrentUrl,
@@ -149,6 +153,7 @@ export {
   generatePosts,
   generateUser,
   generateUsers,
+  getValues,
   randomDate,
   randomInt,
   sample,

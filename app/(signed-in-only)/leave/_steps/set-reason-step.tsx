@@ -11,12 +11,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { ROUTES } from '@/constants/routes';
 import { LeaveAlertDialog } from '@/features/set-reason-step/leave-alert-dialog';
+import { type PropsWithOnNext } from '@/types/props';
 
-type SetReasonStepProps = {
-  onNext: () => void;
-};
-
-const SetReasonStep = ({ onNext }: SetReasonStepProps) => {
+const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
   const router = useRouter();
 
   return (

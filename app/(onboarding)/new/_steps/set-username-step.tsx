@@ -7,12 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { type PropsWithOnNext } from '@/types/props';
 
-type SetUsernameStepProps = {
-  onNext: () => void;
-};
-
-const SetUsernameStep = ({ onNext }: SetUsernameStepProps) => {
+const SetUsernameStep = ({ onNext }: PropsWithOnNext) => {
   return (
     <>
       <AppBar>

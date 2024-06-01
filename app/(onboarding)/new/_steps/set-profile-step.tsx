@@ -1,16 +1,13 @@
 import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
 import { Button } from '@/components/ui/button';
 import { generateUser } from '@/lib/utils';
+import { type PropsWithOnNext } from '@/types/props';
 
 const me = generateUser();
 
 const { username, description } = me;
 
-type SetProfileStepProps = {
-  onNext: () => void;
-};
-
-const SetProfileStep = ({ onNext }: SetProfileStepProps) => {
+const SetProfileStep = ({ onNext }: PropsWithOnNext) => {
   return (
     <div className="flex h-dvh flex-col">
       <AppBar className="justify-between border-none">

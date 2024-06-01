@@ -5,34 +5,32 @@ import { useRouter } from 'next/navigation';
 import { SetProfileStep } from '@/app/(onboarding)/new/_steps/set-profile-step';
 import { SetUsernameStep } from '@/app/(onboarding)/new/_steps/set-username-step';
 import { ROUTES } from '@/constants/routes';
-import { FunnelStep, useFunnel } from '@/hooks/use-funnel';
+import { useFunnel } from '@/hooks/use-funnel';
+import { getValues } from '@/lib/utils';
 
-enum NewPageFunnelSteps {
-  SetUsername = 'set-username',
-  SetProfile = 'set-profile',
-}
+const NEW_PAGE_FUNNEL_STEPS = {
+  SET_USERNAME: 'set-username',
+  SET_PROFILE: 'set-profile',
+} as const;
 
 const NewPage = () => {
   const { Funnel, setStep } = useFunnel({
-    steps: [
-      NewPageFunnelSteps.SetUsername,
-      NewPageFunnelSteps.SetProfile,
-    ] as const,
-    initialStep: NewPageFunnelSteps.SetUsername,
+    steps: getValues(NEW_PAGE_FUNNEL_STEPS),
+    initialStep: NEW_PAGE_FUNNEL_STEPS.SET_USERNAME,
   });
 
   const router = useRouter();
 
   return (
     <Funnel>
-      <FunnelStep name={NewPageFunnelSteps.SetUsername}>
+      <Funnel.Step name={NEW_PAGE_FUNNEL_STEPS.SET_USERNAME}>
         <SetUsernameStep
-          onNext={() => setStep(NewPageFunnelSteps.SetProfile)}
+          onNext={() => setStep(NEW_PAGE_FUNNEL_STEPS.SET_PROFILE)}
         />
-      </FunnelStep>
-      <FunnelStep name={NewPageFunnelSteps.SetProfile}>
+      </Funnel.Step>
+      <Funnel.Step name={NEW_PAGE_FUNNEL_STEPS.SET_PROFILE}>
         <SetProfileStep onNext={() => router.push(ROUTES.ROOT)} />
-      </FunnelStep>
+      </Funnel.Step>
     </Funnel>
   );
 };

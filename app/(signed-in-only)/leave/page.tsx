@@ -5,34 +5,32 @@ import { useRouter } from 'next/navigation';
 import { SetReasonStep } from '@/app/(signed-in-only)/leave/_steps/set-reason-step';
 import { WatchRecordsStep } from '@/app/(signed-in-only)/leave/_steps/watch-records-step';
 import { ROUTES } from '@/constants/routes';
-import { FunnelStep, useFunnel } from '@/hooks/use-funnel';
+import { useFunnel } from '@/hooks/use-funnel';
+import { getValues } from '@/lib/utils';
 
-enum LeavePageFunnelSteps {
-  WatchRecords = 'watch-records-step',
-  SetReason = 'set-reason-step',
-}
+const LEAVE_PAGE_FUNNEL_STEPS = {
+  WATCH_RECORDS: 'watch-records',
+  SET_REASON: 'set-reason',
+} as const;
 
 const LeavePage = () => {
   const { Funnel, setStep } = useFunnel({
-    steps: [
-      LeavePageFunnelSteps.WatchRecords,
-      LeavePageFunnelSteps.SetReason,
-    ] as const,
-    initialStep: LeavePageFunnelSteps.WatchRecords,
+    steps: getValues(LEAVE_PAGE_FUNNEL_STEPS),
+    initialStep: LEAVE_PAGE_FUNNEL_STEPS.WATCH_RECORDS,
   });
 
   const router = useRouter();
 
   return (
     <Funnel>
-      <FunnelStep name={LeavePageFunnelSteps.WatchRecords}>
+      <Funnel.Step name={LEAVE_PAGE_FUNNEL_STEPS.WATCH_RECORDS}>
         <WatchRecordsStep
-          onNext={() => setStep(LeavePageFunnelSteps.SetReason)}
+          onNext={() => setStep(LEAVE_PAGE_FUNNEL_STEPS.SET_REASON)}
         />
-      </FunnelStep>
-      <FunnelStep name={LeavePageFunnelSteps.SetReason}>
+      </Funnel.Step>
+      <Funnel.Step name={LEAVE_PAGE_FUNNEL_STEPS.SET_REASON}>
         <SetReasonStep onNext={() => router.push(ROUTES.ROOT)} />
-      </FunnelStep>
+      </Funnel.Step>
     </Funnel>
   );
 };
