@@ -18,12 +18,14 @@ import {
   CreateCommentInput,
   CreatePostInput,
   CreateReportInput,
+  CreateStickerBlockInput,
   ImageUploadDto,
   LikesControllerDeleteLikeData,
   LikesControllerFetchIfLikedData,
   LikesControllerFetchLikesData,
   LikesControllerLikeData,
   PatchCommentDto,
+  PatchPostInput,
   PostsControllerCreatePrivateStickerData,
   PostsControllerFetchCursorData,
   PostsControllerFetchCursorParams,
@@ -38,18 +40,41 @@ import {
   PostsControllerFetchTempPostsData,
   PostsControllerFetchUserPostsData,
   PostsControllerFetchUserPostsParams,
+  PostsControllerPatchPostData,
   PostsControllerPublishPostData,
   PostsControllerSoftDeleteData,
   PostsControllerUpdatePostData,
   PublishPostInput,
   ReportsControllerReportCommentData,
   ReportsControllerReportPostData,
+  StickerBlocksControllerCreateStickerBlockData,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
 export class Posts<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
+  /**
+   * @description 게시글과 스티커 아이디를 매핑한 스티커 블록을 생성한다. 세부 스타일 좌표값을 저장한다.
+   *
+   * @tags 게시글 API
+   * @name StickerBlocksControllerCreateStickerBlock
+   * @summary 게시글 속 스티커 생성
+   * @request POST:/posts/{postId}/stickers/{stickerId}
+   */
+  stickerBlocksControllerCreateStickerBlock = (
+    postId: number,
+    stickerId: number,
+    data: CreateStickerBlockInput,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickerBlocksControllerCreateStickerBlockData, any>({
+      path: `/posts/${postId}/stickers/${stickerId}`,
+      method: 'POST',
+      body: data,
+      type: ContentType.Json,
+      ...params,
+    });
   /**
    * @description 게시글을 등록한다.
    *
@@ -85,6 +110,28 @@ export class Posts<
       path: `/posts/${postId}`,
       method: 'DELETE',
       secure: true,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags 게시글 API
+   * @name PostsControllerPatchPost
+   * @summary 게시글 patch
+   * @request PATCH:/posts/{postId}
+   * @secure
+   */
+  postsControllerPatchPost = (
+    postId: number,
+    data: PatchPostInput,
+    params: RequestParams = {},
+  ) =>
+    this.request<PostsControllerPatchPostData, any>({
+      path: `/posts/${postId}`,
+      method: 'PATCH',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
       ...params,
     });
   /**
@@ -406,11 +453,11 @@ export class Posts<
    * @tags 게시글 API
    * @name LikesControllerFetchLikes
    * @summary 좋아요 누른 대상 조회하기
-   * @request GET:/posts/{postId}/like/like-users
+   * @request GET:/posts/{postId}/like-users
    */
   likesControllerFetchLikes = (postId: number, params: RequestParams = {}) =>
     this.request<LikesControllerFetchLikesData, any>({
-      path: `/posts/${postId}/like/like-users`,
+      path: `/posts/${postId}/like-users`,
       method: 'GET',
       ...params,
     });
@@ -442,17 +489,16 @@ export class Posts<
    * @tags 게시글 API
    * @name ReportsControllerReportComment
    * @summary 댓글 신고
-   * @request POST:/posts/{postId}/comments/{commentId}/report
+   * @request POST:/posts/comments/{commentId}/report
    * @secure
    */
   reportsControllerReportComment = (
-    postId: number,
     commentId: number,
     data: CreateReportInput,
     params: RequestParams = {},
   ) =>
     this.request<ReportsControllerReportCommentData, any>({
-      path: `/posts/${postId}/comments/${commentId}/report`,
+      path: `/posts/comments/${commentId}/report`,
       method: 'POST',
       body: data,
       secure: true,

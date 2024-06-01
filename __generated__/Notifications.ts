@@ -11,14 +11,12 @@
  * ---------------------------------------------------------------
  */
 import {
-  EmitNotiInput,
+  NotificationsControllerConnectUserData,
   NotificationsControllerFetchNotiData,
   NotificationsControllerFetchNotiParams,
-  NotificationsControllerSendClientAlarmData,
-  NotificationsControllerSendNotiData,
-  NotificationsControllerToggleNotiData,
+  NotificationsControllerReadNotiData,
 } from './data-contracts';
-import { ContentType, HttpClient, RequestParams } from './http-client';
+import { HttpClient, RequestParams } from './http-client';
 
 export class Notifications<
   SecurityDataType = unknown,
@@ -27,13 +25,13 @@ export class Notifications<
    * @description [swagger 불가능, postman 권장] sse를 연결한다. 로그인된 유저를 타겟으로 하는 알림이 보내졌을경우 sse를 통해 전달받는다.
    *
    * @tags 알림 API
-   * @name NotificationsControllerSendClientAlarm
+   * @name NotificationsControllerConnectUser
    * @summary [SSE] 알림을 구독한다.
    * @request GET:/notifications/subscribe
    * @secure
    */
-  notificationsControllerSendClientAlarm = (params: RequestParams = {}) =>
-    this.request<NotificationsControllerSendClientAlarmData, any>({
+  notificationsControllerConnectUser = (params: RequestParams = {}) =>
+    this.request<NotificationsControllerConnectUserData, any>({
       path: `/notifications/subscribe`,
       method: 'GET',
       secure: true,
@@ -63,39 +61,16 @@ export class Notifications<
    * @description 알림을 읽음 처리한다.
    *
    * @tags 알림 API
-   * @name NotificationsControllerToggleNoti
+   * @name NotificationsControllerReadNoti
    * @summary 알림 읽기
    * @request POST:/notifications/{id}/read
    * @secure
    */
-  notificationsControllerToggleNoti = (
-    id: number,
-    params: RequestParams = {},
-  ) =>
-    this.request<NotificationsControllerToggleNotiData, any>({
+  notificationsControllerReadNoti = (id: number, params: RequestParams = {}) =>
+    this.request<NotificationsControllerReadNotiData, any>({
       path: `/notifications/${id}/read`,
       method: 'POST',
       secure: true,
-      ...params,
-    });
-  /**
-   * @description userId에게 알림을 보낸다. sse로 연결되어 있을 경우 실시간으로 fetch된다.
-   *
-   * @tags 알림 API
-   * @name NotificationsControllerSendNoti
-   * @summary userId에게 알림 생성
-   * @request POST:/notifications/send/{userId}
-   */
-  notificationsControllerSendNoti = (
-    userId: string,
-    data: EmitNotiInput,
-    params: RequestParams = {},
-  ) =>
-    this.request<NotificationsControllerSendNotiData, any>({
-      path: `/notifications/send/${userId}`,
-      method: 'POST',
-      body: data,
-      type: ContentType.Json,
       ...params,
     });
 }

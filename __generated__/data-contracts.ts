@@ -47,6 +47,45 @@ export interface PatchAnnouncementInput {
   content?: string;
 }
 
+export interface UserResponseDtoWithFollowing {
+  /** 카카오 id */
+  kakaoId: number;
+  /** 유저 핸들러 */
+  handle: string;
+  /** 어드민 유저 여부 */
+  isAdmin: boolean;
+  /**
+   * 팔로잉 수
+   * @default 0
+   */
+  following_count?: number;
+  /**
+   * 팔로워 수
+   * @default 0
+   */
+  follower_count?: number;
+  /** 유저 이름 */
+  username: string;
+  /** 유저 설명 */
+  description: string;
+  /** 프로필 이미지 url */
+  profile_image: string;
+  /** 프로필 배경 이미지 url */
+  background_image: string;
+  /**
+   * 생성된 날짜
+   * @format date-time
+   */
+  date_created: string;
+  /**
+   * 삭제된 날짜
+   * @format date-time
+   */
+  date_deleted: string;
+  /** 팔로잉 유무 */
+  isFollowing: boolean;
+}
+
 export interface UserResponseDto {
   /** 카카오 id */
   kakaoId: number;
@@ -54,6 +93,16 @@ export interface UserResponseDto {
   handle: string;
   /** 어드민 유저 여부 */
   isAdmin: boolean;
+  /**
+   * 팔로잉 수
+   * @default 0
+   */
+  following_count?: number;
+  /**
+   * 팔로워 수
+   * @default 0
+   */
+  follower_count?: number;
   /** 유저 이름 */
   username: string;
   /** 유저 설명 */
@@ -188,21 +237,16 @@ export interface Sticker {
   isReusable: boolean;
 }
 
-export interface RemoveBgDto {
-  /** 이미지가 저장된 url */
-  url: string;
-}
-
 export interface UpdateStickerInput {
-  /** 찾을 스티커의 id */
-  id: number;
   /** 변경할 url */
-  image_url: string;
+  image_url?: string;
+  /** 재사용 가능 여부 설정 */
+  isReusable?: boolean;
 }
 
-export interface FindStickerInput {
-  /** 찾을 스티커의 id */
-  id: number;
+export interface CreateStickerCategoryInput {
+  /** 스티커 이름 */
+  name: string;
 }
 
 export interface StickerCategory {
@@ -219,28 +263,26 @@ export interface MapCategoryDto {
   stickerCategoryId: number;
 }
 
-export interface CreateStickerBlockDto {
-  /** 참조하는 스티커의 아이디 */
-  stickerId: number;
-  /** 참조하는 포스트 아이디 */
-  postsId: number;
-  /** 스티커의 depth */
-  depth: number;
-  /** 스티커의 fill */
-  fill: string;
-  /** 스티커의 x좌표 */
-  x: string;
-  /** 스티커의 y좌표 */
-  y: string;
-  /** 스티커의 가로 폭 */
-  width: string;
-  /** 스티커의 세로 폭 */
-  height: string;
+export interface CreateStickerBlockInput {
+  /** 스티커의 width */
+  width: number;
+  /** 스티커의 top */
+  top: number;
+  /** 스티커의 left */
+  left: number;
+  /** 스티커의 rotate */
+  rotate: number;
+  /** 스티커의 scale */
+  scale: number;
+  /** 스티커의 zindex */
+  zindex: number;
 }
 
 export interface PublishPostInput {
   /** 연결된 카테고리 fk */
   postCategoryId: string;
+  /** 연결된 내지 fk */
+  postBackgroundId: string;
   /** 제목(최대 100자) */
   title: string;
   /** 댓글 허용 여부(boolean) */
@@ -249,6 +291,8 @@ export interface PublishPostInput {
   scope: 'PUBLIC' | 'PROTECTED' | 'PRIVATE';
   /** 게시글 내용 */
   content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -297,6 +341,8 @@ export interface PublishPostDto {
   date_deleted: string;
   /** 게시글 내용 */
   content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -306,6 +352,8 @@ export interface PublishPostDto {
 export interface CreatePostInput {
   /** 연결된 카테고리 fk */
   postCategoryId?: string;
+  /** 연결된 내지 fk */
+  postBackgroundId?: string;
   /** 제목(최대 100자) */
   title: string;
   /** 댓글 허용 여부(boolean) */
@@ -314,6 +362,75 @@ export interface CreatePostInput {
   scope?: 'PUBLIC' | 'PROTECTED' | 'PRIVATE';
   /** 게시글 내용 */
   content: string;
+  /** 게시글 캡쳐 이미지 url */
+  image_url: string;
+  /** 게시글 대표 이미지 url */
+  main_image_url: string;
+}
+
+export interface PatchPostInput {
+  /** 연결된 카테고리 fk */
+  postCategoryId?: string;
+  /** 연결된 내지 fk */
+  postBackgroundId?: string;
+  /** 제목(최대 100자) */
+  title?: string;
+  /** 댓글 허용 여부(boolean) */
+  allow_comment?: boolean;
+  /** [공개 설정] PUBLIC: 전체공개, PROTECTED: 친구공개, PRIVATE: 비공개 */
+  scope?: 'PUBLIC' | 'PROTECTED' | 'PRIVATE';
+  /** 게시글 내용 */
+  content?: string;
+  /** 게시글 캡쳐 이미지 url */
+  image_url?: string;
+  /** 게시글 대표 이미지 url */
+  main_image_url?: string;
+}
+
+export interface PostOnlyResponseDto {
+  /** 포스트의 고유 아이디 */
+  id: number;
+  /** 연결된 카테고리 fk */
+  postCategoryId: string;
+  /** 연결된 내지 fk */
+  postBackgroundId: string;
+  /** 작성한 유저 fk */
+  userKakaoId: number;
+  /** 제목(최대 100자) */
+  title: string;
+  /** 임시저장(false), 발행(true) */
+  isPublished: boolean;
+  /** 좋아요 카운트 */
+  like_count: number;
+  /** 조회수 카운트 */
+  view_count: number;
+  /** 댓글수 카운트 */
+  comment_count: number;
+  /** 신고수 카운트 */
+  report_count: number;
+  /** 댓글 허용 여부(boolean) */
+  allow_comment: boolean;
+  /** [공개 설정] PUBLIC: 전체공개, PROTECTED: 친구공개, PRIVATE: 비공개 */
+  scope: 'PUBLIC' | 'PROTECTED' | 'PRIVATE';
+  /**
+   * 생성된 날짜
+   * @format date-time
+   */
+  date_created: string;
+  /**
+   * 수정된 날짜
+   * @format date-time
+   */
+  date_updated: string;
+  /**
+   * soft delete column
+   * @format date-time
+   */
+  date_deleted: string;
+  /** 게시글 내용 */
+  content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -382,6 +499,8 @@ export interface PostResponseDtoExceptCategory {
   date_deleted: string;
   /** 게시글 내용 */
   content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -443,6 +562,8 @@ export interface PostResponseDto {
   date_deleted: string;
   /** 게시글 내용 */
   content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -464,6 +585,16 @@ export interface User {
   current_refresh_token: string;
   /** 어드민 유저 여부 */
   isAdmin: boolean;
+  /**
+   * 팔로잉 수
+   * @default 0
+   */
+  following_count?: number;
+  /**
+   * 팔로워 수
+   * @default 0
+   */
+  follower_count?: number;
   /** 유저 이름 */
   username: string;
   /** 유저 설명 */
@@ -526,6 +657,8 @@ export interface Posts {
   date_deleted: string;
   /** 게시글 내용 */
   content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -549,18 +682,18 @@ export interface StickerBlock {
   postsId: number;
   /** 참조하는 포스트 */
   posts: Posts;
-  /** 스티커의 depth */
-  depth: number;
-  /** 스티커의 fill */
-  fill: string;
-  /** 스티커의 x좌표 */
-  x: string;
-  /** 스티커의 y좌표 */
-  y: string;
-  /** 스티커의 가로 폭 */
-  width: string;
-  /** 스티커의 세로 폭 */
-  height: string;
+  /** 스티커의 width */
+  width: number;
+  /** 스티커의 top */
+  top: number;
+  /** 스티커의 left */
+  left: number;
+  /** 스티커의 rotate */
+  rotate: number;
+  /** 스티커의 scale */
+  scale: number;
+  /** 스티커의 zindex */
+  zindex: number;
 }
 
 export interface FetchPostForUpdateDto {
@@ -600,30 +733,36 @@ export interface CursorPagePostResponseDto {
 export interface FollowUserDto {
   /** PK: uuid */
   id: string;
-  /** FK: kakaoId */
-  to_user: number;
-  /** FK: kakaoId */
-  from_user: number;
-}
-
-export interface FromUserResponseDto {
-  /** PK: uuid */
-  id: string;
   /** 이웃 추가를 받은 유저 */
   toUserKakaoId: number;
   /** 이웃 추가를 한 유저 */
   fromUserKakaoId: number;
-  from_user: UserResponseDto;
 }
 
-export interface ToUserResponseDto {
-  /** PK: uuid */
-  id: string;
-  /** 이웃 추가를 받은 유저 */
-  toUserKakaoId: number;
-  /** 이웃 추가를 한 유저 */
-  fromUserKakaoId: number;
-  to_user: UserResponseDto;
+export interface FetchNotiResponse {
+  /** PK: A_I_ */
+  id: number;
+  /** 알림을 생성한 유저 FK */
+  userKakaoId: number;
+  /** 알림을 받는 유저 FK */
+  targetUserKakaoId: number;
+  /** 알림의 유형 */
+  type: 'COMMENT' | 'REPLY' | 'LIKE' | 'FOLLOW' | 'ANNOUNCEMENT' | 'REPORT';
+  /**
+   * 알림 체크 여부
+   * @default false
+   */
+  is_checked: boolean;
+  /**
+   * 생성된 날짜
+   * @format date-time
+   */
+  date_created: string;
+  /**
+   * 삭제된 날짜
+   * @format date-time
+   */
+  date_deleted: string;
 }
 
 export interface CreateCommentInput {
@@ -776,6 +915,8 @@ export interface OmitTypeClass {
   date_deleted: string;
   /** 게시글 내용 */
   content: string;
+  /** 게시글 설명(html 태그 제외) */
+  main_description: string;
   /** 게시글 캡쳐 이미지 url */
   image_url: string;
   /** 게시글 대표 이미지 url */
@@ -788,20 +929,22 @@ export interface FetchLikeResponseDto {
   /** 게시글 아이디 */
   postsId: number;
   posts: OmitTypeClass;
-  user: number;
-}
-
-export interface FetchLikesResponseDto {
-  /** PK: uuid */
-  id: string;
-  /** 좋아요를 누른 유저 */
-  user: User;
+  userKakaoId: number;
 }
 
 export interface FetchPostCategoriesDto {
   postCount: number;
   categoryId: string;
   categoryName: string;
+}
+
+export interface FetchPostCategoryDto {
+  /** PK: uuid */
+  id: string;
+  /** 카테고리 이름 */
+  name: string;
+  /** 유저 아이디 */
+  userKakaoId: number;
 }
 
 export interface CreatePostCategoryDto {
@@ -825,71 +968,14 @@ export interface CreatePostCategoryResponseDto {
   user: PickTypeClass;
 }
 
-export interface FetchPostCategoryDto {
-  /** PK: uuid */
-  id: string;
-  /** 카테고리 이름 */
-  name: string;
-  /** 유저 아이디 */
-  userKakaoId: number;
-}
-
 export interface PatchPostCategoryDto {
   /** 카테고리 이름 */
   name: string;
 }
 
-export interface FetchNotiResponse {
-  /** PK: A_I_ */
-  id: number;
-  /** 알림을 생성한 유저 FK */
-  userKakaoId: number;
-  /** 알림을 받는 유저 FK */
-  targetUserKakaoId: number;
-  /** 알림의 유형 */
-  type: 'COMMENT' | 'REPLY' | 'NEIGHBOR_POST' | 'ANNOUNCEMENT' | 'REPORT';
-  /**
-   * 알림 체크 여부
-   * @default false
-   */
-  is_checked: boolean;
-  /** 리다이렉션 url */
-  url: string;
-  /** 알림 메시지 */
-  message: string;
-  /**
-   * 생성된 날짜
-   * @format date-time
-   */
-  date_created: string;
-  /**
-   * 삭제된 날짜
-   * @format date-time
-   */
-  date_deleted: string;
-}
-
-export interface EmitNotiInput {
-  /** 알림을 받는 유저 FK */
-  targetUserKakaoId: number;
-  /** 알림의 유형 */
-  type: 'COMMENT' | 'REPLY' | 'NEIGHBOR_POST' | 'ANNOUNCEMENT' | 'REPORT';
-  /**
-   * 알림 체크 여부
-   * @default false
-   */
-  is_checked: boolean;
-  /** 리다이렉션 url */
-  url: string;
-  /** 알림 메시지 */
-  message: string;
-}
-
 export interface CreateReportInput {
   /** 신고 내용 */
   content: string;
-  /** 신고당한 유저 id */
-  targetUserKakaoId: number;
   /** 신고 유형 */
   type: 'SPAM' | 'FRAUD' | 'SEXUAL' | 'ETC';
   /** 신고가 발생한 게시물의 url */
@@ -908,8 +994,6 @@ export interface FetchReportResponse {
   date_created: string;
   /** 신고한 유저 id */
   userKakaoId: number;
-  /** 신고당한 유저 id */
-  targetUserKakaoId: number;
   /** 신고 유형 */
   type: 'SPAM' | 'FRAUD' | 'SEXUAL' | 'ETC';
   /** 신고 대상 */
@@ -922,6 +1006,8 @@ export interface FetchReportResponse {
   commentId: number;
 }
 
+export type AppControllerHealthCheckData = any;
+
 export type AnnouncementsControllerCreateAnmtData = AnnouncementResponseDto;
 
 export type AnnouncementsControllerFetchAnmtsData = AnnouncementResponseDto[];
@@ -932,7 +1018,7 @@ export type AnnouncementsControllerRemoveAnmtData = AnnouncementResponseDto;
 
 export type UsersControllerFindAllUsersData = any;
 
-export type UsersControllerFindUsersByNameData = UserResponseDto[];
+export type UsersControllerFindUsersByNameData = UserResponseDtoWithFollowing[];
 
 export type UsersControllerFindUserByKakaoIdData = UserResponseDto;
 
@@ -973,31 +1059,27 @@ export type StickersControllerCreatePrivateStickerData = Sticker;
 
 export type StickersControllerFetchPrivateStickersData = Sticker[];
 
-export type StickersControllerCreatePublicStickerData = Sticker;
+export type StickersControllerToggleReusableData = any;
 
 export type StickersControllerFetchPublicStickersData = Sticker[];
 
-export type StickersControllerToggleReusableData = any;
-
-export type StickersControllerRemoveBgData = any;
-
-export type StickersControllerUpdateStickerData = any;
-
-export type StickersControllerRemoveS3Data = any;
-
-export type StickerCategoriesControllerCreateCategoryData = StickerCategory;
-
-export type StickerCategoriesControllerMapCategoryData = any;
+export type StickersControllerCreatePublicStickerData = Sticker;
 
 export type StickerCategoriesControllerFetchCategoriesData = any;
 
 export type StickerCategoriesControllerFetchStickersByCategoryNameData = any;
+
+export type StickerCategoriesControllerCreateCategoryData = StickerCategory;
+
+export type StickerCategoriesControllerMapCategoryData = any;
 
 export type StickerBlocksControllerCreateStickerBlockData = any;
 
 export type PostsControllerPublishPostData = PublishPostDto;
 
 export type PostsControllerSoftDeleteData = any;
+
+export type PostsControllerPatchPostData = PostOnlyResponseDto;
 
 export type PostsControllerUpdatePostData = PublishPostDto;
 
@@ -1118,46 +1200,15 @@ export type FollowsControllerFollowUserData = FollowUserDto;
 
 export type FollowsControllerUnfollowUserData = any;
 
-export type FollowsControllerGetFollowersData = FromUserResponseDto[];
+export type FollowsControllerCheckFollowerData = boolean;
 
-export type FollowsControllerGetFollowsData = ToUserResponseDto[];
+export type FollowsControllerCheckFollowingData = boolean;
 
-export type CommentsControllerInsertCommentData = ChildrenComment;
+export type FollowsControllerGetFollowersData = UserResponseDtoWithFollowing[];
 
-export type CommentsControllerFetchCommentsData = FetchCommentsDto[];
+export type FollowsControllerGetFollowsData = UserResponseDtoWithFollowing[];
 
-export type CommentsControllerPatchCommentData = FetchCommentDto;
-
-export type CommentsControllerDeleteCommentData = any;
-
-export type LikesControllerLikeData = FetchLikeResponseDto;
-
-export type LikesControllerDeleteLikeData = any;
-
-export type LikesControllerFetchIfLikedData = boolean;
-
-export type LikesControllerFetchLikesData = FetchLikesResponseDto[];
-
-export type PostCategoriesControllerFetchPostCategoriesData =
-  FetchPostCategoriesDto[];
-
-export type PostCategoriesControllerCreatePostCategoryData =
-  CreatePostCategoryResponseDto;
-
-export type PostCategoriesControllerFetchMyCategoriesData =
-  FetchPostCategoriesDto[];
-
-export type PostCategoriesControllerFetchMyCategoryData = FetchPostCategoryDto;
-
-export type PostCategoriesControllerPatchCategoryData = FetchPostCategoryDto;
-
-export type PostCategoriesControllerDeletePostCategoryData = any;
-
-export type AuthControllerRefreshData = any;
-
-export type AuthControllerLogoutData = any;
-
-export type NotificationsControllerSendClientAlarmData = any;
+export type NotificationsControllerConnectUserData = any;
 
 export interface NotificationsControllerFetchNotiParams {
   /**
@@ -1174,9 +1225,39 @@ export interface NotificationsControllerFetchNotiParams {
 
 export type NotificationsControllerFetchNotiData = FetchNotiResponse[];
 
-export type NotificationsControllerToggleNotiData = FetchNotiResponse;
+export type NotificationsControllerReadNotiData = FetchNotiResponse;
 
-export type NotificationsControllerSendNotiData = any;
+export type CommentsControllerInsertCommentData = ChildrenComment;
+
+export type CommentsControllerFetchCommentsData = FetchCommentsDto[];
+
+export type CommentsControllerPatchCommentData = FetchCommentDto;
+
+export type CommentsControllerDeleteCommentData = any;
+
+export type LikesControllerLikeData = FetchLikeResponseDto;
+
+export type LikesControllerDeleteLikeData = any;
+
+export type LikesControllerFetchIfLikedData = boolean;
+
+export type LikesControllerFetchLikesData = UserResponseDtoWithFollowing[];
+
+export type PostCategoriesControllerFetchPostCategoriesData =
+  FetchPostCategoriesDto[];
+
+export type PostCategoriesControllerFetchMyCategoryData = FetchPostCategoryDto;
+
+export type PostCategoriesControllerCreatePostCategoryData =
+  CreatePostCategoryResponseDto;
+
+export type PostCategoriesControllerPatchCategoryData = FetchPostCategoryDto;
+
+export type PostCategoriesControllerDeletePostCategoryData = any;
+
+export type AuthControllerRefreshData = any;
+
+export type AuthControllerLogoutData = any;
 
 export type PostBackgroundsControllerUploadImageData = ImageUploadResponseDto;
 

@@ -24,24 +24,30 @@ import {
   CreateAnouncementInput,
   CreateFeedbackInput,
   CreatePostCategoryDto,
+  CreateStickerCategoryInput,
   FeedbacksControllerCreateFeedbackData,
   FeedbacksControllerGetFeedbacksData,
+  FollowsControllerCheckFollowerData,
+  FollowsControllerCheckFollowingData,
   FollowsControllerFollowUserData,
   FollowsControllerGetFollowersData,
   FollowsControllerGetFollowsData,
   FollowsControllerUnfollowUserData,
   ImageUploadDto,
+  MapCategoryDto,
   PatchAgreementInput,
   PatchAnnouncementInput,
   PatchPostCategoryDto,
   PatchUserInput,
   PostCategoriesControllerCreatePostCategoryData,
   PostCategoriesControllerDeletePostCategoryData,
-  PostCategoriesControllerFetchMyCategoriesData,
   PostCategoriesControllerFetchMyCategoryData,
   PostCategoriesControllerFetchPostCategoriesData,
   PostCategoriesControllerPatchCategoryData,
   ReportsControllerFetchAllData,
+  StickerCategoriesControllerCreateCategoryData,
+  StickerCategoriesControllerMapCategoryData,
+  StickersControllerCreatePublicStickerData,
   UsersControllerFetchUserData,
   UsersControllerFindAllUsersData,
   UsersControllerFindUserByHandleData,
@@ -398,11 +404,74 @@ export class Users<
       ...params,
     });
   /**
+   * @description 블꾸에서 제작한 스티커를 업로드한다. 어드민 권한이 있는 유저 전용. 카테고리와 매핑을 해주어야 조회 가능.
+   *
+   * @tags 스티커 API, 어드민 API
+   * @name StickersControllerCreatePublicSticker
+   * @summary [어드민용] 공용 스티커를 업로드한다.
+   * @request POST:/users/admin/stickers
+   * @secure
+   */
+  stickersControllerCreatePublicSticker = (
+    data: ImageUploadDto,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickersControllerCreatePublicStickerData, any>({
+      path: `/users/admin/stickers`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.FormData,
+      ...params,
+    });
+  /**
+   * @description [어드민 전용] 스티커 카테고리를 만든다.
+   *
+   * @tags 스티커 API, 어드민 API
+   * @name StickerCategoriesControllerCreateCategory
+   * @summary [어드민용] 스티커 카테고리 생성
+   * @request POST:/users/admin/stickers/categories
+   * @secure
+   */
+  stickerCategoriesControllerCreateCategory = (
+    data: CreateStickerCategoryInput,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickerCategoriesControllerCreateCategoryData, any>({
+      path: `/users/admin/stickers/categories`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description [어드민 전용] 스티커에 카테고리를 매핑한다.
+   *
+   * @tags 스티커 API, 어드민 API
+   * @name StickerCategoriesControllerMapCategory
+   * @summary [어드민용] 스티커와 카테고리 매핑
+   * @request POST:/users/admin/stickers/map
+   * @secure
+   */
+  stickerCategoriesControllerMapCategory = (
+    data: MapCategoryDto,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickerCategoriesControllerMapCategoryData, any>({
+      path: `/users/admin/stickers/map`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
    * @description 로그인된 유저가 userId를 팔로우한다.
    *
    * @tags 유저 API
    * @name FollowsControllerFollowUser
-   * @summary 이웃 추가하기
+   * @summary 팔로우 추가하기
    * @request POST:/users/{userId}/follow
    * @secure
    */
@@ -418,7 +487,7 @@ export class Users<
    *
    * @tags 유저 API
    * @name FollowsControllerUnfollowUser
-   * @summary 이웃 삭제하기
+   * @summary 팔로우 삭제하기
    * @request DELETE:/users/{userId}/follow
    * @secure
    */
@@ -429,6 +498,44 @@ export class Users<
     this.request<FollowsControllerUnfollowUserData, void>({
       path: `/users/${userId}/follow`,
       method: 'DELETE',
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 나와 팔로우되었는지 유무 체크를 한다.
+   *
+   * @tags 유저 API
+   * @name FollowsControllerCheckFollower
+   * @summary 팔로워 유무 조회
+   * @request GET:/users/me/follower/{userId}
+   * @secure
+   */
+  followsControllerCheckFollower = (
+    userId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<FollowsControllerCheckFollowerData, any>({
+      path: `/users/me/follower/${userId}`,
+      method: 'GET',
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description 나의 팔로잉인지 유무 체크를 한다.
+   *
+   * @tags 유저 API
+   * @name FollowsControllerCheckFollowing
+   * @summary 팔로잉 유무 조회
+   * @request GET:/users/me/following/{userId}
+   * @secure
+   */
+  followsControllerCheckFollowing = (
+    userId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<FollowsControllerCheckFollowingData, any>({
+      path: `/users/me/following/${userId}`,
+      method: 'GET',
       secure: true,
       ...params,
     });
@@ -455,11 +562,11 @@ export class Users<
    * @tags 유저 API
    * @name FollowsControllerGetFollows
    * @summary 팔로잉 목록 조회
-   * @request GET:/users/{userId}/following
+   * @request GET:/users/{userId}/followings
    */
   followsControllerGetFollows = (userId: number, params: RequestParams = {}) =>
     this.request<FollowsControllerGetFollowsData, any>({
-      path: `/users/${userId}/following`,
+      path: `/users/${userId}/followings`,
       method: 'GET',
       ...params,
     });
@@ -469,14 +576,31 @@ export class Users<
    * @tags 유저 API
    * @name PostCategoriesControllerFetchPostCategories
    * @summary 특정 유저의 카테고리 전체 조회
-   * @request GET:/users/{userId}/categories/list
+   * @request GET:/users/{userId}/categories
    */
   postCategoriesControllerFetchPostCategories = (
     userId: number,
     params: RequestParams = {},
   ) =>
     this.request<PostCategoriesControllerFetchPostCategoriesData, any>({
-      path: `/users/${userId}/categories/list`,
+      path: `/users/${userId}/categories`,
+      method: 'GET',
+      ...params,
+    });
+  /**
+   * @description id에 해당하는 카테고리를 조회한다.
+   *
+   * @tags 유저 API
+   * @name PostCategoriesControllerFetchMyCategory
+   * @summary 특정 카테고리 조회
+   * @request GET:/users/categories/{categoryId}
+   */
+  postCategoriesControllerFetchMyCategory = (
+    categoryId: string,
+    params: RequestParams = {},
+  ) =>
+    this.request<PostCategoriesControllerFetchMyCategoryData, any>({
+      path: `/users/categories/${categoryId}`,
       method: 'GET',
       ...params,
     });
@@ -499,41 +623,6 @@ export class Users<
       body: data,
       secure: true,
       type: ContentType.Json,
-      ...params,
-    });
-  /**
-   * @description 로그인된 유저가 생성한 카테고리의 이름과 id, 게시글 개수를 조회한다.
-   *
-   * @tags 유저 API
-   * @name PostCategoriesControllerFetchMyCategories
-   * @summary 로그인된 유저의 카테고리 전체 조회
-   * @request GET:/users/me/categories
-   * @secure
-   */
-  postCategoriesControllerFetchMyCategories = (params: RequestParams = {}) =>
-    this.request<PostCategoriesControllerFetchMyCategoriesData, any>({
-      path: `/users/me/categories`,
-      method: 'GET',
-      secure: true,
-      ...params,
-    });
-  /**
-   * @description 로그인된 유저가 생성한, id에 해당하는 카테고리를 조회한다.
-   *
-   * @tags 유저 API
-   * @name PostCategoriesControllerFetchMyCategory
-   * @summary 로그인된 유저의 특정 카테고리 조회
-   * @request GET:/users/me/categories/{categoryId}
-   * @secure
-   */
-  postCategoriesControllerFetchMyCategory = (
-    categoryId: string,
-    params: RequestParams = {},
-  ) =>
-    this.request<PostCategoriesControllerFetchMyCategoryData, any>({
-      path: `/users/me/categories/${categoryId}`,
-      method: 'GET',
-      secure: true,
       ...params,
     });
   /**
