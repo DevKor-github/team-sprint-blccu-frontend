@@ -51,16 +51,10 @@ const ROUTES = {
   WRITE: '/write',
 } as const;
 
-interface ApiRoutes {
-  ROOT: string;
-}
+const PROXY_API_PREFIX = '/backend-api';
 
-const MOCK_API_ROUTES: ApiRoutes = {
-  ROOT: '/',
+const API_ROUTES = {
+  AUTH_KAKAO_LOGIN: `${PROXY_API_PREFIX}/auth/login/kakao`,
 } as const;
 
-const API_ROUTES: ApiRoutes = {
-  ROOT: '/',
-} as const;
-
-export { API_ROUTES, ROUTES };
+export { API_ROUTES, ROUTES, PROXY_API_PREFIX };

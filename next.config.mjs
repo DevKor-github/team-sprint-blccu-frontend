@@ -25,7 +25,7 @@ const nextConfig = {
         destination: '/users/:userHandle/posts/:postId/:path*',
       },
       {
-        source: '/proxy-api/:path*',
+        source: '/backend-api/:path*',
         destination: `${API_URL}/:path*`,
       },
     ];
