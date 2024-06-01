@@ -21,16 +21,24 @@ type UserHandlePageProps = {
 };
 
 const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
-  const { data } = useQuery({
+  const { data: userData } = useQuery({
     ...queries.users.detail(userHandle),
     retry: false,
   });
 
-  const user = data?.data;
+  const { data: meData } = useQuery({
+    ...queries.users.me,
+    retry: false,
+  });
+
+  const user = userData?.data;
+  const me = meData?.data;
 
   if (user === undefined) {
     return null;
   }
+
+  const isMe = me?.kakaoId === user.kakaoId;
 
   return (
     <div>
@@ -42,11 +50,13 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
               <Share2 className="h-5 w-5" />
             </IconButton>
           </CopyCurrentPageTrigger>
-          <Link href={ROUTES.SETTINGS}>
-            <div className="px-3 py-4">
-              <Settings className="h-5 w-5" />
-            </div>
-          </Link>
+          {isMe && (
+            <Link href={ROUTES.SETTINGS}>
+              <IconButton size="lg">
+                <Settings className="h-5 w-5" />
+              </IconButton>
+            </Link>
+          )}
         </div>
       </AppBar>
       <UserProfileSection user={user} />
