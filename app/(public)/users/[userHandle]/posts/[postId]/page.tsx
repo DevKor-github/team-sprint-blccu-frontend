@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useQuery } from '@tanstack/react-query';
 import { EllipsisVertical, Share2 } from 'lucide-react';
@@ -13,6 +14,7 @@ import {
 import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
+import { ROUTES } from '@/constants/routes';
 import { PostPageAllPostSection } from '@/features/post-page/post-page-all-post-section';
 import { PostPageBottomBar } from '@/features/post-page/post-page-bottom-bar';
 import { ReportPostBottomActionSheet } from '@/features/post-page/report-post-bottom-action-sheet';
@@ -42,12 +44,17 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
       <AppBar className="border-b-0 bg-blccu-white/90 backdrop-blur-lg">
         <AppBarBack />
         <div className="item-center flex w-full justify-between">
-          <AppBarTitle className="flex items-center gap-3">
-            <Avatar size="xs">
-              <AvatarImage src={user.profile_image} />
-              <AvatarFallback className="bg-blccu-neutral-400" />
-            </Avatar>
-            <p className="text-sm font-medium">{user.username}</p>
+          <AppBarTitle className="flex items-center">
+            <Link
+              href={ROUTES.USER_HANDLE_OF(user.handle)}
+              className="flex items-center gap-3"
+            >
+              <Avatar size="xs">
+                <AvatarImage src={user.profile_image} />
+                <AvatarFallback className="bg-blccu-neutral-400" />
+              </Avatar>
+              <p className="text-sm font-medium">{user.username}</p>
+            </Link>
           </AppBarTitle>
           <ReportPostBottomActionSheet
             id={id}

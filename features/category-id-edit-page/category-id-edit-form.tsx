@@ -81,9 +81,7 @@ const CategoryIdEditForm = ({
   const onSubmit = (values: PatchCategoryFormValues) => {
     mutate({
       categoryId: category.id,
-      patchPostCategoryDto: {
-        name: values.name,
-      },
+      patchPostCategoryDto: values,
     });
   };
 

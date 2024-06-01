@@ -1,7 +1,6 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
@@ -27,6 +26,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
   const { data: usersByNameData } = useQuery({
     ...queries.users.search(search),
     enabled: search.length > 0,
+    placeholderData: (prevData) => prevData,
   });
 
   const queryClient = useQueryClient();
