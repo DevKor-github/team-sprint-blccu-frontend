@@ -28,9 +28,15 @@ const SelectCategoryPage = ({
     ...queries.users.detail(userHandle),
     retry: false,
   });
+
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(userData?.data.kakaoId),
     enabled: userData !== undefined,
+  });
+
+  const { data: meData } = useQuery({
+    ...queries.users.me,
+    retry: false,
   });
 
   const categories = categoriesData?.data ?? [];
@@ -44,16 +50,23 @@ const SelectCategoryPage = ({
     0,
   );
 
+  const me = meData?.data;
+  const user = userData?.data;
+
+  const isMe = me?.kakaoId === user?.kakaoId;
+
   return (
     <div>
       <AppBar className="flex justify-between">
         <AppBarBack />
         <AppBarTitle align="center">카테고리</AppBarTitle>
-        <Link href={ROUTES.UPDATE_CATEGORY}>
-          <div className="px-3 py-4">
-            <Pencil className="h-5 w-5" />
-          </div>
-        </Link>
+        {isMe && (
+          <Link href={ROUTES.UPDATE_CATEGORY}>
+            <div className="px-3 py-4">
+              <Pencil className="h-5 w-5" />
+            </div>
+          </Link>
+        )}
       </AppBar>
       <div className="pt-14">
         <div className="flex flex-col pt-2">

@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 
 import {
@@ -10,14 +13,29 @@ import {
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
 import { ROUTES } from '@/constants/routes';
 import { UpdateCategoryPageBottomActionSheet } from '@/features/update-category-page/update-category-page-bottom-action-sheet';
-import { generateCategories } from '@/lib/utils';
-
-const categories = generateCategories(10);
-
-const sortedCategoriesDesc = categories.sort((a, b) => b.count - a.count);
+import { queries } from '@/queries';
 
 const UpdateCategoryPage = () => {
-  const total = sortedCategoriesDesc.reduce((acc, { count }) => acc + count, 0);
+  const { data: meData } = useQuery({
+    ...queries.users.me,
+    retry: false,
+  });
+
+  const { data: categoriesData } = useQuery({
+    ...queries.users.categories(meData?.data.kakaoId),
+    enabled: meData !== undefined,
+  });
+
+  const categories = categoriesData?.data ?? [];
+
+  const sortedCategoriesDesc = categories.sort(
+    (a, b) => b.postCount - a.postCount,
+  );
+
+  const total = sortedCategoriesDesc.reduce(
+    (acc, { postCount }) => acc + postCount,
+    0,
+  );
 
   return (
     <div>
@@ -45,15 +63,10 @@ const UpdateCategoryPage = () => {
           {sortedCategoriesDesc.map((category, index) => (
             <UpdateCategoryPageBottomActionSheet
               key={index}
+              id={category.categoryId}
               trigger={
                 <div className="cursor-pointer px-4" tabIndex={0}>
-                  <StackedCategoryCard
-                    category={{
-                      categoryId: '',
-                      categoryName: category.name,
-                      postCount: category.count,
-                    }}
-                  />
+                  <StackedCategoryCard category={category} />
                 </div>
               }
             />

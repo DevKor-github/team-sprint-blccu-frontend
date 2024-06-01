@@ -33,7 +33,7 @@ const ROUTES = {
    * -----------------------------------------------------------------------------------------------*/
   UPDATE_CATEGORY: '/update-category',
   CREATE_CATEGORY: '/create-category',
-  CATEGORY_ID_EDIT_OF: (categoryId: number) =>
+  CATEGORY_ID_EDIT_OF: (categoryId: string) =>
     `/update-category/${categoryId}/edit`,
   NOTIFICATIONS: '/notifications',
   REPORT_COMMENT_ID_OF: (commentId: number) => `/report/comments/${commentId}`,

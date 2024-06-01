@@ -12,6 +12,12 @@ const TOAST_MESSAGES = {
   UNFOLLOW_FAIL: '팔로우 취소에 실패했습니다.',
   LIKE_FAIL: '좋아요에 실패했습니다.',
   UNLIKE_FAIL: '좋아요 취소에 실패했습니다.',
+  CREATE_CATEGORY_SUCCESS: '카테고리가 생성되었습니다.',
+  CREATE_CATEGORY_FAIL: '카테고리 생성에 실패했습니다.',
+  PATCH_CATEGORY_SUCCESS: '카테고리가 수정되었습니다.',
+  PATCH_CATEGORY_FAIL: '카테고리 수정에 실패했습니다.',
+  DELETE_CATEGORY_SUCCESS: '카테고리가 삭제되었습니다.',
+  DELETE_CATEGORY_FAIL: '카테고리 삭제에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
