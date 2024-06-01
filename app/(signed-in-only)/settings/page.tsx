@@ -1,8 +1,7 @@
 import Link from 'next/link';
 
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { ROUTES } from '@/constants/routes';
+import { CreateFeedbackForm } from '@/features/settings-page/create-feedback-form';
 
 const SettingsPage = () => {
   return (
@@ -22,15 +21,7 @@ const SettingsPage = () => {
           <p className="font-medium">계정 관리</p>
         </div>
       </Link>
-      <div className="mt-10 px-4 py-2">
-        <p className="font-medium">피드백 보내기</p>
-      </div>
-      <div className="flex flex-col gap-2 px-4 pt-2">
-        <Textarea placeholder="이런 점은 개선해주세요." />
-        <Button variant="secondary" disabled>
-          전송
-        </Button>
-      </div>
+      <CreateFeedbackForm />
     </div>
   );
 };
