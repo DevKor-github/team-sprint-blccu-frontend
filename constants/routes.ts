@@ -25,6 +25,8 @@ const ROUTES = {
   POST_OF: (userHandle: string, postId: number) => `/@${userHandle}/${postId}`,
   COMMENTS_OF: (userHandle: string, postId: number) =>
     `/@${userHandle}/${postId}/comments`,
+  LIKES_OF: (userHandle: string, postId: number) =>
+    `/@${userHandle}/${postId}/likes`,
 
   /* -------------------------------------------------------------------------------------------------
    * signed-in-only layout
