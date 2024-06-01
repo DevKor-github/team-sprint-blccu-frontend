@@ -1,18 +1,31 @@
+'use client';
+
 import Link from 'next/link';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { List } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { type UserResponseDto } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
 import { EditUserProfileSheet } from '@/features/user-handle-page/edit-user-profile-sheet';
+import { api } from '@/lib/api';
 import {
   getFollowerDescriptor,
   getFollowingDescriptor,
 } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
+
+type FollowProps = {
+  userId: number;
+};
+
+type UnfollowProps = {
+  userId: number;
+};
 
 type UserProfileSectionProps = {
   user: UserResponseDto;
@@ -29,13 +42,60 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
     following_count,
   } = user;
 
-  const { data } = useQuery({ ...queries.users.me, retry: false });
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
 
-  const me = data?.data;
+  const { data: followingData } = useQuery({
+    ...queries.users.following(user.kakaoId),
+    enabled: meData !== undefined,
+  });
+
+  const queryClient = useQueryClient();
+
+  const { mutate: followMutate, isPending: isFollowPending } = useMutation({
+    mutationFn: ({ userId }: FollowProps) =>
+      api.users.followsControllerFollowUser(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queries.users.following(user.kakaoId).queryKey,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: queries.users.detail(user.handle).queryKey,
+      });
+
+      toast.success(TOAST_MESSAGES.FOLLOW_SUCCESS);
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.FOLLOW_FAIL);
+    },
+  });
+
+  const { mutate: unfollowMutate, isPending: isUnfollowPending } = useMutation({
+    mutationFn: ({ userId }: UnfollowProps) =>
+      api.users.followsControllerUnfollowUser(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queries.users.following(user.kakaoId).queryKey,
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: queries.users.detail(user.handle).queryKey,
+      });
+
+      toast.success(TOAST_MESSAGES.UNFOLLOW_SUCCESS);
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.UNFOLLOW_FAIL);
+    },
+  });
+
+  const me = meData?.data;
 
   const isSignedIn = me !== undefined;
 
   const isMe = me?.handle === handle;
+
+  const isFollowing = followingData?.data ?? false;
 
   const followerDescriptor = getFollowerDescriptor(follower_count);
   const followingDescriptor = getFollowingDescriptor(following_count);
@@ -75,9 +135,28 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
             />
           ) : (
             isSignedIn && (
-              <Button size="sm" radius="full">
-                팔로우
-              </Button>
+              <>
+                {isFollowing ? (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    radius="full"
+                    disabled={isUnfollowPending}
+                    onClick={() => unfollowMutate({ userId: user.kakaoId })}
+                  >
+                    팔로잉
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    radius="full"
+                    disabled={isFollowPending}
+                    onClick={() => followMutate({ userId: user.kakaoId })}
+                  >
+                    팔로우
+                  </Button>
+                )}
+              </>
             )
           )}
           <Link href={ROUTES.SELECT_CATEGORY_OF(handle)}>

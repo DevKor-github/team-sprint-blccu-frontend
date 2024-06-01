@@ -10,6 +10,7 @@ import {
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
+import { ChatInput } from '@/components/ui-unstable/chat-input';
 import { CommentableListItem } from '@/features/comments-page/commentable-list-item';
 import { queries } from '@/queries';
 
@@ -51,7 +52,7 @@ const CommentsPage = ({
         ))}
       </div>
       <div className="fixed bottom-0 mx-auto h-20 w-full max-w-md bg-blccu-white/80 backdrop-blur">
-        {/* <ChatInput postId={postId} /> */}
+        <ChatInput postId={postId} />
       </div>
     </>
   );

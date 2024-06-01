@@ -28,6 +28,16 @@ const users = createQueryKeys('users', {
         return Promise.reject(new Error('User ID is undefined'));
       }
 
+      return api.users.followsControllerCheckFollowing(id);
+    },
+  }),
+  followings: (id: number | undefined) => ({
+    queryKey: [id],
+    queryFn: () => {
+      if (id === undefined) {
+        return Promise.reject(new Error('User ID is undefined'));
+      }
+
       return api.users.followsControllerGetFollows(id);
     },
   }),
