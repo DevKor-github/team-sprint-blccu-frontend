@@ -14,7 +14,7 @@
     "sta": "sta -p https://api.blccu.com/api-docs-json -o __generated__ --modular --axios --extract-request-params --extract-request-body --extract-response-body --extract-response-error",
     "chromatic": "npx chromatic --project-token=chpt_1234567890",
     "update-deps": "ncu -u && pnpm i",
-    "prepare": "husky install"
+    "prepare": "is-ci || husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
@@ -89,6 +89,7 @@
     "eslint-plugin-no-relative-import-paths": "^1.5.4",
     "eslint-plugin-storybook": "^0.8.0",
     "husky": "^9.0.11",
+    "is-ci": "^3.0.1",
     "lint-staged": "^15.2.5",
     "postcss": "^8",
     "prettier": "^3.2.5",
