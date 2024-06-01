@@ -1,22 +1,25 @@
 import Link from 'next/link';
 
+import { type UserResponseDto } from '@/__generated__/data-contracts';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { getBannerSignedInUsernameDescriptor } from '@/lib/get-descriptor';
-import { generateUser } from '@/lib/utils';
 
-const me = generateUser();
+const backgroundImage =
+  'https://images.unsplash.com/photo-1507400492013-162706c8c05e';
 
-const { username } = me;
+type BannerSignedInProps = {
+  user: UserResponseDto;
+};
 
-const BannerSignedIn = () => {
+const BannerSignedIn = ({ user: { username } }: BannerSignedInProps) => {
   const usernameDescriptor = getBannerSignedInUsernameDescriptor(username);
 
   return (
     <div
-      className="mx-4 mt-4 flex h-52 flex-col justify-end rounded-lg p-4"
+      className="mx-4 mt-4 flex h-52 flex-col justify-end rounded-lg bg-cover bg-center p-4"
       style={{
-        backgroundColor: '#888888',
+        backgroundImage: `url(${backgroundImage})`,
       }}
     >
       <p className="text-xs text-blccu-white">{usernameDescriptor}</p>
