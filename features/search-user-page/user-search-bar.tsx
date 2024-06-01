@@ -6,15 +6,12 @@ import { Search } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-const UserSearchBar = () => {
-  const [value, setValue] = useState<string>('');
+type UserSearchBarProps = {
+  value: string;
+  handleValueChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-
-    setValue(value);
-  };
-
+const UserSearchBar = ({ value, handleValueChange }: UserSearchBarProps) => {
   return (
     <div
       className={cn(
@@ -30,7 +27,7 @@ const UserSearchBar = () => {
         )}
         placeholder="닉네임 또는 아이디로 검색하세요"
         value={value}
-        onChange={handleChange}
+        onChange={handleValueChange}
       />
       <Search className="ml-2 h-5 w-5 text-blccu-neutral-600" />
     </div>
