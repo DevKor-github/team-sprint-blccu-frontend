@@ -20,6 +20,8 @@ const TOAST_MESSAGES = {
   DELETE_CATEGORY_FAIL: '카테고리 삭제에 실패했습니다.',
   UPDATE_USER_PROFILE_SUCCESS: '프로필이 수정되었습니다.',
   UPDATE_USER_PROFILE_FAIL: '프로필 수정에 실패했습니다.',
+  CREATE_FEEDBACK_SUCCESS: '피드백이 전송되었습니다.',
+  CREATE_FEEDBACK_ERROR: '피드백 전송에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
