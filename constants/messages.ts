@@ -18,6 +18,8 @@ const TOAST_MESSAGES = {
   PATCH_CATEGORY_FAIL: '카테고리 수정에 실패했습니다.',
   DELETE_CATEGORY_SUCCESS: '카테고리가 삭제되었습니다.',
   DELETE_CATEGORY_FAIL: '카테고리 삭제에 실패했습니다.',
+  UPDATE_USER_PROFILE_SUCCESS: '프로필이 수정되었습니다.',
+  UPDATE_USER_PROFILE_FAIL: '프로필 수정에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
