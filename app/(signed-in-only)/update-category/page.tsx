@@ -33,14 +33,27 @@ const UpdateCategoryPage = () => {
       <div className="pt-14">
         <div className="flex flex-col pt-2">
           <div className="px-4">
-            <StackedCategoryCard category="전체글" count={total} disabled />
+            <StackedCategoryCard
+              category={{
+                categoryId: '',
+                categoryName: '전체글',
+                postCount: total,
+              }}
+              disabled
+            />
           </div>
-          {sortedCategoriesDesc.map(({ name, count }, index) => (
+          {sortedCategoriesDesc.map((category, index) => (
             <UpdateCategoryPageBottomActionSheet
               key={index}
               trigger={
                 <div className="cursor-pointer px-4" tabIndex={0}>
-                  <StackedCategoryCard category={name} count={count} />
+                  <StackedCategoryCard
+                    category={{
+                      categoryId: '',
+                      categoryName: category.name,
+                      postCount: category.count,
+                    }}
+                  />
                 </div>
               }
             />
