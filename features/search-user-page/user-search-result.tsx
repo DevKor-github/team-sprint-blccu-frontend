@@ -1,40 +1,51 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
-import { generateUsers, sampleSize } from '@/lib/utils';
+import { queries } from '@/queries';
 
-const USERS_COUNT = 21;
+type UserSearchResultProps = {
+  search: string;
+};
 
-const users = generateUsers(USERS_COUNT);
+const UserSearchResult = ({ search }: UserSearchResultProps) => {
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { data: usersByNameData } = useQuery({
+    ...queries.users.search(search),
+    enabled: search.length > 0,
+  });
 
-const FollowingButtons = [
-  <Button key="follow-button" size="sm" radius="full">
-    팔로우
-  </Button>,
-  <Button key="following-button" variant="secondary" size="sm" radius="full">
-    팔로잉
-  </Button>,
-];
+  const users = usersByNameData?.data ?? [];
 
-const FollowingButton = sampleSize(FollowingButtons, USERS_COUNT);
+  const me = meData?.data;
 
-const UserSearchResult = () => {
+  const isSignedIn = me !== undefined;
+
   return (
     <div className="mt-4 flex flex-col gap-2 px-4">
-      {users.map(
-        (
-          { username, handle, description, profileImage, backgroundImage },
-          index,
-        ) => (
-          <StackedUserCard
-            key={index}
-            avatar={profileImage}
-            username={username}
-            userHandle={handle}
-            description={description}
-            right={FollowingButton[index]}
-          />
-        ),
-      )}
+      {users.map(({ isFollowing, ...user }, index) => (
+        <StackedUserCard
+          key={index}
+          user={user}
+          right={
+            isSignedIn && (
+              <>
+                {isFollowing ? (
+                  <Button variant="secondary" size="sm" radius="full">
+                    팔로잉
+                  </Button>
+                ) : (
+                  <Button size="sm" radius="full">
+                    팔로우
+                  </Button>
+                )}
+              </>
+            )
+          }
+        />
+      ))}
     </div>
   );
 };
