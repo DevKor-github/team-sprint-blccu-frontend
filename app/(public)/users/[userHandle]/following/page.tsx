@@ -1,3 +1,7 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+
 import {
   AppBar,
   AppBarBack,
@@ -5,28 +9,31 @@ import {
 } from '@/components/ui-unstable/app-bar';
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
-import { generateUsers, sampleSize } from '@/lib/utils';
-
-const users = generateUsers(21);
-
-const FollowingButtons = [
-  <Button key="follow-button" size="sm" radius="full">
-    팔로우
-  </Button>,
-  <Button key="following-button" variant="secondary" size="sm" radius="full">
-    팔로잉
-  </Button>,
-];
-
-const FollowingButton = sampleSize(FollowingButtons, 21);
+import { queries } from '@/queries';
 
 type FollowingPageProps = {
   params: {
-    username: string;
+    userHandle: string;
   };
 };
 
-const FollowingPage = ({ params: { username: _ } }: FollowingPageProps) => {
+const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { data: userData } = useQuery({
+    ...queries.users.detail(userHandle),
+    retry: false,
+  });
+  const { data: followingData } = useQuery({
+    ...queries.users.following(userData?.data.kakaoId),
+    enabled: userData !== undefined,
+  });
+
+  const me = meData?.data;
+
+  const isSignedIn = me !== undefined;
+
+  const users = followingData?.data ?? [];
+
   return (
     <div>
       <AppBar>
@@ -35,21 +42,27 @@ const FollowingPage = ({ params: { username: _ } }: FollowingPageProps) => {
       </AppBar>
       <div className="pt-14">
         <div className="mt-4 flex flex-col gap-2 px-4">
-          {users.map(
-            (
-              { username, handle, description, profileImage, backgroundImage },
-              index,
-            ) => (
-              <StackedUserCard
-                key={index}
-                avatar={profileImage}
-                username={username}
-                userHandle={handle}
-                description={description}
-                right={FollowingButton[index]}
-              />
-            ),
-          )}
+          {users.map(({ isFollowing, ...user }, index) => (
+            <StackedUserCard
+              key={index}
+              user={user}
+              right={
+                isSignedIn && (
+                  <>
+                    {isFollowing ? (
+                      <Button variant="secondary" size="sm" radius="full">
+                        팔로잉
+                      </Button>
+                    ) : (
+                      <Button size="sm" radius="full">
+                        팔로우
+                      </Button>
+                    )}
+                  </>
+                )
+              }
+            />
+          ))}
         </div>
       </div>
     </div>

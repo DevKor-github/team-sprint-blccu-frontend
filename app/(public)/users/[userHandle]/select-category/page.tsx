@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
 import { Pencil } from 'lucide-react';
 
 import {
@@ -10,15 +13,7 @@ import {
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
 import { QUERY_KEY } from '@/constants/query';
 import { ROUTES } from '@/constants/routes';
-import { generateCategories, generateUser } from '@/lib/utils';
-
-const categories = generateCategories(10);
-
-const sortedCategoriesDesc = categories.sort((a, b) => b.count - a.count);
-
-const me = generateUser();
-
-const { handle } = me;
+import { queries } from '@/queries';
 
 type SelectCategoryPageProps = {
   params: {
@@ -27,9 +22,27 @@ type SelectCategoryPageProps = {
 };
 
 const SelectCategoryPage = ({
-  params: { userHandle: _ },
+  params: { userHandle },
 }: SelectCategoryPageProps) => {
-  const total = sortedCategoriesDesc.reduce((acc, { count }) => acc + count, 0);
+  const { data: userData } = useQuery({
+    ...queries.users.detail(userHandle),
+    retry: false,
+  });
+  const { data: categoriesData } = useQuery({
+    ...queries.users.categories(userData?.data.kakaoId),
+    enabled: userData !== undefined,
+  });
+
+  const categories = categoriesData?.data ?? [];
+
+  const sortedCategoriesDesc = categories.sort(
+    (a, b) => b.postCount - a.postCount,
+  );
+
+  const total = sortedCategoriesDesc.reduce(
+    (acc, { postCount }) => acc + postCount,
+    0,
+  );
 
   return (
     <div>
@@ -44,23 +57,29 @@ const SelectCategoryPage = ({
       </AppBar>
       <div className="pt-14">
         <div className="flex flex-col pt-2">
-          <Link href={ROUTES.USER_HANDLE_OF(handle)}>
+          <Link href={ROUTES.USER_HANDLE_OF(userHandle)}>
             <div className="px-4">
-              <StackedCategoryCard category="전체글" count={total} />
+              <StackedCategoryCard
+                category={{
+                  categoryId: '',
+                  categoryName: '전체글',
+                  postCount: total,
+                }}
+              />
             </div>
           </Link>
-          {sortedCategoriesDesc.map(({ id, name, count }, index) => (
+          {sortedCategoriesDesc.map((category) => (
             <Link
               href={{
-                pathname: ROUTES.USER_HANDLE_OF(handle),
+                pathname: ROUTES.USER_HANDLE_OF(userHandle),
                 query: {
-                  [QUERY_KEY.CATEGORY_ID]: id,
+                  [QUERY_KEY.CATEGORY_ID]: category.categoryId,
                 },
               }}
-              key={index}
+              key={category.categoryId}
             >
               <div className="px-4">
-                <StackedCategoryCard category={name} count={count} />
+                <StackedCategoryCard category={category} />
               </div>
             </Link>
           ))}
