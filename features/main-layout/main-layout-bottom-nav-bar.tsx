@@ -1,15 +1,25 @@
+'use client';
+
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
 import { Home, Pencil, User } from 'lucide-react';
 
 import { ROUTES } from '@/constants/routes';
-import { cn, generateUser } from '@/lib/utils';
-
-const me = generateUser();
-
-const { handle } = me;
+import { cn } from '@/lib/utils';
+import { queries } from '@/queries';
 
 const MainLayoutBottomNavBar = () => {
+  const { data } = useQuery({ ...queries.users.me, retry: false });
+
+  const me = data?.data;
+
+  const isSignedIn = me !== undefined;
+
+  if (!isSignedIn) {
+    return null;
+  }
+
   return (
     <nav
       className={cn(
@@ -38,7 +48,7 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.USER_HANDLE_OF(handle)}>
+          <Link href={ROUTES.USER_HANDLE_OF(me.handle)}>
             <div className="p-5">
               <User className="h-5 w-5" />
             </div>
