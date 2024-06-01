@@ -61,6 +61,10 @@ const posts = createQueryKeys('posts', {
     queryKey: [postId],
     queryFn: () => api.posts.postsControllerFetchPostDetail(postId),
   }),
+  like: (postId: number) => ({
+    queryKey: [postId],
+    queryFn: () => api.posts.likesControllerFetchIfLiked(postId),
+  }),
   likeUsers: (postId: number) => ({
     queryKey: [postId],
     queryFn: () => api.posts.likesControllerFetchLikes(postId),

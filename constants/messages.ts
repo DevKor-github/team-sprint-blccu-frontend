@@ -10,6 +10,8 @@ const TOAST_MESSAGES = {
   FOLLOW_FAIL: '팔로우에 실패했습니다.',
   UNFOLLOW_SUCCESS: '팔로우 취소되었습니다.',
   UNFOLLOW_FAIL: '팔로우 취소에 실패했습니다.',
+  LIKE_FAIL: '좋아요에 실패했습니다.',
+  UNLIKE_FAIL: '좋아요 취소에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
