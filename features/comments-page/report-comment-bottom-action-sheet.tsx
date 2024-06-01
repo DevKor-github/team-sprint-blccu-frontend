@@ -11,12 +11,16 @@ import {
   BottomActionSheetTrigger,
 } from '@/components/ui-unstable/bottom-action-sheet';
 import { ROUTES } from '@/constants/routes';
-import { generateId } from '@/lib/utils';
 import { type PropsWithTrigger } from '@/types/props';
 
-const id = generateId();
+type ReportCommentBottomActionSheetProps = {
+  id: number;
+} & PropsWithTrigger;
 
-const ReportCommentBottomActionSheet = ({ trigger }: PropsWithTrigger) => {
+const ReportCommentBottomActionSheet = ({
+  id,
+  trigger,
+}: ReportCommentBottomActionSheetProps) => {
   return (
     <BottomActionSheet>
       <BottomActionSheetTrigger asChild>{trigger}</BottomActionSheetTrigger>
