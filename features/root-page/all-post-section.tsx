@@ -4,17 +4,21 @@ import Link from 'next/link';
 
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
+import { useQuery } from '@tanstack/react-query';
+
 import {
   Section,
   SectionContent,
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { ROUTES } from '@/constants/routes';
-import { generatePosts } from '@/lib/utils';
-
-const posts = generatePosts(42);
+import { queries } from '@/queries';
 
 const AllPostSection = () => {
+  const { data } = useQuery(queries.posts.all);
+
+  const posts = data?.data.data ?? [];
+
   return (
     <Section className="mx-4">
       <SectionTitle>전체글</SectionTitle>
@@ -28,9 +32,16 @@ const AllPostSection = () => {
             }}
           >
             <Masonry gutter="10px">
-              {posts.map(({ author, id: postId, thumbnail }, index) => (
-                <Link href={ROUTES.POST_OF(author.handle, postId)} key={index}>
-                  <img src={thumbnail} alt="photo" className="rounded-md" />
+              {posts.map((post) => (
+                <Link
+                  href={ROUTES.POST_OF(post.user.handle, post.id)}
+                  key={post.id}
+                >
+                  <img
+                    src={post.main_image_url}
+                    alt="photo"
+                    className="rounded-md"
+                  />
                 </Link>
               ))}
             </Masonry>
