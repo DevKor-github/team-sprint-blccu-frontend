@@ -1,14 +1,16 @@
+import {
+  type FetchPostCategoriesDto,
+  FetchPostCategoryDto,
+} from '@/__generated__/data-contracts';
 import { cn } from '@/lib/utils';
 
 type StackedCategoryCardProps = {
-  category: string;
-  count: number;
+  category: FetchPostCategoriesDto;
   disabled?: boolean;
 };
 
 const StackedCategoryCard = ({
-  category,
-  count,
+  category: { categoryName, postCount },
   disabled,
 }: StackedCategoryCardProps) => {
   return (
@@ -18,8 +20,8 @@ const StackedCategoryCard = ({
         disabled && 'cursor-not-allowed opacity-50',
       )}
     >
-      <p className="font-medium">{category}</p>
-      <p className="text-sm">{count.toLocaleString()}</p>
+      <p className="font-medium">{categoryName}</p>
+      <p className="text-sm">{postCount.toLocaleString()}</p>
     </div>
   );
 };

@@ -2,32 +2,27 @@ import Link from 'next/link';
 
 import { type ReactNode } from 'react';
 
+import { type UserResponseDto } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ROUTES } from '@/constants/routes';
 
 type StackedUserCardProps = {
-  avatar: string;
-  username: string;
-  userHandle: string;
-  description?: string;
+  user: UserResponseDto;
   right?: ReactNode;
 };
 
 const StackedUserCard = ({
-  avatar,
-  username,
-  userHandle,
-  description,
+  user: { profile_image, username, handle, description },
   right,
 }: StackedUserCardProps) => {
   return (
     <div className="flex items-center gap-4">
       <Link
-        href={ROUTES.USER_HANDLE_OF(userHandle)}
+        href={ROUTES.USER_HANDLE_OF(handle)}
         className="flex flex-1 items-center gap-4 py-2"
       >
         <Avatar>
-          <AvatarImage src={avatar} />
+          <AvatarImage src={profile_image} />
           <AvatarFallback className="bg-blccu-neutral-400" />
         </Avatar>
         <div className="flex flex-1 flex-col gap-0.5">
