@@ -17,7 +17,7 @@ const AppBar = ({
   return (
     <header
       className={cn(
-        'fixed left-1/2 top-0 z-50 flex h-14 w-full max-w-md -translate-x-1/2 items-center border-b bg-blccu-white px-1 ',
+        'fixed left-1/2 top-0 z-50 flex h-14 w-full max-w-md -translate-x-1/2 items-center border-b bg-blccu-white px-1',
         className,
       )}
     >

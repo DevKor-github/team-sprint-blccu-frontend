@@ -1,7 +1,4 @@
-import {
-  type FetchPostCategoriesDto,
-  FetchPostCategoryDto,
-} from '@/__generated__/data-contracts';
+import { type FetchPostCategoriesDto } from '@/__generated__/data-contracts';
 import { cn } from '@/lib/utils';
 
 type StackedCategoryCardProps = {
