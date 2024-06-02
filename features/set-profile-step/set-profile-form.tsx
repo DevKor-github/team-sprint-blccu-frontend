@@ -1,15 +1,22 @@
+import { type ChangeEvent, useRef } from 'react';
 import { type UseFormProps, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import z from 'zod';
 
-import { type PatchUserInput } from '@/__generated__/data-contracts';
+import {
+  type ImageUploadDto,
+  type PatchUserInput,
+  type UserResponseDto,
+} from '@/__generated__/data-contracts';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
+import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/props';
 
 const patchUserProfileFormSchema = z.object({
@@ -38,16 +45,21 @@ type PatchUserProfileProps = {
 };
 
 type SetProfileFormProps = {
+  user: UserResponseDto;
   defaultValues: UseFormProps<PatchUserProfileFormValues>['defaultValues'];
 } & PropsWithOnNext;
 
-const SetProfileForm = ({ defaultValues, onNext }: SetProfileFormProps) => {
+const SetProfileForm = ({
+  user,
+  defaultValues,
+  onNext,
+}: SetProfileFormProps) => {
   const form = useForm<PatchUserProfileFormValues>({
     resolver: zodResolver(patchUserProfileFormSchema),
     defaultValues,
   });
 
-  const { mutate } = useMutation({
+  const { mutate: patchUserMutate } = useMutation({
     mutationFn: ({ patchUserInput }: PatchUserProfileProps) =>
       api.users.usersControllerPatchUser(patchUserInput),
 
@@ -63,13 +75,70 @@ const SetProfileForm = ({ defaultValues, onNext }: SetProfileFormProps) => {
     },
   });
 
+  const queryClient = useQueryClient();
+
+  const { mutate: uploadBackgroundImageMutate } = useMutation({
+    mutationFn: (imageUploadDto: ImageUploadDto) =>
+      api.users.usersControllerUploadBackgroundImage(imageUploadDto),
+
+    onSuccess: () => {
+      toast.success(TOAST_MESSAGES.UPLOAD_BACKGROUND_IMAGE_SUCCESS);
+
+      queryClient.invalidateQueries({
+        queryKey: queries.users.me.queryKey,
+      });
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.UPLOAD_BACKGROUND_IMAGE_FAIL);
+    },
+  });
+
+  const backgroundImageRef = useRef<HTMLInputElement>(null);
+
+  const handleBackgroundImageUpload = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+
+    if (file === undefined) {
+      return;
+    }
+
+    uploadBackgroundImageMutate({ file });
+  };
+
+  const { mutate: uploadProfileImageMutate } = useMutation({
+    mutationFn: (imageUploadDto: ImageUploadDto) =>
+      api.users.usersControllerUploadProfileImage(imageUploadDto),
+
+    onSuccess: () => {
+      toast.success(TOAST_MESSAGES.UPLOAD_PROFILE_IMAGE_SUCCESS);
+
+      queryClient.invalidateQueries({
+        queryKey: queries.users.me.queryKey,
+      });
+    },
+  });
+
+  const profileImageRef = useRef<HTMLInputElement>(null);
+
+  const handleProfileImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file === undefined) {
+      return;
+    }
+
+    uploadProfileImageMutate({ file });
+  };
+
   const onSubmit = (values: PatchUserProfileFormValues) => {
-    mutate({
+    patchUserMutate({
       patchUserInput: values,
     });
   };
 
-  const { isSubmitting, isValid, isDirty } = form.formState;
+  const { isSubmitting, isValid } = form.formState;
 
   return (
     <Form {...form}>
@@ -87,9 +156,36 @@ const SetProfileForm = ({ defaultValues, onNext }: SetProfileFormProps) => {
           </div>
           <div className="flex flex-col items-center gap-4 rounded-lg p-4 shadow-lg">
             <div className="relative w-full">
-              <div className="absolute h-32 w-full rounded-lg bg-blccu-neutral-400" />
+              <div
+                className="absolute h-32 w-full cursor-pointer rounded-lg bg-blccu-neutral-400"
+                onClick={() => backgroundImageRef.current?.click()}
+                style={{
+                  backgroundImage: `url(${user.background_image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
               <div className="pt-24">
-                <div className="relative mx-auto h-14 w-14 rounded-full bg-blccu-neutral-800" />
+                <Avatar
+                  size="xl"
+                  className="mx-auto cursor-pointer"
+                  onClick={() => profileImageRef.current?.click()}
+                >
+                  <AvatarImage src={user.profile_image} />
+                  <AvatarFallback className="bg-blccu-neutral-600" />
+                </Avatar>
+                <input
+                  ref={backgroundImageRef}
+                  type="file"
+                  className="hidden"
+                  onChange={handleBackgroundImageUpload}
+                />
+                <input
+                  ref={profileImageRef}
+                  type="file"
+                  className="hidden"
+                  onChange={handleProfileImageUpload}
+                />
               </div>
             </div>
             <div className="mt-4 flex w-full flex-col items-center gap-2">
@@ -137,10 +233,7 @@ const SetProfileForm = ({ defaultValues, onNext }: SetProfileFormProps) => {
               />
             </div>
           </div>
-          <Button
-            className="mb-4"
-            disabled={!isValid || !isDirty || isSubmitting}
-          >
+          <Button className="mb-4" disabled={!isValid || isSubmitting}>
             블꾸 시작하기
           </Button>
         </div>

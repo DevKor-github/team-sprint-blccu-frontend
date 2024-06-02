@@ -23,6 +23,10 @@ const TOAST_MESSAGES = {
   CREATE_FEEDBACK_SUCCESS: '피드백이 전송되었습니다.',
   CREATE_FEEDBACK_ERROR: '피드백 전송에 실패했습니다.',
   CREATE_AGREEMENT_FAIL: '약관 동의에 실패했습니다.',
+  UPLOAD_PROFILE_IMAGE_SUCCESS: '프로필 이미지가 업로드되었습니다.',
+  UPLOAD_PROFILE_IMAGE_FAIL: '프로필 이미지 업로드에 실패했습니다.',
+  UPLOAD_BACKGROUND_IMAGE_SUCCESS: '배경 이미지가 업로드되었습니다.',
+  UPLOAD_BACKGROUND_IMAGE_FAIL: '배경 이미지 업로드에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
