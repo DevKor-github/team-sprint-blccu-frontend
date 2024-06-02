@@ -1,27 +1,35 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
 
 import {
   AppDetailBar,
   AppDetailBarTitle,
 } from '@/components/ui-unstable/app-detail-bar';
+import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { api } from '@/lib/api';
 import { getSignUpMethodDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
 
 const ManageAccountPage = () => {
   const { data: meData } = useQuery({ ...queries.users.me, retry: false });
 
-  /**
-   * FIXME: BE GET -> POST로 교체 후 useMutation 사용
-   */
-  const { refetch } = useQuery({
-    ...queries.auth.logout,
-    enabled: false,
+  const router = useRouter();
+
+  const { mutate } = useMutation({
+    mutationFn: () => api.auth.authControllerLogout(),
+    onSuccess: () => {
+      router.push(ROUTES.ROOT);
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.LOGOUT_FAIL);
+    },
   });
 
   const me = meData?.data;
@@ -61,7 +69,7 @@ const ManageAccountPage = () => {
             </div>
           </section>
           <section>
-            <div className="cursor-pointer px-4 py-2" onClick={() => refetch()}>
+            <div className="cursor-pointer px-4 py-2" onClick={() => mutate()}>
               <p className="font-medium">로그아웃</p>
             </div>
           </section>
