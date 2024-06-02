@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
 import {
@@ -8,15 +11,30 @@ import {
 } from '@/components/ui-unstable/app-detail-bar';
 import { ROUTES } from '@/constants/routes';
 import { getSignUpMethodDescriptor } from '@/lib/get-descriptor';
-import { randomDate } from '@/lib/utils';
-
-const signUpMethod = 'kakao';
-const signUpDate = randomDate(new Date(2019, 0, 1), new Date());
-
-const signUpMethodDescriptor = getSignUpMethodDescriptor(signUpMethod);
-const formattedDate = format(signUpDate, 'yyyy.MM.dd');
+import { queries } from '@/queries';
 
 const ManageAccountPage = () => {
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+
+  /**
+   * FIXME: BE GET -> POST로 교체 후 useMutation 사용
+   */
+  const { refetch } = useQuery({
+    ...queries.auth.logout,
+    enabled: false,
+  });
+
+  const me = meData?.data;
+
+  if (me === undefined) {
+    return null;
+  }
+
+  const signUpMethod = 'kakao';
+
+  const signUpMethodDescriptor = getSignUpMethodDescriptor(signUpMethod);
+  const formattedDate = format(me.date_created, 'yyyy.MM.dd');
+
   /**
    * @note
    * - {@link SettingsLayout}에서 이미 pt-14를 주고 있어서 "h-dvh pt-14"를 사용할 수 없었습니다.
@@ -43,11 +61,9 @@ const ManageAccountPage = () => {
             </div>
           </section>
           <section>
-            <Link href={ROUTES.ROOT}>
-              <div className="px-4 py-2">
-                <p className="font-medium">로그아웃</p>
-              </div>
-            </Link>
+            <div className="cursor-pointer px-4 py-2" onClick={() => refetch()}>
+              <p className="font-medium">로그아웃</p>
+            </div>
           </section>
         </div>
         <div className="flex justify-center">
