@@ -7,6 +7,10 @@ const users = createQueryKeys('users', {
     queryKey: null,
     queryFn: api.users.usersControllerFetchUser,
   },
+  agreements: {
+    queryKey: null,
+    queryFn: api.users.agreementsControllerFetchAgreements,
+  },
   detail: (handle: string) => ({
     queryKey: [handle],
     queryFn: () => api.users.usersControllerFindUserByHandle(handle),

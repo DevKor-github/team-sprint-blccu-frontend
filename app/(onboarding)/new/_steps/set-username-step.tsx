@@ -1,48 +1,74 @@
+import { useQuery } from '@tanstack/react-query';
+
+import {
+  type AgreementsControllerFetchAgreementsData,
+  type UserResponseDto,
+} from '@/__generated__/data-contracts';
 import {
   AppBar,
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { SetUsernameForm } from '@/features/set-username-step/set-username-form';
+import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/props';
 
-const SetUsernameStep = ({ onNext }: PropsWithOnNext) => {
+const SetUsernameStep = (props: PropsWithOnNext) => {
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+
+  const { data: agreementsData } = useQuery(queries.users.agreements);
+
+  if (!meData) {
+    return null;
+  }
+
+  if (!agreementsData) {
+    return null;
+  }
+
+  const me = meData.data;
+  const agreements = agreementsData.data;
+
   return (
     <>
       <AppBar>
         <AppBarBack />
         <AppBarTitle>회원가입</AppBarTitle>
       </AppBar>
-      <div className="flex h-dvh flex-col justify-between px-4 pt-14">
-        <div className="mt-6 flex flex-col gap-4">
-          <Label htmlFor="username">유저 이름</Label>
-          <Input id="username" placeholder="이름을 입력해주세요." />
-        </div>
-        <div className="flex flex-col gap-10">
-          <section>
-            <div className="flex items-center justify-between py-2">
-              <p className="text-sm">이용약관 동의 (필수)</p>
-              <Checkbox />
-            </div>
-            <div className="flex items-center justify-between py-2">
-              <p className="text-sm">개인정보 수집 및 이용동의 (필수)</p>
-              <Checkbox />
-            </div>
-            <div className="flex items-center justify-between py-2">
-              <p className="text-sm">광고성 정보 수신 동의 (선택)</p>
-              <Checkbox />
-            </div>
-          </section>
-          <Button onClick={onNext} className="mb-4">
-            블꾸 시작하기
-          </Button>
-        </div>
-      </div>
+      <SetUsernameForm
+        defaultValues={convertToSetUsernameFormValues({ me, agreements })}
+        {...props}
+      />
     </>
   );
+};
+
+type ConvertToSetUsernameFormValuesProps = {
+  me: UserResponseDto;
+  agreements: AgreementsControllerFetchAgreementsData;
+};
+
+const convertToSetUsernameFormValues = ({
+  me,
+  agreements,
+}: ConvertToSetUsernameFormValuesProps) => {
+  const termsOfServiceAgreement = agreements.find(
+    (agreement) => agreement.agreementType === 'TERMS_OF_SERVICE',
+  );
+  const privacyPolicyAgreement = agreements.find(
+    (agreement) => agreement.agreementType === 'PRIVACY_POLICY',
+  );
+  const marketingConsentAgreement = agreements.find(
+    (agreement) => agreement.agreementType === 'MARKETING_CONSENT',
+  );
+
+  return {
+    ...me,
+    termsOfService:
+      termsOfServiceAgreement?.isAgreed === true ? true : undefined,
+    privacyPolicy: privacyPolicyAgreement?.isAgreed === true ? true : undefined,
+    marketingConsent: marketingConsentAgreement?.isAgreed,
+  } as const;
 };
 
 export { SetUsernameStep };

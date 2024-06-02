@@ -22,6 +22,7 @@ const TOAST_MESSAGES = {
   UPDATE_USER_PROFILE_FAIL: '프로필 수정에 실패했습니다.',
   CREATE_FEEDBACK_SUCCESS: '피드백이 전송되었습니다.',
   CREATE_FEEDBACK_ERROR: '피드백 전송에 실패했습니다.',
+  CREATE_AGREEMENT_FAIL: '약관 동의에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
