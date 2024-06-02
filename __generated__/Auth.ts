@@ -55,12 +55,14 @@ export class Auth<
    * @tags 인증 API
    * @name AuthControllerLogout
    * @summary 로그아웃(clear cookie)
-   * @request GET:/auth/logout
+   * @request POST:/auth/logout
+   * @secure
    */
   authControllerLogout = (params: RequestParams = {}) =>
     this.request<AuthControllerLogoutData, any>({
       path: `/auth/logout`,
-      method: 'GET',
+      method: 'POST',
+      secure: true,
       ...params,
     });
 }
