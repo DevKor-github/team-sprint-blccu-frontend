@@ -48,6 +48,7 @@ import {
   StickerCategoriesControllerCreateCategoryData,
   StickerCategoriesControllerMapCategoryData,
   StickersControllerCreatePublicStickerData,
+  UsersControllerDeleteUserData,
   UsersControllerFetchUserData,
   UsersControllerFindAllUsersData,
   UsersControllerFindUserByHandleData,
@@ -224,6 +225,22 @@ export class Users<
       body: data,
       secure: true,
       type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 회원을 탈퇴하고 연동된 게시글과 댓글을 soft delete한다.
+   *
+   * @tags 유저 API
+   * @name UsersControllerDeleteUser
+   * @summary 회원 탈퇴(soft delete)
+   * @request DELETE:/users/me
+   * @secure
+   */
+  usersControllerDeleteUser = (params: RequestParams = {}) =>
+    this.request<UsersControllerDeleteUserData, any>({
+      path: `/users/me`,
+      method: 'DELETE',
+      secure: true,
       ...params,
     });
   /**

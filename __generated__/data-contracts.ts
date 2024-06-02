@@ -1028,6 +1028,8 @@ export type UsersControllerFetchUserData = UserResponseDto;
 
 export type UsersControllerPatchUserData = UserResponseDto;
 
+export type UsersControllerDeleteUserData = any;
+
 export type UsersControllerUploadProfileImageData = ImageUploadResponseDto;
 
 export type UsersControllerUploadBackgroundImageData = ImageUploadResponseDto;
