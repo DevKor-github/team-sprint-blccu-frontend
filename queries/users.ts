@@ -11,6 +11,16 @@ const users = createQueryKeys('users', {
     queryKey: [handle],
     queryFn: () => api.users.usersControllerFindUserByHandle(handle),
   }),
+  follower: (id: number | undefined) => ({
+    queryKey: [id],
+    queryFn: () => {
+      if (id === undefined) {
+        return Promise.reject(new Error('User ID is undefined'));
+      }
+
+      return api.users.followsControllerCheckFollower(id);
+    },
+  }),
   followers: (id: number | undefined) => ({
     queryKey: [id],
     queryFn: () => {
@@ -19,16 +29,6 @@ const users = createQueryKeys('users', {
       }
 
       return api.users.followsControllerGetFollowers(id);
-    },
-  }),
-  following: (id: number | undefined) => ({
-    queryKey: [id],
-    queryFn: () => {
-      if (id === undefined) {
-        return Promise.reject(new Error('User ID is undefined'));
-      }
-
-      return api.users.followsControllerCheckFollowing(id);
     },
   }),
   followings: (id: number | undefined) => ({

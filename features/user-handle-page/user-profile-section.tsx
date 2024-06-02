@@ -44,8 +44,8 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
 
   const { data: meData } = useQuery({ ...queries.users.me, retry: false });
 
-  const { data: followingData } = useQuery({
-    ...queries.users.following(user.kakaoId),
+  const { data: followerData } = useQuery({
+    ...queries.users.follower(user.kakaoId),
     enabled: meData !== undefined,
   });
 
@@ -56,7 +56,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
       api.users.followsControllerFollowUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queries.users.following(user.kakaoId).queryKey,
+        queryKey: queries.users.follower(user.kakaoId).queryKey,
       });
 
       queryClient.invalidateQueries({
@@ -75,7 +75,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
       api.users.followsControllerUnfollowUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queries.users.following(user.kakaoId).queryKey,
+        queryKey: queries.users.follower(user.kakaoId).queryKey,
       });
 
       queryClient.invalidateQueries({
@@ -95,7 +95,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
 
   const isMe = me?.handle === handle;
 
-  const isFollowing = followingData?.data ?? false;
+  const isFollowing = followerData?.data ?? false;
 
   const followerDescriptor = getFollowerDescriptor(follower_count);
   const followingDescriptor = getFollowingDescriptor(following_count);
