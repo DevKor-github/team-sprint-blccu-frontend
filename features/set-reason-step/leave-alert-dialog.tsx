@@ -1,5 +1,3 @@
-import { useRouter } from 'next/navigation';
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,17 +8,13 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { ROUTES } from '@/constants/routes';
 import { type PropsWithTrigger } from '@/types/props';
 
-const LeaveAlertDialog = ({ trigger }: PropsWithTrigger) => {
-  /**
-   * @note
-   * - 개발 시 Link와 Button을 구분하고 있습니다. (Button 모양이라도 단순 페이지 이동인 경우 Link 사용)
-   * - 이 경우에는, 삭제하기 버튼 클릭 시 API 호출로 변경될 예정이라 예외적으로 Link가 아닌 router.push()를 사용합니다.
-   */
-  const router = useRouter();
+type LeaveAlertDialogProps = {
+  onSubmit: () => void;
+} & PropsWithTrigger;
 
+const LeaveAlertDialog = ({ onSubmit, trigger }: LeaveAlertDialogProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
@@ -33,9 +27,7 @@ const LeaveAlertDialog = ({ trigger }: PropsWithTrigger) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>취소하기</AlertDialogCancel>
-          <AlertDialogAction onClick={() => router.push(ROUTES.ROOT)}>
-            삭제하기
-          </AlertDialogAction>
+          <AlertDialogAction onClick={onSubmit}>삭제하기</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
