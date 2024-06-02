@@ -23,7 +23,7 @@ const SetProfileStep = ({ onNext }: PropsWithOnNext) => {
           건너뛰기
         </Button>
       </AppBar>
-      <SetProfileForm defaultValues={me} onNext={onNext} />
+      <SetProfileForm user={me} defaultValues={me} onNext={onNext} />
     </div>
   );
 };
