@@ -1,29 +1,50 @@
+import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from 'lucide-react';
+
 import useSelectedEditor from '@/app/(signed-in-only)/write/store/selectedEditor';
+import {
+  EditorBottomSubNavBar,
+  EditorBottomSubNavBarItem,
+  EditorBottomSubNavBarItemButton,
+} from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
 
 const AlignToolbar = () => {
   const editor = useSelectedEditor((state: any) => state.selectedEditor);
 
   return (
-    <div className="fixed bottom-[15%] left-[50%] z-50 h-[8%] w-[28rem] -translate-x-[50%] rounded-[20px] bg-[#fffffff5] shadow-[8px_8px_8px_#00000014] backdrop-blur-sm backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(4px)_brightness(100%)]">
-      <div className="flex items-center justify-around py-5 align-middle">
-        <div onClick={() => editor.chain().focus().setTextAlign('left').run()}>
-          좌측
-        </div>
-        <div
+    <EditorBottomSubNavBar>
+      <EditorBottomSubNavBarItem>
+        <EditorBottomSubNavBarItemButton
+          onClick={() => editor.chain().focus().setTextAlign('left').run()}
+        >
+          <AlignLeft className="h-8 w-8" />
+          <p className="text-xs">좌측</p>
+        </EditorBottomSubNavBarItemButton>
+      </EditorBottomSubNavBarItem>
+      <EditorBottomSubNavBarItem>
+        <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setTextAlign('center').run()}
         >
-          중앙
-        </div>
-        <div
+          <AlignCenter className="h-8 w-8" />
+          <p className="text-xs">중앙</p>
+        </EditorBottomSubNavBarItemButton>
+      </EditorBottomSubNavBarItem>
+      <EditorBottomSubNavBarItem>
+        <EditorBottomSubNavBarItemButton
+          onClick={() => editor.chain().focus().setTextAlign('right').run()}
+        >
+          <AlignRight className="h-8 w-8" />
+          <p className="text-xs">우측</p>
+        </EditorBottomSubNavBarItemButton>
+      </EditorBottomSubNavBarItem>
+      <EditorBottomSubNavBarItem>
+        <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setTextAlign('justify').run()}
         >
-          배분
-        </div>
-        <div onClick={() => editor.chain().focus().setTextAlign('right').run()}>
-          우측
-        </div>
-      </div>
-    </div>
+          <AlignJustify className="h-8 w-8" />
+          <p className="text-xs">배분</p>
+        </EditorBottomSubNavBarItemButton>
+      </EditorBottomSubNavBarItem>
+    </EditorBottomSubNavBar>
   );
 };
 
