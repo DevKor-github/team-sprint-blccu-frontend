@@ -15,9 +15,10 @@ import {
   StickerCategoriesControllerFetchCategoriesData,
   StickerCategoriesControllerFetchStickersByCategoryNameData,
   StickersControllerCreatePrivateStickerData,
+  StickersControllerDeleteStickerData,
   StickersControllerFetchPrivateStickersData,
   StickersControllerFetchPublicStickersData,
-  StickersControllerToggleReusableData,
+  StickersControllerPatchStickerData,
   UpdateStickerInput,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
@@ -66,22 +67,38 @@ export class Stickers<
    * @description 본인이 만든 스티커를 patch한다. image_url 변경 시 기존의 이미지는 s3에서 제거된다.
    *
    * @tags 스티커 API
-   * @name StickersControllerToggleReusable
+   * @name StickersControllerPatchSticker
    * @summary 스티커의 image_url 혹은 재사용 여부를 설정한다.
    * @request PATCH:/stickers/{id}
    * @secure
    */
-  stickersControllerToggleReusable = (
+  stickersControllerPatchSticker = (
     id: number,
     data: UpdateStickerInput,
     params: RequestParams = {},
   ) =>
-    this.request<StickersControllerToggleReusableData, any>({
+    this.request<StickersControllerPatchStickerData, any>({
       path: `/stickers/${id}`,
       method: 'PATCH',
       body: data,
       secure: true,
       type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description 스티커를 삭제한다.
+   *
+   * @tags 스티커 API
+   * @name StickersControllerDeleteSticker
+   * @summary 스티커 삭제
+   * @request DELETE:/stickers/{id}
+   * @secure
+   */
+  stickersControllerDeleteSticker = (id: number, params: RequestParams = {}) =>
+    this.request<StickersControllerDeleteStickerData, any>({
+      path: `/stickers/${id}`,
+      method: 'DELETE',
+      secure: true,
       ...params,
     });
   /**

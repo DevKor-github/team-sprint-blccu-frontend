@@ -40,6 +40,8 @@ import {
   PatchAnnouncementInput,
   PatchPostCategoryDto,
   PatchUserInput,
+  PostBackgroundsControllerDeleteData,
+  PostBackgroundsControllerUploadImageData,
   PostCategoriesControllerCreatePostCategoryData,
   PostCategoriesControllerDeletePostCategoryData,
   PostCategoriesControllerFetchMyCategoryData,
@@ -685,6 +687,39 @@ export class Users<
       path: `/users/me/categories/${categoryId}`,
       method: 'DELETE',
       secure: true,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags 어드민 API
+   * @name PostBackgroundsControllerUploadImage
+   * @summary 내지 업로드
+   * @request POST:/users/admin/posts/background
+   */
+  postBackgroundsControllerUploadImage = (
+    data: ImageUploadDto,
+    params: RequestParams = {},
+  ) =>
+    this.request<PostBackgroundsControllerUploadImageData, any>({
+      path: `/users/admin/posts/background`,
+      method: 'POST',
+      body: data,
+      type: ContentType.FormData,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags 어드민 API
+   * @name PostBackgroundsControllerDelete
+   * @summary 내지 삭제하기
+   * @request DELETE:/users/admin/posts/background/{id}
+   */
+  postBackgroundsControllerDelete = (id: string, params: RequestParams = {}) =>
+    this.request<PostBackgroundsControllerDeleteData, any>({
+      path: `/users/admin/posts/background/${id}`,
+      method: 'DELETE',
       ...params,
     });
   /**

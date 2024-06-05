@@ -171,7 +171,8 @@ export interface CreateAgreementsInput {
     | 'PRIVACY_POLICY'
     | 'TERMS_OF_SERVICE'
     | 'MARKETING_CONSENT'
-    | 'CUSTOM_AGREEMENT';
+    | 'CUSTOM_AGREEMENT'
+    | 'DESIGN_LICENCE';
   /** 약관 동의 유무 */
   isAgreed: boolean;
 }
@@ -186,7 +187,8 @@ export interface FetchAgreementDto {
     | 'PRIVACY_POLICY'
     | 'TERMS_OF_SERVICE'
     | 'MARKETING_CONSENT'
-    | 'CUSTOM_AGREEMENT';
+    | 'CUSTOM_AGREEMENT'
+    | 'DESIGN_LICENCE';
   /** 약관 동의 유무 */
   isAgreed: boolean;
   /**
@@ -280,19 +282,46 @@ export interface MapCategoryDto {
   stickerCategoryId: number;
 }
 
-export interface CreateStickerBlockInput {
-  /** 스티커의 width */
-  width: number;
-  /** 스티커의 top */
-  top: number;
-  /** 스티커의 left */
-  left: number;
-  /** 스티커의 rotate */
-  rotate: number;
+export interface BulkInsertStickerInput {
+  /** 스티커의 posX */
+  posX: number;
+  /** 스티커의 posY */
+  posY: number;
   /** 스티커의 scale */
   scale: number;
+  /** 스티커의 angle */
+  angle: number;
   /** 스티커의 zindex */
   zindex: number;
+  /** 스티커의 clientId */
+  clientId: string;
+  /** 스티커의 id */
+  stickerId: number;
+}
+
+export interface CreateStickerBlocksInput {
+  stickerBlocks: BulkInsertStickerInput[];
+}
+
+export interface CreateStickerBlocksResponseDto {
+  /** 스티커의 posX */
+  posX: number;
+  /** 스티커의 posY */
+  posY: number;
+  /** 스티커의 scale */
+  scale: number;
+  /** 스티커의 angle */
+  angle: number;
+  /** 스티커의 zindex */
+  zindex: number;
+  /** 스티커의 clientId */
+  clientId: string;
+  /** 스티커의 id */
+  stickerId: number;
+  /** 게시글 아이디 */
+  postsId: number;
+  /** 스티커블록 아이디 */
+  id: number;
 }
 
 export interface PublishPostInput {
@@ -699,18 +728,18 @@ export interface StickerBlock {
   postsId: number;
   /** 참조하는 포스트 */
   posts: Posts;
-  /** 스티커의 width */
-  width: number;
-  /** 스티커의 top */
-  top: number;
-  /** 스티커의 left */
-  left: number;
-  /** 스티커의 rotate */
-  rotate: number;
+  /** 스티커의 posX */
+  posX: number;
+  /** 스티커의 posY */
+  posY: number;
   /** 스티커의 scale */
   scale: number;
+  /** 스티커의 angle */
+  angle: number;
   /** 스티커의 zindex */
   zindex: number;
+  /** 스티커의 clientId */
+  clientId: string;
 }
 
 export interface FetchPostForUpdateDto {
@@ -816,7 +845,7 @@ export interface ChildrenComment {
    * 논리 삭제 칼럼
    * @format date-time
    */
-  date_deleted: string;
+  date_deleted: string | null;
   /** 작성자의 정보 */
   user: UserPrimaryResponseDto;
 }
@@ -848,7 +877,7 @@ export interface FetchCommentsDto {
    * 논리 삭제 칼럼
    * @format date-time
    */
-  date_deleted: string;
+  date_deleted: string | null;
   /** 작성자의 정보 */
   user: UserPrimaryResponseDto;
   /** 자식 댓글 배열 */
@@ -887,7 +916,7 @@ export interface FetchCommentDto {
    * 논리 삭제 칼럼
    * @format date-time
    */
-  date_deleted: string;
+  date_deleted: string | null;
 }
 
 export interface OmitTypeClass {
@@ -1025,6 +1054,8 @@ export interface FetchReportResponse {
 
 export type AppControllerHealthCheckData = any;
 
+export type PrometheusControllerIndexData = any;
+
 export type AnnouncementsControllerCreateAnmtData = AnnouncementResponseDto;
 
 export type AnnouncementsControllerFetchAnmtsData = AnnouncementResponseDto[];
@@ -1057,7 +1088,8 @@ export interface AgreementsControllerFetchContractParams {
     | 'PRIVACY_POLICY'
     | 'TERMS_OF_SERVICE'
     | 'MARKETING_CONSENT'
-    | 'CUSTOM_AGREEMENT';
+    | 'CUSTOM_AGREEMENT'
+    | 'DESIGN_LICENCE';
 }
 
 export type AgreementsControllerFetchContractData = any;
@@ -1078,7 +1110,9 @@ export type StickersControllerCreatePrivateStickerData = Sticker;
 
 export type StickersControllerFetchPrivateStickersData = Sticker[];
 
-export type StickersControllerToggleReusableData = any;
+export type StickersControllerPatchStickerData = Sticker;
+
+export type StickersControllerDeleteStickerData = any;
 
 export type StickersControllerFetchPublicStickersData = Sticker[];
 
@@ -1092,7 +1126,8 @@ export type StickerCategoriesControllerCreateCategoryData = StickerCategory;
 
 export type StickerCategoriesControllerMapCategoryData = any;
 
-export type StickerBlocksControllerCreateStickerBlockData = any;
+export type StickerBlocksControllerCreateStickerBlocksData =
+  CreateStickerBlocksResponseDto[];
 
 export type PostsControllerPublishPostData = PublishPostDto;
 

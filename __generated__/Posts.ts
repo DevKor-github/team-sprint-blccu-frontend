@@ -18,7 +18,7 @@ import {
   CreateCommentInput,
   CreatePostInput,
   CreateReportInput,
-  CreateStickerBlockInput,
+  CreateStickerBlocksInput,
   ImageUploadDto,
   LikesControllerDeleteLikeData,
   LikesControllerFetchIfLikedData,
@@ -26,6 +26,7 @@ import {
   LikesControllerLikeData,
   PatchCommentDto,
   PatchPostInput,
+  PostBackgroundsControllerFetchAllData,
   PostsControllerCreatePrivateStickerData,
   PostsControllerFetchCursorData,
   PostsControllerFetchCursorParams,
@@ -47,7 +48,7 @@ import {
   PublishPostInput,
   ReportsControllerReportCommentData,
   ReportsControllerReportPostData,
-  StickerBlocksControllerCreateStickerBlockData,
+  StickerBlocksControllerCreateStickerBlocksData,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -58,20 +59,21 @@ export class Posts<
    * @description 게시글과 스티커 아이디를 매핑한 스티커 블록을 생성한다. 세부 스타일 좌표값을 저장한다.
    *
    * @tags 게시글 API
-   * @name StickerBlocksControllerCreateStickerBlock
+   * @name StickerBlocksControllerCreateStickerBlocks
    * @summary 게시글 속 스티커 생성
-   * @request POST:/posts/{postId}/stickers/{stickerId}
+   * @request POST:/posts/{postId}/stickers/bulk
+   * @secure
    */
-  stickerBlocksControllerCreateStickerBlock = (
+  stickerBlocksControllerCreateStickerBlocks = (
     postId: number,
-    stickerId: number,
-    data: CreateStickerBlockInput,
+    data: CreateStickerBlocksInput,
     params: RequestParams = {},
   ) =>
-    this.request<StickerBlocksControllerCreateStickerBlockData, any>({
-      path: `/posts/${postId}/stickers/${stickerId}`,
+    this.request<StickerBlocksControllerCreateStickerBlocksData, any>({
+      path: `/posts/${postId}/stickers/bulk`,
       method: 'POST',
       body: data,
+      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -458,6 +460,20 @@ export class Posts<
   likesControllerFetchLikes = (postId: number, params: RequestParams = {}) =>
     this.request<LikesControllerFetchLikesData, any>({
       path: `/posts/${postId}/like-users`,
+      method: 'GET',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags 게시글 API
+   * @name PostBackgroundsControllerFetchAll
+   * @summary 내지 모두 불러오기
+   * @request GET:/posts/backgrounds
+   */
+  postBackgroundsControllerFetchAll = (params: RequestParams = {}) =>
+    this.request<PostBackgroundsControllerFetchAllData, any>({
+      path: `/posts/backgrounds`,
       method: 'GET',
       ...params,
     });
