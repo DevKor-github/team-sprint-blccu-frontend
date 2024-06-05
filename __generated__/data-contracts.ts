@@ -154,6 +154,17 @@ export interface ImageUploadResponseDto {
   image_url: string;
 }
 
+export interface DeleteUserInput {
+  /** 피드백 내용 */
+  content: string;
+  /** 피드백 종류 */
+  type:
+    | 'TOO_MANY_ERRORS'
+    | 'REJOIN_AFTER_DEACTIVATION'
+    | 'OTHER_ISSUES'
+    | 'GENERAL_FEEDBACK';
+}
+
 export interface CreateAgreementsInput {
   /** 약관의 종류 */
   agreementType:
@@ -210,6 +221,12 @@ export interface FetchFeedbackDto {
   id: number;
   /** 피드백 내용 */
   content: string;
+  /** 피드백 종류 */
+  type:
+    | 'TOO_MANY_ERRORS'
+    | 'REJOIN_AFTER_DEACTIVATION'
+    | 'OTHER_ISSUES'
+    | 'GENERAL_FEEDBACK';
   /** 피드백 보낸 유저의 카카오 아이디 */
   userKakaoId: number;
   /**

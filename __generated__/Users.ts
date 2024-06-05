@@ -25,6 +25,7 @@ import {
   CreateFeedbackInput,
   CreatePostCategoryDto,
   CreateStickerCategoryInput,
+  DeleteUserInput,
   FeedbacksControllerCreateFeedbackData,
   FeedbacksControllerGetFeedbacksData,
   FollowsControllerCheckFollowerData,
@@ -236,11 +237,16 @@ export class Users<
    * @request DELETE:/users/me
    * @secure
    */
-  usersControllerDeleteUser = (params: RequestParams = {}) =>
+  usersControllerDeleteUser = (
+    data: DeleteUserInput,
+    params: RequestParams = {},
+  ) =>
     this.request<UsersControllerDeleteUserData, any>({
       path: `/users/me`,
       method: 'DELETE',
+      body: data,
       secure: true,
+      type: ContentType.Json,
       ...params,
     });
   /**
@@ -292,7 +298,6 @@ export class Users<
    * @name AgreementsControllerFetchContract
    * @summary contract fetch
    * @request GET:/users/contracts
-   * @secure
    */
   agreementsControllerFetchContract = (
     query: AgreementsControllerFetchContractParams,
@@ -302,7 +307,6 @@ export class Users<
       path: `/users/contracts`,
       method: 'GET',
       query: query,
-      secure: true,
       ...params,
     });
   /**
