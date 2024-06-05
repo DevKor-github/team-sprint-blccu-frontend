@@ -24,9 +24,13 @@ type CommentsPageProps = {
 const CommentsPage = ({
   params: { userHandle: _, postId },
 }: CommentsPageProps) => {
-  const { data } = useQuery(queries.posts.comments(postId));
+  const { data: commentsData } = useQuery(queries.posts.comments(postId));
 
-  const comments = data?.data ?? [];
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+
+  const comments = commentsData?.data ?? [];
+
+  const me = meData?.data;
 
   return (
     <>
@@ -37,14 +41,14 @@ const CommentsPage = ({
       <div className="flex flex-col gap-2 px-4 pb-20 pt-14">
         {comments.map((comment, index) => (
           <div key={index}>
-            <CommentableListItem comment={comment} />
+            <CommentableListItem comment={comment} me={me} />
             <div className="relative ml-7 mt-2 flex flex-col gap-2">
               {comment.children.map((child, index) => (
                 <Fragment key={index}>
                   {index === 0 && (
                     <CornerDownRight className="absolute -left-7 top-2 h-4 w-4 text-blccu-neutral-400" />
                   )}
-                  <CommentableListItem comment={child} />
+                  <CommentableListItem comment={child} me={me} />
                 </Fragment>
               ))}
             </div>

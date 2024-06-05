@@ -29,15 +29,23 @@ type PostPageProps = {
 };
 
 const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
-  const { data } = useQuery(queries.posts.detail(postId));
+  const { data: postData } = useQuery(queries.posts.detail(postId));
 
-  const post = data?.data;
+  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+
+  const post = postData?.data;
 
   if (post === undefined) {
     return null;
   }
 
+  const me = meData?.data;
+
   const { id, user, image_url } = post;
+
+  const isSignedIn = me !== undefined;
+
+  const isMe = me?.kakaoId === user.kakaoId;
 
   return (
     <>
@@ -56,14 +64,18 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
               <p className="text-sm font-medium">{user.username}</p>
             </Link>
           </AppBarTitle>
-          <ReportPostBottomActionSheet
-            id={id}
-            trigger={
-              <IconButton size="lg">
-                <EllipsisVertical className="h-5 w-5" />
-              </IconButton>
-            }
-          />
+          {isSignedIn && (
+            <ReportPostBottomActionSheet
+              id={id}
+              me={me}
+              isMe={isMe}
+              trigger={
+                <IconButton size="lg">
+                  <EllipsisVertical className="h-5 w-5" />
+                </IconButton>
+              }
+            />
+          )}
         </div>
       </AppBar>
       <div className="pt-14">

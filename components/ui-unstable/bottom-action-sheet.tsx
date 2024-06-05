@@ -80,11 +80,13 @@ const BottomActionSheetGroup = ({ children }: React.PropsWithChildren) => {
 
 type BottomActionSheetItemProps = {
   className?: string;
+  onClick?: () => void;
 } & React.PropsWithChildren;
 
 const BottomActionSheetItem = ({
   children,
   className,
+  onClick,
 }: BottomActionSheetItemProps) => {
   return (
     <BottomActionSheetClose asChild>
@@ -93,6 +95,7 @@ const BottomActionSheetItem = ({
           'cursor-pointer py-3 text-center text-sm text-blccu-neutral-600',
           className,
         )}
+        onClick={onClick}
       >
         {children}
       </div>
