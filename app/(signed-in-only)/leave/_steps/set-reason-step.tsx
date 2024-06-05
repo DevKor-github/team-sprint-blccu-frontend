@@ -5,8 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import z from 'zod';
 
+import { type DeleteUserInput } from '@/__generated__/data-contracts';
 import {
   AppBar,
   AppBarBack,
@@ -22,15 +25,17 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
 import { LeaveAlertDialog } from '@/features/set-reason-step/leave-alert-dialog';
+import { api } from '@/lib/api';
 import { getValues } from '@/lib/utils';
 import { type PropsWithOnNext } from '@/types/props';
 
 const LEAVE_REASON_TYPE = {
-  EXCESSIVE_ERROR: 'EXCESSIVE_ERROR',
-  REJOIN_AFTER_LEAVE: 'REJOIN_AFTER_LEAVE',
-  ETC: 'ETC',
+  TOO_MANY_ERRORS: 'TOO_MANY_ERRORS',
+  REJOIN_AFTER_DEACTIVATION: 'REJOIN_AFTER_DEACTIVATION',
+  OTHER_ISSUES: 'OTHER_ISSUES',
 } as const;
 
 const leaveReasonFormSchema = z.object({
@@ -54,22 +59,34 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
   const form = useForm<LeaveReasonFormValues>({
     resolver: zodResolver(leaveReasonFormSchema),
     defaultValues: {
-      type: LEAVE_REASON_TYPE.EXCESSIVE_ERROR,
+      type: LEAVE_REASON_TYPE.TOO_MANY_ERRORS,
       content: '',
     },
   });
 
-  const onSubmit = (values: LeaveReasonFormValues) => {
-    console.log(values);
+  const { mutate } = useMutation({
+    mutationFn: (deleteUserInput: DeleteUserInput) =>
+      api.users.usersControllerDeleteUser(deleteUserInput),
+    onSuccess: () => {
+      toast.success(TOAST_MESSAGES.LEAVE_USER_SUCCESS);
 
-    if (onNext !== undefined) {
-      onNext();
-    }
+      if (onNext !== undefined) {
+        onNext();
+      }
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.LEAVE_USER_FAIL);
+    },
+  });
+
+  const onSubmit = (values: LeaveReasonFormValues) => {
+    mutate(values);
   };
 
   const { isSubmitting } = form.formState;
 
-  const isEtc = form.watch(LEAVE_REASON_NAME.TYPE) === LEAVE_REASON_TYPE.ETC;
+  const isEtc =
+    form.watch(LEAVE_REASON_NAME.TYPE) === LEAVE_REASON_TYPE.OTHER_ISSUES;
 
   return (
     <>
@@ -105,7 +122,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
                           </FormLabel>
                           <FormControl>
                             <RadioGroupItem
-                              value={LEAVE_REASON_TYPE.EXCESSIVE_ERROR}
+                              value={LEAVE_REASON_TYPE.TOO_MANY_ERRORS}
                             />
                           </FormControl>
                         </FormItem>
@@ -115,14 +132,18 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
                           </FormLabel>
                           <FormControl>
                             <RadioGroupItem
-                              value={LEAVE_REASON_TYPE.REJOIN_AFTER_LEAVE}
+                              value={
+                                LEAVE_REASON_TYPE.REJOIN_AFTER_DEACTIVATION
+                              }
                             />
                           </FormControl>
                         </FormItem>
                         <FormItem className="flex items-center justify-between space-y-0 py-2">
                           <FormLabel className="font-normal">기타</FormLabel>
                           <FormControl>
-                            <RadioGroupItem value={LEAVE_REASON_TYPE.ETC} />
+                            <RadioGroupItem
+                              value={LEAVE_REASON_TYPE.OTHER_ISSUES}
+                            />
                           </FormControl>
                         </FormItem>
                       </RadioGroup>

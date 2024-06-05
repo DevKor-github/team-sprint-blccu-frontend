@@ -28,6 +28,8 @@ const TOAST_MESSAGES = {
   UPLOAD_BACKGROUND_IMAGE_SUCCESS: '배경 이미지가 업로드되었습니다.',
   UPLOAD_BACKGROUND_IMAGE_FAIL: '배경 이미지 업로드에 실패했습니다.',
   LOGOUT_FAIL: '로그아웃에 실패했습니다.',
+  LEAVE_USER_SUCCESS: '회원 탈퇴되었습니다.',
+  LEAVE_USER_FAIL: '회원 탈퇴에 실패했습니다.',
 };
 
 export { TOAST_MESSAGES };
