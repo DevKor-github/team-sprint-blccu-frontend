@@ -2,6 +2,7 @@
 
 import { ArrowDownToLine, File, Smile } from 'lucide-react';
 
+import { EditPostBackgroundSheet } from '@/app/(signed-in-only)/write/components/sheet/edit-post-background-sheet';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import {
   EditorBottomNavBar,
@@ -25,13 +26,14 @@ const DecoToolbar = () => {
         </EditorBottomNavBarItemButton>
       </EditorBottomNavBarItem>
       <EditorBottomNavBarItem>
-        <EditorBottomNavBarItemButton
-          isSelected={focused === 'background'}
-          onClick={() => setFocused('background')}
-        >
-          <File className="h-6 w-6" />
-          <p className="text-xs">내지 수정</p>
-        </EditorBottomNavBarItemButton>
+        <EditPostBackgroundSheet
+          trigger={
+            <EditorBottomNavBarItemButton>
+              <File className="h-6 w-6" />
+              <p className="text-xs">내지 수정</p>
+            </EditorBottomNavBarItemButton>
+          }
+        />
       </EditorBottomNavBarItem>
       <EditorBottomNavBarItem>
         <EditorBottomNavBarItemButton

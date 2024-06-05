@@ -4,6 +4,8 @@ import { useRef } from 'react';
 
 import html2canvas from 'html2canvas';
 
+import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
+
 import Editor from './editor/editor';
 import StickerContainer from './stickerContainer';
 import Top from './top';
@@ -31,8 +33,16 @@ const MainContent = () => {
     }
   };
 
+  const { backgroundImage } = useEditorContentsStore((state) => state);
+
   return (
-    <div>
+    <div
+      className="min-h-dvh bg-contain bg-repeat-y"
+      style={{
+        backgroundImage:
+          backgroundImage !== null ? `url(${backgroundImage})` : 'none',
+      }}
+    >
       <Top />
       <div ref={mainContentRef}>
         <StickerContainer />
