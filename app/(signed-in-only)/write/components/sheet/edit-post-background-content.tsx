@@ -12,7 +12,7 @@ import { queries } from '@/queries';
 const EditPostBackgroundContent = () => {
   const { data } = useQuery(queries.posts.background);
 
-  const { setBackgroundImage } = useEditorContentsStore((state) => state);
+  const { setBackground } = useEditorContentsStore((state) => state);
 
   const backgrounds = data?.data ?? [];
 
@@ -27,7 +27,7 @@ const EditPostBackgroundContent = () => {
           <SheetClose>
             <div
               className="h-32 w-full rounded-lg shadow-lg"
-              onClick={() => setBackgroundImage(null)}
+              onClick={() => setBackground(null)}
             ></div>
           </SheetClose>
           {backgrounds.map((background) => (
@@ -39,7 +39,7 @@ const EditPostBackgroundContent = () => {
                 className="h-32 w-full rounded-lg object-cover shadow-lg"
                 width={500}
                 height={500}
-                onClick={() => setBackgroundImage(background.image_url)}
+                onClick={() => setBackground(background)}
               />
             </SheetClose>
           ))}

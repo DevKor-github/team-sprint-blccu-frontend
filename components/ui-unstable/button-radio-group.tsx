@@ -75,6 +75,7 @@ const ButtonRadioGroupItem = ({
 
   return (
     <Button
+      type="button"
       variant={variant}
       value={value}
       onClick={context.onClick}
