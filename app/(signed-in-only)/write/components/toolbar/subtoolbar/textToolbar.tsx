@@ -38,7 +38,7 @@ const TextToolbar = () => {
         <div
           onClick={() => {
             if (!editor) return;
-            editor.chain().focus().run();
+            editor.chain().focus().setFontSize('20pt').run();
           }}
         >
           크기
