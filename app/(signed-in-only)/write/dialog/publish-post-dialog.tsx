@@ -1,0 +1,16 @@
+import { PublishPostForm } from '@/app/(signed-in-only)/write/dialog/publish-post-form';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { type PropsWithTrigger } from '@/types/props';
+
+const PublishPostDialog = ({ trigger }: PropsWithTrigger) => {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent className="h-full w-full max-w-md bg-blccu-neutral-200 p-0">
+        <PublishPostForm />
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export { PublishPostDialog };

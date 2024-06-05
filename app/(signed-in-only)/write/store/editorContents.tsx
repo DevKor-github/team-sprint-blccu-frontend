@@ -1,22 +1,28 @@
 import { create } from 'zustand';
 
+import { type PostBackground } from '@/__generated__/data-contracts';
+
 type EditorContentsState = {
   titleContents: string;
   bodyContents: string;
-  backgroundImage: string | null;
+  background: PostBackground | null;
+  mainContainerElement: HTMLElement | null;
   setTitleContents: (titleContents: string) => void;
   setBodyContents: (bodyContents: string) => void;
-  setBackgroundImage: (backgroundImage: string | null) => void;
+  setBackground: (background: PostBackground | null) => void;
+  setMainContainerElement: (element: HTMLElement) => void;
 };
 
 const useEditorContentsStore = create<EditorContentsState>((set) => ({
   titleContents: '',
   bodyContents: '',
-  backgroundImage: '',
+  background: null,
+  mainContainerElement: null,
   setTitleContents: (titleContents: string) => set({ titleContents }),
   setBodyContents: (bodyContents: string) => set({ bodyContents }),
-  setBackgroundImage: (backgroundImage: string | null) =>
-    set({ backgroundImage }),
+  setBackground: (background: PostBackground | null) => set({ background }),
+  setMainContainerElement: (element: HTMLElement) =>
+    set({ mainContainerElement: element }),
 }));
 
 export default useEditorContentsStore;
