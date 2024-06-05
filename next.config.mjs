@@ -42,6 +42,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'picsum.photos',
       },
+      /* s3 bucket */
+      {
+        protocol: 'https',
+        hostname: 's3.ap-northeast-2.amazonaws.com',
+      },
     ],
   },
   webpack: (config) => {
