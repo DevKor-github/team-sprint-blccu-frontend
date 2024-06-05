@@ -1,5 +1,8 @@
 'use client';
 
+import { useState } from 'react';
+
+import StickerPost from '@/app/(signed-in-only)/write/components/stickerPost';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 
@@ -13,6 +16,7 @@ const StickerBottomSheet = () => {
         }
     });
     */
+  const [stickerPostOpen, setStickerPostOpen] = useState(false);
 
   const data = [
     { id: 1, name: '카테고리1' },
@@ -23,35 +27,35 @@ const StickerBottomSheet = () => {
   const dummyStickerData = [
     {
       id: 1,
-      src: '/Burger.png',
-      x: 200,
-      y: 200,
-      w: 200,
-      h: 200,
+      src: 'Burger.png',
+      x: 100,
+      y: 100,
+      scale: 1,
+      angle: 0,
     },
     {
       id: 2,
       src: 'Doughnut.png',
-      x: 200,
-      y: 200,
-      w: 200,
-      h: 200,
+      x: 100,
+      y: 100,
+      scale: 1,
+      angle: 0,
     },
     {
       id: 3,
       src: 'Egg.png',
-      x: 200,
-      y: 200,
-      w: 200,
-      h: 200,
+      x: 100,
+      y: 100,
+      scale: 1,
+      angle: 0,
     },
     {
       id: 4,
       src: 'Pizza.png',
-      x: 200,
-      y: 200,
-      w: 200,
-      h: 200,
+      x: 100,
+      y: 100,
+      scale: 1,
+      angle: 0,
     },
   ];
 
@@ -91,7 +95,8 @@ const StickerBottomSheet = () => {
                 {item.name}
               </div>
             ))}
-            <div>스티커 추가</div>
+            <div onClick={() => setStickerPostOpen(true)}>스티커 추가</div>
+            {stickerPostOpen && <StickerPost />}
           </div>
         </div>
         <div className="container grid max-h-[50vh] grid-cols-4 gap-4 overflow-y-auto px-4 py-6">

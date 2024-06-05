@@ -4,6 +4,8 @@ import { devtools } from 'zustand/middleware';
 const useStickersStore = create(
   devtools((set) => ({
     stickers: {},
+    focused: null,
+    setFocused: (focused: string | null) => set({ focused }),
     addSticker: (sticker: any) =>
       set((state: any) => ({
         stickers: { ...state.stickers, [sticker.clientId]: sticker },
@@ -33,18 +35,18 @@ const useStickersStore = create(
       }),
     editSize: ({
       clientId,
-      w,
-      h,
+      scale,
+      angle,
     }: {
       clientId: string;
-      w: number;
-      h: number;
+      scale: number;
+      angle: number;
     }) =>
       set((state: any) => {
         const newStickers = { ...state.stickers };
         if (newStickers[clientId]) {
-          newStickers[clientId].w = w;
-          newStickers[clientId].h = h;
+          newStickers[clientId].scale = scale;
+          newStickers[clientId].angle = angle;
         }
         return { stickers: newStickers };
       }),

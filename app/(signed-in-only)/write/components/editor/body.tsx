@@ -11,6 +11,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import FontSize from 'tiptap-extension-font-size';
 
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
@@ -73,12 +74,13 @@ const Body = () => {
       Color,
       FontFamily,
       Underline,
+      FontSize,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       CustomImage,
       Placeholder.configure({ placeholder: '본문을 작성해주세요' }),
     ],
     onUpdate: ({ editor }) => {
-      const json = editor.getJSON();
+      const json = editor.getHTML();
       setBodyContents(json);
     },
   });

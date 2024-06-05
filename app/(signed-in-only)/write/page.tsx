@@ -1,3 +1,5 @@
+import React from 'react';
+
 import MainContent from './components/mainContent';
 import BackgroundBottomSheet from './components/toolbar/backgroundBottomSheet';
 import MainToolbar from './components/toolbar/mainToolbar';

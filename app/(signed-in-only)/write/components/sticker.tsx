@@ -23,6 +23,12 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
     (state: any) => state.stickers[clientId],
   );
 
+  const editPosition = useStickersStore((state: any) => state.editPosition);
+  const editSize = useStickersStore((state: any) => state.editSize);
+
+  const focused = useStickersStore((state: any) => state.focused);
+  const setFocused = useStickersStore((state: any) => state.setFocused);
+
   const mode = useModeStore((state: any) => state.mode);
 
   const freeze = () => {
@@ -65,48 +71,50 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
       const clientY =
         event instanceof TouchEvent ? event.touches[0].clientY : event.clientY;
 
-      if (resizingRef.current) {
-        // Resizing
-        if (!containerRef.current) return;
-        event.stopPropagation();
+      if (focused === clientId) {
+        if (resizingRef.current) {
+          // Resizing
+          if (!containerRef.current) return;
+          event.stopPropagation();
 
-        const rect = containerRef.current.getBoundingClientRect();
-        const center = {
-          x: rect.left + rect.width / 2,
-          y: rect.top + rect.height / 2,
-        };
+          const rect = containerRef.current.getBoundingClientRect();
+          const center = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+          };
 
-        const dx = clientX - center.x;
-        const dy = clientY - center.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+          const dx = clientX - center.x;
+          const dy = clientY - center.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
-        setTransform((prev) => ({
-          ...prev,
-          scale: distance / (rect.width / 2) || 1,
-          angle: angle - 90,
-        }));
-      } else if (draggingRef.current && lastPositionRef.current) {
-        // Dragging
-        event.stopPropagation();
+          setTransform((prev) => ({
+            ...prev,
+            scale: distance / (rect.width / 2) || 1,
+            angle: angle - 90,
+          }));
+        } else if (draggingRef.current && lastPositionRef.current) {
+          // Dragging
+          event.stopPropagation();
 
-        const dx = clientX - lastPositionRef.current.x;
-        const dy = clientY - lastPositionRef.current.y;
+          const dx = clientX - lastPositionRef.current.x;
+          const dy = clientY - lastPositionRef.current.y;
 
-        if (Number.isNaN(dx) || Number.isNaN(dy)) {
-          return;
+          if (Number.isNaN(dx) || Number.isNaN(dy)) {
+            return;
+          }
+
+          setTransform((prev) => ({
+            ...prev,
+            posX: prev.posX + dx,
+            posY: prev.posY + dy,
+          }));
+
+          lastPositionRef.current = { x: clientX, y: clientY };
         }
-
-        setTransform((prev) => ({
-          ...prev,
-          posX: prev.posX + dx,
-          posY: prev.posY + dy,
-        }));
-
-        lastPositionRef.current = { x: clientX, y: clientY };
       }
     },
-    [],
+    [clientId, focused],
   );
 
   const throttledMouseOrTouchMove = useCallback(
@@ -118,16 +126,28 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
     draggingRef.current = false;
     resizingRef.current = false;
     transformRef.current = transform;
+    editPosition({
+      clientId,
+      x: transform.posX,
+      y: transform.posY,
+    });
+    editSize({
+      clientId,
+      scale: transform.scale,
+      angle: transform.angle,
+    });
   }, [transform]);
 
   const handleMouseDown = (event: React.MouseEvent): void => {
     event.stopPropagation();
+    setFocused(clientId);
     draggingRef.current = true;
     lastPositionRef.current = { x: event.clientX, y: event.clientY };
   };
 
   const handleTouchStart = (event: React.TouchEvent): void => {
     event.stopPropagation();
+    setFocused(clientId);
     draggingRef.current = true;
     if (event.touches.length > 0) {
       lastPositionRef.current = {
@@ -139,11 +159,13 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
 
   const handleResizeMouseDown = (event: React.MouseEvent): void => {
     event.stopPropagation();
+    setFocused(clientId);
     resizingRef.current = true;
   };
 
   const handleResizeTouchStart = (event: React.TouchEvent): void => {
     event.stopPropagation();
+    setFocused(clientId);
     resizingRef.current = true;
   };
 
@@ -170,7 +192,8 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
     position: 'absolute',
     width: '30px',
     height: '30px',
-    backgroundColor: 'red',
+    border: '2px solid black',
+    backgroundColor: 'white',
     borderRadius: '50%',
     touchAction: 'none',
     cursor: 'pointer',
@@ -189,6 +212,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           transform: `rotate(${transform.angle}deg) scale(${transform.scale})`,
           transformOrigin: 'center',
           transition: 'transform 0.1s ease',
+          border: focused === clientId ? '2px solid black' : 'none',
           pointerEvents: freeze(),
         }}
         className={zIndex()}
@@ -201,17 +225,19 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           alt="sticker"
           className="h-full w-full object-contain"
         />
-        <div
-          id="resize-control"
-          style={{
-            ...resizeControlStyle,
-            position: 'absolute',
-            bottom: '0px',
-            right: '0px',
-          }}
-          onMouseDown={handleResizeMouseDown}
-          onTouchStart={handleResizeTouchStart}
-        />
+        {focused === clientId && (
+          <div
+            id="resize-control"
+            style={{
+              ...resizeControlStyle,
+              position: 'absolute',
+              bottom: '-15px',
+              right: '-15px',
+            }}
+            onMouseDown={handleResizeMouseDown}
+            onTouchStart={handleResizeTouchStart}
+          />
+        )}
       </div>
     </div>
   );

@@ -37,7 +37,7 @@ const Title = () => {
       Placeholder.configure({ placeholder: '제목' }),
     ],
     onUpdate: ({ editor }) => {
-      const json = editor.getJSON();
+      const json = editor.getHTML();
       setTitleContents(json);
     },
   });
