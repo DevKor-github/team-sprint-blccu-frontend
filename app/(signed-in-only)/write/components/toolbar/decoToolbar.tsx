@@ -3,6 +3,7 @@
 import { ArrowDownToLine, File, Smile } from 'lucide-react';
 
 import { EditPostBackgroundSheet } from '@/app/(signed-in-only)/write/components/sheet/edit-post-background-sheet';
+import { StickerSheet } from '@/app/(signed-in-only)/write/components/sheet/sticker-sheet';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import {
   EditorBottomNavBar,
@@ -17,13 +18,14 @@ const DecoToolbar = () => {
   return (
     <EditorBottomNavBar>
       <EditorBottomNavBarItem>
-        <EditorBottomNavBarItemButton
-          isSelected={focused === 'text'}
-          onClick={() => setFocused('sticker')}
-        >
-          <Smile className="h-6 w-6" />
-          <p className="text-xs">스티커</p>
-        </EditorBottomNavBarItemButton>
+        <StickerSheet
+          trigger={
+            <EditorBottomNavBarItemButton>
+              <Smile className="h-6 w-6" />
+              <p className="text-xs">스티커</p>
+            </EditorBottomNavBarItemButton>
+          }
+        />
       </EditorBottomNavBarItem>
       <EditorBottomNavBarItem>
         <EditPostBackgroundSheet
