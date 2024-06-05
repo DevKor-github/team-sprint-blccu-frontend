@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { removeBackground } from '@imgly/background-removal';
 
 const StickerPost = () => {
-  const [imageSrc, setImageSrc] = useState<HTMLImageElement | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -18,8 +18,17 @@ const StickerPost = () => {
       const desiredHeight = img.height * scaleFactor;
       canvas.width = desiredWidth;
       canvas.height = desiredHeight;
+
+      if (ctx === null) {
+        return;
+      }
+
       ctx.drawImage(img, 0, 0, desiredWidth, desiredHeight);
       canvas.toBlob((blob) => {
+        if (blob === null) {
+          return;
+        }
+
         const newImgUrl = URL.createObjectURL(blob);
         setImageSrc(newImgUrl);
       });
