@@ -16,10 +16,8 @@ import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
-import FontSize from 'tiptap-extension-font-size';
 
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useModeStore from '@/app/(signed-in-only)/write/store/mode';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
 
 import './placeholder.css';
@@ -46,7 +44,6 @@ const Title = () => {
       Bold,
       Italic,
       Strike,
-      FontSize,
       TextStyle,
       Color,
       FontFamily,
