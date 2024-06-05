@@ -23,12 +23,8 @@ import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedE
 import './placeholder.css';
 
 const Title = () => {
-  const titleContents = useEditorContentsStore(
-    (state: any) => state.titleContents,
-  );
-  const setTitleContents = useEditorContentsStore(
-    (state: any) => state.setTitleContents,
-  );
+  const { setTitleContents } = useEditorContentsStore((state) => state);
+
   const setSelectedEditor = useSelectedEditorStore(
     (state: any) => state.setSelectedEditor,
   );

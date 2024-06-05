@@ -105,18 +105,7 @@ const config = {
       },
     },
   },
-  plugins: [
-    require('tailwindcss-animate'),
-    function ({ addUtilities }: { addUtilities: any }) {
-      const newUtilities = {
-        '.bg-checkerboard': {
-          background: 'theme("backgroundPatterns.checkerboard")',
-        },
-        // Add more custom background classes for each pattern
-      };
-      addUtilities(newUtilities, ['responsive', 'hover']);
-    },
-  ],
+  plugins: [require('tailwindcss-animate')],
 } satisfies Config;
 
 export default config;

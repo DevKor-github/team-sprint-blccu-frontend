@@ -73,6 +73,12 @@ const posts = createQueryKeys('posts', {
     queryKey: [postId],
     queryFn: () => api.posts.commentsControllerFetchComments(postId),
   }),
+
+  /* editor */
+  background: {
+    queryKey: null,
+    queryFn: () => api.posts.postBackgroundsControllerFetchAll(),
+  },
 });
 
 export { posts };
