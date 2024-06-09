@@ -224,6 +224,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           src={stickerProps.src}
           alt="sticker"
           className="h-full w-full object-contain"
+          crossOrigin="anonymous"
         />
         {focused === clientId && (
           <div

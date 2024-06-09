@@ -90,6 +90,11 @@ const PublishPostForm = () => {
   const { background, titleContents, bodyContents, mainContainerElement } =
     useEditorContentsStore((state) => state);
 
+  const stripHtml = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  };
+
   const router = useRouter();
 
   const { mutate } = useMutation({
@@ -112,7 +117,7 @@ const PublishPostForm = () => {
   const form = useForm<PublishPostFormValues>({
     resolver: zodResolver(publishPostFormSchema),
     defaultValues: {
-      title: titleContents, // FIXME: html element까지 들어가는 문제
+      title: stripHtml(titleContents), // FIXME: html element까지 들어가는 문제
       allow_comment: PUBLISH_POST_ALLOW_COMMENT_TYPE.TRUE,
       scope: PUBLISH_POST_SCOPE_TYPE.PUBLIC,
     },
