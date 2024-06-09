@@ -108,7 +108,7 @@ const CategoryIdEditForm = ({
               )}
             />
           </div>
-          <Button disabled={!isValid || !isDirty || isSubmitting}>
+          <Button size="lg" disabled={!isValid || !isDirty || isSubmitting}>
             카테고리 수정
           </Button>
         </div>

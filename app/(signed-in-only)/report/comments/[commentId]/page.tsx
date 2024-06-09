@@ -180,7 +180,12 @@ const ReportCommentIdPage = ({
               />
             </div>
             <div className="flex w-full px-4 pb-4">
-              <Button type="submit" variant="destructive" className="flex-1">
+              <Button
+                type="submit"
+                size="lg"
+                variant="destructive"
+                className="flex-1"
+              >
                 신고하기
               </Button>
             </div>

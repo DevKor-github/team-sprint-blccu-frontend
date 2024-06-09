@@ -233,7 +233,11 @@ const SetProfileForm = ({
               />
             </div>
           </div>
-          <Button className="mb-4" disabled={!isValid || isSubmitting}>
+          <Button
+            size="lg"
+            className="mb-4"
+            disabled={!isValid || isSubmitting}
+          >
             블꾸 시작하기
           </Button>
         </div>

@@ -174,6 +174,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
                 trigger={
                   <Button
                     type="button"
+                    size="lg"
                     variant="destructive"
                     className="flex-1"
                   >
@@ -183,6 +184,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
               />
               <Button
                 type="button"
+                size="lg"
                 className="flex-1"
                 onClick={() => router.push(ROUTES.MANAGE_ACCOUNT)}
               >

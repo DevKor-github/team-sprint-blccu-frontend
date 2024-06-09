@@ -84,7 +84,7 @@ const PostPageBottomBar = ({
             }}
           >
             <Heart
-              className={cn('h-4 w-4', like && 'fill-blccu-red text-blccu-red')}
+              className={cn('h-5 w-5', like && 'fill-blccu-red text-blccu-red')}
             />
           </IconButton>
           <Link href={ROUTES.LIKES_OF(user.handle, id)}>
@@ -93,14 +93,14 @@ const PostPageBottomBar = ({
         </div>
         <Link href={ROUTES.COMMENTS_OF(user.handle, id)}>
           <div className="flex items-center gap-1 px-2 py-1">
-            <MessageCircleMore className="h-4 w-4" />
+            <MessageCircleMore className="h-5 w-5" />
             <p className="text-sm">{comment_count.toLocaleString()}</p>
           </div>
         </Link>
       </div>
       <CopyCurrentPageTrigger asChild>
         <IconButton size="lg">
-          <Share2 className="h-4 w-4" />
+          <Share2 className="h-5 w-5" />
         </IconButton>
       </CopyCurrentPageTrigger>
     </div>

@@ -23,10 +23,16 @@ const WatchRecordsStep = ({ onNext }: PropsWithOnNext) => {
           <p className="pt-4 text-lg font-bold">탈퇴하기 전 꼭 확인해주세요.</p>
         </div>
         <div className="flex w-full gap-2 px-4 pb-4">
-          <Button variant="destructive" className="flex-1" onClick={onNext}>
+          <Button
+            size="lg"
+            variant="destructive"
+            className="flex-1"
+            onClick={onNext}
+          >
             탈퇴 계속하기
           </Button>
           <Button
+            size="lg"
             className="flex-1"
             onClick={() => router.push(ROUTES.MANAGE_ACCOUNT)}
           >

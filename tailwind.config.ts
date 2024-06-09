@@ -106,7 +106,7 @@ const config = {
       },
       boxShadow: {
         'blccu-top': '-8px -8px 20px 0 rgba(0, 0, 0, 0.04)',
-        'blccu-bottom': '8px 8px 20px 0 rgba(0, 0, 0, 0.04)',
+        'blccu-bottom': '4px 4px 20px 0 rgba(0, 0, 0, 0.04)',
         'blccu-secondary': '2px 2px 20px 5px rgba(0, 0, 0, 0.04)',
       },
     },

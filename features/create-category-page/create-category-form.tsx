@@ -90,7 +90,9 @@ const CreateCategoryForm = () => {
               )}
             />
           </div>
-          <Button disabled={!isValid || isSubmitting}>카테고리 생성</Button>
+          <Button size="lg" disabled={!isValid || isSubmitting}>
+            카테고리 생성
+          </Button>
         </div>
       </form>
     </Form>

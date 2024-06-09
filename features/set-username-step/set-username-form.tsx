@@ -191,7 +191,11 @@ const SetUsernameForm = ({ defaultValues, onNext }: SetUsernameFormProps) => {
                 )}
               />
             </section>
-            <Button disabled={!isValid || isSubmitting} className="mb-4">
+            <Button
+              size="lg"
+              disabled={!isValid || isSubmitting}
+              className="mb-4"
+            >
               블꾸 시작하기
             </Button>
           </div>

@@ -7,6 +7,7 @@ import {
 } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 type ButtonRadioGroupContextProps = {
   value: string;
@@ -79,7 +80,7 @@ const ButtonRadioGroupItem = ({
       variant={variant}
       value={value}
       onClick={context.onClick}
-      className={className}
+      className={cn(className, 'flex-1')}
     >
       {children}
     </Button>
