@@ -9,8 +9,8 @@ import { toast } from 'sonner';
 import z from 'zod';
 
 import { type CreateCommentInput } from '@/__generated__/data-contracts';
+import { Button } from '@/components/ui/button';
 import { Form, FormField } from '@/components/ui/form';
-import { IconButton } from '@/components/ui/icon-button';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
@@ -98,13 +98,14 @@ const ChatInput = ({ postId }: ChatInputProps) => {
               />
             )}
           />
-          <IconButton
+          <Button
             className="ml-2"
             type="submit"
+            radius="full"
             disabled={!isValid || isSubmitting}
           >
-            <Send className="h-5 w-5 text-blccu-neutral-600" />
-          </IconButton>
+            <Send className="h-5 w-5 text-white" />
+          </Button>
         </form>
       </Form>
     </div>

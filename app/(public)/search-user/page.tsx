@@ -21,7 +21,7 @@ const SearchUserPage = () => {
 
   return (
     <div>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>유저 검색</AppBarTitle>
       </AppBar>

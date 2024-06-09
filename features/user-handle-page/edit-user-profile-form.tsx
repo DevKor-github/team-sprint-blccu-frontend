@@ -152,7 +152,7 @@ const EditUserProfileForm = ({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="relative w-full">
           <div
-            className="absolute h-32 w-full cursor-pointer rounded-lg bg-blccu-neutral-400"
+            className="absolute h-32 w-full cursor-pointer rounded-2xl bg-blccu-neutral-400"
             onClick={() => backgroundImageRef.current?.click()}
             style={{
               backgroundImage: `url(${user.background_image})`,
@@ -183,29 +183,31 @@ const EditUserProfileForm = ({
             />
           </div>
         </div>
-        <div className="mt-4 flex flex-col items-center gap-2">
-          <FormField
-            control={form.control}
-            name={PATCH_USER_PROFILE_NAME.USERNAME}
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormControl>
-                  <input {...field} className="w-full text-center text-lg" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={PATCH_USER_PROFILE_NAME.HANDLE}
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormControl>
-                  <input {...field} className="w-full text-center text-sm" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
+        <div className="mt-4 flex flex-col items-center gap-4">
+          <div className="flex w-full flex-col items-center">
+            <FormField
+              control={form.control}
+              name={PATCH_USER_PROFILE_NAME.USERNAME}
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <input {...field} className="w-full text-center text-lg" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name={PATCH_USER_PROFILE_NAME.HANDLE}
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <input {...field} className="w-full text-center text-sm" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name={PATCH_USER_PROFILE_NAME.DESCRIPTION}
@@ -220,7 +222,8 @@ const EditUserProfileForm = ({
         </div>
         <SheetFooter className="mt-12">
           <Button
-            className="w-full"
+            className="mx-auto"
+            radius="full"
             disabled={!isValid || !isDirty || isSubmitting}
           >
             수정

@@ -31,7 +31,7 @@ const SetUsernameStep = (props: PropsWithOnNext) => {
 
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>회원가입</AppBarTitle>
       </AppBar>

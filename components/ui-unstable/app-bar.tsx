@@ -10,14 +10,17 @@ import { IconButton } from '@/components/ui/icon-button';
 import { cn } from '@/lib/utils';
 import { type PropsWithClassName } from '@/types/props';
 
-const AppBar = ({
-  className,
-  children,
-}: PropsWithChildren & PropsWithClassName) => {
+type AppBarProps = {
+  shadow?: boolean;
+} & PropsWithChildren &
+  PropsWithClassName;
+
+const AppBar = ({ className, children, shadow }: AppBarProps) => {
   return (
     <header
       className={cn(
-        'fixed left-1/2 top-0 z-50 flex h-14 w-full max-w-md -translate-x-1/2 items-center border-b bg-blccu-white px-1',
+        'fixed left-1/2 top-0 z-50 flex h-14 w-full max-w-md -translate-x-1/2 items-center bg-blccu-white px-1',
+        shadow && 'shadow-blccu-bottom',
         className,
       )}
     >

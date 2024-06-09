@@ -13,13 +13,13 @@ const SaveToolbar = () => {
     <EditorBottomSubNavBar align="right">
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton>
-          <Save className="h-8 w-8" />
+          <Save className="h-6 w-6" />
           <p className="text-xs">저장</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton>
-          <Download className="h-8 w-8" />
+          <Download className="h-6 w-6" />
           <p className="text-xs">불러오기 | {numberOfSaveFiles}</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>

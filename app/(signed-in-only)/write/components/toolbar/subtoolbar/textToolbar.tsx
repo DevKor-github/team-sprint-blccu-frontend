@@ -37,7 +37,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setFontFamily('Inter').run()}
         >
-          <Ligature className="h-8 w-8" />
+          <Ligature className="h-6 w-6" />
           <p className="text-xs">글씨체</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -45,7 +45,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().run()}
         >
-          <Type className="h-8 w-8" />
+          <Type className="h-6 w-6" />
           <p className="text-xs">크기</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -53,7 +53,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => document.getElementById('setcolor')?.click()}
         >
-          <Palette className="h-8 w-8" />
+          <Palette className="h-6 w-6" />
           <p className="text-xs">색상</p>
           <input
             type="color"
@@ -67,7 +67,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
-          <Bold className="h-8 w-8" />
+          <Bold className="h-6 w-6" />
           <p className="text-xs">굵게</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -75,7 +75,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().toggleUnderline().run()}
         >
-          <Underline className="h-8 w-8" />
+          <Underline className="h-6 w-6" />
           <p className="text-xs">밑줄</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -83,7 +83,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().toggleStrike().run()}
         >
-          <Strikethrough className="h-8 w-8" />
+          <Strikethrough className="h-6 w-6" />
           <p className="text-xs">취소선</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -91,7 +91,7 @@ const TextToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor?.chain().focus().toggleItalic().run()}
         >
-          <Italic className="h-8 w-8" />
+          <Italic className="h-6 w-6" />
           <p className="text-xs">기울이기</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>

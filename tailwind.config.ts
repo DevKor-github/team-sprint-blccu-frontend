@@ -96,12 +96,18 @@ const config = {
       },
       fontSize: {
         '2xs': '0.625rem' /* 10px */,
+        'lg-2': '1rem' /* 16px */,
       },
       fontFamily: {
         'noto-sans-kr': ['var(--font-noto-sans-kr)'],
       },
       screens: {
         'over-blccu-screen-width': '448px',
+      },
+      boxShadow: {
+        'blccu-top': '-8px -8px 20px 0 rgba(0, 0, 0, 0.04)',
+        'blccu-bottom': '8px 8px 20px 0 rgba(0, 0, 0, 0.04)',
+        'blccu-secondary': '2px 2px 20px 5px rgba(0, 0, 0, 0.04)',
       },
     },
   },

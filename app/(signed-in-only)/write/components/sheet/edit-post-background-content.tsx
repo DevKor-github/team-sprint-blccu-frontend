@@ -26,7 +26,7 @@ const EditPostBackgroundContent = () => {
         <div className="grid grid-cols-2 gap-2">
           <SheetClose>
             <div
-              className="h-32 w-full rounded-lg shadow-lg"
+              className="h-32 w-full rounded-3xl"
               onClick={() => setBackground(null)}
             ></div>
           </SheetClose>
@@ -36,7 +36,7 @@ const EditPostBackgroundContent = () => {
                 key={background.id}
                 src={background.image_url}
                 alt="내지"
-                className="h-32 w-full rounded-lg object-cover shadow-lg"
+                className="h-32 w-full rounded-lg object-cover shadow-blccu-secondary"
                 width={500}
                 height={500}
                 onClick={() => setBackground(background)}

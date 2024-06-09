@@ -34,11 +34,11 @@ const CommentsPage = ({
 
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>댓글</AppBarTitle>
       </AppBar>
-      <div className="flex flex-col gap-2 px-4 pb-20 pt-14">
+      <div className="flex flex-col gap-2 px-4 pb-20 pt-16">
         {comments.map((comment, index) => (
           <div key={index}>
             <CommentableListItem comment={comment} me={me} />

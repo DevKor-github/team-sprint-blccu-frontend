@@ -19,7 +19,7 @@ const EditUserProfileSheet = ({ trigger }: PropsWithTrigger) => {
   return (
     <Sheet>
       <SheetTrigger asChild>{trigger}</SheetTrigger>
-      <SheetContent side="bottom" className="rounded-t-lg">
+      <SheetContent side="bottom" className="rounded-t-3xl">
         <EditUserProfileForm user={me} defaultValues={me} />
       </SheetContent>
     </Sheet>

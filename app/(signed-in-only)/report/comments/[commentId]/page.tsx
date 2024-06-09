@@ -105,7 +105,7 @@ const ReportCommentIdPage = ({
 
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>댓글 신고</AppBarTitle>
       </AppBar>

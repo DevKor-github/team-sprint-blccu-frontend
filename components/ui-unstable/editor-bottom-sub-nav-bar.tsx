@@ -15,7 +15,7 @@ const EditorBottomSubNavBar = ({
     <div
       className={cn(
         'fixed bottom-20 z-50 max-w-[calc(448px-32px)] bg-blccu-white',
-        'rounded-xl px-1 shadow-xl',
+        'rounded-xl px-1 shadow-blccu-secondary',
         align === 'left' &&
           'left-4 over-blccu-screen-width:left-[calc(50%-224px+16px)]',
         align === 'center' && 'left-1/2 -translate-x-1/2',

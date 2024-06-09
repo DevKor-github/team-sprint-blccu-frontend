@@ -20,7 +20,7 @@ const TrendingPostSection = () => {
   const posts = data?.data.data ?? [];
 
   return (
-    <Section className="ml-4">
+    <Section className="pl-4">
       <SectionTitle>인기글</SectionTitle>
       <SectionContent>
         <ScrollArea>

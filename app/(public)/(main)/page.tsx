@@ -20,10 +20,12 @@ const RootPage = () => {
   return (
     <div>
       <RootPageHeader />
-      {isSignedIn ? <BannerSignedIn user={me} /> : <BannerNotSignedIn />}
-      <TrendingPostSection />
-      {isSignedIn && <FollowingPostSection />}
-      <AllPostSection />
+      <div className="flex flex-col gap-3">
+        {isSignedIn ? <BannerSignedIn user={me} /> : <BannerNotSignedIn />}
+        <TrendingPostSection />
+        {isSignedIn && <FollowingPostSection />}
+        <AllPostSection />
+      </div>
     </div>
   );
 };

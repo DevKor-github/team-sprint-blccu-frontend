@@ -7,14 +7,24 @@ const Section = ({
   children,
   className,
 }: PropsWithChildren & PropsWithClassName) => {
-  return <section className={cn('mt-8', className)}>{children}</section>;
+  return (
+    <section
+      className={cn(
+        'py-3',
+        'bg-gradient-to-b from-blccu-neutral-200/20 to-transparent',
+        className,
+      )}
+    >
+      {children}
+    </section>
+  );
 };
 
 const SectionTitle = ({
   children,
   className,
 }: PropsWithChildren & PropsWithClassName) => {
-  return <div className={cn('text-lg font-bold', className)}>{children}</div>;
+  return <div className={cn('text-lg-2 font-bold', className)}>{children}</div>;
 };
 
 const SectionContent = ({

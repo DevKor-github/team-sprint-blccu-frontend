@@ -86,8 +86,8 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
           height={2000}
         />
         <PostPageAuthorProfileSection user={user} />
-        <PostPageAllPostSection user={user} />
         <UserHandlePageTrendingPostSection user={user} />
+        <PostPageAllPostSection user={user} />
         <div className="h-[24px]" />
       </div>
       <PostPageBottomBar post={post} />

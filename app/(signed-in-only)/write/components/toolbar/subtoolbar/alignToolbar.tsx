@@ -16,7 +16,7 @@ const AlignToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setTextAlign('left').run()}
         >
-          <AlignLeft className="h-8 w-8" />
+          <AlignLeft className="h-6 w-6" />
           <p className="text-xs">좌측</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -24,7 +24,7 @@ const AlignToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setTextAlign('center').run()}
         >
-          <AlignCenter className="h-8 w-8" />
+          <AlignCenter className="h-6 w-6" />
           <p className="text-xs">중앙</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -32,7 +32,7 @@ const AlignToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setTextAlign('right').run()}
         >
-          <AlignRight className="h-8 w-8" />
+          <AlignRight className="h-6 w-6" />
           <p className="text-xs">우측</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
@@ -40,7 +40,7 @@ const AlignToolbar = () => {
         <EditorBottomSubNavBarItemButton
           onClick={() => editor.chain().focus().setTextAlign('justify').run()}
         >
-          <AlignJustify className="h-8 w-8" />
+          <AlignJustify className="h-6 w-6" />
           <p className="text-xs">배분</p>
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>

@@ -52,7 +52,7 @@ const pastNotifications = sortedNotificationsRecentFirst.slice(
 const NotificationsPage = () => {
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>알림</AppBarTitle>
       </AppBar>

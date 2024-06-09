@@ -73,7 +73,7 @@ const LikesPage = ({ params: { userHandle: _, postId } }: LikesPageProps) => {
 
   return (
     <div>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>좋아요한 유저 목록</AppBarTitle>
       </AppBar>

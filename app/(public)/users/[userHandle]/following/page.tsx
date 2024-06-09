@@ -79,7 +79,7 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
 
   return (
     <div>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>팔로잉 목록</AppBarTitle>
       </AppBar>

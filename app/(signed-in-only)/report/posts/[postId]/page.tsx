@@ -102,7 +102,7 @@ const ReportPostIdPage = ({ params: { postId } }: ReportPostIdPageProps) => {
 
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>게시글 신고</AppBarTitle>
       </AppBar>

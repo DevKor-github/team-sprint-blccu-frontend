@@ -167,8 +167,8 @@ const PublishPostForm = () => {
         </AppBar>
         <div className="flex flex-col gap-4 pt-16">
           <section className="w-full px-4">
-            <div className="flex gap-4 rounded-md bg-blccu-white p-4 shadow-md">
-              <div className="h-24 w-24 rounded-md bg-blccu-neutral-400" />
+            <div className="flex gap-4 rounded-3xl bg-blccu-white p-4 shadow-blccu-secondary">
+              <div className="h-24 w-24 rounded-2xl bg-blccu-neutral-400" />
               <div className="flex flex-1 flex-col gap-2">
                 <FormField
                   control={form.control}
@@ -204,7 +204,7 @@ const PublishPostForm = () => {
             </div>
           </section>
           <section className="w-full px-4">
-            <div className="flex flex-col gap-8 rounded-md bg-blccu-white p-4 shadow-md">
+            <div className="flex flex-col gap-8 rounded-3xl bg-blccu-white p-4 shadow-blccu-secondary">
               <div className="flex flex-col gap-2">
                 <FormField
                   control={form.control}

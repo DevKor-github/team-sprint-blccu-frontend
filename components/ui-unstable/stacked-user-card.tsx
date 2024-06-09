@@ -25,7 +25,7 @@ const StackedUserCard = ({
           <AvatarImage src={profile_image} />
           <AvatarFallback className="bg-blccu-neutral-400" />
         </Avatar>
-        <div className="flex flex-1 flex-col gap-0.5">
+        <div className="flex flex-1 flex-col">
           <h3 className="line-clamp-1 font-medium text-blccu-neutral-600">
             {username}
           </h3>

@@ -9,7 +9,7 @@ import {
 const SettingsLayout = ({ children }: PropsWithChildren) => {
   return (
     <div>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>설정</AppBarTitle>
       </AppBar>

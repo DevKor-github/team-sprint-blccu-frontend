@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
@@ -5,6 +7,7 @@ import { type UserPrimaryResponseDto } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { ROUTES } from '@/constants/routes';
 import { api } from '@/lib/api';
 import { getFollowerDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
@@ -95,15 +98,17 @@ const PostPageAuthorProfileSection = ({
   const followerDescriptor = getFollowerDescriptor(user.follower_count);
 
   return (
-    <section className="mx-4 mt-12 flex items-center rounded-xl py-4 shadow-lg">
-      <div className="flex flex-1 flex-col items-center gap-4">
-        <Avatar>
-          <AvatarImage src={profile_image} />
-          <AvatarFallback className="bg-blccu-neutral-400" />
-        </Avatar>
-        <div className="flex flex-col items-center gap-1">
-          <p className="text-sm font-medium">{username}</p>
-          <p className="max-w-40 text-center text-xs text-blccu-neutral-400">
+    <section className="mx-4 mt-12 flex items-center rounded-xl py-4 shadow-blccu-secondary">
+      <div className="flex flex-1 flex-col items-center gap-2">
+        <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
+          <Avatar>
+            <AvatarImage src={profile_image} />
+            <AvatarFallback className="bg-blccu-neutral-400" />
+          </Avatar>
+        </Link>
+        <div className="flex flex-col items-center">
+          <p className="text-xs font-medium">{username}</p>
+          <p className="max-w-40 text-center text-2xs text-blccu-neutral-400">
             {description}
           </p>
         </div>

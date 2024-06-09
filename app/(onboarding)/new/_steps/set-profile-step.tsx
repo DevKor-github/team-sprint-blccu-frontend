@@ -17,7 +17,7 @@ const SetProfileStep = ({ onNext }: PropsWithOnNext) => {
 
   return (
     <div className="flex h-dvh flex-col">
-      <AppBar className="justify-between border-none">
+      <AppBar className="justify-between border-none" shadow>
         <AppBarBack />
         <Button variant="ghost" onClick={onNext}>
           건너뛰기

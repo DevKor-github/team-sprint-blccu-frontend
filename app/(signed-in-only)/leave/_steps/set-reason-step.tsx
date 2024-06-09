@@ -90,7 +90,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
 
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>회원 탈퇴</AppBarTitle>
       </AppBar>

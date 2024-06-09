@@ -26,7 +26,7 @@ const buttonVariants = cva(
         none: 'h-auto px-0' /* it is only used for ghost variant */,
       },
       radius: {
-        default: 'rounded-lg',
+        default: 'rounded-xl',
         full: 'rounded-full',
       },
     },

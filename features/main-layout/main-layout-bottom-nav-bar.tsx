@@ -16,18 +16,18 @@ const MainLayoutBottomNavBar = () => {
 
   const isSignedIn = me !== undefined;
 
-  if (!isSignedIn) {
-    return null;
-  }
+  // if (!isSignedIn) {
+  //   return null;
+  // }
 
   return (
     <nav
       className={cn(
         'fixed bottom-0 left-1/2 w-full max-w-md -translate-x-1/2',
-        'border-t bg-blccu-white',
+        'bg-blccu-white shadow-blccu-top',
       )}
     >
-      <ul className="flex justify-evenly">
+      <ul className="flex justify-between px-11">
         <li>
           <Link href={ROUTES.ROOT}>
             <div className="p-5">
@@ -48,7 +48,8 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.USER_HANDLE_OF(me.handle)}>
+          <Link href={ROUTES.USER_HANDLE_OF(me?.handle ?? '')}>
+            {/* FIXME: me.handle 로 바꿔 */}
             <div className="p-5">
               <User className="h-5 w-5" />
             </div>

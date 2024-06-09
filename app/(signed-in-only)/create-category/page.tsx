@@ -8,7 +8,7 @@ import { CreateCategoryForm } from '@/features/create-category-page/create-categ
 const CreateCategoryPage = () => {
   return (
     <>
-      <AppBar>
+      <AppBar shadow>
         <AppBarBack />
         <AppBarTitle align="center">카테고리 생성</AppBarTitle>
       </AppBar>

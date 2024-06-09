@@ -11,14 +11,14 @@ const RootPageHeader = () => {
       <Link href={ROUTES.ROOT}>
         <BlccuLogo className="w-14" />
       </Link>
-      <div className="flex items-center">
+      <div className="flex items-center gap-4">
         <Link href={ROUTES.NOTIFICATIONS}>
-          <div className="px-3 py-4">
+          <div className="py-4">
             <Bell className="h-5 w-5" />
           </div>
         </Link>
         <Link href={ROUTES.SEARCH_USER}>
-          <div className="px-3 py-4">
+          <div className="py-4">
             <Search className="h-5 w-5" />
           </div>
         </Link>

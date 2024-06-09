@@ -39,7 +39,7 @@ const UpdateCategoryPage = () => {
 
   return (
     <div>
-      <AppBar className="flex justify-between">
+      <AppBar className="flex justify-between" shadow>
         <AppBarBack />
         <AppBarTitle align="center">카테고리 수정</AppBarTitle>
         <Link href={ROUTES.CREATE_CATEGORY}>

@@ -20,7 +20,7 @@ const AllPostSection = () => {
   const posts = data?.data.data ?? [];
 
   return (
-    <Section className="mx-4">
+    <Section className="px-4">
       <SectionTitle>전체글</SectionTitle>
       <SectionContent>
         <div className="max-h-[1200px] overflow-y-hidden">
