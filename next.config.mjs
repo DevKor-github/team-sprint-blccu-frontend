@@ -47,6 +47,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 's3.ap-northeast-2.amazonaws.com',
       },
+      /* cloudfront */
+      {
+        protocol: 'https',
+        hostname: 'd60yoiev654ed.cloudfront.net',
+      },
     ],
   },
   webpack: (config) => {
