@@ -32,7 +32,7 @@ const CommentableListItem = ({
           삭제된 댓글입니다.
         </p>
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
           <div className="flex items-center justify-between">
             <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
               <div className="flex items-center gap-2">

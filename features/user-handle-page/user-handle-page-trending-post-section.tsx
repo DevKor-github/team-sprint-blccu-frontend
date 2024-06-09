@@ -32,7 +32,7 @@ const UserHandlePageTrendingPostSection = ({
   const posts = data?.data.data ?? [];
 
   return (
-    <Section className="ml-4 pb-6">
+    <Section className="pb-6 pl-4">
       <SectionTitle>{titleDescriptor}</SectionTitle>
       <SectionContent>
         <ScrollArea>

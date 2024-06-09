@@ -74,7 +74,7 @@ const ChatInput = ({ postId }: ChatInputProps) => {
   return (
     <div
       className={cn(
-        'mx-4 mt-4 rounded-full bg-blccu-neutral-200/50 py-2 pl-7 pr-5',
+        'mx-4 mt-4 rounded-full bg-blccu-neutral-200/20 py-2 pl-7 pr-5',
         'transition-shadow focus-within:outline-none focus-within:ring-1 focus-within:ring-blccu-ring',
       )}
     >

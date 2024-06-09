@@ -11,12 +11,14 @@ import {
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
+import { ChatInput } from '@/components/ui-unstable/chat-input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
 import { PostPageAllPostSection } from '@/features/post-page/post-page-all-post-section';
 import { PostPageAuthorProfileSection } from '@/features/post-page/post-page-author-profile-section';
 import { PostPageBottomBar } from '@/features/post-page/post-page-bottom-bar';
+import { PostPageDetailActions } from '@/features/post-page/post-page-detail-actions';
 import { ReportPostBottomActionSheet } from '@/features/post-page/report-post-bottom-action-sheet';
 import { UserHandlePageTrendingPostSection } from '@/features/user-handle-page/user-handle-page-trending-post-section';
 import { queries } from '@/queries';
@@ -85,6 +87,16 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
           width={1280}
           height={2000}
         />
+        <PostPageDetailActions post={post} />
+        <div className="flex flex-col">
+          <Link
+            href={ROUTES.COMMENTS_OF(user.handle, post.id)}
+            className="ml-4"
+          >
+            <p className="font-medium">댓글 더보기</p>
+          </Link>
+          <ChatInput postId={post.id} />
+        </div>
         <PostPageAuthorProfileSection user={user} />
         <UserHandlePageTrendingPostSection user={user} />
         <PostPageAllPostSection user={user} />

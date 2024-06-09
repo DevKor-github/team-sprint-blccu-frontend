@@ -98,7 +98,7 @@ const PostPageAuthorProfileSection = ({
   const followerDescriptor = getFollowerDescriptor(user.follower_count);
 
   return (
-    <section className="mx-4 mt-12 flex items-center rounded-xl py-4 shadow-blccu-secondary">
+    <section className="mx-4 my-12 flex items-center rounded-xl py-4 shadow-blccu-secondary">
       <div className="flex flex-1 flex-col items-center gap-2">
         <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
           <Avatar>

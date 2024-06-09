@@ -22,7 +22,7 @@ const HorizontalScrollablePostCard = ({
         backgroundImage: `url(${main_image_url})`,
       }}
     >
-      <div className="absolute bottom-0 flex w-full items-center gap-2 rounded-b-lg bg-blccu-white px-2 py-3">
+      <div className="absolute bottom-0 flex w-full items-center gap-2 rounded-b-lg bg-blccu-white px-2 py-3 outline-white">
         <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
           <Avatar size="xs">
             <AvatarImage src={user.profile_image} alt="avatar" />
