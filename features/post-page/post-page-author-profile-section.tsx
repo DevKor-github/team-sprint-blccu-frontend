@@ -108,7 +108,7 @@ const PostPageAuthorProfileSection = ({
         </Link>
         <div className="flex flex-col items-center">
           <p className="text-xs font-medium">{username}</p>
-          <p className="max-w-40 text-center text-2xs text-blccu-neutral-400">
+          <p className="line-clamp-1 max-w-40 text-center text-2xs text-blccu-neutral-400">
             {description}
           </p>
         </div>
