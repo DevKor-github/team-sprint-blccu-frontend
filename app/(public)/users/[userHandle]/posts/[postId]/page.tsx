@@ -51,7 +51,7 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
 
   return (
     <>
-      <AppBar className="border-b-0 bg-blccu-white/90 backdrop-blur-lg">
+      <AppBar className="bg-blccu-white/90 backdrop-blur-lg">
         <AppBarBack />
         <div className="item-center flex w-full justify-between">
           <AppBarTitle className="flex items-center">
