@@ -20,6 +20,7 @@ import {
   AnnouncementsControllerCreateAnmtData,
   AnnouncementsControllerPatchAnmtData,
   AnnouncementsControllerRemoveAnmtData,
+  BulkMapCategoryDto,
   CreateAgreementsInput,
   CreateAnouncementInput,
   CreateFeedbackInput,
@@ -35,7 +36,6 @@ import {
   FollowsControllerGetFollowsData,
   FollowsControllerUnfollowUserData,
   ImageUploadDto,
-  MapCategoryDto,
   PatchAgreementInput,
   PatchAnnouncementInput,
   PatchPostCategoryDto,
@@ -478,7 +478,7 @@ export class Users<
    * @secure
    */
   stickerCategoriesControllerMapCategory = (
-    data: MapCategoryDto,
+    data: BulkMapCategoryDto,
     params: RequestParams = {},
   ) =>
     this.request<StickerCategoriesControllerMapCategoryData, any>({

@@ -138,7 +138,7 @@ export class Stickers<
    * @request GET:/stickers/categories/{id}
    */
   stickerCategoriesControllerFetchStickersByCategoryName = (
-    id: string,
+    id: number,
     params: RequestParams = {},
   ) =>
     this.request<

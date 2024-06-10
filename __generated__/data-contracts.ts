@@ -263,15 +263,22 @@ export interface UpdateStickerInput {
   isReusable?: boolean;
 }
 
-export interface CreateStickerCategoryInput {
-  /** 스티커 이름 */
-  name: string;
-}
-
 export interface StickerCategory {
   /** PK: A_I_ */
   id: number;
   /** 카테고리 이름 */
+  name: string;
+}
+
+export interface StickerCategoryMapper {
+  /** 스티커 아이디 */
+  stickerId: number;
+  /** 스티커 카테고리 아이디 */
+  stickerCategoryId: number;
+}
+
+export interface CreateStickerCategoryInput {
+  /** 스티커 이름 */
   name: string;
 }
 
@@ -280,6 +287,11 @@ export interface MapCategoryDto {
   stickerId: number;
   /** 매핑 하고자 하는 카테고리의 id */
   stickerCategoryId: number;
+}
+
+export interface BulkMapCategoryDto {
+  /** 매핑할 카테고리 및 스티커 배열 */
+  maps: MapCategoryDto[];
 }
 
 export interface BulkInsertStickerInput {
@@ -328,9 +340,11 @@ export interface PublishPostInput {
   /** 연결된 카테고리 fk */
   postCategoryId: string;
   /** 연결된 내지 fk */
-  postBackgroundId: string;
+  postBackgroundId?: string | null;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 댓글 허용 여부(boolean) */
   allow_comment: boolean;
   /** [공개 설정] PUBLIC: 전체공개, PROTECTED: 친구공개, PRIVATE: 비공개 */
@@ -356,6 +370,8 @@ export interface PublishPostDto {
   userKakaoId: number;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 임시저장(false), 발행(true) */
   isPublished: boolean;
   /** 좋아요 카운트 */
@@ -402,6 +418,8 @@ export interface CreatePostInput {
   postBackgroundId?: string;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 댓글 허용 여부(boolean) */
   allow_comment?: boolean;
   /** [공개 설정] PUBLIC: 전체공개, PROTECTED: 친구공개, PRIVATE: 비공개 */
@@ -409,9 +427,9 @@ export interface CreatePostInput {
   /** 게시글 내용 */
   content: string;
   /** 게시글 캡쳐 이미지 url */
-  image_url: string;
+  image_url?: string;
   /** 게시글 대표 이미지 url */
-  main_image_url: string;
+  main_image_url?: string;
 }
 
 export interface PatchPostInput {
@@ -421,6 +439,8 @@ export interface PatchPostInput {
   postBackgroundId?: string;
   /** 제목(최대 100자) */
   title?: string;
+  /** 수정용 제목 */
+  title_html?: string;
   /** 댓글 허용 여부(boolean) */
   allow_comment?: boolean;
   /** [공개 설정] PUBLIC: 전체공개, PROTECTED: 친구공개, PRIVATE: 비공개 */
@@ -444,6 +464,8 @@ export interface PostOnlyResponseDto {
   userKakaoId: number;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 임시저장(false), 발행(true) */
   isPublished: boolean;
   /** 좋아요 카운트 */
@@ -514,6 +536,8 @@ export interface PostResponseDtoExceptCategory {
   userKakaoId: number;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 임시저장(false), 발행(true) */
   isPublished: boolean;
   /** 좋아요 카운트 */
@@ -577,6 +601,8 @@ export interface PostResponseDto {
   userKakaoId: number;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 임시저장(false), 발행(true) */
   isPublished: boolean;
   /** 좋아요 카운트 */
@@ -672,6 +698,8 @@ export interface Posts {
   userKakaoId: number;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 임시저장(false), 발행(true) */
   isPublished: boolean;
   /** 좋아요 카운트 */
@@ -785,6 +813,15 @@ export interface FollowUserDto {
   fromUserKakaoId: number;
 }
 
+export interface PickTypeClass {
+  /** 유저 핸들러 */
+  handle: string;
+  /** 유저 이름 */
+  username: string;
+  /** 프로필 이미지 url */
+  profile_image: string;
+}
+
 export interface FetchNotiResponse {
   /** PK: A_I_ */
   id: number;
@@ -809,6 +846,7 @@ export interface FetchNotiResponse {
    * @format date-time
    */
   date_deleted: string;
+  user: PickTypeClass;
 }
 
 export interface CreateCommentInput {
@@ -930,6 +968,8 @@ export interface OmitTypeClass {
   userKakaoId: number;
   /** 제목(최대 100자) */
   title: string;
+  /** 수정용 제목 */
+  title_html: string;
   /** 임시저장(false), 발행(true) */
   isPublished: boolean;
   /** 좋아요 카운트 */
@@ -996,11 +1036,6 @@ export interface FetchPostCategoryDto {
 export interface CreatePostCategoryDto {
   /** 카테고리 이름 */
   name: string;
-}
-
-export interface PickTypeClass {
-  /** 카카오 id */
-  kakaoId: number;
 }
 
 export interface CreatePostCategoryResponseDto {
@@ -1118,13 +1153,15 @@ export type StickersControllerFetchPublicStickersData = Sticker[];
 
 export type StickersControllerCreatePublicStickerData = Sticker;
 
-export type StickerCategoriesControllerFetchCategoriesData = any;
+export type StickerCategoriesControllerFetchCategoriesData = StickerCategory[];
 
-export type StickerCategoriesControllerFetchStickersByCategoryNameData = any;
+export type StickerCategoriesControllerFetchStickersByCategoryNameData =
+  StickerCategoryMapper[];
 
 export type StickerCategoriesControllerCreateCategoryData = StickerCategory;
 
-export type StickerCategoriesControllerMapCategoryData = any;
+export type StickerCategoriesControllerMapCategoryData =
+  StickerCategoryMapper[];
 
 export type StickerBlocksControllerCreateStickerBlocksData =
   CreateStickerBlocksResponseDto[];
