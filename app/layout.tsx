@@ -23,9 +23,9 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="ko-KR">
-      <body className={cn(notoSansKr.className, 'bg-slate-100')}>
+      <body className={cn(notoSansKr.className, 'bg-gray-50')}>
         <QueryProvider>
-          <div className="mx-auto min-h-dvh max-w-screen-sm bg-white">
+          <div className="mx-auto min-h-dvh max-w-screen-sm bg-white shadow-xl">
             {children}
           </div>
           <Toaster
