@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
+import { CreateFeedbackForm } from '@/app/(signed-in-only)/settings/_components/create-feedback-form';
 import { ROUTES } from '@/constants/routes';
-import { CreateFeedbackForm } from '@/features/settings-page/create-feedback-form';
 
 const SettingsPage = () => {
   return (

@@ -4,12 +4,12 @@ import {
   type AgreementsControllerFetchAgreementsData,
   type UserResponseDto,
 } from '@/__generated__/data-contracts';
+import { SetUsernameForm } from '@/app/(onboarding)/new/_steps/set-username-step/components/set-username-form';
 import {
   AppBar,
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
-import { SetUsernameForm } from '@/features/set-username-step/set-username-form';
 import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/props';
 

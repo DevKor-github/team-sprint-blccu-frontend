@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import z from 'zod';
 
 import { type DeleteUserInput } from '@/__generated__/data-contracts';
+import { LeaveAlertDialog } from '@/app/(signed-in-only)/leave/_steps/set-reason-step/components/leave-alert-dialog';
 import {
   AppBar,
   AppBarBack,
@@ -27,7 +28,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
-import { LeaveAlertDialog } from '@/features/set-reason-step/leave-alert-dialog';
 import { api } from '@/lib/api';
 import { getValues } from '@/lib/utils';
 import { type PropsWithOnNext } from '@/types/props';

@@ -2,12 +2,12 @@
 
 import { useQuery } from '@tanstack/react-query';
 
+import { CategoryIdEditForm } from '@/app/(signed-in-only)/update-category/[categoryId]/edit/_components/category-id-edit-form';
 import {
   AppBar,
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
-import { CategoryIdEditForm } from '@/features/category-id-edit-page/category-id-edit-form';
 import { queries } from '@/queries';
 
 type CategoryIdEditPageProps = {

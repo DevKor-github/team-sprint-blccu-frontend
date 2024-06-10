@@ -6,10 +6,10 @@ import {
   type ChildrenComment,
   type UserResponseDto,
 } from '@/__generated__/data-contracts';
+import { ReportCommentBottomActionSheet } from '@/app/(public)/users/[userHandle]/posts/[postId]/comments/_components/report-comment-bottom-action-sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
-import { ReportCommentBottomActionSheet } from '@/features/comments-page/report-comment-bottom-action-sheet';
 
 type CommentableListItemProps = {
   comment: ChildrenComment;

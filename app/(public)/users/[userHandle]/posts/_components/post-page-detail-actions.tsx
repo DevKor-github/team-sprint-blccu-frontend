@@ -3,11 +3,11 @@ import { EllipsisVertical, Heart, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { type PostResponseDto } from '@/__generated__/data-contracts';
+import { ReportPostBottomActionSheet } from '@/app/(public)/users/[userHandle]/posts/_components/report-post-bottom-action-sheet';
 import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
 import { TOAST_MESSAGES } from '@/constants/messages';
-import { ReportPostBottomActionSheet } from '@/features/post-page/report-post-bottom-action-sheet';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';

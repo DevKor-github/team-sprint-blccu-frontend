@@ -6,6 +6,12 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { EllipsisVertical } from 'lucide-react';
 
+import { UserHandlePageTrendingPostSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-handle-page-trending-post-section';
+import { PostPageAllPostSection } from '@/app/(public)/users/[userHandle]/posts/_components/post-page-all-post-section';
+import { PostPageAuthorProfileSection } from '@/app/(public)/users/[userHandle]/posts/_components/post-page-author-profile-section';
+import { PostPageBottomBar } from '@/app/(public)/users/[userHandle]/posts/_components/post-page-bottom-bar';
+import { PostPageDetailActions } from '@/app/(public)/users/[userHandle]/posts/_components/post-page-detail-actions';
+import { ReportPostBottomActionSheet } from '@/app/(public)/users/[userHandle]/posts/_components/report-post-bottom-action-sheet';
 import {
   AppBar,
   AppBarBack,
@@ -15,12 +21,6 @@ import { ChatInput } from '@/components/ui-unstable/chat-input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
-import { PostPageAllPostSection } from '@/features/post-page/post-page-all-post-section';
-import { PostPageAuthorProfileSection } from '@/features/post-page/post-page-author-profile-section';
-import { PostPageBottomBar } from '@/features/post-page/post-page-bottom-bar';
-import { PostPageDetailActions } from '@/features/post-page/post-page-detail-actions';
-import { ReportPostBottomActionSheet } from '@/features/post-page/report-post-bottom-action-sheet';
-import { UserHandlePageTrendingPostSection } from '@/features/user-handle-page/user-handle-page-trending-post-section';
 import { queries } from '@/queries';
 
 type PostPageProps = {

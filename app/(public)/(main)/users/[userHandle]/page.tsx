@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { Settings, Share2 } from 'lucide-react';
 
+import { PostByCategorySection } from '@/app/(public)/(main)/users/[userHandle]/_components/post-by-category-section';
+import { UserHandlePageTrendingPostSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-handle-page-trending-post-section';
+import { UserProfileSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-profile-section';
 import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
 import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
-import { PostByCategorySection } from '@/features/user-handle-page/post-by-category-section';
-import { UserHandlePageTrendingPostSection } from '@/features/user-handle-page/user-handle-page-trending-post-section';
-import { UserProfileSection } from '@/features/user-handle-page/user-profile-section';
 import { queries } from '@/queries';
 
 type UserHandlePageProps = {

@@ -5,13 +5,13 @@ import { Fragment } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { CornerDownRight } from 'lucide-react';
 
+import { CommentableListItem } from '@/app/(public)/users/[userHandle]/posts/[postId]/comments/_components/commentable-list-item';
 import {
   AppBar,
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { ChatInput } from '@/components/ui-unstable/chat-input';
-import { CommentableListItem } from '@/features/comments-page/commentable-list-item';
 import { queries } from '@/queries';
 
 type CommentsPageProps = {

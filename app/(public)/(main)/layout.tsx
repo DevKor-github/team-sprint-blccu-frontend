@@ -1,6 +1,6 @@
 import { type PropsWithChildren } from 'react';
 
-import { MainLayoutBottomNavBar } from '@/features/main-layout/main-layout-bottom-nav-bar';
+import { MainLayoutBottomNavBar } from '@/app/(public)/(main)/_components/main-layout-bottom-nav-bar';
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (

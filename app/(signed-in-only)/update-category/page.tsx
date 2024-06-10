@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 
+import { UpdateCategoryPageBottomActionSheet } from '@/app/(signed-in-only)/update-category/_components/update-category-page-bottom-action-sheet';
 import {
   AppBar,
   AppBarBack,
@@ -12,7 +13,6 @@ import {
 } from '@/components/ui-unstable/app-bar';
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
 import { ROUTES } from '@/constants/routes';
-import { UpdateCategoryPageBottomActionSheet } from '@/features/update-category-page/update-category-page-bottom-action-sheet';
 import { queries } from '@/queries';
 
 const UpdateCategoryPage = () => {

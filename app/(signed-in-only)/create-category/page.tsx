@@ -1,9 +1,9 @@
+import { CreateCategoryForm } from '@/app/(signed-in-only)/create-category/_components/create-category-form';
 import {
   AppBar,
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
-import { CreateCategoryForm } from '@/features/create-category-page/create-category-form';
 
 const CreateCategoryPage = () => {
   return (

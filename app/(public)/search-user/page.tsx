@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
+import { UserSearchBar } from '@/app/(public)/search-user/_components/user-search-bar';
+import { UserSearchResult } from '@/app/(public)/search-user/_components/user-search-result';
 import {
   AppBar,
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
-import { UserSearchBar } from '@/features/search-user-page/user-search-bar';
-import { UserSearchResult } from '@/features/search-user-page/user-search-result';
 
 const SearchUserPage = () => {
   const [search, setSearch] = useState<string>('');

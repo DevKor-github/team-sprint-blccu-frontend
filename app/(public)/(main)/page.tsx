@@ -2,12 +2,12 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-import { AllPostSection } from '@/features/root-page/all-post-section';
-import { BannerNotSignedIn } from '@/features/root-page/banner-not-signed-in';
-import { BannerSignedIn } from '@/features/root-page/banner-signed-in';
-import { FollowingPostSection } from '@/features/root-page/following-post-section';
-import { RootPageHeader } from '@/features/root-page/root-page-header';
-import { TrendingPostSection } from '@/features/root-page/trending-post-section';
+import { AllPostSection } from '@/app/(public)/(main)/_components/all-post-section';
+import { BannerNotSignedIn } from '@/app/(public)/(main)/_components/banner-not-signed-in';
+import { BannerSignedIn } from '@/app/(public)/(main)/_components/banner-signed-in';
+import { FollowingPostSection } from '@/app/(public)/(main)/_components/following-post-section';
+import { RootPageHeader } from '@/app/(public)/(main)/_components/root-page-header';
+import { TrendingPostSection } from '@/app/(public)/(main)/_components/trending-post-section';
 import { queries } from '@/queries';
 
 const RootPage = () => {

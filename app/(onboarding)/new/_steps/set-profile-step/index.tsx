@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { SetProfileForm } from '@/app/(onboarding)/new/_steps/set-profile-step/components/set-profile-form';
 import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
 import { Button } from '@/components/ui/button';
-import { SetProfileForm } from '@/features/set-profile-step/set-profile-form';
 import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/props';
 

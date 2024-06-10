@@ -7,11 +7,11 @@ import { List } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { type UserResponseDto } from '@/__generated__/data-contracts';
+import { EditUserProfileSheet } from '@/app/(public)/(main)/users/[userHandle]/_components/edit-user-profile-sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
-import { EditUserProfileSheet } from '@/features/user-handle-page/edit-user-profile-sheet';
 import { api } from '@/lib/api';
 import {
   getFollowerDescriptor,

@@ -2,8 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query';
 
+import { EditUserProfileForm } from '@/app/(public)/(main)/users/[userHandle]/_components/edit-user-profile-form';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { EditUserProfileForm } from '@/features/user-handle-page/edit-user-profile-form';
 import { queries } from '@/queries';
 import { type PropsWithTrigger } from '@/types/props';
 
