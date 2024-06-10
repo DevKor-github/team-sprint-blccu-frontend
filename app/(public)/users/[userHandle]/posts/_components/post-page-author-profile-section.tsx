@@ -28,7 +28,7 @@ const PostPageAuthorProfileSection = ({
   user: { kakaoId, handle, username, description, profile_image },
 }: PostPageAuthorProfileSectionProps) => {
   const { data: userData } = useQuery({
-    ...queries.users.detail(handle),
+    ...queries.users.detailByHandle(handle),
     retry: false,
   });
 
@@ -53,7 +53,7 @@ const PostPageAuthorProfileSection = ({
       });
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(handle).queryKey,
+        queryKey: queries.users.detailByHandle(handle).queryKey,
       });
 
       toast.success(TOAST_MESSAGES.FOLLOW_SUCCESS);
@@ -72,7 +72,7 @@ const PostPageAuthorProfileSection = ({
       });
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(handle).queryKey,
+        queryKey: queries.users.detailByHandle(handle).queryKey,
       });
 
       toast.success(TOAST_MESSAGES.UNFOLLOW_SUCCESS);

@@ -1,4 +1,4 @@
-import { type NotificationType } from '@/types/mocking-entity';
+import { type FetchNotiResponse } from '@/__generated__/data-contracts';
 
 const getFollowerDescriptor = (followerCount: number | undefined) => {
   if (followerCount === 0 || followerCount === undefined) {
@@ -39,14 +39,20 @@ const getPostPageAllPostSectionTitleDescriptor = (username: string) => {
   return `${username}님의 전체글`;
 };
 
-const getNotificationTypeDescriptor = (type: NotificationType) => {
+const getNotificationTypeDescriptor = (type: FetchNotiResponse['type']) => {
   switch (type) {
-    case 'like':
-      return '님이 내 게시물에 좋아요를 남겼습니다.';
-    case 'comment':
+    case 'COMMENT':
       return '님이 내 게시물에 댓글을 남겼습니다.';
-    case 'follow':
+    case 'REPLY':
+      return '님이 내 댓글에 답글을 남겼습니다.';
+    case 'LIKE':
+      return '님이 내 게시물에 좋아요를 남겼습니다.';
+    case 'FOLLOW':
       return '님이 나를 팔로우합니다.';
+    case 'ANNOUNCEMENT': // ?
+      return '공지사항이 올라왔습니다.';
+    case 'REPORT': // ?
+      return '신고가 접수되었습니다.';
     default:
       throw new Error('Invalid notification type');
   }

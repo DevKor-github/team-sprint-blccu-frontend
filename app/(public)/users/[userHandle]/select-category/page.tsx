@@ -25,7 +25,7 @@ const SelectCategoryPage = ({
   params: { userHandle },
 }: SelectCategoryPageProps) => {
   const { data: userData } = useQuery({
-    ...queries.users.detail(userHandle),
+    ...queries.users.detailByHandle(userHandle),
     retry: false,
   });
 

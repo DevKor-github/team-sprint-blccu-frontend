@@ -1,27 +1,47 @@
+'use client';
+
 import Link from 'next/link';
 
+import { useQuery } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
+import { type FetchNotiResponse } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ROUTES } from '@/constants/routes';
 import { getNotificationTypeDescriptor } from '@/lib/get-descriptor';
-import { type NotificationType, type User } from '@/types/mocking-entity';
+import { queries } from '@/queries';
 
 type StackedNotificationCardProps = {
-  user: User;
-  type: NotificationType;
-  sentAt: Date;
+  notification: FetchNotiResponse;
 };
 
 const StackedNotificationCard = ({
-  user: { username, handle, profileImage },
-  type,
-  sentAt,
+  notification: {
+    userKakaoId,
+    targetUserKakaoId,
+    type,
+    is_checked,
+    date_created,
+  },
 }: StackedNotificationCardProps) => {
+  const { data: userData } = useQuery(
+    queries.users.detailByKakaoId(userKakaoId),
+  );
+  const { data: targetUserData } = useQuery(
+    queries.users.detailByKakaoId(targetUserKakaoId),
+  );
+
+  if (userData === undefined || targetUserData === undefined) {
+    return null;
+  }
+
+  const user = userData.data;
+  const targetUser = targetUserData.data;
+
   const notificationTypeDescriptor = getNotificationTypeDescriptor(type);
 
-  const sentAtDescriptor = formatDistanceToNow(sentAt, {
+  const dateCreatedDescriptor = formatDistanceToNow(date_created, {
     addSuffix: true,
     locale: ko,
   });
@@ -29,20 +49,20 @@ const StackedNotificationCard = ({
   return (
     <div className="flex items-center gap-2">
       <div className="flex flex-1 items-center gap-4">
-        <Link href={ROUTES.USER_HANDLE_OF(handle)}>
+        <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
           <Avatar size="xs">
-            <AvatarImage src={profileImage} alt="avatar" />
+            <AvatarImage src={user.profile_image} alt="avatar" />
             <AvatarFallback className="bg-blccu-neutral-400" />
           </Avatar>
         </Link>
         <div className="break-all text-sm">
-          <Link href={ROUTES.USER_HANDLE_OF(handle)}>
-            <span className="font-bold">{username}</span>
+          <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
+            <span className="font-bold">{user.username}</span>
           </Link>
           <span>{notificationTypeDescriptor}</span>
         </div>
       </div>
-      <p className="text-xs text-blccu-neutral-600">{sentAtDescriptor}</p>
+      <p className="text-xs text-blccu-neutral-600">{dateCreatedDescriptor}</p>
     </div>
   );
 };

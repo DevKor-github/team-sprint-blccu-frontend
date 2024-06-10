@@ -66,7 +66,7 @@ const EditUserProfileForm = ({
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(user.handle).queryKey,
+        queryKey: queries.users.detailByHandle(user.handle).queryKey,
       });
 
       toast.success(TOAST_MESSAGES.UPDATE_USER_PROFILE_SUCCESS);
@@ -88,7 +88,7 @@ const EditUserProfileForm = ({
       });
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(user.handle).queryKey,
+        queryKey: queries.users.detailByHandle(user.handle).queryKey,
       });
     },
     onError: () => {
@@ -122,7 +122,7 @@ const EditUserProfileForm = ({
       });
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(user.handle).queryKey,
+        queryKey: queries.users.detailByHandle(user.handle).queryKey,
       });
     },
   });

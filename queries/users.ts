@@ -11,7 +11,11 @@ const users = createQueryKeys('users', {
     queryKey: null,
     queryFn: api.users.agreementsControllerFetchAgreements,
   },
-  detail: (handle: string) => ({
+  detailByKakaoId: (kakaoId: number) => ({
+    queryKey: [kakaoId],
+    queryFn: () => api.users.usersControllerFindUserByKakaoId(kakaoId),
+  }),
+  detailByHandle: (handle: string) => ({
     queryKey: [handle],
     queryFn: () => api.users.usersControllerFindUserByHandle(handle),
   }),

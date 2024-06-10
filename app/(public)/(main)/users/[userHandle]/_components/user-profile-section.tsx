@@ -60,7 +60,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(user.handle).queryKey,
+        queryKey: queries.users.detailByHandle(user.handle).queryKey,
       });
 
       toast.success(TOAST_MESSAGES.FOLLOW_SUCCESS);
@@ -79,7 +79,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.detail(user.handle).queryKey,
+        queryKey: queries.users.detailByHandle(user.handle).queryKey,
       });
 
       toast.success(TOAST_MESSAGES.UNFOLLOW_SUCCESS);

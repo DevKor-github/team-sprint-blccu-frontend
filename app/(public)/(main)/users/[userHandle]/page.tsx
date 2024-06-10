@@ -22,7 +22,7 @@ type UserHandlePageProps = {
 
 const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
   const { data: userData } = useQuery({
-    ...queries.users.detail(userHandle),
+    ...queries.users.detailByHandle(userHandle),
     retry: false,
   });
 

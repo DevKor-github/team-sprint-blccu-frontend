@@ -31,7 +31,7 @@ type FollowingPageProps = {
 const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
   const { data: meData } = useQuery({ ...queries.users.me, retry: false });
   const { data: userData } = useQuery({
-    ...queries.users.detail(userHandle),
+    ...queries.users.detailByHandle(userHandle),
     retry: false,
   });
   const { data: followingsData } = useQuery({
