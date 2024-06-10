@@ -16,4 +16,11 @@ const getValues = <T extends Record<string, any>>(obj: T) => {
 
 const noop = () => {};
 
-export { cn, copyCurrentUrl, getValues, noop };
+const truncate = (str: string, num: number) => {
+  if (str.length <= num) {
+    return str;
+  }
+  return str.slice(0, num) + '...';
+};
+
+export { cn, copyCurrentUrl, getValues, noop, truncate };

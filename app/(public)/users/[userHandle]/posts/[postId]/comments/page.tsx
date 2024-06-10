@@ -1,10 +1,11 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, type MouseEventHandler, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { CornerDownRight } from 'lucide-react';
 
+import { type FetchCommentDto } from '@/__generated__/data-contracts';
 import { CommentableListItem } from '@/app/(public)/users/[userHandle]/posts/[postId]/comments/_components/commentable-list-item';
 import {
   AppBar,
@@ -12,6 +13,7 @@ import {
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { ChatInput } from '@/components/ui-unstable/chat-input';
+import { truncate } from '@/lib/utils';
 import { queries } from '@/queries';
 
 type CommentsPageProps = {
@@ -32,31 +34,75 @@ const CommentsPage = ({
 
   const me = meData?.data;
 
+  const [selectedComment, setSelectedComment] =
+    useState<FetchCommentDto | null>(null);
+
+  const getHandleCommentClick = (comment: FetchCommentDto | null) => {
+    const handleCommentClick: MouseEventHandler<HTMLDivElement> = (event) => {
+      event.stopPropagation();
+      setSelectedComment(comment);
+    };
+
+    return handleCommentClick;
+  };
+
   return (
     <>
       <AppBar shadow>
         <AppBarBack />
         <AppBarTitle>댓글</AppBarTitle>
       </AppBar>
-      <div className="flex flex-col gap-2 px-4 pb-20 pt-16">
+      <div className="flex flex-col px-2 pb-28 pt-16">
         {comments.map((comment, index) => (
           <div key={index}>
-            <CommentableListItem comment={comment} me={me} />
-            <div className="relative ml-7 mt-2 flex flex-col gap-2">
+            <CommentableListItem
+              comment={comment}
+              me={me}
+              isSelected={
+                selectedComment !== null && selectedComment.id === comment.id
+              }
+              onClick={getHandleCommentClick(comment)}
+            />
+            <div className="relative ml-7 mt-2 flex flex-col">
               {comment.children.map((child, index) => (
                 <Fragment key={index}>
                   {index === 0 && (
                     <CornerDownRight className="absolute -left-7 top-2 h-4 w-4 text-blccu-neutral-400" />
                   )}
-                  <CommentableListItem comment={child} me={me} />
+                  <CommentableListItem
+                    comment={child}
+                    me={me}
+                    onClick={getHandleCommentClick(comment)}
+                  />
                 </Fragment>
               ))}
             </div>
           </div>
         ))}
       </div>
-      <div className="fixed bottom-0 mx-auto h-20 w-full max-w-screen-sm bg-blccu-white/80 backdrop-blur">
-        <ChatInput postId={postId} />
+      <div className="fixed bottom-0 mx-auto w-full max-w-screen-sm bg-blccu-white/80 backdrop-blur">
+        {selectedComment && (
+          <div className="flex items-center justify-between px-4 pt-1">
+            <p className="text-sm font-medium text-blccu-neutral-600">
+              <span className="rounded-lg bg-blccu-neutral-200 px-1">
+                {truncate(selectedComment.content, 20)}
+              </span>{' '}
+              에 대한 답글
+            </p>
+            <button
+              className="text-blccu-primary-500 text-sm font-medium"
+              onClick={() => setSelectedComment(null)}
+            >
+              취소
+            </button>
+          </div>
+        )}
+        <div className="h-16 w-full">
+          <ChatInput
+            postId={postId}
+            parentId={selectedComment?.id ?? undefined}
+          />
+        </div>
       </div>
     </>
   );

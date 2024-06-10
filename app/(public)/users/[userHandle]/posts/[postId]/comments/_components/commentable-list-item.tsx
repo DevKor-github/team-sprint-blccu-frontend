@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { EventHandler, type MouseEventHandler } from 'react';
+
 import { EllipsisVertical } from 'lucide-react';
 
 import {
@@ -10,15 +12,20 @@ import { ReportCommentBottomActionSheet } from '@/app/(public)/users/[userHandle
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
+import { cn } from '@/lib/utils';
 
 type CommentableListItemProps = {
   comment: ChildrenComment;
   me: UserResponseDto | undefined;
+  isSelected?: boolean;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 const CommentableListItem = ({
   comment: { id, user, content, postsId, date_deleted },
   me,
+  isSelected,
+  onClick,
 }: CommentableListItemProps) => {
   const isSignedIn = me !== undefined;
   const isMe = me?.kakaoId === user.kakaoId;
@@ -32,7 +39,13 @@ const CommentableListItem = ({
           삭제된 댓글입니다.
         </p>
       ) : (
-        <div className="flex flex-col">
+        <div
+          className={cn(
+            'flex flex-col px-2 py-1',
+            isSelected && 'rounded-lg bg-blccu-neutral-200',
+          )}
+          onClick={onClick}
+        >
           <div className="flex items-center justify-between">
             <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
               <div className="flex items-center gap-2">

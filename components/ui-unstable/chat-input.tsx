@@ -36,9 +36,10 @@ type InsertCommentProps = {
 
 type ChatInputProps = {
   postId: number;
+  parentId?: number;
 };
 
-const ChatInput = ({ postId }: ChatInputProps) => {
+const ChatInput = ({ postId, parentId }: ChatInputProps) => {
   const form = useForm<InsertCommentFormValues>({
     resolver: zodResolver(insertCommentFormSchema),
     defaultValues: {
@@ -66,7 +67,7 @@ const ChatInput = ({ postId }: ChatInputProps) => {
   });
 
   const onSubmit = async (values: InsertCommentFormValues) => {
-    mutate({ postId, createCommentInput: values });
+    mutate({ postId, createCommentInput: { ...values, parentId } });
   };
 
   const { isSubmitting, isValid } = form.formState;
