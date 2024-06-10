@@ -11,7 +11,7 @@ import {
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
-import { QUERY_KEY } from '@/constants/query';
+import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
 import { queries } from '@/queries';
 
@@ -86,7 +86,7 @@ const SelectCategoryPage = ({
               href={{
                 pathname: ROUTES.USER_HANDLE_OF(userHandle),
                 query: {
-                  [QUERY_KEY.CATEGORY_ID]: category.categoryId,
+                  [QUERY_PARAMS.CATEGORY_ID]: category.categoryId,
                 },
               }}
               key={category.categoryId}

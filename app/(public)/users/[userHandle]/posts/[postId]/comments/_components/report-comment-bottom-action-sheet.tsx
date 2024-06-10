@@ -16,7 +16,7 @@ import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
-import { type PropsWithTrigger } from '@/types/props';
+import { type PropsWithTrigger } from '@/types/util';
 
 type ReportCommentBottomActionSheetProps = {
   id: number;

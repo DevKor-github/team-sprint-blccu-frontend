@@ -1,7 +1,7 @@
 import { type PropsWithChildren } from 'react';
 
 import { cn } from '@/lib/utils';
-import { type PropsWithClassName } from '@/types/props';
+import { type PropsWithClassName } from '@/types/util';
 
 const Section = ({
   children,

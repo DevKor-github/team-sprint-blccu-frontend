@@ -8,7 +8,7 @@ import { ChevronLeft } from 'lucide-react';
 
 import { IconButton } from '@/components/ui/icon-button';
 import { cn } from '@/lib/utils';
-import { type PropsWithClassName } from '@/types/props';
+import { type PropsWithClassName } from '@/types/util';
 
 type AppBarProps = {
   shadow?: boolean;

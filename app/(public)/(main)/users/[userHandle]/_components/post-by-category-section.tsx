@@ -13,7 +13,7 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
-import { QUERY_KEY } from '@/constants/query';
+import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
 import { queries } from '@/queries';
 
@@ -23,7 +23,7 @@ type PostByCategorySectionProps = {
 
 const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
   const searchParams = useSearchParams();
-  const categoryId = searchParams.get(QUERY_KEY.CATEGORY_ID) ?? undefined;
+  const categoryId = searchParams.get(QUERY_PARAMS.CATEGORY_ID) ?? undefined;
 
   const { data: postData } = useQuery(
     queries.posts.userByCategory(user.kakaoId, categoryId),

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { EditUserProfileForm } from '@/app/(public)/(main)/users/[userHandle]/_components/edit-user-profile-form';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { queries } from '@/queries';
-import { type PropsWithTrigger } from '@/types/props';
+import { type PropsWithTrigger } from '@/types/util';
 
 const EditUserProfileSheet = ({ trigger }: PropsWithTrigger) => {
   const { data: meData } = useQuery({ ...queries.users.me, retry: false });

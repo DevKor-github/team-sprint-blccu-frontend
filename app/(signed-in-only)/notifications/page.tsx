@@ -13,7 +13,7 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { StackedNotificationCard } from '@/components/ui-unstable/stacked-notificiation-card';
-import { MILLISECONDS_IN_DAY } from '@/constants/date';
+import { MILLISECONDS_IN_DAY } from '@/constants/constants';
 import { queries } from '@/queries';
 
 const NotificationsPage = () => {

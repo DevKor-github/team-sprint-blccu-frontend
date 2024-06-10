@@ -6,7 +6,7 @@ import { Postbg } from '@/__generated__/Postbg';
 import { Posts } from '@/__generated__/Posts';
 import { Stickers } from '@/__generated__/Stickers';
 import { Users } from '@/__generated__/Users';
-import { PROXY_API_PREFIX } from '@/constants/url';
+import { PROXY_API_PREFIX } from '@/constants/routes';
 
 const anmts = new Anmts({
   baseURL: PROXY_API_PREFIX,

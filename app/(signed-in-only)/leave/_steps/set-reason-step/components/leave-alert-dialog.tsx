@@ -8,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { type PropsWithTrigger } from '@/types/props';
+import { type PropsWithTrigger } from '@/types/util';
 
 type LeaveAlertDialogProps = {
   onSubmit: () => void;

@@ -1,6 +1,6 @@
 import { EditPostBackgroundContent } from '@/app/(signed-in-only)/write/components/sheet/edit-post-background-content';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { type PropsWithTrigger } from '@/types/props';
+import { type PropsWithTrigger } from '@/types/util';
 
 const EditPostBackgroundSheet = ({ trigger }: PropsWithTrigger) => {
   return (

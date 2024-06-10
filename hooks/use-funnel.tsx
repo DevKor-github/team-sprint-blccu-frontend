@@ -11,8 +11,8 @@ import {
   useMemo,
 } from 'react';
 
-import { QUERY_KEY } from '@/constants/query';
-import { type NonEmptyArray } from '@/types/utility-types';
+import { QUERY_PARAMS } from '@/constants/constants';
+import { type NonEmptyArray } from '@/types/util';
 
 /**
  * FunnelStep
@@ -90,7 +90,8 @@ const useFunnel = <Steps extends NonEmptyArray<string>>({
           // eslint-disable-next-line react-hooks/rules-of-hooks
           const searchParams = useSearchParams();
 
-          const step = searchParams.get(QUERY_KEY.FUNNEL_STEP) ?? initialStep;
+          const step =
+            searchParams.get(QUERY_PARAMS.FUNNEL_STEP) ?? initialStep;
 
           return <TargetFunnel<Steps> steps={steps} step={step} {...props} />;
         },
@@ -108,7 +109,7 @@ const useFunnel = <Steps extends NonEmptyArray<string>>({
   );
 
   const setStep = (step: Steps[number]) => {
-    const queryString = createQueryString(QUERY_KEY.FUNNEL_STEP, step);
+    const queryString = createQueryString(QUERY_PARAMS.FUNNEL_STEP, step);
 
     router.push('?' + queryString);
   };

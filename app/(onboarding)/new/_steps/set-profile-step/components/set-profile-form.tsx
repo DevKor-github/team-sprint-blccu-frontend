@@ -17,7 +17,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
-import { type PropsWithOnNext } from '@/types/props';
+import { type PropsWithOnNext } from '@/types/util';
 
 const patchUserProfileFormSchema = z.object({
   username: z.string().min(1).max(20),

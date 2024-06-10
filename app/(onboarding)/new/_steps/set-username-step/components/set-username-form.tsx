@@ -21,7 +21,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
-import { type PropsWithOnNext } from '@/types/props';
+import { type PropsWithOnNext } from '@/types/util';
 
 const setUsernameFormSchema = z.object({
   username: z.string().min(1).max(20),

@@ -30,7 +30,7 @@ import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
 import { api } from '@/lib/api';
 import { getValues } from '@/lib/utils';
-import { type PropsWithOnNext } from '@/types/props';
+import { type PropsWithOnNext } from '@/types/util';
 
 const LEAVE_REASON_TYPE = {
   TOO_MANY_ERRORS: 'TOO_MANY_ERRORS',

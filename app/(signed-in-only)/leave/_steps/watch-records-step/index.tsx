@@ -7,7 +7,7 @@ import {
 } from '@/components/ui-unstable/app-bar';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-import { type PropsWithOnNext } from '@/types/props';
+import { type PropsWithOnNext } from '@/types/util';
 
 const WatchRecordsStep = ({ onNext }: PropsWithOnNext) => {
   const router = useRouter();

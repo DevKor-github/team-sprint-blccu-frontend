@@ -1,3 +1,9 @@
+const QUERY_PARAMS = {
+  FUNNEL_STEP: 'funnel-step',
+  CATEGORY_ID: 'category-id',
+} as const;
+
+/* date constants */
 const MILLISECONDS_IN_SECOND = 1000;
 const SECONDS_IN_MINUTE = 60;
 const MINUTES_IN_HOUR = 60;
@@ -18,5 +24,6 @@ export {
   MILLISECONDS_IN_SECOND,
   MILLISECONDS_IN_WEEK,
   MINUTES_IN_HOUR,
+  QUERY_PARAMS,
   SECONDS_IN_MINUTE,
 };

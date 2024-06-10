@@ -11,7 +11,7 @@ import {
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { queries } from '@/queries';
-import { type PropsWithOnNext } from '@/types/props';
+import { type PropsWithOnNext } from '@/types/util';
 
 const SetUsernameStep = (props: PropsWithOnNext) => {
   const { data: meData } = useQuery({ ...queries.users.me, retry: false });

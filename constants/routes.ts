@@ -1,4 +1,4 @@
-import { PROXY_API_PREFIX } from '@/constants/url';
+const PROXY_API_PREFIX = '/backend-api';
 
 const ROUTES = {
   /* -------------------------------------------------------------------------------------------------
@@ -59,4 +59,4 @@ const API_ROUTES = {
   AUTH_KAKAO_LOGIN: `${PROXY_API_PREFIX}/auth/login/kakao`,
 } as const;
 
-export { API_ROUTES, ROUTES };
+export { API_ROUTES, PROXY_API_PREFIX, ROUTES };
