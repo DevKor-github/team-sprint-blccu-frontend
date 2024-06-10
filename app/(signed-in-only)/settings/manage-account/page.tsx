@@ -25,7 +25,7 @@ const ManageAccountPage = () => {
   const { mutate } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),
     onSuccess: () => {
-      router.push(ROUTES.ROOT);
+      router.refresh();
     },
     onError: () => {
       toast.error(TOAST_MESSAGES.LOGOUT_FAIL);
