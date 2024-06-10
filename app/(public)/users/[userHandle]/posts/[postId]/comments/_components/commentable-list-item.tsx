@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { EventHandler, type MouseEventHandler } from 'react';
+import { type MouseEventHandler } from 'react';
 
 import { EllipsisVertical } from 'lucide-react';
 
@@ -35,14 +35,14 @@ const CommentableListItem = ({
   return (
     <>
       {isDeleted ? (
-        <p className="text-sm font-medium text-blccu-neutral-600">
+        <p className="py-2 text-sm font-medium text-blccu-neutral-600">
           삭제된 댓글입니다.
         </p>
       ) : (
         <div
           className={cn(
-            'flex flex-col px-2 py-1',
-            isSelected && 'rounded-lg bg-blccu-neutral-200',
+            'flex flex-col gap-1 rounded-lg px-3 py-2',
+            isSelected && 'shadow-blccu-secondary',
           )}
           onClick={onClick}
         >

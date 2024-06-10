@@ -98,7 +98,7 @@ const PostPageAuthorProfileSection = ({
   const followerDescriptor = getFollowerDescriptor(user.follower_count);
 
   return (
-    <section className="mx-4 my-12 flex items-center rounded-xl py-4 shadow-blccu-secondary">
+    <section className="mx-4 my-12 flex flex-col items-center gap-6 rounded-2xl py-8 shadow-blccu-secondary sm:flex-row">
       <div className="flex flex-1 flex-col items-center gap-2">
         <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
           <Avatar>
@@ -106,9 +106,9 @@ const PostPageAuthorProfileSection = ({
             <AvatarFallback className="bg-blccu-neutral-400" />
           </Avatar>
         </Link>
-        <div className="flex flex-col items-center">
-          <p className="text-xs font-medium">{username}</p>
-          <p className="line-clamp-1 max-w-40 text-center text-2xs text-blccu-neutral-400">
+        <div className="flex flex-col items-center gap-1">
+          <p className="font-medium">{username}</p>
+          <p className="line-clamp-1 max-w-48 text-center text-xs text-blccu-neutral-500">
             {description}
           </p>
         </div>
@@ -136,7 +136,7 @@ const PostPageAuthorProfileSection = ({
             )}
           </>
         )}
-        <p className="text-xs text-blccu-neutral-600">{followerDescriptor}</p>
+        <p className="text-xs text-blccu-neutral-500">{followerDescriptor}</p>
       </div>
     </section>
   );

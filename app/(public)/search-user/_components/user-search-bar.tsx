@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Search } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -15,7 +13,7 @@ const UserSearchBar = ({ value, handleValueChange }: UserSearchBarProps) => {
   return (
     <div
       className={cn(
-        'mx-4 mt-4 flex items-center rounded-full bg-blccu-neutral-200 py-2 pl-7 pr-5',
+        'mx-4 mt-4 flex items-center rounded-full border bg-blccu-neutral-100 py-3 pl-7 pr-5',
         'transition-shadow focus-within:outline-none focus-within:ring-1 focus-within:ring-blccu-ring',
       )}
     >
@@ -23,9 +21,9 @@ const UserSearchBar = ({ value, handleValueChange }: UserSearchBarProps) => {
         className={cn(
           'w-full bg-transparent',
           'focus:outline-none',
-          'placeholder:text-blccu-neutral-400',
+          'placeholder:text-blccu-neutral-500',
         )}
-        placeholder="닉네임 또는 아이디로 검색하세요"
+        placeholder="유저 이름 또는 아이디로 검색"
         value={value}
         onChange={handleValueChange}
       />

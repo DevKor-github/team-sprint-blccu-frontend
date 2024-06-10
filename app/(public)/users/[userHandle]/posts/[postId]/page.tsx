@@ -54,15 +54,14 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
       <AppBar className="bg-blccu-white/90 backdrop-blur-lg">
         <AppBarBack />
         <div className="item-center flex w-full justify-between">
-          <AppBarTitle className="flex items-center">
-            <Link
-              href={ROUTES.USER_HANDLE_OF(user.handle)}
-              className="flex items-center gap-3"
-            >
+          <AppBarTitle className="flex items-center gap-3">
+            <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
               <Avatar size="xs">
                 <AvatarImage src={user.profile_image} />
                 <AvatarFallback className="bg-blccu-neutral-400" />
               </Avatar>
+            </Link>
+            <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
               <p className="text-sm font-medium">{user.username}</p>
             </Link>
           </AppBarTitle>

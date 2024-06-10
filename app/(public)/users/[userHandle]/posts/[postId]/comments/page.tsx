@@ -63,11 +63,11 @@ const CommentsPage = ({
               }
               onClick={getHandleCommentClick(comment)}
             />
-            <div className="relative ml-7 mt-2 flex flex-col">
+            <div className="relative ml-7 flex flex-col">
               {comment.children.map((child, index) => (
                 <Fragment key={index}>
                   {index === 0 && (
-                    <CornerDownRight className="absolute -left-7 top-2 h-4 w-4 text-blccu-neutral-400" />
+                    <CornerDownRight className="absolute -left-3 top-3 h-4 w-4 text-blccu-neutral-400" />
                   )}
                   <CommentableListItem
                     comment={child}

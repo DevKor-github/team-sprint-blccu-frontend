@@ -21,8 +21,10 @@ const config = {
         blccu: {
           white: 'rgb(var(--blccu-white) / <alpha-value>)',
           neutral: {
+            100: 'rgb(var(--blccu-neutral-100) / <alpha-value>)',
             200: 'rgb(var(--blccu-neutral-200) / <alpha-value>)',
             400: 'rgb(var(--blccu-neutral-400) / <alpha-value>)',
+            500: 'rgb(var(--blccu-neutral-500) / <alpha-value>)',
             600: 'rgb(var(--blccu-neutral-600) / <alpha-value>)',
             800: 'rgb(var(--blccu-neutral-800) / <alpha-value>)',
           },
@@ -89,14 +91,6 @@ const config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-      },
-      backgroundPatterns: {
-        checkerboard:
-          'linear-gradient(to bottom, transparent 19px, #f2f2f2 19px) 0 0 / 100vw 20px repeat-y, linear-gradient(to right, transparent 19px, #f2f2f2 19px) 0 0 / 20px 100vh repeat-x white;',
-      },
-      fontSize: {
-        '2xs': '0.625rem' /* 10px */,
-        'lg-2': '1rem' /* 16px */,
       },
       fontFamily: {
         'noto-sans-kr': ['var(--font-noto-sans-kr)'],

@@ -108,27 +108,23 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
           backgroundImage: `url(${background_image})`,
         }}
       />
-      <Avatar size="xl" className="mt-[40px]">
+      <Avatar size="xl" className="mt-[42px]">
         <AvatarImage src={profile_image} />
         <AvatarFallback className="bg-blccu-neutral-400" />
       </Avatar>
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex flex-col items-center gap-4">
-          <h2 className="text-2xl font-bold">{username}</h2>
-          <div className="flex flex-col items-center gap-1">
-            <div className="break-all text-sm text-blccu-neutral-400">
-              <Link href={ROUTES.FOLLOWERS_OF(handle)}>
-                <span>{followerDescriptor}</span>
-              </Link>
-              <span>&nbsp;·&nbsp;</span>
-              <Link href={ROUTES.FOLLOWING_OF(handle)}>
-                <span>{followingDescriptor}</span>
-              </Link>
-            </div>
-            <p className="max-w-72 text-center text-sm text-blccu-neutral-600">
-              {description}
-            </p>
+      <div className="flex flex-col items-center gap-8">
+        <h2 className="text-2xl font-semibold">{username}</h2>
+        <div className="flex flex-col items-center gap-2">
+          <div className="break-all text-sm text-blccu-neutral-500">
+            <Link href={ROUTES.FOLLOWERS_OF(handle)}>
+              <span>{followerDescriptor}</span>
+            </Link>
+            <span>&nbsp;·&nbsp;</span>
+            <Link href={ROUTES.FOLLOWING_OF(handle)}>
+              <span>{followingDescriptor}</span>
+            </Link>
           </div>
+          <p className="max-w-72 text-center text-sm">{description}</p>
         </div>
         <div className="flex items-center gap-2">
           {isMe ? (

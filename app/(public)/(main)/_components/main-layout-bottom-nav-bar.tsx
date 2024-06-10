@@ -27,15 +27,15 @@ const MainLayoutBottomNavBar = () => {
         'bg-blccu-white shadow-blccu-top',
       )}
     >
-      <ul className="flex justify-between px-11">
-        <li>
+      <ul className="flex justify-evenly">
+        <li className="mr-5">
           <Link href={ROUTES.ROOT}>
             <div className="p-5">
               <Home className="h-5 w-5" />
             </div>
           </Link>
         </li>
-        <li>
+        <li className="ml-5">
           <Link href={ROUTES.WRITE}>
             <div
               className={cn(

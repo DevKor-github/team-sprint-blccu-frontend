@@ -1,13 +1,13 @@
 import Link from 'next/link';
 
+import { ExternalLink } from 'lucide-react';
+
 import { type UserResponseDto } from '@/__generated__/data-contracts';
-import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { getBannerSignedInUsernameDescriptor } from '@/lib/get-descriptor';
-import { cn } from '@/lib/utils';
 
 const backgroundImage =
-  'https://images.unsplash.com/photo-1717511130028-3dcb14006ca5';
+  'https://images.unsplash.com/photo-1717831499998-6f5bafe9e287';
 
 type BannerSignedInProps = {
   user: UserResponseDto;
@@ -18,26 +18,23 @@ const BannerSignedIn = ({ user: { username } }: BannerSignedInProps) => {
 
   return (
     <div
-      className="mx-4 my-4 flex h-52 flex-col justify-end rounded-lg bg-cover bg-center"
+      className="mx-4 my-4 flex h-60 flex-col justify-end rounded-lg bg-cover bg-center"
       style={{
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div
-        className={cn(
-          'flex flex-col',
-          'rounded-b-lg bg-gradient-to-b from-transparent to-black p-4',
-        )}
-      >
-        <p className="text-sm text-blccu-white">{usernameDescriptor}</p>
-        <p className="text-2xl font-bold text-blccu-white">
-          지금 블로그를 꾸며보세요.
-        </p>
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-blccu-white">지금 블꾸하러 가기</p>
-          <Button size="sm" variant="secondary" radius="full" asChild>
-            <Link href={ROUTES.WRITE}>글쓰기</Link>
-          </Button>
+      <div className="flex rounded-b-lg bg-gradient-to-b from-transparent to-black p-4 transition-all sm:p-8">
+        <div className="flex flex-col">
+          <p className="text-sm text-blccu-white">{usernameDescriptor}</p>
+          <p className="text-xl font-semibold text-blccu-white">
+            지금 블로그를 꾸며보세요 🎨
+          </p>
+          <Link href={ROUTES.WRITE}>
+            <p className="mt-2 flex items-center gap-1 text-sm text-blccu-white">
+              <ExternalLink className="h-4 w-4" />
+              지금 블꾸하러 가기
+            </p>
+          </Link>
         </div>
       </div>
     </div>

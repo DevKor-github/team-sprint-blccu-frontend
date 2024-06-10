@@ -6,8 +6,10 @@
   /* blccu design token (color) */
   :root {
     --blccu-white: 255 255 255; /* #ffffff */
+    --blccu-neutral-100: 250 250 250; /* #fafafa */
     --blccu-neutral-200: 234 234 234; /* #eaeaea */
     --blccu-neutral-400: 166 166 166; /* #a6a6a6 */
+    --blccu-neutral-500: 118 118 118; /* #767676 */
     --blccu-neutral-600: 91 91 91; /* #5b5b5b */
     --blccu-neutral-800: 26 26 26; /* #1a1a1a */
     --blccu-black: 0 0 0; /* #000000 */

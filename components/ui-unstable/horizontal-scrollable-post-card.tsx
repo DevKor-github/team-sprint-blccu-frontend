@@ -15,7 +15,7 @@ const HorizontalScrollablePostCard = ({
   return (
     <figure
       className={cn(
-        'relative flex h-48 w-[120px] flex-col rounded-lg bg-cover bg-center shadow-blccu-bottom transition',
+        'relative flex h-60 w-40 flex-col rounded-lg bg-cover bg-center shadow-blccu-bottom transition',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blccu-ring',
       )}
       style={{
@@ -30,8 +30,8 @@ const HorizontalScrollablePostCard = ({
           </Avatar>
         </Link>
         <div className="flex w-full flex-col">
-          <h3 className="line-clamp-1 text-xs">{title}</h3>
-          <p className="line-clamp-1 text-2xs font-light text-blccu-neutral-600">
+          <h3 className="line-clamp-1 text-sm font-medium">{title}</h3>
+          <p className="line-clamp-1 text-xs text-blccu-neutral-500">
             {user.username}
           </p>
         </div>
