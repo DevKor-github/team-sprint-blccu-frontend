@@ -7,7 +7,7 @@ const stickers = createQueryKeys('stickers', {
     queryKey: null,
     queryFn: () => api.stickers.stickerCategoriesControllerFetchCategories(),
   },
-  category: (id: string) => ({
+  category: (id: number) => ({
     queryKey: [id],
     queryFn: () =>
       api.stickers.stickerCategoriesControllerFetchStickersByCategoryName(id),

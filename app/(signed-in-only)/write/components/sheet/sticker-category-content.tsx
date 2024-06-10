@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { useQuery } from '@tanstack/react-query';
 
+import { type StickerCategory } from '@/__generated__/data-contracts';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SheetClose } from '@/components/ui/sheet';
@@ -9,8 +10,7 @@ import { TabsContent } from '@/components/ui/tabs';
 import { queries } from '@/queries';
 
 type StickerCategoryContentProps = {
-  // FIXME: BE response dto is not defined
-  category: any;
+  category: StickerCategory;
 };
 
 const StickerCategoryContent = ({
@@ -23,7 +23,7 @@ const StickerCategoryContent = ({
   const stickers = data?.data ?? [];
 
   return (
-    <TabsContent value={id}>
+    <TabsContent value={String(id)}>
       <ScrollArea className="h-60">
         <div className="flex flex-wrap justify-between gap-2">
           {stickers.map((sticker: any) => (

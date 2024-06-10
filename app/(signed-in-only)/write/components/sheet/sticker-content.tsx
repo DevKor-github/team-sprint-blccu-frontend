@@ -19,8 +19,8 @@ const StickerContent = () => {
         <TabsList className="mb-4">
           <ScrollArea className="w-[200px] whitespace-nowrap">
             <TabsTrigger value="my-sticker">내 스티커</TabsTrigger>
-            {categories.map((category: any) => (
-              <TabsTrigger key={category.id} value={category.id}>
+            {categories.map((category) => (
+              <TabsTrigger key={category.id} value={String(category.id)}>
                 {category.name}
               </TabsTrigger>
             ))}
@@ -34,7 +34,7 @@ const StickerContent = () => {
       <TabsContent value="my-sticker">
         <ScrollArea className="h-60"></ScrollArea>
       </TabsContent>
-      {categories.map((category: any) => (
+      {categories.map((category) => (
         <StickerCategoryContent key={category.id} category={category} />
       ))}
     </Tabs>
