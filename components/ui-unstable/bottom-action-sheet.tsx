@@ -40,7 +40,7 @@ const bottomActionSheetVariants = cva(
       side: {
         bottom: cn(
           'inset-x-0 mx-auto bottom-0',
-          'w-[calc(100vw-16px)] over-blccu-screen-width:w-[calc(448px-16px)]',
+          'w-[calc(100vw-16px)] sm:w-[calc(640px-16px)]',
           'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
         ),
       },

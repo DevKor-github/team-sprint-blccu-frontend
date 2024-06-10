@@ -45,7 +45,7 @@ AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 const alertDialogVariants = cva(
   cn(
     'fixed z-50 bg-blccu-background shadow-lg rounded-lg',
-    'w-[calc(100vw-32px)] over-blccu-screen-width:w-[calc(448px-32px)]',
+    'w-[calc(100vw-32px)] sm:w-[calc(640px-32px)]',
     'duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=open]:slide-in-from-left-1/2',
     'flex flex-col',
   ),

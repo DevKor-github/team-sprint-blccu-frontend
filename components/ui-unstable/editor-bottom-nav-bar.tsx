@@ -7,7 +7,7 @@ const EditorBottomNavBar = ({ children }: PropsWithChildren) => {
   return (
     <nav
       className={cn(
-        'fixed bottom-0 left-1/2 w-full max-w-md -translate-x-1/2',
+        'fixed bottom-0 left-1/2 w-full max-w-screen-sm -translate-x-1/2',
         'bg-blccu-black text-blccu-white',
       )}
     >

@@ -13,7 +13,7 @@ const SignInPage = () => {
       <div className="flex flex-col items-center gap-2">
         <KakaoButton
           asChild
-          className="w-[calc(100vw-32px)] over-blccu-screen-width:w-[calc(448px-32px)]"
+          className="w-[calc(100vw-32px)] sm:w-[calc(640px-32px)]"
         >
           <Link href={API_ROUTES.AUTH_KAKAO_LOGIN}>
             <KakaoLogo className="mr-4 h-4 w-4" />

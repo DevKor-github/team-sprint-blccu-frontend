@@ -55,7 +55,7 @@ const CommentsPage = ({
           </div>
         ))}
       </div>
-      <div className="fixed bottom-0 mx-auto h-20 w-full max-w-md bg-blccu-white/80 backdrop-blur">
+      <div className="fixed bottom-0 mx-auto h-20 w-full max-w-screen-sm bg-blccu-white/80 backdrop-blur">
         <ChatInput postId={postId} />
       </div>
     </>

@@ -16,11 +16,9 @@ const EditorBottomSubNavBar = ({
       className={cn(
         'fixed bottom-20 z-50 max-w-[calc(448px-32px)] bg-blccu-white',
         'rounded-xl px-1 shadow-blccu-secondary',
-        align === 'left' &&
-          'left-4 over-blccu-screen-width:left-[calc(50%-224px+16px)]',
+        align === 'left' && 'left-4 sm:left-[calc(50%-320px+16px)]',
         align === 'center' && 'left-1/2 -translate-x-1/2',
-        align === 'right' &&
-          'right-4 over-blccu-screen-width:right-[calc(50%-224px+16px)]',
+        align === 'right' && 'right-4 sm:right-[calc(50%-320px+16px)]',
       )}
     >
       <ul className="flex items-center">{children}</ul>

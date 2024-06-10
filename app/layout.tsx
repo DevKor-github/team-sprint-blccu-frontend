@@ -25,7 +25,9 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="ko-KR">
       <body className={cn(notoSansKr.className, 'bg-slate-100')}>
         <QueryProvider>
-          <div className="mx-auto min-h-dvh max-w-md bg-white">{children}</div>
+          <div className="mx-auto min-h-dvh max-w-screen-sm bg-white">
+            {children}
+          </div>
           <Toaster
             position="bottom-center"
             toastOptions={{

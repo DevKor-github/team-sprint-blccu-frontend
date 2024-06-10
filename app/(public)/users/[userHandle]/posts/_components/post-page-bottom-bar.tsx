@@ -69,7 +69,7 @@ const PostPageBottomBar = ({
   const like = data?.data ?? false;
 
   return (
-    <div className="fixed bottom-0 mx-auto flex h-14 w-full max-w-md items-center justify-between bg-blccu-white/90 px-2 backdrop-blur-lg">
+    <div className="fixed bottom-0 mx-auto flex h-14 w-full max-w-screen-sm items-center justify-between bg-blccu-white/90 px-2 backdrop-blur-lg">
       <div className="flex items-center">
         <div className="flex items-center gap-1 px-2 py-1">
           <IconButton

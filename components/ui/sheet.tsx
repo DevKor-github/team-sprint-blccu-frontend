@@ -41,7 +41,7 @@ const sheetVariants = cva(
     variants: {
       side: {
         bottom: cn(
-          'inset-x-0 bottom-0 mx-auto w-full max-w-md',
+          'inset-x-0 bottom-0 mx-auto w-full max-w-screen-sm',
           'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
         ),
       },

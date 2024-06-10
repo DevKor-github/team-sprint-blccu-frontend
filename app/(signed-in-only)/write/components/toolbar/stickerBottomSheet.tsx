@@ -82,12 +82,12 @@ const StickerBottomSheet = () => {
   return (
     <div>
       <div
-        className="fixed left-[50%] top-0 z-50 h-[50%] w-[32rem] max-w-md -translate-x-[50%] bg-opacity-100"
+        className="fixed left-[50%] top-0 z-50 h-[50%] w-[32rem] max-w-screen-sm -translate-x-[50%] bg-opacity-100"
         onClick={() => {
           setFocused('init');
         }}
       />
-      <div className="fixed bottom-0 left-[50%] z-50 h-[50%] w-[32rem] max-w-md -translate-x-[50%] rounded-[20px_20px_0px_0px] bg-[#FFFFFF] shadow-[8px_-40px_40px_#0000000a]">
+      <div className="fixed bottom-0 left-[50%] z-50 h-[50%] w-[32rem] max-w-screen-sm -translate-x-[50%] rounded-[20px_20px_0px_0px] bg-[#FFFFFF] shadow-[8px_-40px_40px_#0000000a]">
         <div className="container flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-4 overflow-x-auto">
             {data.map((item) => (
