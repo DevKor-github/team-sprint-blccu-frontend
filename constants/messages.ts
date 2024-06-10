@@ -36,6 +36,7 @@ const TOAST_MESSAGES = {
   DELETE_COMMENT_FAIL: '댓글 삭제에 실패했습니다.',
   PUBLISH_POST_SUCCESS: '게시글이 작성되었습니다.',
   PUBLISH_POST_FAIL: '게시글 작성에 실패했습니다.',
-};
+  NOTIFICATION_CONNECT_FAIL: '알림 서버와 연결이 끊겼습니다.',
+} as const;
 
 export { TOAST_MESSAGES };
