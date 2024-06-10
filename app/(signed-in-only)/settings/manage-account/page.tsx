@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -20,12 +19,11 @@ import { queries } from '@/queries';
 const ManageAccountPage = () => {
   const { data: meData } = useQuery({ ...queries.users.me, retry: false });
 
-  const router = useRouter();
-
   const { mutate } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),
     onSuccess: () => {
-      router.refresh();
+      // 이게 최선인가?
+      window.location.href = ROUTES.ROOT;
     },
     onError: () => {
       toast.error(TOAST_MESSAGES.LOGOUT_FAIL);
