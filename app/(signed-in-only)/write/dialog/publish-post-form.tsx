@@ -141,6 +141,7 @@ const PublishPostForm = () => {
       allow_comment:
         values.allow_comment === PUBLISH_POST_ALLOW_COMMENT_TYPE.TRUE,
       postBackgroundId: background?.id ?? '', // FIXME: 빈 내지일 경우 현재 에러 발생
+      title_html: titleContents,
       content: bodyContents,
       image_url: '', // TODO: capture upload 이미지
       main_image_url: '', // TODO: 대표 이미지 로직 제작 이후 채워넣기
