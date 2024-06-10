@@ -70,9 +70,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.LEAVE_USER_SUCCESS);
 
-      if (onNext !== undefined) {
-        onNext();
-      }
+      window.location.href = ROUTES.ROOT;
     },
     onError: () => {
       toast.error(TOAST_MESSAGES.LEAVE_USER_FAIL);

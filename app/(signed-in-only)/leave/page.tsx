@@ -29,7 +29,7 @@ const LeavePage = () => {
         />
       </Funnel.Step>
       <Funnel.Step name={LEAVE_PAGE_FUNNEL_STEPS.SET_REASON}>
-        <SetReasonStep onNext={() => router.push(ROUTES.ROOT)} />
+        <SetReasonStep />
       </Funnel.Step>
     </Funnel>
   );
