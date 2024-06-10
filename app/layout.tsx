@@ -5,6 +5,7 @@ import { type PropsWithChildren } from 'react';
 
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
+import { NotificationSubscriber } from '@/providers/notification-subscriber';
 import QueryProvider from '@/providers/query-provider';
 
 import './globals.css';
@@ -25,11 +26,13 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="ko-KR">
       <body className={cn(notoSansKr.className, 'bg-gray-50')}>
         <QueryProvider>
-          <div className="mx-auto min-h-dvh max-w-screen-sm bg-white shadow-xl">
-            {children}
-          </div>
+          <NotificationSubscriber>
+            <div className="mx-auto min-h-dvh max-w-screen-sm bg-white shadow-xl">
+              {children}
+            </div>
+          </NotificationSubscriber>
           <Toaster
-            position="bottom-center"
+            position="top-right"
             toastOptions={{
               className:
                 'font-noto-sans-kr' /* FIXME: font-serif는 적용되는데, custom font는 적용이 안된다. */,
