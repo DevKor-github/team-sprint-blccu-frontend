@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 
-import { useQuery } from '@tanstack/react-query';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -10,35 +9,14 @@ import { type FetchNotiResponse } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ROUTES } from '@/constants/routes';
 import { getNotificationTypeDescriptor } from '@/lib/get-descriptor';
-import { queries } from '@/queries';
 
 type StackedNotificationCardProps = {
   notification: FetchNotiResponse;
 };
 
 const StackedNotificationCard = ({
-  notification: {
-    userKakaoId,
-    targetUserKakaoId,
-    type,
-    is_checked,
-    date_created,
-  },
+  notification: { user, type, is_checked, date_created },
 }: StackedNotificationCardProps) => {
-  const { data: userData } = useQuery(
-    queries.users.detailByKakaoId(userKakaoId),
-  );
-  const { data: targetUserData } = useQuery(
-    queries.users.detailByKakaoId(targetUserKakaoId),
-  );
-
-  if (userData === undefined || targetUserData === undefined) {
-    return null;
-  }
-
-  const user = userData.data;
-  const targetUser = targetUserData.data;
-
   const notificationTypeDescriptor = getNotificationTypeDescriptor(type);
 
   const dateCreatedDescriptor = formatDistanceToNow(date_created, {

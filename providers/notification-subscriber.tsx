@@ -28,11 +28,11 @@ const NotificationSubscriber = ({ children }: PropsWithChildren) => {
     eventSource.onmessage = (event: any) => {
       const data = JSON.parse(event.data) as FetchNotiResponse;
 
-      const { userKakaoId, type } = data;
+      const { user, type } = data;
 
       const notificationTypeDescriptor = getNotificationTypeDescriptor(type);
 
-      toast.info('[알림] ' + userKakaoId + notificationTypeDescriptor);
+      toast.info('[알림] ' + user.username + notificationTypeDescriptor);
     };
 
     eventSource.onerror = () => {
