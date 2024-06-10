@@ -51,11 +51,11 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
             </IconButton>
           </CopyCurrentPageTrigger>
           {isMe && (
-            <Link href={ROUTES.SETTINGS}>
-              <IconButton size="lg">
+            <IconButton size="lg" asChild>
+              <Link href={ROUTES.SETTINGS}>
                 <Settings className="h-5 w-5" />
-              </IconButton>
-            </Link>
+              </Link>
+            </IconButton>
           )}
         </div>
       </AppBar>

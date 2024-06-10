@@ -35,11 +35,9 @@ const BannerSignedIn = ({ user: { username } }: BannerSignedInProps) => {
         </p>
         <div className="flex items-center justify-between">
           <p className="text-xs text-blccu-white">지금 블꾸하러 가기</p>
-          <Link href={ROUTES.WRITE}>
-            <Button size="sm" variant="secondary" radius="full">
-              글쓰기
-            </Button>
-          </Link>
+          <Button size="sm" variant="secondary" radius="full" asChild>
+            <Link href={ROUTES.WRITE}>글쓰기</Link>
+          </Button>
         </div>
       </div>
     </div>

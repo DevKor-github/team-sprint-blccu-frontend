@@ -19,9 +19,9 @@ const BannerNotSignedIn = () => {
         <br />
         <span className="text-3xl">'블꾸'</span> 하세요!
       </p>
-      <Link href={ROUTES.SIGN_IN}>
-        <Button radius="full">지금 시작하기 </Button>
-      </Link>
+      <Button radius="full" asChild>
+        <Link href={ROUTES.SIGN_IN}>지금 시작하기</Link>
+      </Button>
     </div>
   );
 };
