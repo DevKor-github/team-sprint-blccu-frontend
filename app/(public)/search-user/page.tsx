@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useDebounce } from '@uidotdev/usehooks';
+
 import { UserSearchBar } from '@/app/(public)/search-user/_components/user-search-bar';
 import { UserSearchResult } from '@/app/(public)/search-user/_components/user-search-result';
 import {
@@ -12,6 +14,7 @@ import {
 
 const SearchUserPage = () => {
   const [search, setSearch] = useState<string>('');
+  const debouncedSearch = useDebounce(search, 300);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -27,7 +30,7 @@ const SearchUserPage = () => {
       </AppBar>
       <div className="pt-14">
         <UserSearchBar value={search} handleValueChange={handleSearchChange} />
-        <UserSearchResult search={search} />
+        <UserSearchResult search={debouncedSearch} />
       </div>
     </div>
   );
