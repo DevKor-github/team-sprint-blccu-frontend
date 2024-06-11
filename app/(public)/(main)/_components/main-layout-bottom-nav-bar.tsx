@@ -2,23 +2,18 @@
 
 import Link from 'next/link';
 
-import { useQuery } from '@tanstack/react-query';
 import { Home, Pencil, User } from 'lucide-react';
 
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { cn } from '@/lib/utils';
-import { queries } from '@/queries';
 
 const MainLayoutBottomNavBar = () => {
-  const { data } = useQuery({ ...queries.users.me, retry: false });
+  const { isSignedIn, me } = useFetchMe();
 
-  const me = data?.data;
-
-  const isSignedIn = me !== undefined;
-
-  // if (!isSignedIn) {
-  //   return null;
-  // }
+  if (!isSignedIn) {
+    return null;
+  }
 
   return (
     <nav
@@ -48,8 +43,7 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.USER_HANDLE_OF(me?.handle ?? '')}>
-            {/* FIXME: me.handle 로 바꿔 */}
+          <Link href={ROUTES.USER_HANDLE_OF(me!.handle)}>
             <div className="p-5">
               <User className="h-5 w-5" />
             </div>

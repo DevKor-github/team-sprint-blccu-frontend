@@ -1,19 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { SetProfileForm } from '@/app/(onboarding)/new/_steps/set-profile-step/components/set-profile-form';
 import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
 import { Button } from '@/components/ui/button';
-import { queries } from '@/queries';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { type PropsWithOnNext } from '@/types/util';
 
 const SetProfileStep = ({ onNext }: PropsWithOnNext) => {
-  const { data } = useQuery({ ...queries.users.me, retry: false });
+  const { me } = useFetchMe();
 
-  if (!data) {
+  if (me === undefined) {
     return null;
   }
-
-  const me = data.data;
 
   return (
     <div className="flex h-dvh flex-col">

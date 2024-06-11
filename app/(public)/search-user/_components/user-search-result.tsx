@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
@@ -22,7 +23,8 @@ type UserSearchResultProps = {
 };
 
 const UserSearchResult = ({ search }: UserSearchResultProps) => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { isSignedIn, me } = useFetchMe();
+
   const { data: usersByNameData } = useQuery({
     ...queries.users.search(search),
     enabled: search.length > 0,
@@ -62,10 +64,6 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
   });
 
   const users = usersByNameData?.data ?? [];
-
-  const me = meData?.data;
-
-  const isSignedIn = me !== undefined;
 
   return (
     <div className="mt-4 flex flex-col gap-2 px-4">

@@ -39,6 +39,7 @@ import {
 } from '@/components/ui/select';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { getValues, noop } from '@/lib/utils';
 import { queries } from '@/queries';
@@ -76,13 +77,11 @@ const PUBLISH_POST_NAME = {
 } as const;
 
 const PublishPostForm = () => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
-
-  const me = meData?.data;
+  const { isSignedIn, me } = useFetchMe();
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.kakaoId),
-    enabled: me !== undefined,
+    enabled: isSignedIn,
   });
 
   const categories = categoriesData?.data ?? [];

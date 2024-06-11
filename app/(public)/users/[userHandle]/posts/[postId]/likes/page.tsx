@@ -11,6 +11,7 @@ import {
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
@@ -30,8 +31,9 @@ type LikesPageProps = {
 };
 
 const LikesPage = ({ params: { userHandle: _, postId } }: LikesPageProps) => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
-  const { data: likesData } = useQuery(queries.posts.likeUsers(postId));
+  const { isSignedIn, me } = useFetchMe();
+
+  const { data } = useQuery(queries.posts.likeUsers(postId));
 
   const queryClient = useQueryClient();
 
@@ -65,11 +67,7 @@ const LikesPage = ({ params: { userHandle: _, postId } }: LikesPageProps) => {
     },
   });
 
-  const me = meData?.data;
-
-  const isSignedIn = me !== undefined;
-
-  const users = likesData?.data ?? [];
+  const users = data?.data ?? [];
 
   return (
     <div>

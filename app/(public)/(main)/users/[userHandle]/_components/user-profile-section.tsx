@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import {
   getFollowerDescriptor,
@@ -42,11 +43,11 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
     following_count,
   } = user;
 
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { me, isSignedIn } = useFetchMe();
 
   const { data: followerData } = useQuery({
     ...queries.users.follower(user.kakaoId),
-    enabled: meData !== undefined,
+    enabled: isSignedIn,
   });
 
   const queryClient = useQueryClient();
@@ -88,10 +89,6 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
       toast.error(TOAST_MESSAGES.UNFOLLOW_FAIL);
     },
   });
-
-  const me = meData?.data;
-
-  const isSignedIn = me !== undefined;
 
   const isMe = me?.handle === handle;
 

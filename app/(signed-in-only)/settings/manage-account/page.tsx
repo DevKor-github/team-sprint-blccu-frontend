@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
 
@@ -12,12 +12,12 @@ import {
 } from '@/components/ui-unstable/app-detail-bar';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { getSignUpMethodDescriptor } from '@/lib/get-descriptor';
-import { queries } from '@/queries';
 
 const ManageAccountPage = () => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { me } = useFetchMe();
 
   const { mutate } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),
@@ -29,8 +29,6 @@ const ManageAccountPage = () => {
       toast.error(TOAST_MESSAGES.LOGOUT_FAIL);
     },
   });
-
-  const me = meData?.data;
 
   if (me === undefined) {
     return null;

@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { getFollowerDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
@@ -32,14 +33,11 @@ const PostPageAuthorProfileSection = ({
     retry: false,
   });
 
-  const { data: meData } = useQuery({
-    ...queries.users.me,
-    retry: false,
-  });
+  const { isSignedIn, me } = useFetchMe();
 
   const { data: followerData } = useQuery({
     ...queries.users.follower(kakaoId),
-    enabled: meData !== undefined,
+    enabled: isSignedIn,
   });
 
   const queryClient = useQueryClient();
@@ -83,13 +81,10 @@ const PostPageAuthorProfileSection = ({
   });
 
   const user = userData?.data;
-  const me = meData?.data;
 
   if (user === undefined) {
     return null;
   }
-
-  const isSignedIn = me !== undefined;
 
   const isMe = me?.kakaoId === user.kakaoId;
 

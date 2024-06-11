@@ -8,6 +8,7 @@ import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-pa
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
@@ -19,9 +20,9 @@ type PostPageDetailActionsProps = {
 const PostPageDetailActions = ({ post }: PostPageDetailActionsProps) => {
   const { id, user, like_count } = post;
 
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { isSignedIn, me } = useFetchMe();
 
-  const { data: likeData } = useQuery(queries.posts.like(id));
+  const { data } = useQuery(queries.posts.like(id));
 
   const queryClient = useQueryClient();
 
@@ -57,11 +58,7 @@ const PostPageDetailActions = ({ post }: PostPageDetailActionsProps) => {
     },
   });
 
-  const like = likeData?.data ?? false;
-
-  const me = meData?.data;
-
-  const isSignedIn = me !== undefined;
+  const like = data?.data ?? false;
 
   const isMe = me?.kakaoId === user.kakaoId;
   return (
@@ -70,7 +67,7 @@ const PostPageDetailActions = ({ post }: PostPageDetailActionsProps) => {
         {isSignedIn && (
           <ReportPostBottomActionSheet
             id={id}
-            me={me}
+            me={me!}
             isMe={isMe}
             trigger={
               <IconButton size="none">

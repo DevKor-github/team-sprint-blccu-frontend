@@ -4,24 +4,17 @@ import { redirect } from 'next/navigation';
 
 import { type PropsWithChildren } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
-
 import { ROUTES } from '@/constants/routes';
-import { queries } from '@/queries';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 
 const SignedInOnlyLayout = ({ children }: PropsWithChildren) => {
-  const { isLoading, data } = useQuery({
-    ...queries.users.me,
-    retry: false,
-  });
+  const { isLoading, isSignedIn } = useFetchMe();
 
   if (isLoading) {
     return null;
   }
 
-  const me = data?.data;
-
-  if (me === undefined) {
+  if (!isSignedIn) {
     redirect(ROUTES.SIGN_IN);
   }
 

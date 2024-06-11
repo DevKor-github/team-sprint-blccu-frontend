@@ -13,6 +13,7 @@ import {
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
 import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { queries } from '@/queries';
 
 type SelectCategoryPageProps = {
@@ -34,10 +35,7 @@ const SelectCategoryPage = ({
     enabled: userData !== undefined,
   });
 
-  const { data: meData } = useQuery({
-    ...queries.users.me,
-    retry: false,
-  });
+  const { me } = useFetchMe();
 
   const categories = categoriesData?.data ?? [];
 
@@ -50,7 +48,6 @@ const SelectCategoryPage = ({
     0,
   );
 
-  const me = meData?.data;
   const user = userData?.data;
 
   const isMe = me?.kakaoId === user?.kakaoId;

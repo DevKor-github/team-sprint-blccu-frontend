@@ -21,6 +21,7 @@ import { ChatInput } from '@/components/ui-unstable/chat-input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { queries } from '@/queries';
 
 type PostPageProps = {
@@ -33,7 +34,7 @@ type PostPageProps = {
 const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
   const { data: postData } = useQuery(queries.posts.detail(postId));
 
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { isSignedIn, me } = useFetchMe();
 
   const post = postData?.data;
 
@@ -41,11 +42,7 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
     return null;
   }
 
-  const me = meData?.data;
-
   const { id, user, image_url } = post;
-
-  const isSignedIn = me !== undefined;
 
   const isMe = me?.kakaoId === user.kakaoId;
 
@@ -68,7 +65,7 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
           {isSignedIn && (
             <ReportPostBottomActionSheet
               id={id}
-              me={me}
+              me={me!}
               isMe={isMe}
               trigger={
                 <IconButton size="lg">

@@ -13,6 +13,7 @@ import {
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { ChatInput } from '@/components/ui-unstable/chat-input';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { truncate } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -26,13 +27,11 @@ type CommentsPageProps = {
 const CommentsPage = ({
   params: { userHandle: _, postId },
 }: CommentsPageProps) => {
-  const { data: commentsData } = useQuery(queries.posts.comments(postId));
+  const { me } = useFetchMe();
 
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { data } = useQuery(queries.posts.comments(postId));
 
-  const comments = commentsData?.data ?? [];
-
-  const me = meData?.data;
+  const comments = data?.data ?? [];
 
   const [selectedComment, setSelectedComment] =
     useState<FetchCommentDto | null>(null);

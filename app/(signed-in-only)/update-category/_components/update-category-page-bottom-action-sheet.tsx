@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import {
@@ -13,6 +13,7 @@ import {
 } from '@/components/ui-unstable/bottom-action-sheet';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 import { type PropsWithTrigger } from '@/types/util';
@@ -31,10 +32,7 @@ const UpdateCategoryPageBottomActionSheet = ({
 }: UpdateCategoryPageBottomActionSheetProps) => {
   const queryClient = useQueryClient();
 
-  const { data: meData } = useQuery({
-    ...queries.users.me,
-    retry: false,
-  });
+  const { me } = useFetchMe();
 
   const { mutate } = useMutation({
     mutationFn: ({ categoryId }: DeletePostCategoryProps) =>
@@ -43,7 +41,7 @@ const UpdateCategoryPageBottomActionSheet = ({
       toast.success(TOAST_MESSAGES.DELETE_CATEGORY_SUCCESS);
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.categories(meData?.data.kakaoId).queryKey,
+        queryKey: queries.users.categories(me?.kakaoId).queryKey,
       });
     },
     onError: () => {

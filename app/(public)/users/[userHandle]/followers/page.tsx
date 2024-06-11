@@ -11,6 +11,7 @@ import {
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
@@ -29,7 +30,8 @@ type FollowersPageProps = {
 };
 
 const FollowersPage = ({ params: { userHandle } }: FollowersPageProps) => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { isSignedIn, me } = useFetchMe();
+
   const { data: userData } = useQuery({
     ...queries.users.detailByHandle(userHandle),
     retry: false,
@@ -70,10 +72,6 @@ const FollowersPage = ({ params: { userHandle } }: FollowersPageProps) => {
       toast.error(TOAST_MESSAGES.UNFOLLOW_FAIL);
     },
   });
-
-  const me = meData?.data;
-
-  const isSignedIn = me !== undefined;
 
   const users = followersData?.data ?? [];
 

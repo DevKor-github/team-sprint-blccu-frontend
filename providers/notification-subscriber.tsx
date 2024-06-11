@@ -2,19 +2,16 @@
 
 import { type PropsWithChildren, useEffect } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { type FetchNotiResponse } from '@/__generated__/data-contracts';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { PROXY_API_PREFIX } from '@/constants/routes';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { getNotificationTypeDescriptor } from '@/lib/get-descriptor';
-import { queries } from '@/queries';
 
 const NotificationSubscriber = ({ children }: PropsWithChildren) => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
-
-  const me = meData?.data;
+  const { me } = useFetchMe();
 
   useEffect(() => {
     if (me === undefined) {

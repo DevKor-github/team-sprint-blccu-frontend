@@ -10,24 +10,24 @@ import {
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
+import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/util';
 
 const SetUsernameStep = (props: PropsWithOnNext) => {
-  const { data: meData } = useQuery({ ...queries.users.me, retry: false });
+  const { me } = useFetchMe();
 
-  const { data: agreementsData } = useQuery(queries.users.agreements);
+  const { data } = useQuery(queries.users.agreements);
 
-  if (!meData) {
+  if (me === undefined) {
     return null;
   }
 
-  if (!agreementsData) {
+  if (data === undefined) {
     return null;
   }
 
-  const me = meData.data;
-  const agreements = agreementsData.data;
+  const agreements = data.data;
 
   return (
     <>
