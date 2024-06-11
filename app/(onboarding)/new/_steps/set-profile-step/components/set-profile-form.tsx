@@ -12,6 +12,7 @@ import {
   type PatchUserProfileFormValues,
   useSetProfileForm,
 } from '@/app/(onboarding)/new/_steps/set-profile-step/hooks/use-set-profile-form';
+import { FileUploader } from '@/components/ui-unstable/file-uploader';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -62,26 +63,6 @@ const SetProfileForm = ({
     });
   };
 
-  const {
-    ref: backgroundImageRef,
-    handleUpload: handleBackgroundImageUpload,
-    trigger: triggerBackgroundImageUpload,
-  } = useUploadFile({
-    uploadMutation: useUploadBackgroundImageMutation({
-      onSuccess: invalidateQueries,
-    }),
-  });
-
-  const {
-    ref: profileImageRef,
-    handleUpload: handleProfileImageUpload,
-    trigger: triggerProfileImageUpload,
-  } = useUploadFile({
-    uploadMutation: useUploadProfileImageMutation({
-      onSuccess: invalidateQueries,
-    }),
-  });
-
   const { isSubmitting, isValid } = form.formState;
 
   return (
@@ -100,35 +81,36 @@ const SetProfileForm = ({
           </div>
           <div className="flex flex-col items-center gap-4 rounded-lg p-4 shadow-lg">
             <div className="relative w-full">
-              <div
-                className="absolute h-32 w-full cursor-pointer rounded-lg bg-blccu-neutral-400"
-                onClick={triggerBackgroundImageUpload}
-                style={{
-                  backgroundImage: `url(${user.background_image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
+              <FileUploader
+                {...useUploadFile({
+                  uploadMutation: useUploadBackgroundImageMutation({
+                    onSuccess: invalidateQueries,
+                  }),
+                })}
+                trigger={
+                  <div
+                    className="absolute h-32 w-full cursor-pointer rounded-lg bg-blccu-neutral-400"
+                    style={{
+                      backgroundImage: `url(${user.background_image})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                }
               />
               <div className="pt-24">
-                <Avatar
-                  size="xl"
-                  className="mx-auto cursor-pointer"
-                  onClick={triggerProfileImageUpload}
-                >
-                  <AvatarImage src={user.profile_image} />
-                  <AvatarFallback className="bg-blccu-neutral-600" />
-                </Avatar>
-                <input
-                  ref={backgroundImageRef}
-                  type="file"
-                  className="hidden"
-                  onChange={handleBackgroundImageUpload}
-                />
-                <input
-                  ref={profileImageRef}
-                  type="file"
-                  className="hidden"
-                  onChange={handleProfileImageUpload}
+                <FileUploader
+                  {...useUploadFile({
+                    uploadMutation: useUploadProfileImageMutation({
+                      onSuccess: invalidateQueries,
+                    }),
+                  })}
+                  trigger={
+                    <Avatar size="xl" className="mx-auto cursor-pointer">
+                      <AvatarImage src={user.profile_image} />
+                      <AvatarFallback className="bg-blccu-neutral-600" />
+                    </Avatar>
+                  }
                 />
               </div>
             </div>

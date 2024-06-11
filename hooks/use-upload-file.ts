@@ -15,7 +15,7 @@ type UseUploadFileProps = {
 const useUploadFile = ({ uploadMutation: { mutate } }: UseUploadFileProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
-  const handleUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
 
     if (file === undefined) {
@@ -25,11 +25,11 @@ const useUploadFile = ({ uploadMutation: { mutate } }: UseUploadFileProps) => {
     mutate({ file });
   };
 
-  const trigger = () => {
+  const onClickTrigger = () => {
     ref.current?.click();
   };
 
-  return { ref, handleUpload, trigger };
+  return { ref, onUpload, onClickTrigger };
 };
 
 export { useUploadFile };
