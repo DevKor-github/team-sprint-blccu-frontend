@@ -2,32 +2,29 @@ import Link from 'next/link';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { type UserPrimaryResponseDto } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { getFollowerDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
 
 type PostPageAuthorProfileSectionProps = {
-  user: UserPrimaryResponseDto;
+  userKakaoId: number;
 };
 
 const PostPageAuthorProfileSection = ({
-  user: { kakaoId, handle, username, description, profile_image },
+  userKakaoId,
 }: PostPageAuthorProfileSectionProps) => {
+  const { isSignedIn, me } = useMeQuery();
   const { data: userData } = useQuery({
-    ...queries.users.detailByHandle(handle),
+    ...queries.users.detailByKakaoId(userKakaoId),
     retry: false,
   });
-
-  const { isSignedIn, me } = useFetchMe();
-
   const { data: followerData } = useQuery({
-    ...queries.users.follower(kakaoId),
+    ...queries.users.follower(userKakaoId),
     enabled: isSignedIn,
   });
 
@@ -35,11 +32,10 @@ const PostPageAuthorProfileSection = ({
 
   const invalidateQueries = () => {
     queryClient.invalidateQueries({
-      queryKey: queries.users.follower(kakaoId).queryKey,
+      queryKey: queries.users.follower(userKakaoId).queryKey,
     });
-
     queryClient.invalidateQueries({
-      queryKey: queries.users.detailByHandle(handle).queryKey,
+      queryKey: queries.users.detailByKakaoId(userKakaoId).queryKey,
     });
   };
 
@@ -59,10 +55,9 @@ const PostPageAuthorProfileSection = ({
     return null;
   }
 
+  const { username, profile_image, description } = user;
   const isMe = me?.kakaoId === user.kakaoId;
-
   const isFollowing = followerData?.data ?? false;
-
   const followerDescriptor = getFollowerDescriptor(user.follower_count);
 
   return (

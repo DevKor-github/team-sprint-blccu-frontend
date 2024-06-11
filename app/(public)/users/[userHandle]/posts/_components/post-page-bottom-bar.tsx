@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Heart, MessageCircleMore, Share2 } from 'lucide-react';
 
-import { type PostResponseDto } from '@/__generated__/data-contracts';
 import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
@@ -13,23 +12,21 @@ import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
 type PostPageBottomBarProps = {
-  post: PostResponseDto;
+  postId: number;
 };
 
-const PostPageBottomBar = ({
-  post: { id, user, comment_count, like_count },
-}: PostPageBottomBarProps) => {
-  const { data } = useQuery(queries.posts.like(id));
+const PostPageBottomBar = ({ postId }: PostPageBottomBarProps) => {
+  const { data: postData } = useQuery(queries.posts.detail(postId));
+  const { data: likeData } = useQuery(queries.posts.like(postId));
 
   const queryClient = useQueryClient();
 
   const invalidateQueries = () => {
     queryClient.invalidateQueries({
-      queryKey: queries.posts.like(id).queryKey,
+      queryKey: queries.posts.detail(postId).queryKey,
     });
-
     queryClient.invalidateQueries({
-      queryKey: queries.posts.detail(id).queryKey,
+      queryKey: queries.posts.like(postId).queryKey,
     });
   };
 
@@ -42,7 +39,23 @@ const PostPageBottomBar = ({
       onSuccess: invalidateQueries,
     });
 
-  const like = data?.data ?? false;
+  const post = postData?.data;
+
+  if (post === undefined) {
+    return null;
+  }
+
+  const { id, user, comment_count, like_count } = post;
+
+  const like = likeData?.data ?? false;
+
+  const toggleLikeMutate = () => {
+    if (like) {
+      unlikeMutate(id);
+    } else {
+      likeMutate(id);
+    }
+  };
 
   return (
     <div className="fixed bottom-0 mx-auto flex h-14 w-full max-w-screen-sm items-center justify-between bg-blccu-white/90 px-2 backdrop-blur-lg">
@@ -51,13 +64,7 @@ const PostPageBottomBar = ({
           <IconButton
             size="none"
             disabled={isLikePending || isUnlikePending}
-            onClick={() => {
-              if (like) {
-                unlikeMutate(id);
-              } else {
-                likeMutate(id);
-              }
-            }}
+            onClick={toggleLikeMutate}
           >
             <Heart
               className={cn('h-5 w-5', like && 'fill-blccu-red text-blccu-red')}
