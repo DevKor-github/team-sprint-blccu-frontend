@@ -20,18 +20,14 @@ const useUnlikeMutation = ({
   onSuccess,
   onError,
   ...rest
-}: UseUnlikeMutationProps) => {
+}: UseUnlikeMutationProps = {}) => {
   return useMutation({
     mutationFn: (postId: number) => api.posts.likesControllerDeleteLike(postId),
     onSuccess: (...props) => {
-      if (onSuccess !== undefined) {
-        onSuccess(...props);
-      }
+      onSuccess?.(...props);
     },
     onError: (...props) => {
-      if (onError !== undefined) {
-        onError(...props);
-      }
+      onError?.(...props);
 
       toast.error(TOAST_MESSAGES.UNLIKE_FAIL);
     },

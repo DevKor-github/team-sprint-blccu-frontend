@@ -2,37 +2,43 @@ import { type UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { type AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
-import { type FetchLikeResponseDto } from '@/__generated__/data-contracts';
+import {
+  type PatchUserInput,
+  type UserResponseDto,
+} from '@/__generated__/data-contracts';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 
-type UseLikeMutationProps = Omit<
+type UsePatchUserMutationProps = Omit<
   UseMutationOptions<
-    AxiosResponse<FetchLikeResponseDto, any>,
+    AxiosResponse<UserResponseDto, any>,
     Error,
-    number,
+    PatchUserInput,
     unknown
   >,
   'mutationFn'
 >;
 
-const useLikeMutation = ({
+const usePatchUserMutation = ({
   onSuccess,
   onError,
   ...rest
-}: UseLikeMutationProps = {}) => {
+}: UsePatchUserMutationProps = {}) => {
   return useMutation({
-    mutationFn: (postId: number) => api.posts.likesControllerLike(postId),
+    mutationFn: (dto: PatchUserInput) =>
+      api.users.usersControllerPatchUser(dto),
     onSuccess: (...props) => {
       onSuccess?.(...props);
+
+      toast.success(TOAST_MESSAGES.UPDATE_USER_PROFILE_SUCCESS);
     },
     onError: (...props) => {
       onError?.(...props);
 
-      toast.error(TOAST_MESSAGES.LIKE_FAIL);
+      toast.error(TOAST_MESSAGES.UPDATE_USER_PROFILE_FAIL);
     },
     ...rest,
   });
 };
 
-export { useLikeMutation };
+export { usePatchUserMutation };

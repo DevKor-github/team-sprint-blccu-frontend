@@ -23,21 +23,17 @@ const useUploadProfileImageMutation = ({
   onSuccess,
   onError,
   ...rest
-}: UseUploadProfileImageMutationProps) => {
+}: UseUploadProfileImageMutationProps = {}) => {
   return useMutation({
     mutationFn: (dto: ImageUploadDto) =>
       api.users.usersControllerUploadProfileImage(dto),
     onSuccess: (...props) => {
-      if (onSuccess !== undefined) {
-        onSuccess(...props);
-      }
+      onSuccess?.(...props);
 
       toast.success(TOAST_MESSAGES.UPLOAD_PROFILE_IMAGE_SUCCESS);
     },
     onError: (...props) => {
-      if (onError !== undefined) {
-        onError(...props);
-      }
+      onError?.(...props);
 
       toast.error(TOAST_MESSAGES.UPLOAD_PROFILE_IMAGE_FAIL);
     },

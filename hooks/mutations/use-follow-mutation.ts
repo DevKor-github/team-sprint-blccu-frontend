@@ -15,21 +15,17 @@ const useFollowMutation = ({
   onSuccess,
   onError,
   ...rest
-}: UseFollowMutationProps) => {
+}: UseFollowMutationProps = {}) => {
   return useMutation({
     mutationFn: (userId: number) =>
       api.users.followsControllerFollowUser(userId),
     onSuccess: (...props) => {
-      if (onSuccess !== undefined) {
-        onSuccess(...props);
-      }
+      onSuccess?.(...props);
 
       toast.success(TOAST_MESSAGES.FOLLOW_SUCCESS);
     },
     onError: (...props) => {
-      if (onError !== undefined) {
-        onError(...props);
-      }
+      onError?.(...props);
 
       toast.error(TOAST_MESSAGES.FOLLOW_FAIL);
     },

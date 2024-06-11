@@ -3,10 +3,7 @@ import { type UseFormProps } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import {
-  type CreateAgreementsInput,
-  type PatchUserInput,
-} from '@/__generated__/data-contracts';
+import { type CreateAgreementsInput } from '@/__generated__/data-contracts';
 import {
   SET_USERNAME_FORM_NAME,
   type SetUsernameFormValues,
@@ -23,6 +20,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { usePatchUserMutation } from '@/hooks/mutations/use-patch-user-mutation';
 import { api } from '@/lib/api';
 import { type PropsWithOnNext } from '@/types/util';
 
@@ -65,19 +63,11 @@ const SetUsernameForm = ({ defaultValues, onNext }: SetUsernameFormProps) => {
       /**
        * FIXME: 사실 Mutation 전체가 성공해야만 호출하는 게 맞는데, 방법을 모르겠음.
        */
-      if (onNext !== undefined) {
-        onNext();
-      }
+      onNext?.();
     },
   });
 
-  const { mutate: patchUserMutate } = useMutation({
-    mutationFn: (dto: PatchUserInput) =>
-      api.users.usersControllerPatchUser(dto),
-    onError: () => {
-      toast.error(TOAST_MESSAGES.UPDATE_USER_PROFILE_FAIL);
-    },
-  });
+  const { mutate: patchUserMutate } = usePatchUserMutation();
 
   const { mutate: agreeMutate } = useMutation({
     mutationFn: (dto: CreateAgreementsInput) =>

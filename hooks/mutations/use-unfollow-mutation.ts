@@ -15,21 +15,17 @@ const useUnfollowMutation = ({
   onSuccess,
   onError,
   ...rest
-}: UseUnfollowMutationProps) => {
+}: UseUnfollowMutationProps = {}) => {
   return useMutation({
     mutationFn: (userId: number) =>
       api.users.followsControllerUnfollowUser(userId),
     onSuccess: (...props) => {
-      if (onSuccess !== undefined) {
-        onSuccess(...props);
-      }
+      onSuccess?.(...props);
 
       toast.success(TOAST_MESSAGES.UNFOLLOW_SUCCESS);
     },
     onError: (...props) => {
-      if (onError !== undefined) {
-        onError(...props);
-      }
+      onError?.(...props);
 
       toast.error(TOAST_MESSAGES.UNFOLLOW_FAIL);
     },

@@ -23,21 +23,17 @@ const useUploadBackgroundImageMutation = ({
   onSuccess,
   onError,
   ...rest
-}: UseUploadBackgroundImageMutationProps) => {
+}: UseUploadBackgroundImageMutationProps = {}) => {
   return useMutation({
     mutationFn: (dto: ImageUploadDto) =>
       api.users.usersControllerUploadBackgroundImage(dto),
     onSuccess: (...props) => {
-      if (onSuccess !== undefined) {
-        onSuccess(...props);
-      }
+      onSuccess?.(...props);
 
       toast.success(TOAST_MESSAGES.UPLOAD_BACKGROUND_IMAGE_SUCCESS);
     },
     onError: (...props) => {
-      if (onError !== undefined) {
-        onError(...props);
-      }
+      onError?.(...props);
 
       toast.error(TOAST_MESSAGES.UPLOAD_BACKGROUND_IMAGE_FAIL);
     },
