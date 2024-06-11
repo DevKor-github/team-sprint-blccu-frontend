@@ -43,7 +43,7 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.USER_HANDLE_OF(me!.handle)}>
+          <Link href={ROUTES.USER_HANDLE_OF(me.handle)}>
             <div className="p-5">
               <User className="h-5 w-5" />
             </div>

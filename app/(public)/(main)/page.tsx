@@ -19,7 +19,7 @@ const RootPage = () => {
     <div>
       <RootPageHeader />
       <div className="flex flex-col gap-3">
-        {isSignedIn ? <BannerSignedIn user={me!} /> : <BannerNotSignedIn />}
+        {isSignedIn ? <BannerSignedIn user={me} /> : <BannerNotSignedIn />}
         <TrendingPostSection />
         {isSignedIn && <FollowingPostSection />}
         <AllPostSection />

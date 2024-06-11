@@ -63,7 +63,7 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
           {isSignedIn && (
             <ReportPostBottomActionSheet
               id={id}
-              me={me!}
+              me={me}
               isMe={isMe}
               trigger={
                 <IconButton size="lg">

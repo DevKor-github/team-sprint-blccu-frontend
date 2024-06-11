@@ -7,7 +7,11 @@ const useMeQuery = () => {
 
   const me = data?.data;
 
-  return { isLoading, me, isSignedIn: me !== undefined };
+  if (me === undefined) {
+    return { isLoading, me: undefined, isSignedIn: false as const };
+  }
+
+  return { isLoading, me, isSignedIn: true as const };
 };
 
 export { useMeQuery };
