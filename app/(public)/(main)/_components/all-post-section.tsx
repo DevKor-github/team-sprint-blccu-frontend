@@ -1,10 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
+import { useEffect } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useIntersectionObserver } from '@uidotdev/usehooks';
 
 import {
   Section,
@@ -12,41 +15,70 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { ROUTES } from '@/constants/routes';
+import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
 const AllPostSection = () => {
-  const { data } = useQuery(queries.posts.all);
+  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: queries.posts.all.queryKey,
+    queryFn: ({ pageParam }) =>
+      api.posts.postsControllerFetchCursor({
+        sort: 'DESC',
+        take: 30,
+        cursor: pageParam,
+      }),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: ({
+      data: {
+        meta: { hasNextData, customCursor },
+      },
+    }) => (hasNextData ? customCursor : undefined),
+  });
 
-  const posts = data?.data.data ?? [];
+  const [ref, entry] = useIntersectionObserver({
+    threshold: 0,
+  });
+
+  const isIntersecting = entry?.isIntersecting ?? false;
+
+  useEffect(() => {
+    if (isIntersecting) {
+      fetchNextPage();
+    }
+  }, [isIntersecting]);
+
+  const posts = data?.pages.flatMap((page) => page.data.data) ?? [];
 
   return (
     <Section className="px-4">
       <SectionTitle>전체글</SectionTitle>
       <SectionContent>
-        <div className="max-h-[1200px] overflow-y-hidden">
-          <ResponsiveMasonry
-            columnsCountBreakPoints={{
-              0: 1,
-              240: 2,
-              360: 3,
-            }}
-          >
-            <Masonry gutter="10px">
-              {posts.map((post) => (
-                <Link
-                  href={ROUTES.POST_OF(post.user.handle, post.id)}
-                  key={post.id}
-                >
-                  <img
-                    src={post.main_image_url}
-                    alt="photo"
-                    className="rounded-md"
-                  />
-                </Link>
-              ))}
-            </Masonry>
-          </ResponsiveMasonry>
-        </div>
+        <ResponsiveMasonry
+          columnsCountBreakPoints={{
+            0: 1,
+            240: 2,
+            360: 3,
+            540: 4,
+          }}
+        >
+          <Masonry gutter="10px">
+            {posts.map((post) => (
+              <Link
+                href={ROUTES.POST_OF(post.user.handle, post.id)}
+                key={post.id}
+              >
+                <Image
+                  src={post.main_image_url}
+                  alt="photo"
+                  className="rounded-md"
+                  width={300}
+                  height={300}
+                />
+              </Link>
+            ))}
+            {!isFetchingNextPage && <div ref={ref} />}
+          </Masonry>
+        </ResponsiveMasonry>
       </SectionContent>
     </Section>
   );

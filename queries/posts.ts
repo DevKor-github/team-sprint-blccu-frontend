@@ -5,11 +5,6 @@ import { api } from '@/lib/api';
 const posts = createQueryKeys('posts', {
   all: {
     queryKey: null,
-    queryFn: () =>
-      api.posts.postsControllerFetchCursor({
-        sort: 'DESC',
-        take: 50,
-      }),
   },
   trending: {
     queryKey: null,
