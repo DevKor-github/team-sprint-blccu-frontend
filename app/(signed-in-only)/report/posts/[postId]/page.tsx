@@ -2,14 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import { type CreateReportInput } from '@/__generated__/data-contracts';
+import {
+  REPORT_POST_NAME,
+  REPORT_POST_TYPE,
+  useReportPostForm,
+} from '@/app/(signed-in-only)/report/posts/[postId]/_hooks/use-report-post-form';
 import {
   AppBar,
   AppBarBack,
@@ -27,29 +28,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
-import { getValues } from '@/lib/utils';
-
-const REPORT_POST_TYPE = {
-  SPAM: 'SPAM',
-  FRAUD: 'FRAUD',
-  SEXUAL: 'SEXUAL',
-  ETC: 'ETC',
-} as const;
-
-const reportPostFormSchema = z.object({
-  type: z.enum(getValues(REPORT_POST_TYPE)),
-  content: z.string(),
-});
-
-type ReportPostFormValues = z.infer<typeof reportPostFormSchema>;
-
-/**
- * @note reportPostFormSchema의 key와 일치해야 합니다.
- */
-const REPORT_POST_NAME = {
-  TYPE: 'type',
-  CONTENT: 'content',
-} as const;
 
 type ReportPostProps = {
   postId: number;
@@ -65,6 +43,21 @@ type ReportPostIdPageProps = {
 const ReportPostIdPage = ({ params: { postId } }: ReportPostIdPageProps) => {
   const router = useRouter();
 
+  const { form, onSubmit } = useReportPostForm({
+    defaultValues: {
+      type: REPORT_POST_TYPE.SPAM,
+      content: '',
+    },
+    onSubmit: (values) =>
+      mutate({
+        postId,
+        createReportInput: {
+          ...values,
+          url: '',
+        },
+      }),
+  });
+
   const { mutate } = useMutation({
     mutationFn: ({ postId, createReportInput }: ReportPostProps) =>
       api.posts.reportsControllerReportPost(postId, createReportInput),
@@ -78,24 +71,6 @@ const ReportPostIdPage = ({ params: { postId } }: ReportPostIdPageProps) => {
     },
   });
 
-  const form = useForm<ReportPostFormValues>({
-    resolver: zodResolver(reportPostFormSchema),
-    defaultValues: {
-      type: REPORT_POST_TYPE.SPAM,
-      content: '',
-    },
-  });
-
-  const onSubmit = async (values: ReportPostFormValues) => {
-    mutate({
-      postId,
-      createReportInput: {
-        ...values,
-        url: '',
-      },
-    });
-  };
-
   const { isSubmitting } = form.formState;
 
   const isEtc = form.watch(REPORT_POST_NAME.TYPE) === REPORT_POST_TYPE.ETC;
@@ -107,7 +82,7 @@ const ReportPostIdPage = ({ params: { postId } }: ReportPostIdPageProps) => {
         <AppBarTitle>게시글 신고</AppBarTitle>
       </AppBar>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className="flex h-dvh flex-col justify-between">
             <div className="px-4 pt-14">
               <FormField

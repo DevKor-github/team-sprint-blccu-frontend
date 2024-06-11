@@ -2,14 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import { type CreateReportInput } from '@/__generated__/data-contracts';
+import {
+  REPORT_COMMENT_NAME,
+  REPORT_COMMENT_TYPE,
+  useReportCommentForm,
+} from '@/app/(signed-in-only)/report/comments/[commentId]/_hooks/use-report-comment-form';
 import {
   AppBar,
   AppBarBack,
@@ -27,29 +28,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
-import { getValues } from '@/lib/utils';
-
-const REPORT_COMMENT_TYPE = {
-  SPAM: 'SPAM',
-  FRAUD: 'FRAUD',
-  SEXUAL: 'SEXUAL',
-  ETC: 'ETC',
-} as const;
-
-const reportCommentFormSchema = z.object({
-  type: z.enum(getValues(REPORT_COMMENT_TYPE)),
-  content: z.string(),
-});
-
-type ReportCommentFormValues = z.infer<typeof reportCommentFormSchema>;
-
-/**
- * @note reportCommentFormSchema의 key와 일치해야 합니다.
- */
-const REPORT_COMMENT_NAME = {
-  TYPE: 'type',
-  CONTENT: 'content',
-} as const;
 
 type ReportCommentProps = {
   commentId: number;
@@ -67,6 +45,21 @@ const ReportCommentIdPage = ({
 }: ReportCommentIdPageProps) => {
   const router = useRouter();
 
+  const { form, onSubmit } = useReportCommentForm({
+    defaultValues: {
+      type: REPORT_COMMENT_TYPE.SPAM,
+      content: '',
+    },
+    onSubmit: (values) =>
+      mutate({
+        commentId,
+        createReportInput: {
+          ...values,
+          url: '',
+        },
+      }),
+  });
+
   const { mutate } = useMutation({
     mutationFn: ({ commentId, createReportInput }: ReportCommentProps) =>
       api.posts.reportsControllerReportComment(commentId, createReportInput),
@@ -80,24 +73,6 @@ const ReportCommentIdPage = ({
     },
   });
 
-  const form = useForm<ReportCommentFormValues>({
-    resolver: zodResolver(reportCommentFormSchema),
-    defaultValues: {
-      type: REPORT_COMMENT_TYPE.SPAM,
-      content: '',
-    },
-  });
-
-  const onSubmit = async (values: ReportCommentFormValues) => {
-    mutate({
-      commentId,
-      createReportInput: {
-        ...values,
-        url: '',
-      },
-    });
-  };
-
   const { isSubmitting } = form.formState;
 
   const isEtc =
@@ -110,7 +85,7 @@ const ReportCommentIdPage = ({
         <AppBarTitle>댓글 신고</AppBarTitle>
       </AppBar>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className="flex h-dvh flex-col justify-between">
             <div className="px-4 pt-14">
               <FormField

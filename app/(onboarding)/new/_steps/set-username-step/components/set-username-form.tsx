@@ -1,14 +1,17 @@
-import { type UseFormProps, useForm } from 'react-hook-form';
+import { type UseFormProps } from 'react-hook-form';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import {
   type CreateAgreementsInput,
   type PatchUserInput,
 } from '@/__generated__/data-contracts';
+import {
+  SET_USERNAME_FORM_NAME,
+  type SetUsernameFormValues,
+  useSetUsernameForm,
+} from '@/app/(onboarding)/new/_steps/set-username-step/hooks/use-set-username-form';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -23,33 +26,49 @@ import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { type PropsWithOnNext } from '@/types/util';
 
-const setUsernameFormSchema = z.object({
-  username: z.string().min(1).max(20),
-  termsOfService: z.literal(true),
-  privacyPolicy: z.literal(true),
-  marketingConsent: z.boolean(),
-});
-
-type SetUsernameFormValues = z.infer<typeof setUsernameFormSchema>;
-
-/**
- * @note setUsernameFormSchema의 key와 일치해야 합니다.
- */
-const SET_USERNAME_FORM_NAME = {
-  USERNAME: 'username',
-  TERMS_OF_SERVICE: 'termsOfService',
-  PRIVACY_POLICY: 'privacyPolicy',
-  MARKETING_CONSENT: 'marketingConsent',
-} as const;
-
 type SetUsernameFormProps = PropsWithOnNext & {
   defaultValues: UseFormProps<SetUsernameFormValues>['defaultValues'];
 };
 
 const SetUsernameForm = ({ defaultValues, onNext }: SetUsernameFormProps) => {
-  const form = useForm<SetUsernameFormValues>({
-    resolver: zodResolver(setUsernameFormSchema),
+  const { form, onSubmit } = useSetUsernameForm({
     defaultValues,
+    onSubmit: ({
+      username,
+      termsOfService,
+      privacyPolicy,
+      marketingConsent,
+    }) => {
+      patchUserMutate({ username });
+
+      if (termsOfService === true) {
+        agreeMutate({
+          agreementType: 'TERMS_OF_SERVICE',
+          isAgreed: true,
+        });
+      }
+
+      if (privacyPolicy === true) {
+        agreeMutate({
+          agreementType: 'PRIVACY_POLICY',
+          isAgreed: true,
+        });
+      }
+
+      if (marketingConsent === true) {
+        agreeMutate({
+          agreementType: 'MARKETING_CONSENT',
+          isAgreed: true,
+        });
+      }
+
+      /**
+       * FIXME: 사실 Mutation 전체가 성공해야만 호출하는 게 맞는데, 방법을 모르겠음.
+       */
+      if (onNext !== undefined) {
+        onNext();
+      }
+    },
   });
 
   const { mutate: patchUserMutate } = useMutation({
@@ -68,46 +87,11 @@ const SetUsernameForm = ({ defaultValues, onNext }: SetUsernameFormProps) => {
     },
   });
 
-  const onSubmit = (values: SetUsernameFormValues) => {
-    const { username, termsOfService, privacyPolicy, marketingConsent } =
-      values;
-
-    patchUserMutate({ username });
-
-    if (termsOfService === true) {
-      agreeMutate({
-        agreementType: 'TERMS_OF_SERVICE',
-        isAgreed: true,
-      });
-    }
-
-    if (privacyPolicy === true) {
-      agreeMutate({
-        agreementType: 'PRIVACY_POLICY',
-        isAgreed: true,
-      });
-    }
-
-    if (marketingConsent === true) {
-      agreeMutate({
-        agreementType: 'MARKETING_CONSENT',
-        isAgreed: true,
-      });
-    }
-
-    /**
-     * FIXME: 사실 Mutation 전체가 성공해야만 호출하는 게 맞는데, 방법을 모르겠음.
-     */
-    if (onNext !== undefined) {
-      onNext();
-    }
-  };
-
   const { isSubmitting, isValid } = form.formState;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="flex h-dvh flex-col justify-between px-4 pt-14">
           <FormField
             control={form.control}

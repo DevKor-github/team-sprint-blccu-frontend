@@ -1,33 +1,20 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Send } from 'lucide-react';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import { type CreateCommentInput } from '@/__generated__/data-contracts';
+import {
+  INSERT_COMMENT_NAME,
+  useInsertCommentForm,
+} from '@/components/ui-unstable/chat-input/hooks/use-insert-comment-form';
 import { Button } from '@/components/ui/button';
 import { Form, FormField } from '@/components/ui/form';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
-
-const insertCommentFormSchema = z.object({
-  content: z.string().min(1),
-});
-
-type InsertCommentFormValues = z.infer<typeof insertCommentFormSchema>;
-
-/**
- * @note insertCommentFormSchema의 key와 일치해야 합니다.
- */
-const INSERT_COMMENT_NAME = {
-  CONTENT: 'content',
-} as const;
 
 type InsertCommentProps = {
   postId: number;
@@ -40,11 +27,12 @@ type ChatInputProps = {
 };
 
 const ChatInput = ({ postId, parentId }: ChatInputProps) => {
-  const form = useForm<InsertCommentFormValues>({
-    resolver: zodResolver(insertCommentFormSchema),
+  const { form, onSubmit } = useInsertCommentForm({
     defaultValues: {
       content: '',
     },
+    onSubmit: (values) =>
+      mutate({ postId, createCommentInput: { ...values, parentId } }),
   });
 
   const queryClient = useQueryClient();
@@ -66,10 +54,6 @@ const ChatInput = ({ postId, parentId }: ChatInputProps) => {
     },
   });
 
-  const onSubmit = async (values: InsertCommentFormValues) => {
-    mutate({ postId, createCommentInput: { ...values, parentId } });
-  };
-
   const { isSubmitting, isValid } = form.formState;
 
   return (
@@ -80,10 +64,7 @@ const ChatInput = ({ postId, parentId }: ChatInputProps) => {
       )}
     >
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex items-center"
-        >
+        <form onSubmit={onSubmit} className="flex items-center">
           <FormField
             control={form.control}
             name={INSERT_COMMENT_NAME.CONTENT}

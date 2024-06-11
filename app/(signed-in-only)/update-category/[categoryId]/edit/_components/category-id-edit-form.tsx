@@ -2,17 +2,20 @@
 
 import { useRouter } from 'next/navigation';
 
-import { type UseFormProps, useForm } from 'react-hook-form';
+import { type UseFormProps } from 'react-hook-form';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import {
   type FetchPostCategoryDto,
   type PatchPostCategoryDto,
 } from '@/__generated__/data-contracts';
+import {
+  PATCH_CATEGORY_NAME,
+  type PatchCategoryFormValues,
+  useCategoryIdEditForm,
+} from '@/app/(signed-in-only)/update-category/[categoryId]/edit/_hooks/use-category-id-edit-form';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -24,19 +27,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
-
-const patchCategoryFormSchema = z.object({
-  name: z.string().min(1),
-});
-
-type PatchCategoryFormValues = z.infer<typeof patchCategoryFormSchema>;
-
-/**
- * @note patchCategoryFormSchema의 key와 일치해야 합니다.
- */
-const PATCH_CATEGORY_NAME = {
-  NAME: 'name',
-} as const;
 
 type PatchPostCategoryProps = {
   categoryId: string;
@@ -54,9 +44,13 @@ const CategoryIdEditForm = ({
 }: CategoryIdEditFormProps) => {
   const router = useRouter();
 
-  const form = useForm<PatchCategoryFormValues>({
-    resolver: zodResolver(patchCategoryFormSchema),
+  const { form, onSubmit } = useCategoryIdEditForm({
     defaultValues,
+    onSubmit: (values) =>
+      mutate({
+        categoryId: category.id,
+        patchPostCategoryDto: values,
+      }),
   });
 
   const { mutate } = useMutation({
@@ -78,18 +72,11 @@ const CategoryIdEditForm = ({
     },
   });
 
-  const onSubmit = (values: PatchCategoryFormValues) => {
-    mutate({
-      categoryId: category.id,
-      patchPostCategoryDto: values,
-    });
-  };
-
   const { isSubmitting, isValid, isDirty } = form.formState;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="flex h-dvh flex-col justify-between px-4 pb-4 pt-14">
           <div className="mt-6 flex flex-col gap-4">
             <FormField

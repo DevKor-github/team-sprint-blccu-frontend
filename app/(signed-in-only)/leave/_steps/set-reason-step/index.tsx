@@ -2,15 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import { type DeleteUserInput } from '@/__generated__/data-contracts';
 import { LeaveAlertDialog } from '@/app/(signed-in-only)/leave/_steps/set-reason-step/components/leave-alert-dialog';
+import {
+  LEAVE_REASON_NAME,
+  LEAVE_REASON_TYPE,
+  useSetReasonForm,
+} from '@/app/(signed-in-only)/leave/_steps/set-reason-step/hooks/use-set-reason-form';
 import {
   AppBar,
   AppBarBack,
@@ -29,39 +30,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
 import { api } from '@/lib/api';
-import { getValues } from '@/lib/utils';
 import { type PropsWithOnNext } from '@/types/util';
-
-const LEAVE_REASON_TYPE = {
-  TOO_MANY_ERRORS: 'TOO_MANY_ERRORS',
-  REJOIN_AFTER_DEACTIVATION: 'REJOIN_AFTER_DEACTIVATION',
-  OTHER_ISSUES: 'OTHER_ISSUES',
-} as const;
-
-const leaveReasonFormSchema = z.object({
-  type: z.enum(getValues(LEAVE_REASON_TYPE)),
-  content: z.string(),
-});
-
-/**
- * @note leaveReasonFormSchema의 key와 일치해야 합니다.
- */
-const LEAVE_REASON_NAME = {
-  TYPE: 'type',
-  CONTENT: 'content',
-} as const;
-
-type LeaveReasonFormValues = z.infer<typeof leaveReasonFormSchema>;
 
 const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
   const router = useRouter();
 
-  const form = useForm<LeaveReasonFormValues>({
-    resolver: zodResolver(leaveReasonFormSchema),
+  const { form, onSubmit } = useSetReasonForm({
     defaultValues: {
       type: LEAVE_REASON_TYPE.TOO_MANY_ERRORS,
       content: '',
     },
+    onSubmit: (values) => mutate(values),
   });
 
   const { mutate } = useMutation({
@@ -77,10 +56,6 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
     },
   });
 
-  const onSubmit = (values: LeaveReasonFormValues) => {
-    mutate(values);
-  };
-
   const { isSubmitting } = form.formState;
 
   const isEtc =
@@ -93,7 +68,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
         <AppBarTitle>회원 탈퇴</AppBarTitle>
       </AppBar>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <div className="flex h-dvh flex-col justify-between">
             <div className="px-4 pt-14">
               <p className="pt-4 text-lg font-bold">
@@ -168,7 +143,7 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
             </div>
             <div className="flex w-full gap-2 px-4 pb-4">
               <LeaveAlertDialog
-                onSubmit={form.handleSubmit(onSubmit)}
+                onSubmit={onSubmit} // dialog에서 확인 버튼을 누르면 form을 submit합니다.
                 trigger={
                   <Button
                     type="button"

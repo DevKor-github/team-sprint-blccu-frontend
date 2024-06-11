@@ -1,16 +1,19 @@
 import { type ChangeEvent, useRef } from 'react';
-import { type UseFormProps, useForm } from 'react-hook-form';
+import { type UseFormProps } from 'react-hook-form';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import {
   type ImageUploadDto,
   type PatchUserInput,
   type UserResponseDto,
 } from '@/__generated__/data-contracts';
+import {
+  PATCH_USER_PROFILE_NAME,
+  type PatchUserProfileFormValues,
+  useEditUserProfileForm,
+} from '@/app/(public)/(main)/users/[userHandle]/_hooks/use-edit-user-profile-form';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -18,27 +21,6 @@ import { SheetFooter } from '@/components/ui/sheet';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
-
-const patchUserProfileFormSchema = z.object({
-  handle: z
-    .string()
-    .min(3)
-    .max(20)
-    .regex(/^[a-zA-Z0-9-_]+$/),
-  username: z.string().min(1).max(20),
-  description: z.string().max(80).optional(),
-});
-
-type PatchUserProfileFormValues = z.infer<typeof patchUserProfileFormSchema>;
-
-/**
- * @note patchUserProfileFormSchema의 key와 일치해야 합니다.
- */
-const PATCH_USER_PROFILE_NAME = {
-  HANDLE: 'handle',
-  USERNAME: 'username',
-  DESCRIPTION: 'description',
-} as const;
 
 type EditUserProfileFormProps = {
   user: UserResponseDto;
@@ -49,9 +31,9 @@ const EditUserProfileForm = ({
   user,
   defaultValues,
 }: EditUserProfileFormProps) => {
-  const form = useForm<PatchUserProfileFormValues>({
-    resolver: zodResolver(patchUserProfileFormSchema),
+  const { form, onSubmit } = useEditUserProfileForm({
     defaultValues,
+    onSubmit: (values) => mutate(values),
   });
 
   const queryClient = useQueryClient();
@@ -135,15 +117,11 @@ const EditUserProfileForm = ({
     uploadProfileImageMutate({ file });
   };
 
-  const onSubmit = (values: PatchUserProfileFormValues) => {
-    mutate(values);
-  };
-
   const { isSubmitting, isValid, isDirty } = form.formState;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="relative w-full">
           <div
             className="absolute h-32 w-full cursor-pointer rounded-2xl bg-blccu-neutral-400"

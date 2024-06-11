@@ -2,14 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import { type CreatePostCategoryDto } from '@/__generated__/data-contracts';
+import {
+  CREATE_CATEGORY_NAME,
+  useCreateCategoryForm,
+} from '@/app/(signed-in-only)/create-category/_hooks/use-create-category-form';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -22,24 +22,11 @@ import { Input } from '@/components/ui/input';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 
-const createCategoryFormSchema = z.object({
-  name: z.string().min(1),
-});
-
-type CreateCategoryFormValues = z.infer<typeof createCategoryFormSchema>;
-
-/**
- * @note createCategoryFormSchema의 key와 일치해야 합니다.
- */
-const CREATE_CATEGORY_NAME = {
-  NAME: 'name',
-} as const;
-
 const CreateCategoryForm = () => {
   const router = useRouter();
 
-  const form = useForm<CreateCategoryFormValues>({
-    resolver: zodResolver(createCategoryFormSchema),
+  const { form, onSubmit } = useCreateCategoryForm({
+    onSubmit: (values) => mutate(values),
   });
 
   const { mutate } = useMutation({
@@ -55,15 +42,11 @@ const CreateCategoryForm = () => {
     },
   });
 
-  const onSubmit = (values: CreateCategoryFormValues) => {
-    mutate(values);
-  };
-
   const { isSubmitting, isValid } = form.formState;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="flex h-dvh flex-col justify-between px-4 pb-4 pt-14">
           <div className="mt-6 flex flex-col gap-4">
             <FormField

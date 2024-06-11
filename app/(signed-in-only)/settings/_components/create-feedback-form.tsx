@@ -1,13 +1,13 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import z from 'zod';
 
 import { type CreateFeedbackInput } from '@/__generated__/data-contracts';
+import {
+  CREATE_FEEDBACK_NAME,
+  useCreateFeedbackForm,
+} from '@/app/(signed-in-only)/settings/_hooks/use-create-feedback-form';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -20,25 +20,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 
-const createFeedbackFormSchema = z.object({
-  content: z.string().min(1),
-});
-
-type CreateFeedbackFormValues = z.infer<typeof createFeedbackFormSchema>;
-
-/**
- * @note createFeedbackFormSchema의 key와 일치해야 합니다.
- */
-const CREATE_FEEDBACK_NAME = {
-  CONTENT: 'content',
-} as const;
-
 const CreateFeedbackForm = () => {
-  const form = useForm<CreateFeedbackFormValues>({
-    resolver: zodResolver(createFeedbackFormSchema),
+  const { form, onSubmit } = useCreateFeedbackForm({
     defaultValues: {
       content: '',
     },
+    onSubmit: (values) => mutate(values),
   });
 
   const { mutate } = useMutation({
@@ -54,15 +41,11 @@ const CreateFeedbackForm = () => {
     },
   });
 
-  const onSubmit = (values: CreateFeedbackFormValues) => {
-    mutate(values);
-  };
-
   const { isSubmitting, isValid } = form.formState;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <div className="mt-10 flex flex-col gap-2 px-4 pt-2">
           <FormField
             control={form.control}
@@ -80,7 +63,9 @@ const CreateFeedbackForm = () => {
               </FormItem>
             )}
           />
-          <Button disabled={!isValid || isSubmitting}>전송</Button>
+          <div>
+            <Button disabled={!isValid || isSubmitting}>전송</Button>
+          </div>
         </div>
       </form>
     </Form>
