@@ -44,12 +44,12 @@ const PostPageDetailActions = ({ post }: PostPageDetailActionsProps) => {
 
   const { mutate: unlikeMutate, isPending: isUnlikePending } = useMutation({
     mutationFn: (postId: number) => api.posts.likesControllerDeleteLike(postId),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
         queryKey: queries.posts.like(id).queryKey,
       });
 
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: queries.posts.detail(id).queryKey,
       });
     },

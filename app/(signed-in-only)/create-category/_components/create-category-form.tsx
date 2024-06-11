@@ -35,10 +35,6 @@ const CREATE_CATEGORY_NAME = {
   NAME: 'name',
 } as const;
 
-type CreatePostCategoryProps = {
-  createPostCategoryDto: CreatePostCategoryDto;
-};
-
 const CreateCategoryForm = () => {
   const router = useRouter();
 
@@ -47,10 +43,8 @@ const CreateCategoryForm = () => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: ({ createPostCategoryDto }: CreatePostCategoryProps) =>
-      api.users.postCategoriesControllerCreatePostCategory(
-        createPostCategoryDto,
-      ),
+    mutationFn: (dto: CreatePostCategoryDto) =>
+      api.users.postCategoriesControllerCreatePostCategory(dto),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.CREATE_CATEGORY_SUCCESS);
 
@@ -62,9 +56,7 @@ const CreateCategoryForm = () => {
   });
 
   const onSubmit = (values: CreateCategoryFormValues) => {
-    mutate({
-      createPostCategoryDto: values,
-    });
+    mutate(values);
   };
 
   const { isSubmitting, isValid } = form.formState;

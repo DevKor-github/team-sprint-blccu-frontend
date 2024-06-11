@@ -40,10 +40,6 @@ const PATCH_USER_PROFILE_NAME = {
   DESCRIPTION: 'description',
 } as const;
 
-type PatchUserProfileProps = {
-  patchUserInput: PatchUserInput;
-};
-
 type SetProfileFormProps = {
   user: UserResponseDto;
   defaultValues: UseFormProps<PatchUserProfileFormValues>['defaultValues'];
@@ -60,8 +56,8 @@ const SetProfileForm = ({
   });
 
   const { mutate: patchUserMutate } = useMutation({
-    mutationFn: ({ patchUserInput }: PatchUserProfileProps) =>
-      api.users.usersControllerPatchUser(patchUserInput),
+    mutationFn: (dto: PatchUserInput) =>
+      api.users.usersControllerPatchUser(dto),
 
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.UPDATE_USER_PROFILE_SUCCESS);
@@ -78,8 +74,8 @@ const SetProfileForm = ({
   const queryClient = useQueryClient();
 
   const { mutate: uploadBackgroundImageMutate } = useMutation({
-    mutationFn: (imageUploadDto: ImageUploadDto) =>
-      api.users.usersControllerUploadBackgroundImage(imageUploadDto),
+    mutationFn: (dto: ImageUploadDto) =>
+      api.users.usersControllerUploadBackgroundImage(dto),
 
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.UPLOAD_BACKGROUND_IMAGE_SUCCESS);
@@ -133,9 +129,7 @@ const SetProfileForm = ({
   };
 
   const onSubmit = (values: PatchUserProfileFormValues) => {
-    patchUserMutate({
-      patchUserInput: values,
-    });
+    patchUserMutate(values);
   };
 
   const { isSubmitting, isValid } = form.formState;

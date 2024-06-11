@@ -18,10 +18,6 @@ import { api } from '@/lib/api';
 import { queries } from '@/queries';
 import { type PropsWithTrigger } from '@/types/util';
 
-type DeletePostCategoryProps = {
-  categoryId: string;
-};
-
 type UpdateCategoryPageBottomActionSheetProps = {
   id: string;
 } & PropsWithTrigger;
@@ -35,7 +31,7 @@ const UpdateCategoryPageBottomActionSheet = ({
   const { me } = useFetchMe();
 
   const { mutate } = useMutation({
-    mutationFn: ({ categoryId }: DeletePostCategoryProps) =>
+    mutationFn: (categoryId: string) =>
       api.users.postCategoriesControllerDeletePostCategory(categoryId),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.DELETE_CATEGORY_SUCCESS);
@@ -58,7 +54,7 @@ const UpdateCategoryPageBottomActionSheet = ({
             <BottomActionSheetItem>수정하기</BottomActionSheetItem>
           </Link>
           <BottomActionSheetSeparator />
-          <div onClick={() => mutate({ categoryId: id })}>
+          <div onClick={() => mutate(id)}>
             <BottomActionSheetItem className="text-blccu-red">
               삭제하기
             </BottomActionSheetItem>

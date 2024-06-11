@@ -13,14 +13,6 @@ import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
-type LikeProps = {
-  postId: number;
-};
-
-type UnlikeProps = {
-  postId: number;
-};
-
 type PostPageBottomBarProps = {
   post: PostResponseDto;
 };
@@ -33,8 +25,7 @@ const PostPageBottomBar = ({
   const queryClient = useQueryClient();
 
   const { mutate: likeMutate, isPending: isLikePending } = useMutation({
-    mutationFn: ({ postId }: LikeProps) =>
-      api.posts.likesControllerLike(postId),
+    mutationFn: (postId: number) => api.posts.likesControllerLike(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queries.posts.like(id).queryKey,
@@ -50,8 +41,7 @@ const PostPageBottomBar = ({
   });
 
   const { mutate: unlikeMutate, isPending: isUnlikePending } = useMutation({
-    mutationFn: ({ postId }: UnlikeProps) =>
-      api.posts.likesControllerDeleteLike(postId),
+    mutationFn: (postId: number) => api.posts.likesControllerDeleteLike(postId),
     onSuccess: async () => {
       await queryClient.invalidateQueries({
         queryKey: queries.posts.like(id).queryKey,
@@ -77,9 +67,9 @@ const PostPageBottomBar = ({
             disabled={isLikePending || isUnlikePending}
             onClick={() => {
               if (like) {
-                unlikeMutate({ postId: id });
+                unlikeMutate(id);
               } else {
-                likeMutate({ postId: id });
+                likeMutate(id);
               }
             }}
           >

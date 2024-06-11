@@ -65,8 +65,8 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (deleteUserInput: DeleteUserInput) =>
-      api.users.usersControllerDeleteUser(deleteUserInput),
+    mutationFn: (dto: DeleteUserInput) =>
+      api.users.usersControllerDeleteUser(dto),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.LEAVE_USER_SUCCESS);
 

@@ -42,14 +42,6 @@ const SET_USERNAME_FORM_NAME = {
   MARKETING_CONSENT: 'marketingConsent',
 } as const;
 
-type PatchUserProfileProps = {
-  patchUserInput: PatchUserInput;
-};
-
-type createAgreementsProps = {
-  createAgreementsInput: CreateAgreementsInput;
-};
-
 type SetUsernameFormProps = PropsWithOnNext & {
   defaultValues: UseFormProps<SetUsernameFormValues>['defaultValues'];
 };
@@ -61,16 +53,16 @@ const SetUsernameForm = ({ defaultValues, onNext }: SetUsernameFormProps) => {
   });
 
   const { mutate: patchUserMutate } = useMutation({
-    mutationFn: ({ patchUserInput }: PatchUserProfileProps) =>
-      api.users.usersControllerPatchUser(patchUserInput),
+    mutationFn: (dto: PatchUserInput) =>
+      api.users.usersControllerPatchUser(dto),
     onError: () => {
       toast.error(TOAST_MESSAGES.UPDATE_USER_PROFILE_FAIL);
     },
   });
 
   const { mutate: agreeMutate } = useMutation({
-    mutationFn: ({ createAgreementsInput }: createAgreementsProps) =>
-      api.users.agreementsControllerAgree(createAgreementsInput),
+    mutationFn: (dto: CreateAgreementsInput) =>
+      api.users.agreementsControllerAgree(dto),
     onError: () => {
       toast.error(TOAST_MESSAGES.CREATE_AGREEMENT_FAIL);
     },
@@ -80,34 +72,26 @@ const SetUsernameForm = ({ defaultValues, onNext }: SetUsernameFormProps) => {
     const { username, termsOfService, privacyPolicy, marketingConsent } =
       values;
 
-    patchUserMutate({
-      patchUserInput: { username },
-    });
+    patchUserMutate({ username });
 
     if (termsOfService === true) {
       agreeMutate({
-        createAgreementsInput: {
-          agreementType: 'TERMS_OF_SERVICE',
-          isAgreed: true,
-        },
+        agreementType: 'TERMS_OF_SERVICE',
+        isAgreed: true,
       });
     }
 
     if (privacyPolicy === true) {
       agreeMutate({
-        createAgreementsInput: {
-          agreementType: 'PRIVACY_POLICY',
-          isAgreed: true,
-        },
+        agreementType: 'PRIVACY_POLICY',
+        isAgreed: true,
       });
     }
 
     if (marketingConsent === true) {
       agreeMutate({
-        createAgreementsInput: {
-          agreementType: 'MARKETING_CONSENT',
-          isAgreed: true,
-        },
+        agreementType: 'MARKETING_CONSENT',
+        isAgreed: true,
       });
     }
 

@@ -97,8 +97,8 @@ const PublishPostForm = () => {
   const router = useRouter();
 
   const { mutate } = useMutation({
-    mutationFn: (publishPostInput: PublishPostInput) =>
-      api.posts.postsControllerPublishPost(publishPostInput),
+    mutationFn: (dto: PublishPostInput) =>
+      api.posts.postsControllerPublishPost(dto),
     onSuccess: ({ data }) => {
       toast.success(TOAST_MESSAGES.PUBLISH_POST_SUCCESS);
 

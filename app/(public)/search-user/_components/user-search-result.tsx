@@ -10,14 +10,6 @@ import { useFetchMe } from '@/hooks/queries/use-fetch-me';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
-type FollowProps = {
-  userId: number;
-};
-
-type UnfollowProps = {
-  userId: number;
-};
-
 type UserSearchResultProps = {
   search: string;
 };
@@ -34,7 +26,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
   const queryClient = useQueryClient();
 
   const { mutate: followMutate, isPending: isFollowPending } = useMutation({
-    mutationFn: ({ userId }: FollowProps) =>
+    mutationFn: (userId: number) =>
       api.users.followsControllerFollowUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -49,7 +41,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
   });
 
   const { mutate: unfollowMutate, isPending: isUnfollowPending } = useMutation({
-    mutationFn: ({ userId }: UnfollowProps) =>
+    mutationFn: (userId: number) =>
       api.users.followsControllerUnfollowUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -84,7 +76,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
                       size="sm"
                       radius="full"
                       disabled={isUnfollowPending}
-                      onClick={() => unfollowMutate({ userId: user.kakaoId })}
+                      onClick={() => unfollowMutate(user.kakaoId)}
                     >
                       팔로잉
                     </Button>
@@ -93,7 +85,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
                       size="sm"
                       radius="full"
                       disabled={isFollowPending}
-                      onClick={() => followMutate({ userId: user.kakaoId })}
+                      onClick={() => followMutate(user.kakaoId)}
                     >
                       팔로우
                     </Button>

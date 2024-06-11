@@ -33,10 +33,6 @@ const CREATE_FEEDBACK_NAME = {
   CONTENT: 'content',
 } as const;
 
-type CreateFeedbackProps = {
-  createFeedbackInput: CreateFeedbackInput;
-};
-
 const CreateFeedbackForm = () => {
   const form = useForm<CreateFeedbackFormValues>({
     resolver: zodResolver(createFeedbackFormSchema),
@@ -46,8 +42,8 @@ const CreateFeedbackForm = () => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: ({ createFeedbackInput }: CreateFeedbackProps) =>
-      api.users.feedbacksControllerCreateFeedback(createFeedbackInput),
+    mutationFn: (dto: CreateFeedbackInput) =>
+      api.users.feedbacksControllerCreateFeedback(dto),
     onSuccess: () => {
       form.reset();
 
@@ -59,7 +55,7 @@ const CreateFeedbackForm = () => {
   });
 
   const onSubmit = (values: CreateFeedbackFormValues) => {
-    mutate({ createFeedbackInput: values });
+    mutate(values);
   };
 
   const { isSubmitting, isValid } = form.formState;
