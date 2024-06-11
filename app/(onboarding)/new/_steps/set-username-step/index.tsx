@@ -10,12 +10,12 @@ import {
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/util';
 
 const SetUsernameStep = (props: PropsWithOnNext) => {
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   const { data } = useQuery(queries.users.agreements);
 

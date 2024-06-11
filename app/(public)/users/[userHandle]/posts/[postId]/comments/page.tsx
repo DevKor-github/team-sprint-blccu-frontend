@@ -13,7 +13,7 @@ import {
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
 import { ChatInput } from '@/components/ui-unstable/chat-input';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { truncate } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -27,7 +27,7 @@ type CommentsPageProps = {
 const CommentsPage = ({
   params: { userHandle: _, postId },
 }: CommentsPageProps) => {
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   const { data } = useQuery(queries.posts.comments(postId));
 

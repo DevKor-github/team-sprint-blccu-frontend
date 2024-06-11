@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { queries } from '@/queries';
 
-const useFetchMe = () => {
+const useMeQuery = () => {
   const { isLoading, data } = useQuery({ ...queries.users.me, retry: false });
 
   const me = data?.data;
@@ -10,4 +10,4 @@ const useFetchMe = () => {
   return { isLoading, me, isSignedIn: me !== undefined };
 };
 
-export { useFetchMe };
+export { useMeQuery };

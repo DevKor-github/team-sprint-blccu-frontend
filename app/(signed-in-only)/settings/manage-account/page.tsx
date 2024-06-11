@@ -12,12 +12,12 @@ import {
 } from '@/components/ui-unstable/app-detail-bar';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { api } from '@/lib/api';
 import { getSignUpMethodDescriptor } from '@/lib/get-descriptor';
 
 const ManageAccountPage = () => {
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   const { mutate } = useMutation({
     mutationFn: () => api.auth.authControllerLogout(),

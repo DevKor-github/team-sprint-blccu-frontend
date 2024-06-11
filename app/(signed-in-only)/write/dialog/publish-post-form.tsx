@@ -41,13 +41,13 @@ import {
 } from '@/components/ui/select';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { api } from '@/lib/api';
 import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
 const PublishPostForm = () => {
-  const { isSignedIn, me } = useFetchMe();
+  const { isSignedIn, me } = useMeQuery();
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.kakaoId),

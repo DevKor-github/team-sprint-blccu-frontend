@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { Home, Pencil, User } from 'lucide-react';
 
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { cn } from '@/lib/utils';
 
 const MainLayoutBottomNavBar = () => {
-  const { isSignedIn, me } = useFetchMe();
+  const { isSignedIn, me } = useMeQuery();
 
   if (!isSignedIn) {
     return null;

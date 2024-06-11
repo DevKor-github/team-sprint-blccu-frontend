@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import {
   getFollowerDescriptor,
   getFollowingDescriptor,
@@ -35,7 +35,7 @@ const UserProfileSection = ({
     following_count,
   },
 }: UserProfileSectionProps) => {
-  const { me, isSignedIn } = useFetchMe();
+  const { me, isSignedIn } = useMeQuery();
 
   const { data: followerData } = useQuery({
     ...queries.users.follower(kakaoId),

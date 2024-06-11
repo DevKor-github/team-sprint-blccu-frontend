@@ -11,7 +11,7 @@ import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 
 type LikesPageProps = {
@@ -22,7 +22,7 @@ type LikesPageProps = {
 };
 
 const LikesPage = ({ params: { userHandle: _, postId } }: LikesPageProps) => {
-  const { isSignedIn, me } = useFetchMe();
+  const { isSignedIn, me } = useMeQuery();
 
   const { data } = useQuery(queries.posts.likeUsers(postId));
 

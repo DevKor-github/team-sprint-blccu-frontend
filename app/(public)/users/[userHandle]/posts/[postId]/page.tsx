@@ -21,7 +21,7 @@ import { ChatInput } from '@/components/ui-unstable/chat-input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 
 type PostPageProps = {
@@ -32,9 +32,8 @@ type PostPageProps = {
 };
 
 const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
+  const { isSignedIn, me } = useMeQuery();
   const { data: postData } = useQuery(queries.posts.detail(postId));
-
-  const { isSignedIn, me } = useFetchMe();
 
   const post = postData?.data;
 
@@ -43,7 +42,6 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
   }
 
   const { id, user, image_url } = post;
-
   const isMe = me?.kakaoId === user.kakaoId;
 
   return (
@@ -83,7 +81,7 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
           width={1280}
           height={2000}
         />
-        <PostPageDetailActions post={post} />
+        <PostPageDetailActions postId={post.id} />
         <div className="flex flex-col">
           <Link
             href={ROUTES.COMMENTS_OF(user.handle, post.id)}
@@ -93,12 +91,12 @@ const PostPage = ({ params: { userHandle: _, postId } }: PostPageProps) => {
           </Link>
           <ChatInput postId={post.id} />
         </div>
-        <PostPageAuthorProfileSection user={user} />
+        <PostPageAuthorProfileSection userKakaoId={user.kakaoId} />
         <UserHandlePageTrendingPostSection user={user} />
         <PostPageAllPostSection user={user} />
-        <div className="h-[24px]" />
+        <div className="h-[40px]" />
       </div>
-      <PostPageBottomBar post={post} />
+      <PostPageBottomBar postId={post.id} />
     </>
   );
 };

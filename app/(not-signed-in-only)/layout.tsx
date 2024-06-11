@@ -5,10 +5,10 @@ import { redirect } from 'next/navigation';
 import { type PropsWithChildren } from 'react';
 
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 
 const NotSignedInOnlyLayout = ({ children }: PropsWithChildren) => {
-  const { isLoading, isSignedIn } = useFetchMe();
+  const { isLoading, isSignedIn } = useMeQuery();
 
   if (isLoading) {
     return null;

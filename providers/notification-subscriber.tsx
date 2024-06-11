@@ -7,11 +7,11 @@ import { toast } from 'sonner';
 import { type FetchNotiResponse } from '@/__generated__/data-contracts';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { PROXY_API_PREFIX } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { getNotificationTypeDescriptor } from '@/lib/get-descriptor';
 
 const NotificationSubscriber = ({ children }: PropsWithChildren) => {
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   useEffect(() => {
     if (me === undefined) {

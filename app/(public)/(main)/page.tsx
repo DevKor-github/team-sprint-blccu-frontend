@@ -6,10 +6,10 @@ import { BannerSignedIn } from '@/app/(public)/(main)/_components/banner-signed-
 import { FollowingPostSection } from '@/app/(public)/(main)/_components/following-post-section';
 import { RootPageHeader } from '@/app/(public)/(main)/_components/root-page-header';
 import { TrendingPostSection } from '@/app/(public)/(main)/_components/trending-post-section';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 
 const RootPage = () => {
-  const { isLoading, isSignedIn, me } = useFetchMe();
+  const { isLoading, isSignedIn, me } = useMeQuery();
 
   if (isLoading) {
     return null;

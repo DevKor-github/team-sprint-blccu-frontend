@@ -19,7 +19,7 @@ import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-pa
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -35,7 +35,7 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
     retry: false,
   });
 
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   const [isBelowProfileImageScrollY, setIsBelowProfileImageScrollY] =
     useState(false);

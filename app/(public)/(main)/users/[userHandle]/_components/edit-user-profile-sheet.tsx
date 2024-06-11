@@ -2,11 +2,11 @@
 
 import { EditUserProfileForm } from '@/app/(public)/(main)/users/[userHandle]/_components/edit-user-profile-form';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { type PropsWithTrigger } from '@/types/util';
 
 const EditUserProfileSheet = ({ trigger }: PropsWithTrigger) => {
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   if (me === undefined) {
     return null;

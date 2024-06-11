@@ -13,11 +13,11 @@ import {
 } from '@/components/ui-unstable/app-bar';
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 
 const UpdateCategoryPage = () => {
-  const { isSignedIn, me } = useFetchMe();
+  const { isSignedIn, me } = useMeQuery();
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.kakaoId),

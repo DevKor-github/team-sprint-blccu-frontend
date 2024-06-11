@@ -13,7 +13,7 @@ import {
 import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-card';
 import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 
 type SelectCategoryPageProps = {
@@ -35,7 +35,7 @@ const SelectCategoryPage = ({
     enabled: userData !== undefined,
   });
 
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   const categories = categoriesData?.data ?? [];
 

@@ -1,11 +1,11 @@
 import { SetProfileForm } from '@/app/(onboarding)/new/_steps/set-profile-step/components/set-profile-form';
 import { AppBar, AppBarBack } from '@/components/ui-unstable/app-bar';
 import { Button } from '@/components/ui/button';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { type PropsWithOnNext } from '@/types/util';
 
 const SetProfileStep = ({ onNext }: PropsWithOnNext) => {
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   if (me === undefined) {
     return null;

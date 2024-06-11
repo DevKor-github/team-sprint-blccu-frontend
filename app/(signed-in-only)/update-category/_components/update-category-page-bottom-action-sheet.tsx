@@ -13,7 +13,7 @@ import {
 } from '@/components/ui-unstable/bottom-action-sheet';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
-import { useFetchMe } from '@/hooks/queries/use-fetch-me';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 import { type PropsWithTrigger } from '@/types/util';
@@ -28,7 +28,7 @@ const UpdateCategoryPageBottomActionSheet = ({
 }: UpdateCategoryPageBottomActionSheetProps) => {
   const queryClient = useQueryClient();
 
-  const { me } = useFetchMe();
+  const { me } = useMeQuery();
 
   const { mutate } = useMutation({
     mutationFn: (categoryId: string) =>
