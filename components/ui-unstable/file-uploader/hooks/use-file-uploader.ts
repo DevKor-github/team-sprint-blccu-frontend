@@ -3,7 +3,7 @@ import { type ChangeEventHandler, useRef } from 'react';
 import { type UseMutationResult } from '@tanstack/react-query';
 import { type AxiosResponse } from 'axios';
 
-type UseUploadFileProps = {
+type UseFileUploaderProps = {
   uploadMutation: UseMutationResult<
     AxiosResponse<any, any>,
     unknown,
@@ -12,7 +12,9 @@ type UseUploadFileProps = {
   >;
 };
 
-const useUploadFile = ({ uploadMutation: { mutate } }: UseUploadFileProps) => {
+const useFileUploader = ({
+  uploadMutation: { mutate },
+}: UseFileUploaderProps) => {
   const ref = useRef<HTMLInputElement>(null);
 
   const onUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -32,4 +34,4 @@ const useUploadFile = ({ uploadMutation: { mutate } }: UseUploadFileProps) => {
   return { ref, onUpload, onClickTrigger };
 };
 
-export { useUploadFile };
+export { useFileUploader };

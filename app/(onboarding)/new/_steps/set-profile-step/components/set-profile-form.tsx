@@ -1,12 +1,7 @@
 import { type UseFormProps } from 'react-hook-form';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  type PatchUserInput,
-  type UserResponseDto,
-} from '@/__generated__/data-contracts';
 import {
   PATCH_USER_PROFILE_NAME,
   type PatchUserProfileFormValues,
@@ -16,43 +11,27 @@ import { FileUploader } from '@/components/ui-unstable/file-uploader';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { TOAST_MESSAGES } from '@/constants/messages';
+import { usePatchUserMutation } from '@/hooks/mutations/use-patch-user-mutation';
 import { useUploadBackgroundImageMutation } from '@/hooks/mutations/use-upload-background-image-mutation';
 import { useUploadProfileImageMutation } from '@/hooks/mutations/use-upload-profile-image-mutation';
-import { useUploadFile } from '@/hooks/use-upload-file';
-import { api } from '@/lib/api';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 import { type PropsWithOnNext } from '@/types/util';
 
 type SetProfileFormProps = {
-  user: UserResponseDto;
   defaultValues: UseFormProps<PatchUserProfileFormValues>['defaultValues'];
 } & PropsWithOnNext;
 
-const SetProfileForm = ({
-  user,
-  defaultValues,
-  onNext,
-}: SetProfileFormProps) => {
+const SetProfileForm = ({ defaultValues, onNext }: SetProfileFormProps) => {
+  const { me } = useMeQuery();
+
   const { form, onSubmit } = useSetProfileForm({
     defaultValues,
     onSubmit: (values) => patchUserMutate(values),
   });
 
-  const { mutate: patchUserMutate } = useMutation({
-    mutationFn: (dto: PatchUserInput) =>
-      api.users.usersControllerPatchUser(dto),
-
-    onSuccess: () => {
-      toast.success(TOAST_MESSAGES.UPDATE_USER_PROFILE_SUCCESS);
-
-      if (onNext !== undefined) {
-        onNext();
-      }
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.UPDATE_USER_PROFILE_FAIL);
-    },
+  const { mutate: patchUserMutate } = usePatchUserMutation({
+    onSuccess: () => onNext?.(),
   });
 
   const queryClient = useQueryClient();
@@ -63,7 +42,21 @@ const SetProfileForm = ({
     });
   };
 
+  const uploadBackgroundImageMutation = useUploadBackgroundImageMutation({
+    onSuccess: invalidateQueries,
+  });
+
+  const uploadProfileImageMutation = useUploadProfileImageMutation({
+    onSuccess: invalidateQueries,
+  });
+
   const { isSubmitting, isValid } = form.formState;
+
+  if (me === undefined) {
+    return null;
+  }
+
+  const { profile_image, background_image } = me;
 
   return (
     <Form {...form}>
@@ -82,16 +75,12 @@ const SetProfileForm = ({
           <div className="flex flex-col items-center gap-4 rounded-lg p-4 shadow-lg">
             <div className="relative w-full">
               <FileUploader
-                {...useUploadFile({
-                  uploadMutation: useUploadBackgroundImageMutation({
-                    onSuccess: invalidateQueries,
-                  }),
-                })}
+                uploadMutation={uploadBackgroundImageMutation}
                 trigger={
                   <div
                     className="absolute h-32 w-full cursor-pointer rounded-lg bg-blccu-neutral-400"
                     style={{
-                      backgroundImage: `url(${user.background_image})`,
+                      backgroundImage: `url(${background_image})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
@@ -100,14 +89,10 @@ const SetProfileForm = ({
               />
               <div className="pt-24">
                 <FileUploader
-                  {...useUploadFile({
-                    uploadMutation: useUploadProfileImageMutation({
-                      onSuccess: invalidateQueries,
-                    }),
-                  })}
+                  uploadMutation={uploadProfileImageMutation}
                   trigger={
                     <Avatar size="xl" className="mx-auto cursor-pointer">
-                      <AvatarImage src={user.profile_image} />
+                      <AvatarImage src={profile_image} />
                       <AvatarFallback className="bg-blccu-neutral-600" />
                     </Avatar>
                   }
