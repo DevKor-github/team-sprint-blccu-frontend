@@ -1,7 +1,6 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import {
   AppBar,
@@ -10,9 +9,9 @@ import {
 } from '@/components/ui-unstable/app-bar';
 import { StackedUserCard } from '@/components/ui-unstable/stacked-user-card';
 import { Button } from '@/components/ui/button';
-import { TOAST_MESSAGES } from '@/constants/messages';
+import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
+import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
 import { useFetchMe } from '@/hooks/queries/use-fetch-me';
-import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
 type FollowingPageProps = {
@@ -36,35 +35,21 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: followMutate, isPending: isFollowPending } = useMutation({
-    mutationFn: (userId: number) =>
-      api.users.followsControllerFollowUser(userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: queries.users.followings(userData?.data.kakaoId).queryKey,
-      });
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries({
+      queryKey: queries.users.followings(userData?.data.kakaoId).queryKey,
+    });
+  };
 
-      toast.success(TOAST_MESSAGES.FOLLOW_SUCCESS);
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.FOLLOW_FAIL);
-    },
-  });
+  const { mutate: followMutate, isPending: isFollowPending } =
+    useFollowMutation({
+      onSuccess: invalidateQueries,
+    });
 
-  const { mutate: unfollowMutate, isPending: isUnfollowPending } = useMutation({
-    mutationFn: (userId: number) =>
-      api.users.followsControllerUnfollowUser(userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: queries.users.followings(userData?.data.kakaoId).queryKey,
-      });
-
-      toast.success(TOAST_MESSAGES.UNFOLLOW_SUCCESS);
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.UNFOLLOW_FAIL);
-    },
-  });
+  const { mutate: unfollowMutate, isPending: isUnfollowPending } =
+    useUnfollowMutation({
+      onSuccess: invalidateQueries,
+    });
 
   const users = followingsData?.data ?? [];
 

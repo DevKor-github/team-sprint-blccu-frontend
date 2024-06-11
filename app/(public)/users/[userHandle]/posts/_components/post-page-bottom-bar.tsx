@@ -1,15 +1,14 @@
 import Link from 'next/link';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Heart, MessageCircleMore, Share2 } from 'lucide-react';
-import { toast } from 'sonner';
 
 import { type PostResponseDto } from '@/__generated__/data-contracts';
 import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { IconButton } from '@/components/ui/icon-button';
-import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
-import { api } from '@/lib/api';
+import { useLikeMutation } from '@/hooks/mutations/use-like-mutation';
+import { useUnlikeMutation } from '@/hooks/mutations/use-unlike-mutation';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -24,37 +23,24 @@ const PostPageBottomBar = ({
 
   const queryClient = useQueryClient();
 
-  const { mutate: likeMutate, isPending: isLikePending } = useMutation({
-    mutationFn: (postId: number) => api.posts.likesControllerLike(postId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: queries.posts.like(id).queryKey,
-      });
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries({
+      queryKey: queries.posts.like(id).queryKey,
+    });
 
-      queryClient.invalidateQueries({
-        queryKey: queries.posts.detail(id).queryKey,
-      });
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.LIKE_FAIL);
-    },
+    queryClient.invalidateQueries({
+      queryKey: queries.posts.detail(id).queryKey,
+    });
+  };
+
+  const { mutate: likeMutate, isPending: isLikePending } = useLikeMutation({
+    onSuccess: invalidateQueries,
   });
 
-  const { mutate: unlikeMutate, isPending: isUnlikePending } = useMutation({
-    mutationFn: (postId: number) => api.posts.likesControllerDeleteLike(postId),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: queries.posts.like(id).queryKey,
-      });
-
-      await queryClient.invalidateQueries({
-        queryKey: queries.posts.detail(id).queryKey,
-      });
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.UNLIKE_FAIL);
-    },
-  });
+  const { mutate: unlikeMutate, isPending: isUnlikePending } =
+    useUnlikeMutation({
+      onSuccess: invalidateQueries,
+    });
 
   const like = data?.data ?? false;
 

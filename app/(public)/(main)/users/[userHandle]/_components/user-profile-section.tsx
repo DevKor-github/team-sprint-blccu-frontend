@@ -2,18 +2,17 @@
 
 import Link from 'next/link';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { List } from 'lucide-react';
-import { toast } from 'sonner';
 
 import { type UserResponseDto } from '@/__generated__/data-contracts';
 import { EditUserProfileSheet } from '@/app/(public)/(main)/users/[userHandle]/_components/edit-user-profile-sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
+import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
+import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
 import { useFetchMe } from '@/hooks/queries/use-fetch-me';
-import { api } from '@/lib/api';
 import {
   getFollowerDescriptor,
   getFollowingDescriptor,
@@ -24,63 +23,46 @@ type UserProfileSectionProps = {
   user: UserResponseDto;
 };
 
-const UserProfileSection = ({ user }: UserProfileSectionProps) => {
-  const {
+const UserProfileSection = ({
+  user: {
     username,
+    kakaoId,
     handle,
     description,
     profile_image,
     background_image,
     follower_count,
     following_count,
-  } = user;
-
+  },
+}: UserProfileSectionProps) => {
   const { me, isSignedIn } = useFetchMe();
 
   const { data: followerData } = useQuery({
-    ...queries.users.follower(user.kakaoId),
+    ...queries.users.follower(kakaoId),
     enabled: isSignedIn,
   });
 
   const queryClient = useQueryClient();
 
-  const { mutate: followMutate, isPending: isFollowPending } = useMutation({
-    mutationFn: (userId: number) =>
-      api.users.followsControllerFollowUser(userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: queries.users.follower(user.kakaoId).queryKey,
-      });
+  const invalidateQueries = () => {
+    queryClient.invalidateQueries({
+      queryKey: queries.users.follower(kakaoId).queryKey,
+    });
 
-      queryClient.invalidateQueries({
-        queryKey: queries.users.detailByHandle(user.handle).queryKey,
-      });
+    queryClient.invalidateQueries({
+      queryKey: queries.users.detailByHandle(handle).queryKey,
+    });
+  };
 
-      toast.success(TOAST_MESSAGES.FOLLOW_SUCCESS);
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.FOLLOW_FAIL);
-    },
-  });
+  const { mutate: followMutate, isPending: isFollowPending } =
+    useFollowMutation({
+      onSuccess: invalidateQueries,
+    });
 
-  const { mutate: unfollowMutate, isPending: isUnfollowPending } = useMutation({
-    mutationFn: (userId: number) =>
-      api.users.followsControllerUnfollowUser(userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: queries.users.follower(user.kakaoId).queryKey,
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: queries.users.detailByHandle(user.handle).queryKey,
-      });
-
-      toast.success(TOAST_MESSAGES.UNFOLLOW_SUCCESS);
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.UNFOLLOW_FAIL);
-    },
-  });
+  const { mutate: unfollowMutate, isPending: isUnfollowPending } =
+    useUnfollowMutation({
+      onSuccess: invalidateQueries,
+    });
 
   const isMe = me?.handle === handle;
 
@@ -129,7 +111,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
                     size="sm"
                     radius="full"
                     disabled={isUnfollowPending}
-                    onClick={() => unfollowMutate(user.kakaoId)}
+                    onClick={() => unfollowMutate(kakaoId)}
                   >
                     팔로잉
                   </Button>
@@ -138,7 +120,7 @@ const UserProfileSection = ({ user }: UserProfileSectionProps) => {
                     size="sm"
                     radius="full"
                     disabled={isFollowPending}
-                    onClick={() => followMutate(user.kakaoId)}
+                    onClick={() => followMutate(kakaoId)}
                   >
                     팔로우
                   </Button>
