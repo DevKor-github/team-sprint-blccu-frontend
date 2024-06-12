@@ -16,7 +16,13 @@ import Text from '@tiptap/extension-text';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
-import { EditorContent, useEditor } from '@tiptap/react';
+import {
+  EditorContent,
+  NodeViewWrapper,
+  ReactNodeViewRenderer,
+  mergeAttributes,
+  useEditor,
+} from '@tiptap/react';
 
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
@@ -31,8 +37,27 @@ const Body = () => {
     (state: any) => state.setSelectedEditor,
   );
 
-  const reprImage = useReprImageStore((state: any) => state.reprImage);
-  const setReprImage = useReprImageStore((state: any) => state.setReprImage);
+  const CustomImageComponent = (props: any) => {
+    const reprImage = useReprImageStore((state: any) => state.reprImageId);
+    const setReprImage = useReprImageStore(
+      (state: any) => state.setReprImageId,
+    );
+
+    const { src, alt, id } = props.node.attrs;
+
+    const buttonStyle = `${reprImage === id ? 'bg-[#FFFFFF] text-[#1A1A1A]' : 'bg-[#1A1A1A] text-[#FFFFFF]'} absolute top-2 left-2 p-1`;
+
+    return (
+      <NodeViewWrapper className="grid place-items-center">
+        <div className="relative">
+          <img src={src} alt={alt} id={id} />
+          <button onClick={() => setReprImage(id)} className={buttonStyle}>
+            대표 이미지
+          </button>
+        </div>
+      </NodeViewWrapper>
+    );
+  };
 
   const CustomImage = Image.extend({
     addAttributes() {
@@ -51,23 +76,11 @@ const Body = () => {
         },
       };
     },
+    renderHTML({ HTMLAttributes }) {
+      return ['img', mergeAttributes(HTMLAttributes)];
+    },
     addNodeView() {
-      return ({ node }) => {
-        const container = document.createElement('p');
-        const img = document.createElement('img');
-        const src = node.attrs.src;
-        const id = node.attrs.id;
-        const className = node.attrs.className;
-        img.id = id;
-        img.src = src;
-        container.className = className;
-        container.append(img);
-
-        return {
-          dom: container,
-          contentDOM: img,
-        };
-      };
+      return ReactNodeViewRenderer(CustomImageComponent);
     },
   });
 

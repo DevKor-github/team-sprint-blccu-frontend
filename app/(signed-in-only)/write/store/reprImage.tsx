@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 const useReprImageStore = create((set) => ({
-  reprImageId: '200',
-  setReprImageId: (newReprImageId: string) =>
+  reprImageId: null,
+  setReprImageId: (newReprImageId: number) =>
     set({ reprImageId: newReprImageId }),
 }));
 

@@ -44,8 +44,9 @@ const EditorToolbar = () => {
       await selectedEditor
         ?.chain()
         .focus()
-        .setImage({ src: url, id: currentImageId })
+        .setImage({ src: url, alt: '이미지', id: currentImageId })
         .run();
+      selectedEditor.commands.createParagraphNear();
       increaseImageId();
     }
   };
