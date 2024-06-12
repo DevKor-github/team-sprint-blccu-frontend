@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { useEffect, useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
 import { Settings, Share2 } from 'lucide-react';
 
 import { PostByCategorySection } from '@/app/(public)/(main)/users/[userHandle]/_components/post-by-category-section';
@@ -20,8 +19,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useUserDetailByHandleQuery } from '@/hooks/queries/use-user-detail-by-handle-query';
 import { cn } from '@/lib/utils';
-import { queries } from '@/queries';
 
 type UserHandlePageProps = {
   params: {
@@ -30,11 +29,7 @@ type UserHandlePageProps = {
 };
 
 const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
-  const { data: userData } = useQuery({
-    ...queries.users.detailByHandle(userHandle),
-    retry: false,
-  });
-
+  const { user, isExist } = useUserDetailByHandleQuery(userHandle);
   const { me } = useMeQuery();
 
   const [isBelowProfileImageScrollY, setIsBelowProfileImageScrollY] =
@@ -50,9 +45,7 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const user = userData?.data;
-
-  if (user === undefined) {
+  if (!isExist) {
     return null;
   }
 

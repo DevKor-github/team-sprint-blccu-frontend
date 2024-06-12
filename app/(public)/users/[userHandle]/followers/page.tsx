@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useUserDetailByHandleQuery } from '@/hooks/queries/use-user-detail-by-handle-query';
 import { queries } from '@/queries';
 
 type FollowersPageProps = {
@@ -21,22 +22,19 @@ type FollowersPageProps = {
 };
 
 const FollowersPage = ({ params: { userHandle } }: FollowersPageProps) => {
+  const { user, isExist } = useUserDetailByHandleQuery(userHandle);
   const { isSignedIn, me } = useMeQuery();
 
-  const { data: userData } = useQuery({
-    ...queries.users.detailByHandle(userHandle),
-    retry: false,
-  });
   const { data: followersData } = useQuery({
-    ...queries.users.followers(userData?.data.kakaoId),
-    enabled: userData !== undefined,
+    ...queries.users.followers(user?.kakaoId),
+    enabled: isExist,
   });
 
   const queryClient = useQueryClient();
 
   const invalidateQueries = () => {
     queryClient.invalidateQueries({
-      queryKey: queries.users.followers(userData?.data.kakaoId).queryKey,
+      queryKey: queries.users.followers(user?.kakaoId).queryKey,
     });
   };
 

@@ -14,6 +14,7 @@ import { StackedCategoryCard } from '@/components/ui-unstable/stacked-category-c
 import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useUserDetailByHandleQuery } from '@/hooks/queries/use-user-detail-by-handle-query';
 import { queries } from '@/queries';
 
 type SelectCategoryPageProps = {
@@ -25,17 +26,13 @@ type SelectCategoryPageProps = {
 const SelectCategoryPage = ({
   params: { userHandle },
 }: SelectCategoryPageProps) => {
-  const { data: userData } = useQuery({
-    ...queries.users.detailByHandle(userHandle),
-    retry: false,
-  });
+  const { user, isExist } = useUserDetailByHandleQuery(userHandle);
+  const { me } = useMeQuery();
 
   const { data: categoriesData } = useQuery({
-    ...queries.users.categories(userData?.data.kakaoId),
-    enabled: userData !== undefined,
+    ...queries.users.categories(user?.kakaoId),
+    enabled: isExist,
   });
-
-  const { me } = useMeQuery();
 
   const categories = categoriesData?.data ?? [];
 
@@ -47,8 +44,6 @@ const SelectCategoryPage = ({
     (acc, { postCount }) => acc + postCount,
     0,
   );
-
-  const user = userData?.data;
 
   const isMe = me?.kakaoId === user?.kakaoId;
 
