@@ -99,8 +99,8 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
         </div>
       </AppBar>
       <UserProfileSection user={user} />
-      <PostByCategorySection user={user} />
       <UserHandlePageTrendingPostSection user={user} />
+      <PostByCategorySection user={user} />
     </div>
   );
 };

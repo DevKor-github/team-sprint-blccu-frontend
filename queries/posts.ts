@@ -23,15 +23,6 @@ const posts = createQueryKeys('posts', {
         pageSize: 10,
       }),
   },
-  userAll: (userId: number) => ({
-    queryKey: [userId],
-    queryFn: () =>
-      api.posts.postsControllerFetchUserPosts({
-        userId,
-        sort: 'DESC',
-        take: 10,
-      }),
-  }),
   userTrending: (userId: number) => ({
     queryKey: [userId],
     queryFn: () =>
@@ -44,13 +35,6 @@ const posts = createQueryKeys('posts', {
   }),
   userByCategory: (userId: number, categoryId?: string) => ({
     queryKey: [userId, categoryId],
-    queryFn: () =>
-      api.posts.postsControllerFetchUserPosts({
-        userId,
-        sort: 'DESC',
-        take: 10,
-        categoryId,
-      }),
   }),
   detail: (postId: number) => ({
     queryKey: [postId],

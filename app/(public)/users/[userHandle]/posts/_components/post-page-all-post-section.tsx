@@ -1,6 +1,9 @@
 import Link from 'next/link';
 
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useIntersectionObserver } from '@uidotdev/usehooks';
 
 import { type UserPrimaryResponseDto } from '@/__generated__/data-contracts';
 import {
@@ -10,6 +13,7 @@ import {
 } from '@/components/ui-unstable/section';
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
 import { ROUTES } from '@/constants/routes';
+import { api } from '@/lib/api';
 import { getPostPageAllPostSectionTitleDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
 
@@ -18,13 +22,44 @@ type PostPageAllPostSectionProps = {
 };
 
 const PostPageAllPostSection = ({ user }: PostPageAllPostSectionProps) => {
-  const { data } = useQuery(queries.posts.userAll(user.kakaoId));
+  const {
+    data: postData,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: queries.posts.userByCategory(user.kakaoId).queryKey,
+    queryFn: ({ pageParam }) =>
+      api.posts.postsControllerFetchUserPosts({
+        userId: user.kakaoId,
+        sort: 'DESC',
+        take: 5,
+        cursor: pageParam,
+      }),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: ({
+      data: {
+        meta: { hasNextData, customCursor },
+      },
+    }) => (hasNextData ? customCursor : undefined),
+  });
+
+  const [ref, entry] = useIntersectionObserver({
+    threshold: 0,
+  });
+
+  const isIntersecting = entry?.isIntersecting ?? false;
+
+  useEffect(() => {
+    if (isIntersecting) {
+      fetchNextPage();
+    }
+  }, [isIntersecting]);
 
   const titleDescriptor = getPostPageAllPostSectionTitleDescriptor(
     user.username,
   );
 
-  const posts = data?.data.data ?? [];
+  const posts = postData?.pages.flatMap((page) => page.data.data) ?? [];
 
   return (
     <Section>
@@ -38,6 +73,7 @@ const PostPageAllPostSection = ({ user }: PostPageAllPostSectionProps) => {
               </div>
             </Link>
           ))}
+          {!isFetchingNextPage && <div ref={ref} />}
         </div>
       </SectionContent>
     </Section>

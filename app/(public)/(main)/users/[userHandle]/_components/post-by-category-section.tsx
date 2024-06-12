@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useIntersectionObserver } from '@uidotdev/usehooks';
 import { ChevronDown } from 'lucide-react';
 
 import { type UserResponseDto } from '@/__generated__/data-contracts';
@@ -15,6 +18,7 @@ import {
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
 import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
+import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
 type PostByCategorySectionProps = {
@@ -25,16 +29,47 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
   const searchParams = useSearchParams();
   const categoryId = searchParams.get(QUERY_PARAMS.CATEGORY_ID) ?? undefined;
 
-  const { data: postData } = useQuery(
-    queries.posts.userByCategory(user.kakaoId, categoryId),
-  );
   const { data: categoryData } = useQuery({
     ...queries.users.category(categoryId),
     enabled: categoryId !== undefined,
   });
 
+  const {
+    data: postData,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: queries.posts.userByCategory(user.kakaoId, categoryId).queryKey,
+    queryFn: ({ pageParam }) =>
+      api.posts.postsControllerFetchUserPosts({
+        userId: user.kakaoId,
+        sort: 'DESC',
+        take: 5,
+        categoryId,
+        cursor: pageParam,
+      }),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: ({
+      data: {
+        meta: { hasNextData, customCursor },
+      },
+    }) => (hasNextData ? customCursor : undefined),
+  });
+
+  const [ref, entry] = useIntersectionObserver({
+    threshold: 0,
+  });
+
+  const isIntersecting = entry?.isIntersecting ?? false;
+
+  useEffect(() => {
+    if (isIntersecting) {
+      fetchNextPage();
+    }
+  }, [isIntersecting]);
+
   const categoryName = categoryData?.data.name ?? '전체글';
-  const posts = postData?.data.data ?? [];
+  const posts = postData?.pages.flatMap((page) => page.data.data) ?? [];
 
   return (
     <Section>
@@ -57,6 +92,7 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
               </div>
             </Link>
           ))}
+          {!isFetchingNextPage && <div ref={ref} />}
         </div>
       </SectionContent>
     </Section>
