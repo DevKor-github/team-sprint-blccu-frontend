@@ -14,26 +14,28 @@ import {
   SectionContent,
   SectionTitle,
 } from '@/components/ui-unstable/section';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
 const AllPostSection = () => {
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: queries.posts.all.queryKey,
-    queryFn: ({ pageParam }) =>
-      api.posts.postsControllerFetchCursor({
-        sort: 'DESC',
-        take: 30,
-        cursor: pageParam,
-      }),
-    initialPageParam: undefined as string | undefined,
-    getNextPageParam: ({
-      data: {
-        meta: { hasNextData, customCursor },
-      },
-    }) => (hasNextData ? customCursor : undefined),
-  });
+  const { isLoading, data, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: queries.posts.all.queryKey,
+      queryFn: ({ pageParam }) =>
+        api.posts.postsControllerFetchCursor({
+          sort: 'DESC',
+          take: 30,
+          cursor: pageParam,
+        }),
+      initialPageParam: undefined as string | undefined,
+      getNextPageParam: ({
+        data: {
+          meta: { hasNextData, customCursor },
+        },
+      }) => (hasNextData ? customCursor : undefined),
+    });
 
   const [ref, entry] = useIntersectionObserver({
     threshold: 0,
@@ -62,6 +64,14 @@ const AllPostSection = () => {
           }}
         >
           <Masonry gutter="10px">
+            {isLoading &&
+              [...Array(30)].map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="w-full"
+                  style={{ height: Math.floor(Math.random() * 200) + 140 }}
+                />
+              ))}
             {posts.map((post) => (
               <Link
                 href={ROUTES.POST_OF(post.user.handle, post.id)}
@@ -73,6 +83,7 @@ const AllPostSection = () => {
                   className="rounded-md"
                   width={300}
                   height={300}
+                  loading="lazy"
                 />
               </Link>
             ))}

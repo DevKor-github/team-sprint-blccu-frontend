@@ -10,11 +10,12 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import { queries } from '@/queries';
 
 const FollowingPostSection = () => {
-  const { data } = useQuery(queries.posts.following);
+  const { isLoading, data } = useQuery(queries.posts.following);
 
   const posts = data?.data.items ?? [];
 
@@ -23,6 +24,12 @@ const FollowingPostSection = () => {
       <SectionTitle className="mx-4">팔로잉 최신글</SectionTitle>
       <SectionContent>
         <div className="flex flex-col">
+          {isLoading &&
+            [...Array(5)].map((_, index) => (
+              <div key={index} className="px-4 py-2">
+                <Skeleton className="h-24 w-full" />
+              </div>
+            ))}
           {posts.map((post) => (
             <Link
               href={ROUTES.POST_OF(post.user.handle, post.id)}

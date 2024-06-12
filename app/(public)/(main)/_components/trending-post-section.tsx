@@ -11,11 +11,12 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import { queries } from '@/queries';
 
 const TrendingPostSection = () => {
-  const { data } = useQuery(queries.posts.trending);
+  const { isLoading, data } = useQuery(queries.posts.trending);
 
   const posts = data?.data.data ?? [];
 
@@ -25,6 +26,10 @@ const TrendingPostSection = () => {
       <SectionContent>
         <ScrollArea>
           <div className="mr-4 flex gap-3 pb-4">
+            {isLoading &&
+              [...Array(5)].map((_, index) => (
+                <Skeleton key={index} className="h-60 w-40" />
+              ))}
             {posts.map((post) => (
               <Link
                 href={ROUTES.POST_OF(post.user.handle, post.id)}

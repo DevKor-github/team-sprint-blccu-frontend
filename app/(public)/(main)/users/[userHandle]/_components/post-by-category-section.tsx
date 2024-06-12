@@ -16,6 +16,7 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { QUERY_PARAMS } from '@/constants/constants';
 import { ROUTES } from '@/constants/routes';
 import { api } from '@/lib/api';
@@ -35,6 +36,7 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
   });
 
   const {
+    isLoading: isPostLoading,
     data: postData,
     fetchNextPage,
     isFetchingNextPage,
@@ -85,6 +87,12 @@ const PostByCategorySection = ({ user }: PostByCategorySectionProps) => {
       </SectionTitle>
       <SectionContent>
         <div className="flex flex-col">
+          {isPostLoading &&
+            [...Array(5)].map((_, index) => (
+              <div key={index} className="px-4 py-2">
+                <Skeleton className="h-24 w-full" />
+              </div>
+            ))}
           {posts.map((post) => (
             <Link href={ROUTES.POST_OF(user.handle, post.id)} key={post.id}>
               <div className="px-4 py-3">

@@ -12,6 +12,7 @@ import {
   SectionTitle,
 } from '@/components/ui-unstable/section';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import { getUserHandlePageTrendingPostSectionTitleDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
@@ -23,7 +24,9 @@ type UserHandlePageTrendingPostSectionProps = {
 const UserHandlePageTrendingPostSection = ({
   user,
 }: UserHandlePageTrendingPostSectionProps) => {
-  const { data } = useQuery(queries.posts.userTrending(user.kakaoId));
+  const { isLoading, data } = useQuery(
+    queries.posts.userTrending(user.kakaoId),
+  );
 
   const titleDescriptor = getUserHandlePageTrendingPostSectionTitleDescriptor(
     user.username,
@@ -37,6 +40,10 @@ const UserHandlePageTrendingPostSection = ({
       <SectionContent>
         <ScrollArea>
           <div className="mr-4 flex gap-3 pb-4">
+            {isLoading &&
+              [...Array(5)].map((_, index) => (
+                <Skeleton key={index} className="h-60 w-40" />
+              ))}
             {posts.map((post) => (
               <Link href={ROUTES.POST_OF(user.handle, post.id)} key={post.id}>
                 <HorizontalScrollablePostCard post={post} />
