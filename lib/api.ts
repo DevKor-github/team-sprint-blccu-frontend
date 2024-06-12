@@ -1,3 +1,5 @@
+import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
+
 import { Anmts } from '@/__generated__/Anmts';
 import { Auth } from '@/__generated__/Auth';
 import { Health } from '@/__generated__/Health';
@@ -7,6 +9,16 @@ import { Posts } from '@/__generated__/Posts';
 import { Stickers } from '@/__generated__/Stickers';
 import { Users } from '@/__generated__/Users';
 import { PROXY_API_PREFIX } from '@/constants/routes';
+
+const onRejected = async (error: AxiosError) => {
+  if (error.response?.status !== 401) {
+    return Promise.reject(error);
+  }
+
+  await auth.authControllerRefresh();
+
+  return axios.request(error.config as InternalAxiosRequestConfig); // FIXME: type assertion
+};
 
 const anmts = new Anmts({
   baseURL: PROXY_API_PREFIX,
@@ -50,5 +62,14 @@ const api = {
   stickers,
   users,
 };
+
+// auth.instance.interceptors.response.use((value) => value, onRejected);
+anmts.instance.interceptors.response.use((value) => value, onRejected);
+health.instance.interceptors.response.use((value) => value, onRejected);
+notifications.instance.interceptors.response.use((value) => value, onRejected);
+postbg.instance.interceptors.response.use((value) => value, onRejected);
+posts.instance.interceptors.response.use((value) => value, onRejected);
+stickers.instance.interceptors.response.use((value) => value, onRejected);
+users.instance.interceptors.response.use((value) => value, onRejected);
 
 export { api };
