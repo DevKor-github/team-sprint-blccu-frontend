@@ -62,7 +62,7 @@ const SelectCategoryPage = ({
       </AppBar>
       <div className="pt-14">
         <div className="flex flex-col pt-2">
-          <Link href={ROUTES.USER_HANDLE_OF(userHandle)}>
+          <Link href={ROUTES.USER_HANDLE_OF(userHandle)} replace={true}>
             <div className="px-4">
               <StackedCategoryCard
                 category={{
@@ -81,6 +81,7 @@ const SelectCategoryPage = ({
                   [QUERY_PARAMS.CATEGORY_ID]: category.categoryId,
                 },
               }}
+              replace={true}
               key={category.categoryId}
             >
               <div className="px-4">

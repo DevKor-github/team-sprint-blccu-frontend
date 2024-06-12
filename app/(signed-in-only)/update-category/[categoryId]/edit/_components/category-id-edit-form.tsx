@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { type UseFormProps } from 'react-hook-form';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import {
@@ -26,7 +26,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { api } from '@/lib/api';
+import { queries } from '@/queries';
 
 type PatchPostCategoryProps = {
   categoryId: string;
@@ -53,6 +55,10 @@ const CategoryIdEditForm = ({
       }),
   });
 
+  const { me } = useMeQuery();
+
+  const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationFn: ({
       categoryId,
@@ -63,6 +69,8 @@ const CategoryIdEditForm = ({
         patchPostCategoryDto,
       ),
     onSuccess: () => {
+      queryClient.invalidateQueries(queries.users.categories(me?.kakaoId));
+
       toast.success(TOAST_MESSAGES.PATCH_CATEGORY_SUCCESS);
 
       router.back();
