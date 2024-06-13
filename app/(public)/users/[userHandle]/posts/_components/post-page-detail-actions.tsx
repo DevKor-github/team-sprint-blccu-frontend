@@ -8,6 +8,7 @@ import { IconButton } from '@/components/ui/icon-button';
 import { useLikeMutation } from '@/hooks/mutations/use-like-mutation';
 import { useUnlikeMutation } from '@/hooks/mutations/use-unlike-mutation';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useModalStore } from '@/hooks/use-modal-store';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -16,6 +17,8 @@ type PostPageDetailActionsProps = {
 };
 
 const PostPageDetailActions = ({ postId }: PostPageDetailActionsProps) => {
+  const { open } = useModalStore();
+
   const { isSignedIn, me } = useMeQuery();
   const { data: likeData } = useQuery(queries.posts.like(postId));
   const { data: postData } = useQuery(queries.posts.detail(postId));
@@ -51,6 +54,11 @@ const PostPageDetailActions = ({ postId }: PostPageDetailActionsProps) => {
   const like = likeData?.data ?? false;
 
   const toggleLikeMutate = () => {
+    if (!isSignedIn) {
+      open('sign-in');
+      return;
+    }
+
     if (like) {
       unlikeMutate(id);
     } else {

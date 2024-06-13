@@ -8,6 +8,8 @@ import { IconButton } from '@/components/ui/icon-button';
 import { ROUTES } from '@/constants/routes';
 import { useLikeMutation } from '@/hooks/mutations/use-like-mutation';
 import { useUnlikeMutation } from '@/hooks/mutations/use-unlike-mutation';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useModalStore } from '@/hooks/use-modal-store';
 import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -16,6 +18,9 @@ type PostPageBottomBarProps = {
 };
 
 const PostPageBottomBar = ({ postId }: PostPageBottomBarProps) => {
+  const { open } = useModalStore();
+
+  const { isSignedIn } = useMeQuery();
   const { data: postData } = useQuery(queries.posts.detail(postId));
   const { data: likeData } = useQuery(queries.posts.like(postId));
 
@@ -50,6 +55,11 @@ const PostPageBottomBar = ({ postId }: PostPageBottomBarProps) => {
   const like = likeData?.data ?? false;
 
   const toggleLikeMutate = () => {
+    if (!isSignedIn) {
+      open('sign-in');
+      return;
+    }
+
     if (like) {
       unlikeMutate(id);
     } else {

@@ -5,6 +5,7 @@ import { type PropsWithChildren } from 'react';
 
 import { Toaster } from '@/components/ui/sonner';
 import { cn } from '@/lib/utils';
+import { ModalProvider } from '@/providers/modal-provider';
 import { NotificationSubscriber } from '@/providers/notification-subscriber';
 import QueryProvider from '@/providers/query-provider';
 
@@ -26,11 +27,11 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="ko-KR">
       <body className={cn(notoSansKr.className, 'bg-gray-50')}>
         <QueryProvider>
-          <NotificationSubscriber>
-            <div className="mx-auto min-h-dvh max-w-screen-sm bg-white shadow-xl">
-              {children}
-            </div>
-          </NotificationSubscriber>
+          <div className="mx-auto min-h-dvh max-w-screen-sm bg-white shadow-xl">
+            {children}
+          </div>
+          <NotificationSubscriber />
+          <ModalProvider />
           <Toaster
             position="top-right"
             toastOptions={{

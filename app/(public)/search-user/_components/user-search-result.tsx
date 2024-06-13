@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useModalStore } from '@/hooks/use-modal-store';
 import { queries } from '@/queries';
 
 type UserSearchResultProps = {
@@ -14,6 +15,8 @@ type UserSearchResultProps = {
 };
 
 const UserSearchResult = ({ search }: UserSearchResultProps) => {
+  const { open } = useModalStore();
+
   const { isSignedIn, me } = useMeQuery();
 
   const { data: usersByNameData } = useQuery({
@@ -42,6 +45,18 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
 
   const users = usersByNameData?.data ?? [];
 
+  const handleUnfollowButtonClick = (kakaoId: number) => {
+    unfollowMutate(kakaoId);
+  };
+
+  const handleFollowButtonClick = (kakaoId: number) => {
+    if (!isSignedIn) {
+      open('sign-in');
+      return;
+    }
+    followMutate(kakaoId);
+  };
+
   return (
     <div className="mt-4 flex flex-col gap-2 px-4">
       {users.map(({ isFollowing, ...user }, index) => {
@@ -52,31 +67,28 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
             key={index}
             user={user}
             right={
-              isSignedIn &&
-              !isMe && (
-                <>
-                  {isFollowing ? (
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      radius="full"
-                      disabled={isUnfollowPending}
-                      onClick={() => unfollowMutate(user.kakaoId)}
-                    >
-                      팔로잉
-                    </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      radius="full"
-                      disabled={isFollowPending}
-                      onClick={() => followMutate(user.kakaoId)}
-                    >
-                      팔로우
-                    </Button>
-                  )}
-                </>
-              )
+              <>
+                {isFollowing ? (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    radius="full"
+                    disabled={isUnfollowPending}
+                    onClick={() => handleUnfollowButtonClick(user.kakaoId)}
+                  >
+                    팔로잉
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    radius="full"
+                    disabled={isFollowPending || isMe}
+                    onClick={() => handleFollowButtonClick(user.kakaoId)}
+                  >
+                    팔로우
+                  </Button>
+                )}
+              </>
             }
           />
         );

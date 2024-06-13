@@ -6,14 +6,18 @@ import { Home, Pencil, User } from 'lucide-react';
 
 import { ROUTES } from '@/constants/routes';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useModalStore } from '@/hooks/use-modal-store';
 import { cn } from '@/lib/utils';
 
 const MainLayoutBottomNavBar = () => {
   const { isSignedIn, me } = useMeQuery();
+  const { open } = useModalStore();
 
-  if (!isSignedIn) {
-    return null;
-  }
+  const openModalIfNotSignedIn = () => {
+    if (!isSignedIn) {
+      open('sign-in');
+    }
+  };
 
   return (
     <nav
@@ -31,7 +35,10 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li className="ml-5">
-          <Link href={ROUTES.WRITE}>
+          <Link
+            href={isSignedIn ? ROUTES.WRITE : ''}
+            onClick={openModalIfNotSignedIn}
+          >
             <div
               className={cn(
                 'fixed bottom-[30px] left-1/2 -translate-x-1/2',
@@ -43,7 +50,10 @@ const MainLayoutBottomNavBar = () => {
           </Link>
         </li>
         <li>
-          <Link href={ROUTES.USER_HANDLE_OF(me.handle)}>
+          <Link
+            href={isSignedIn ? ROUTES.USER_HANDLE_OF(me.handle) : ''}
+            onClick={openModalIfNotSignedIn}
+          >
             <div className="p-5">
               <User className="h-5 w-5" />
             </div>

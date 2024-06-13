@@ -8,6 +8,7 @@ import { ROUTES } from '@/constants/routes';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useModalStore } from '@/hooks/use-modal-store';
 import { getFollowerDescriptor } from '@/lib/get-descriptor';
 import { queries } from '@/queries';
 
@@ -18,6 +19,8 @@ type PostPageAuthorProfileSectionProps = {
 const PostPageAuthorProfileSection = ({
   userKakaoId,
 }: PostPageAuthorProfileSectionProps) => {
+  const { open } = useModalStore();
+
   const { isSignedIn, me } = useMeQuery();
   const { data: userData } = useQuery({
     ...queries.users.detailByKakaoId(userKakaoId),
@@ -60,6 +63,19 @@ const PostPageAuthorProfileSection = ({
   const isFollowing = followerData?.data ?? false;
   const followerDescriptor = getFollowerDescriptor(user.follower_count);
 
+  const handleUnfollowButtonClick = () => {
+    unfollowMutate(user.kakaoId);
+  };
+
+  const handleFollowButtonClick = () => {
+    if (!isSignedIn) {
+      open('sign-in');
+      return;
+    }
+
+    followMutate(user.kakaoId);
+  };
+
   return (
     <section className="mx-4 my-12 flex flex-col items-center gap-6 rounded-2xl py-8 shadow-blccu-secondary sm:flex-row">
       <div className="flex flex-1 flex-col items-center gap-2">
@@ -77,28 +93,26 @@ const PostPageAuthorProfileSection = ({
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center gap-2">
-        {isSignedIn && !isMe && (
-          <>
-            {isFollowing ? (
-              <Button
-                variant="secondary"
-                radius="full"
-                disabled={isUnfollowPending}
-                onClick={() => unfollowMutate(user.kakaoId)}
-              >
-                팔로잉
-              </Button>
-            ) : (
-              <Button
-                radius="full"
-                disabled={isFollowPending}
-                onClick={() => followMutate(user.kakaoId)}
-              >
-                팔로우
-              </Button>
-            )}
-          </>
-        )}
+        <>
+          {isFollowing ? (
+            <Button
+              variant="secondary"
+              radius="full"
+              disabled={isUnfollowPending}
+              onClick={handleUnfollowButtonClick}
+            >
+              팔로잉
+            </Button>
+          ) : (
+            <Button
+              radius="full"
+              disabled={isFollowPending || isMe}
+              onClick={handleFollowButtonClick}
+            >
+              팔로우
+            </Button>
+          )}
+        </>
         <p className="text-xs text-blccu-neutral-500">{followerDescriptor}</p>
       </div>
     </section>

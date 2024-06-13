@@ -12,12 +12,18 @@ import {
 import { StackedPostCard } from '@/components/ui-unstable/stacked-post-card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
+import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { queries } from '@/queries';
 
 const FollowingPostSection = () => {
+  const { isSignedIn } = useMeQuery();
   const { isLoading, data } = useQuery(queries.posts.following);
 
   const posts = data?.data.items ?? [];
+
+  if (!isSignedIn) {
+    return null;
+  }
 
   return (
     <Section>
