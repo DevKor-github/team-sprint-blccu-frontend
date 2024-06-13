@@ -28,7 +28,7 @@ const TrendingPostSection = () => {
           <div className="mr-4 flex gap-3 pb-4">
             {isLoading &&
               [...Array(5)].map((_, index) => (
-                <Skeleton key={index} className="h-60 w-40" />
+                <Skeleton key={index} className="h-48 w-32" />
               ))}
             {posts.map((post) => (
               <Link

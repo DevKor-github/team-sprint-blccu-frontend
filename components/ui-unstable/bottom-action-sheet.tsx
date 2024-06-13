@@ -92,7 +92,7 @@ const BottomActionSheetItem = ({
     <BottomActionSheetClose asChild>
       <div
         className={cn(
-          'cursor-pointer py-3 text-center text-sm text-blccu-neutral-600',
+          'flex h-12 cursor-pointer items-center justify-center text-center text-sm text-blccu-neutral-600',
           className,
         )}
         onClick={onClick}

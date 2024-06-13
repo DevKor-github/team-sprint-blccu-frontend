@@ -13,6 +13,7 @@ import { ROUTES } from '@/constants/routes';
 import { useFollowMutation } from '@/hooks/mutations/use-follow-mutation';
 import { useUnfollowMutation } from '@/hooks/mutations/use-unfollow-mutation';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useModalStore } from '@/hooks/use-modal-store';
 import {
   getFollowerDescriptor,
   getFollowingDescriptor,
@@ -35,6 +36,8 @@ const UserProfileSection = ({
     following_count,
   },
 }: UserProfileSectionProps) => {
+  const { open } = useModalStore();
+
   const { me, isSignedIn } = useMeQuery();
 
   const { data: followerData } = useQuery({
@@ -71,6 +74,19 @@ const UserProfileSection = ({
   const followerDescriptor = getFollowerDescriptor(follower_count);
   const followingDescriptor = getFollowingDescriptor(following_count);
 
+  const handleUnfollowButtonClick = () => {
+    unfollowMutate(kakaoId);
+  };
+
+  const handleFollowButtonClick = () => {
+    if (!isSignedIn) {
+      open('sign-in');
+      return;
+    }
+
+    followMutate(kakaoId);
+  };
+
   return (
     <section className="flex flex-col items-center gap-8 pb-8 pt-14">
       <div
@@ -83,7 +99,7 @@ const UserProfileSection = ({
         <AvatarImage src={profile_image} />
         <AvatarFallback className="bg-blccu-neutral-400" />
       </Avatar>
-      <div className="flex flex-col items-center gap-8">
+      <div className="flex flex-col items-center gap-4">
         <h2 className="text-2xl font-semibold">{username}</h2>
         <div className="flex flex-col items-center gap-2">
           <div className="break-all text-sm text-blccu-neutral-500">
@@ -103,30 +119,26 @@ const UserProfileSection = ({
               trigger={<Button radius="full">프로필 편집</Button>}
             />
           ) : (
-            isSignedIn && (
-              <>
-                {isFollowing ? (
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    radius="full"
-                    disabled={isUnfollowPending}
-                    onClick={() => unfollowMutate(kakaoId)}
-                  >
-                    팔로잉
-                  </Button>
-                ) : (
-                  <Button
-                    size="sm"
-                    radius="full"
-                    disabled={isFollowPending}
-                    onClick={() => followMutate(kakaoId)}
-                  >
-                    팔로우
-                  </Button>
-                )}
-              </>
-            )
+            <>
+              {isFollowing ? (
+                <Button
+                  variant="secondary"
+                  radius="full"
+                  disabled={isUnfollowPending}
+                  onClick={handleUnfollowButtonClick}
+                >
+                  팔로잉
+                </Button>
+              ) : (
+                <Button
+                  radius="full"
+                  disabled={isFollowPending}
+                  onClick={handleFollowButtonClick}
+                >
+                  팔로우
+                </Button>
+              )}
+            </>
           )}
           <Link href={ROUTES.SELECT_CATEGORY_OF(handle)}>
             <div className="p-4">

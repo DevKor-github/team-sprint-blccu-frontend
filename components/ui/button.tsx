@@ -24,6 +24,7 @@ const buttonVariants = cva(
         default: 'h-10 px-6',
         sm: 'h-9 text-xs px-5',
         lg: 'h-12 px-7',
+        'lg-wide': 'h-12 px-16',
         none: 'h-auto px-0' /* it is only used for ghost variant */,
       },
       radius: {

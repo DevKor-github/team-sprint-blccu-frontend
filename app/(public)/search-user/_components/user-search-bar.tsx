@@ -13,7 +13,7 @@ const UserSearchBar = ({ value, handleValueChange }: UserSearchBarProps) => {
   return (
     <div
       className={cn(
-        'mx-4 mt-4 flex items-center rounded-full border bg-blccu-neutral-100 py-3 pl-7 pr-5',
+        'mx-4 mt-4 flex h-12 items-center rounded-full border bg-blccu-neutral-100 pl-7 pr-5',
         'transition-shadow focus-within:outline-none focus-within:ring-1 focus-within:ring-blccu-ring',
       )}
     >

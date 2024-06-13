@@ -134,7 +134,7 @@ const EditUserProfileForm = ({
             radius="full"
             disabled={!isValid || !isDirty || isSubmitting}
           >
-            수정
+            프로필 수정
           </Button>
         </SheetFooter>
       </form>

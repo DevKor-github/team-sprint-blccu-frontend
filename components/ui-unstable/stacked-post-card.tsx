@@ -19,21 +19,21 @@ const StackedPostCard = ({
   const formattedDate = format(date_created, 'yyyy. MM. dd.');
 
   return (
-    <div className="flex h-24 gap-2">
+    <div className="flex h-20 gap-2">
       <div className="flex h-full w-full flex-col justify-between gap-2">
         <div className="flex flex-col gap-1">
-          <h3 className="line-clamp-1 font-medium">{title}</h3>
-          <p className="line-clamp-2 text-sm text-blccu-neutral-500">
+          <h3 className="line-clamp-1 text-sm font-medium">{title}</h3>
+          <p className="line-clamp-2 text-xs text-blccu-neutral-500">
             {content}
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
-            <p className="line-clamp-1 max-w-28 text-xs text-blccu-neutral-500">
+            <p className="line-clamp-1 max-w-28 text-2xs text-blccu-neutral-500">
               {user.username}
             </p>
           </Link>
-          <p className="text-xs text-blccu-neutral-500">{formattedDate}</p>
+          <p className="text-2xs text-blccu-neutral-500">{formattedDate}</p>
         </div>
       </div>
       <div className="w-20 flex-shrink-0">

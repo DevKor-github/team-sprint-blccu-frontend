@@ -33,7 +33,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
           <NotificationSubscriber />
           <ModalProvider />
           <Toaster
-            position="top-right"
+            position="bottom-center"
             toastOptions={{
               className:
                 'font-noto-sans-kr' /* FIXME: font-serif는 적용되는데, custom font는 적용이 안된다. */,

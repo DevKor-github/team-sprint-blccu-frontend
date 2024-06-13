@@ -18,19 +18,19 @@ const BannerSignedIn = ({ user: { username } }: BannerSignedInProps) => {
 
   return (
     <div
-      className="mx-4 my-4 flex h-60 flex-col justify-end rounded-lg bg-cover bg-center"
+      className="mx-4 my-4 flex h-52 flex-col justify-end rounded-lg bg-cover bg-center"
       style={{
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
-      <div className="flex rounded-b-lg bg-gradient-to-b from-transparent to-black p-4 transition-all sm:p-8">
+      <div className="flex rounded-b-lg bg-gradient-to-b from-transparent to-black px-4 py-8 transition-all sm:px-8">
         <div className="flex flex-col">
-          <p className="text-sm text-blccu-white">{usernameDescriptor}</p>
+          <p className="text-xs text-blccu-white">{usernameDescriptor}</p>
           <p className="text-xl font-semibold text-blccu-white">
             지금 블로그를 꾸며보세요 🎨
           </p>
           <Link href={ROUTES.WRITE}>
-            <p className="mt-2 flex items-center gap-1 text-sm text-blccu-white">
+            <p className="mt-2 flex items-center gap-1 text-xs text-blccu-white">
               <ExternalLink className="h-4 w-4" />
               지금 블꾸하러 가기
             </p>

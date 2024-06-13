@@ -9,7 +9,7 @@ const Banner = () => {
   const { isLoading, isSignedIn, me } = useMeQuery();
 
   if (isLoading) {
-    return <Skeleton className="m-4 h-60" />;
+    return <Skeleton className="m-4 h-52" />;
   }
 
   return isSignedIn ? <BannerSignedIn user={me} /> : <BannerNotSignedIn />;

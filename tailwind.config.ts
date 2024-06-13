@@ -100,6 +100,10 @@ const config = {
         'blccu-bottom': '4px 4px 20px 0 rgba(0, 0, 0, 0.04)',
         'blccu-secondary': '2px 2px 20px 5px rgba(0, 0, 0, 0.04)',
       },
+      fontSize: {
+        'lg-2': '1rem' /* 16px */,
+        '2xs': '0.625rem', // 10px
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

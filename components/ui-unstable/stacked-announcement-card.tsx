@@ -14,7 +14,7 @@ const StackedAnnouncementCard = ({
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-blccu-neutral-200 p-4">
       <h3 className="text-lg font-medium">{title}</h3>
-      <p>{content}</p>
+      <p className="text-blccu-neutral-600">{content}</p>
       <p className="text-xs text-blccu-neutral-600">{formattedDate}</p>
     </div>
   );

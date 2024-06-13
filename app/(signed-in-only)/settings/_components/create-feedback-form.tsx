@@ -46,7 +46,7 @@ const CreateFeedbackForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={onSubmit}>
-        <div className="mt-10 flex flex-col gap-2 px-4 pt-2">
+        <div className="flex flex-col gap-2 px-4 pt-2">
           <FormField
             control={form.control}
             name={CREATE_FEEDBACK_NAME.CONTENT}
@@ -63,9 +63,9 @@ const CreateFeedbackForm = () => {
               </FormItem>
             )}
           />
-          <div>
-            <Button disabled={!isValid || isSubmitting}>전송</Button>
-          </div>
+          <Button size="lg" disabled={!isValid || isSubmitting}>
+            피드백 보내기
+          </Button>
         </div>
       </form>
     </Form>

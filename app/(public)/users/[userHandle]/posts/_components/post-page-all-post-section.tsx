@@ -71,7 +71,7 @@ const PostPageAllPostSection = ({ user }: PostPageAllPostSectionProps) => {
           {isPostLoading &&
             [...Array(5)].map((_, index) => (
               <div key={index} className="px-4 py-2">
-                <Skeleton className="h-24 w-full" />
+                <Skeleton className="h-20 w-full" />
               </div>
             ))}
           {posts.map((post) => (

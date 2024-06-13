@@ -59,12 +59,12 @@ const ChatInput = ({ postId, parentId }: ChatInputProps) => {
   return (
     <div
       className={cn(
-        'mx-4 mt-4 rounded-full bg-blccu-neutral-100 py-3 pl-7 pr-5',
+        'mx-4 mt-4 flex h-12 rounded-full bg-blccu-neutral-100 pl-7 pr-2',
         'transition-shadow focus-within:outline-none focus-within:ring-1 focus-within:ring-blccu-ring',
       )}
     >
       <Form {...form}>
-        <form onSubmit={onSubmit} className="flex items-center">
+        <form onSubmit={onSubmit} className="my-auto flex w-full items-center">
           <FormField
             control={form.control}
             name={INSERT_COMMENT_NAME.CONTENT}
