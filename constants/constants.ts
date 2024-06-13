@@ -1,6 +1,7 @@
 const QUERY_PARAMS = {
   FUNNEL_STEP: 'funnel-step',
   CATEGORY_ID: 'category-id',
+  SEARCH: 'search',
 } as const;
 
 /* date constants */

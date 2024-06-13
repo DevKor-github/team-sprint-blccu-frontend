@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-
 import { useDebounce } from '@uidotdev/usehooks';
+import { parseAsString, useQueryState } from 'nuqs';
 
 import { UserSearchBar } from '@/app/(public)/search-user/_components/user-search-bar';
 import { UserSearchResult } from '@/app/(public)/search-user/_components/user-search-result';
@@ -11,15 +10,19 @@ import {
   AppBarBack,
   AppBarTitle,
 } from '@/components/ui-unstable/app-bar';
+import { QUERY_PARAMS } from '@/constants/constants';
 
 const SearchUserPage = () => {
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useQueryState(
+    QUERY_PARAMS.SEARCH,
+    parseAsString.withDefault(''),
+  );
   const debouncedSearch = useDebounce(search, 300);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
-    setSearch(value);
+    setSearch(value.length !== 0 ? value : null);
   };
 
   return (
