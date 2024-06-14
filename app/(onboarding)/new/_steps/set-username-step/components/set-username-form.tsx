@@ -30,6 +30,9 @@ type SetUsernameFormProps = PropsWithOnNext;
 
 const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
   const { form, onSubmit } = useSetUsernameForm({
+    defaultValues: {
+      marketingConsent: false,
+    },
     onSubmit: ({
       username,
       handle,
