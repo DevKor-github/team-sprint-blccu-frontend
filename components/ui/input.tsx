@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          'flex w-full rounded-md px-4 py-3 text-sm transition',
+          'flex w-full rounded-md px-4 py-3 text-[16px] transition',
           'border border-blccu-input bg-blccu-input/20',
           'file:border-0 file:bg-transparent file:text-sm file:font-medium',
           'placeholder:text-blccu-neutral-600',

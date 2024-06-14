@@ -96,4 +96,13 @@
   body {
     @apply bg-blccu-background text-blccu-foreground;
   }
+  input[type='text'],
+  input[type='password'],
+  input[type='email'],
+  input[type='tel'],
+  input[type='number'],
+  input[type='search'],
+  input[type='url'] {
+    @apply text-[16px];
+  }
 }

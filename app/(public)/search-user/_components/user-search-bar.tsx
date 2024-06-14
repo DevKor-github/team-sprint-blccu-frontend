@@ -18,6 +18,7 @@ const UserSearchBar = ({ value, handleValueChange }: UserSearchBarProps) => {
       )}
     >
       <input
+        type="search"
         className={cn(
           'w-full bg-transparent',
           'focus:outline-none',

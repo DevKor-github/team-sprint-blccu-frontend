@@ -110,7 +110,7 @@ const EditUserProfileForm = ({
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <input {...field} className="w-full text-center text-sm" />
+                    <input {...field} className="w-full text-center" />
                   </FormControl>
                 </FormItem>
               )}
@@ -122,7 +122,7 @@ const EditUserProfileForm = ({
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <input {...field} className="w-full text-center text-sm" />
+                  <input {...field} className="w-full text-center" />
                 </FormControl>
               </FormItem>
             )}
