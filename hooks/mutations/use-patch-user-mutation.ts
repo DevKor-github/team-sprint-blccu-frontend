@@ -29,8 +29,6 @@ const usePatchUserMutation = ({
       api.users.usersControllerPatchUser(dto),
     onSuccess: (...props) => {
       onSuccess?.(...props);
-
-      toast.success(TOAST_MESSAGES.UPDATE_USER_PROFILE_SUCCESS);
     },
     onError: (...props) => {
       onError?.(...props);

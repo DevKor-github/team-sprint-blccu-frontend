@@ -1,6 +1,7 @@
 import { type UseFormProps } from 'react-hook-form';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { type UserResponseDto } from '@/__generated__/data-contracts';
 import {
@@ -13,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { SheetFooter } from '@/components/ui/sheet';
+import { TOAST_MESSAGES } from '@/constants/messages';
 import { usePatchUserMutation } from '@/hooks/mutations/use-patch-user-mutation';
 import { useUploadBackgroundImageMutation } from '@/hooks/mutations/use-upload-background-image-mutation';
 import { useUploadProfileImageMutation } from '@/hooks/mutations/use-upload-profile-image-mutation';
@@ -39,6 +41,8 @@ const EditUserProfileForm = ({
       queryClient.invalidateQueries({
         queryKey: queries.users.detailByHandle(user.handle).queryKey,
       });
+
+      toast.success(TOAST_MESSAGES.UPDATE_USER_PROFILE_SUCCESS);
     },
   });
 

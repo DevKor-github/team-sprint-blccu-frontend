@@ -4,7 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 
 const setUsernameFormSchema = z.object({
-  username: z.string().min(1).max(20),
+  username: z.string().min(2).max(20),
+  handle: z
+    .string()
+    .min(2)
+    .max(20)
+    .regex(/^[a-zA-Z0-9-_]+$/),
+  description: z.string().max(80).optional(),
   termsOfService: z.literal(true),
   privacyPolicy: z.literal(true),
   marketingConsent: z.boolean(),
@@ -17,13 +23,15 @@ type SetUsernameFormValues = z.infer<typeof setUsernameFormSchema>;
  */
 const SET_USERNAME_FORM_NAME = {
   USERNAME: 'username',
+  HANDLE: 'handle',
+  DESCRIPTION: 'description',
   TERMS_OF_SERVICE: 'termsOfService',
   PRIVACY_POLICY: 'privacyPolicy',
   MARKETING_CONSENT: 'marketingConsent',
 } as const;
 
 type UseSetUsernameFormProps = {
-  defaultValues: UseFormProps<SetUsernameFormValues>['defaultValues'];
+  defaultValues?: UseFormProps<SetUsernameFormValues>['defaultValues'];
   onSubmit: (values: SetUsernameFormValues) => void;
 };
 
@@ -34,6 +42,7 @@ const useSetUsernameForm = ({
   const form = useForm<SetUsernameFormValues>({
     resolver: zodResolver(setUsernameFormSchema),
     defaultValues,
+    mode: 'onChange',
   });
 
   return { form, onSubmit: form.handleSubmit(onSubmit) };

@@ -94,7 +94,10 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', className)}
+      className={cn(
+        // error && 'text-destructive',
+        className,
+      )}
       htmlFor={formItemId}
       {...props}
     />
@@ -167,12 +170,12 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = 'FormMessage';
 
 export {
-  useFormField,
   Form,
-  FormItem,
-  FormLabel,
   FormControl,
   FormDescription,
-  FormMessage,
   FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useFormField,
 };
