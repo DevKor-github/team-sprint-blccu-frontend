@@ -5,10 +5,10 @@ import { redirect } from 'next/navigation';
 import { type PropsWithChildren } from 'react';
 
 import { ROUTES } from '@/constants/routes';
-import { useMeQuery } from '@/hooks/queries/use-me-query';
+import { useAgreementsQuery } from '@/hooks/queries/use-agreements-query';
 
 const SignedInOnlyLayout = ({ children }: PropsWithChildren) => {
-  const { isLoading, isSignedIn } = useMeQuery();
+  const { isLoading, isSignedIn, isInitialUser } = useAgreementsQuery();
 
   if (isLoading) {
     return null;
@@ -16,6 +16,10 @@ const SignedInOnlyLayout = ({ children }: PropsWithChildren) => {
 
   if (!isSignedIn) {
     redirect(ROUTES.SIGN_IN);
+  }
+
+  if (isInitialUser) {
+    redirect(ROUTES.NEW);
   }
 
   return <>{children}</>;
