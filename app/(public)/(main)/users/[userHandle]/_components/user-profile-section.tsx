@@ -38,7 +38,7 @@ const UserProfileSection = ({
 }: UserProfileSectionProps) => {
   const { open } = useModalStore();
 
-  const { me, isSignedIn } = useMeQuery();
+  const { isLoading: isMeLoading, me, isSignedIn } = useMeQuery();
 
   const { data: followerData } = useQuery({
     ...queries.users.follower(kakaoId),
@@ -86,6 +86,10 @@ const UserProfileSection = ({
 
     followMutate(kakaoId);
   };
+
+  if (isMeLoading) {
+    return null;
+  }
 
   return (
     <section className="flex flex-col items-center gap-8 pb-8 pt-14">

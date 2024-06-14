@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 
+import { X } from 'lucide-react';
+
 import BlccuLogoVertical from '@/assets/svg/blccu-logo-vertical.svg';
 import KakaoLogo from '@/assets/svg/kakao-logo.svg';
 import { KakaoButton } from '@/components/ui-unstable/kakao-button';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog';
 import { API_ROUTES } from '@/constants/routes';
 import { useModalStore } from '@/hooks/use-modal-store';
 
@@ -18,6 +20,9 @@ const SignInDialog = () => {
   return (
     <Dialog open={isModalOpen} onOpenChange={close}>
       <DialogContent className="flex w-full flex-col items-center gap-12 rounded-xl">
+        <DialogClose className="absolute right-4 top-4">
+          <X className="h-4 w-4" />
+        </DialogClose>
         <BlccuLogoVertical className="mt-8 w-12" />
         <div className="flex flex-col items-center gap-2">
           <h2 className="text-3xl font-bold">블꾸</h2>
