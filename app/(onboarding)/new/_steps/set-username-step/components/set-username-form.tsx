@@ -84,6 +84,11 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
   const { mutate: agreeMutate } = useMutation({
     mutationFn: (dto: CreateAgreementsInput) =>
       api.users.agreementsControllerAgree(dto),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: queries.users.agreements.queryKey,
+      });
+    },
     onError: () => {
       toast.error(TOAST_MESSAGES.CREATE_AGREEMENT_FAIL);
     },
