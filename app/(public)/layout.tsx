@@ -14,9 +14,9 @@ const PublicLayout = ({ children }: PropsWithChildren) => {
     return null;
   }
 
-  // if (isInitialUser) {
-  //   redirect(ROUTES.NEW);
-  // }
+  if (isInitialUser) {
+    redirect(ROUTES.NEW);
+  }
 
   return <>{children}</>;
 };

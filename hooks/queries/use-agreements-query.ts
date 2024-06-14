@@ -3,7 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import { queries } from '@/queries';
 
 const useAgreementsQuery = () => {
-  const { isLoading, data } = useQuery(queries.users.agreements);
+  const { isLoading, data } = useQuery({
+    ...queries.users.agreements,
+    retry: false,
+  });
 
   const agreements = data?.data;
 
