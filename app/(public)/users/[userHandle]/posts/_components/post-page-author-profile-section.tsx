@@ -77,7 +77,7 @@ const PostPageAuthorProfileSection = ({
   };
 
   return (
-    <section className="mx-4 my-12 flex flex-col items-center gap-6 rounded-2xl py-8 shadow-blccu-secondary sm:flex-row">
+    <section className="mx-4 my-12 flex items-center rounded-2xl px-2 py-8 shadow-blccu-secondary">
       <div className="flex flex-1 flex-col items-center gap-2">
         <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
           <Avatar>
@@ -87,7 +87,7 @@ const PostPageAuthorProfileSection = ({
         </Link>
         <div className="flex flex-col items-center gap-1">
           <p className="font-medium">{username}</p>
-          <p className="line-clamp-1 max-w-48 text-center text-xs text-blccu-neutral-500">
+          <p className="line-clamp-2 max-w-48 text-center text-xs text-blccu-neutral-500">
             {description}
           </p>
         </div>
