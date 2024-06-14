@@ -94,7 +94,7 @@ const UserProfileSection = ({
   return (
     <section className="flex flex-col items-center gap-8 pb-8 pt-14">
       <div
-        className="absolute top-0 h-32 w-full max-w-screen-sm bg-cover bg-center"
+        className="absolute top-0 h-32 w-full max-w-screen-sm bg-blccu-black bg-cover bg-center"
         style={{
           backgroundImage: `url(${background_image})`,
         }}
