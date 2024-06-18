@@ -20,6 +20,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
 
+import './font.css';
 import './placeholder.css';
 
 const Title = () => {

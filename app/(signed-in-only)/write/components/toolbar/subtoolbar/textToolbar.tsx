@@ -57,15 +57,21 @@ const TextToolbar = () => {
                     .setFontFamily('var(--nanum-gothic)')
                     .run()
                 }
+                style={{ fontFamily: 'var(--nanum-gothic)' }}
               >
-                나눔고딕
+                나눔 고딕
               </div>
               <div
                 onClick={() =>
-                  editor.chain().focus().setFontFamily('Ubuntu').run()
+                  editor
+                    .chain()
+                    .focus()
+                    .setFontFamily('var(--nanum-myeongjo)')
+                    .run()
                 }
+                style={{ fontFamily: 'var(--nanum-myeongjo)' }}
               >
-                Ubuntu
+                나눔 명조
               </div>
               <div
                 onClick={() =>

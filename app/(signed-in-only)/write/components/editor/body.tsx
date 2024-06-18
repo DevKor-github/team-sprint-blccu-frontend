@@ -29,6 +29,7 @@ import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
 import { FontSize } from '@/app/(signed-in-only)/write/utils/setFontSize';
 
+import './font.css';
 import './placeholder.css';
 
 const Body = () => {

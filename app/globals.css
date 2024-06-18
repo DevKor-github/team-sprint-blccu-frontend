@@ -1,12 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-
-html {
-  --nanum-gothic: 'Nanum Gothic', sans-serif;
-  --set-nanum-gothic: var(--nanum-gothic);
-}
 
 @layer base {
   /* blccu design token (color) */
