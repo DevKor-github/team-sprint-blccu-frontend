@@ -46,8 +46,12 @@ import { api } from '@/lib/api';
 import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
+import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
+
 const PublishPostForm = () => {
   const { isSignedIn, me } = useMeQuery();
+
+  const reprImageSrc = useReprImageStore((state: any) => state.reprImageSrc);
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.kakaoId),
@@ -85,7 +89,7 @@ const PublishPostForm = () => {
 
   const { form, onSubmit } = usePublishPostForm({
     defaultValues: {
-      title: stripHtml(titleContents), // FIXME: html element까지 들어가는 문제
+      title: stripHtml(titleContents),
       allow_comment: PUBLISH_POST_ALLOW_COMMENT_TYPE.TRUE,
       scope: PUBLISH_POST_SCOPE_TYPE.PUBLIC,
     },
@@ -110,7 +114,7 @@ const PublishPostForm = () => {
         title_html: titleContents,
         content: bodyContents,
         image_url: '', // TODO: capture upload 이미지
-        main_image_url: '', // TODO: 대표 이미지 로직 제작 이후 채워넣기
+        main_image_url: reprImageSrc,
       });
     },
   });

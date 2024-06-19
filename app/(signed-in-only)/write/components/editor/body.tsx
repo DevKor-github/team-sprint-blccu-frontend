@@ -40,20 +40,30 @@ const Body = () => {
   );
 
   const CustomImageComponent = (props: any) => {
-    const reprImage = useReprImageStore((state: any) => state.reprImageId);
-    const setReprImage = useReprImageStore(
+    const reprImageId = useReprImageStore((state: any) => state.reprImageId);
+    const setReprImageId = useReprImageStore(
       (state: any) => state.setReprImageId,
+    );
+
+    const setReprImageSrc = useReprImageStore(
+      (state: any) => state.setReprImageSrc,
     );
 
     const { src, alt, id } = props.node.attrs;
 
-    const buttonStyle = `${reprImage === id ? 'bg-[#FFFFFF] text-[#1A1A1A]' : 'bg-[#1A1A1A] text-[#FFFFFF]'} absolute top-2 left-2 p-1`;
+    const buttonStyle = `${reprImageId === id ? 'bg-[#FFFFFF] text-[#1A1A1A]' : 'bg-[#1A1A1A] text-[#FFFFFF]'} absolute top-2 left-2 p-1`;
 
     return (
       <NodeViewWrapper className="grid place-items-center">
         <div className="relative">
           <img src={src} alt={alt} id={id} />
-          <button onClick={() => setReprImage(id)} className={buttonStyle}>
+          <button
+            onClick={() => {
+              setReprImageId(id);
+              setReprImageSrc(src);
+            }}
+            className={buttonStyle}
+          >
             대표 이미지
           </button>
         </div>
