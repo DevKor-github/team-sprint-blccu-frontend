@@ -1,5 +1,7 @@
 'use client';
 
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 import { AlignLeft, ArrowDownToLine, Image, Type } from 'lucide-react';
 
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
@@ -27,20 +29,26 @@ const EditorToolbar = () => {
     (state: any) => state.increaseImageId,
   );
 
-  const handleImageButtonClick = () => {
-    setFocused('image');
-    document.getElementById('imageInput')?.click();
+  const uploadImage = async (file: any) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(
+      'https://api.blccu.com/posts/image',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+
+    return response.data.image_url;
   };
 
-  const handleImageInputChange = async (e: any) => {
-    const url = 'https://picsum.photos/200/300';
-    /*
-        const files = e.target.files
-        if (files === null) return ;
-        const file = files[0];
-        // 이미지 서버에 업로드 후 url 받아오는 코드 작성
-        */
-    if (url) {
+  const mutation = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: async (url) => {
       await selectedEditor
         ?.chain()
         .focus()
@@ -48,7 +56,23 @@ const EditorToolbar = () => {
         .run();
       selectedEditor.commands.createParagraphNear();
       increaseImageId();
+    },
+    onError: () => {
+      console.log('error');
+    },
+  });
+
+  const handleImageButtonClick = () => {
+    setFocused('image');
+    document.getElementById('imageInput')?.click();
+  };
+
+  const handleImageInputChange = (event: any) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
     }
+    mutation.mutate(file);
   };
 
   return (
