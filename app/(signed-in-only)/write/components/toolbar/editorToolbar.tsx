@@ -31,7 +31,7 @@ const EditorToolbar = () => {
 
   const uploadImage = async (file: any) => {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, file.name);
 
     const response = await axios.post(
       'https://api.blccu.com/posts/image',
@@ -39,6 +39,7 @@ const EditorToolbar = () => {
       {
         headers: {
           'Content-Type': 'multipart/form-data',
+          accept: 'application/json',
         },
       },
     );
