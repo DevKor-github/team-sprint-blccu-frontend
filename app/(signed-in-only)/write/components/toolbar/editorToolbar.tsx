@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { AlignLeft, ArrowDownToLine, Image, Type } from 'lucide-react';
 
+import { type ImageUploadDto } from '@/__generated__/data-contracts';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import useCurrentImageIdStore from '@/app/(signed-in-only)/write/store/imageId';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
@@ -29,9 +30,7 @@ const EditorToolbar = () => {
     (state: any) => state.increaseImageId,
   );
 
-  const uploadImage = async (file: any) => {
-    const formData = new FormData();
-    formData.append('file', file);
+  const uploadImage = async (file: ImageUploadDto) => {
     return api.posts.postsControllerCreatePrivateSticker(file);
   };
 
@@ -61,7 +60,7 @@ const EditorToolbar = () => {
     if (!file) {
       return;
     }
-    mutation.mutate(file);
+    mutation.mutate({ file: file });
   };
 
   return (
