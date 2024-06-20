@@ -12,6 +12,7 @@ import {
   PUBLISH_POST_SCOPE_TYPE,
   usePublishPostForm,
 } from '@/app/(signed-in-only)/write/hooks/use-publish-post-form';
+import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
 import { capture } from '@/app/(signed-in-only)/write/utils/capture';
@@ -51,6 +52,9 @@ const PublishPostForm = () => {
   const { isSignedIn, me } = useMeQuery();
 
   const reprImageSrc = useReprImageStore((state: any) => state.reprImageSrc);
+  const setCaptureMode = useCaptureModeStore(
+    (state: any) => state.setCaptureMode,
+  );
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.kakaoId),
@@ -125,7 +129,12 @@ const PublishPostForm = () => {
       <form onSubmit={onSubmit}>
         <AppBar className="justify-between border-none bg-transparent">
           <DialogClose>
-            <AppBarBack onClick={noop} />
+            <AppBarBack
+              onClick={() => {
+                noop;
+                setCaptureMode(false);
+              }}
+            />
           </DialogClose>
           <AppBarTitle align="center">글 게시</AppBarTitle>
           <Button
