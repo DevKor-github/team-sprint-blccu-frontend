@@ -24,6 +24,7 @@ import {
   useEditor,
 } from '@tiptap/react';
 
+import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
@@ -49,23 +50,27 @@ const Body = () => {
       (state: any) => state.setReprImageSrc,
     );
 
+    const captureMode = useCaptureModeStore((state: any) => state.captureMode);
+
     const { src, alt, id } = props.node.attrs;
 
-    const buttonStyle = `${reprImageId === id ? 'bg-[#FFFFFF] text-[#1A1A1A]' : 'bg-[#1A1A1A] text-[#FFFFFF]'} absolute top-2 left-2 p-1`;
+    const buttonStyle = `${reprImageId === id ? 'bg-[#1A1A1A] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#1A1A1A]'} absolute top-2 left-2 p-1`;
 
     return (
       <NodeViewWrapper className="grid place-items-center">
         <div className="relative">
           <img src={src} alt={alt} id={id} />
-          <button
-            onClick={() => {
-              setReprImageId(id);
-              setReprImageSrc(src);
-            }}
-            className={buttonStyle}
-          >
-            대표 이미지
-          </button>
+          {captureMode || (
+            <button
+              onClick={() => {
+                setReprImageId(id);
+                setReprImageSrc(src);
+              }}
+              className={buttonStyle}
+            >
+              대표 이미지
+            </button>
+          )}
         </div>
       </NodeViewWrapper>
     );
