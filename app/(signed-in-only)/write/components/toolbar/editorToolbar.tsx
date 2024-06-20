@@ -31,7 +31,7 @@ const EditorToolbar = () => {
 
   const uploadImage = async (file: any) => {
     const formData = new FormData();
-    formData.append('file', file, file.name);
+    formData.append('file', file);
     return api.posts.postsControllerCreatePrivateSticker(file);
   };
 
