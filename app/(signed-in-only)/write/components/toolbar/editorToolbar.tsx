@@ -1,7 +1,6 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { AlignLeft, ArrowDownToLine, Image, Type } from 'lucide-react';
 
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
@@ -12,6 +11,7 @@ import {
   EditorBottomNavBarItem,
   EditorBottomNavBarItemButton,
 } from '@/components/ui-unstable/editor-bottom-nav-bar';
+import { api } from '@/lib/api';
 
 const EditorToolbar = () => {
   const focused = useFocusedStore((state: any) => state.focused);
@@ -32,28 +32,16 @@ const EditorToolbar = () => {
   const uploadImage = async (file: any) => {
     const formData = new FormData();
     formData.append('file', file, file.name);
-
-    const response = await axios.post(
-      'https://api.blccu.com/posts/image',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          accept: 'application/json',
-        },
-      },
-    );
-
-    return response.data.image_url;
+    return api.posts.postsControllerCreatePrivateSticker(file);
   };
 
   const mutation = useMutation({
     mutationFn: uploadImage,
-    onSuccess: async (url) => {
+    onSuccess: async ({ data }) => {
       await selectedEditor
         ?.chain()
         .focus()
-        .setImage({ src: url, alt: '이미지', id: currentImageId })
+        .setImage({ src: data.image_url, alt: '이미지', id: currentImageId })
         .run();
       selectedEditor.commands.createParagraphNear();
       increaseImageId();
