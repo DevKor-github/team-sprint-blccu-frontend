@@ -31,7 +31,7 @@ const EditorToolbar = () => {
   );
 
   const uploadImage = async (file: ImageUploadDto) => {
-    return api.posts.postsControllerCreatePrivateSticker(file);
+    return await api.posts.postsControllerCreatePrivateSticker(file);
   };
 
   const mutation = useMutation({
@@ -55,8 +55,8 @@ const EditorToolbar = () => {
     document.getElementById('imageInput')?.click();
   };
 
-  const handleImageInputChange = (event: any) => {
-    const file = event.target.files[0];
+  const handleImageInputChange = async (event: any) => {
+    const file = await event.target.files[0];
     if (!file) {
       return;
     }
@@ -77,7 +77,7 @@ const EditorToolbar = () => {
             type="file"
             accept="image/*"
             className="hidden"
-            onClick={handleImageInputChange}
+            onChange={handleImageInputChange}
           />
         </EditorBottomNavBarItemButton>
       </EditorBottomNavBarItem>
