@@ -9,23 +9,13 @@ import {
 import { Button } from '@/components/ui/button';
 
 const Top = () => {
-  const setCaptureMode = useCaptureModeStore(
-    (state: any) => state.setCaptureMode,
-  );
-
   return (
     <AppBar className="justify-between border-none bg-transparent">
       <AppBarBack />
       <AppBarTitle align="center">
         <ModeSelector />
       </AppBarTitle>
-      <PublishPostDialog
-        trigger={
-          <Button onClick={setCaptureMode(true)} variant="ghost">
-            완료
-          </Button>
-        }
-      />
+      <PublishPostDialog trigger={<Button variant="ghost">완료</Button>} />
     </AppBar>
   );
 };

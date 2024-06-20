@@ -7,7 +7,8 @@ type CaptureModeState = {
 
 const useCaptureModeStore = create<CaptureModeState>((set) => ({
   captureMode: false,
-  setCaptureMode: (captureMode: boolean) => set({ captureMode: captureMode }),
+  setCaptureMode: (newCaptureMode: boolean) =>
+    set({ captureMode: newCaptureMode }),
 }));
 
 export default useCaptureModeStore;

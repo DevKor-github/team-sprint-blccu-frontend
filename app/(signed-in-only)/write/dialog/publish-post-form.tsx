@@ -101,6 +101,8 @@ const PublishPostForm = () => {
         return;
       }
 
+      await setCaptureMode(true);
+
       const dataUrl = await capture(mainContainerElement);
 
       const link = document.createElement('a');
