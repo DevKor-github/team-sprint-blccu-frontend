@@ -1,8 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Nanum+Myeongjo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Gowun+Dodum&family=Grandiflora+One&family=Hahmlet:wght@100..900&family=Nanum+Gothic&family=Nanum+Myeongjo&family=Noto+Sans+KR:wght@100..900&family=Single+Day&family=Sunflower:wght@300&display=swap');
 
 html {
     --nanum-gothic: "Nanum Gothic", sans-serif;
     --nanum-myeongjo: "Nanum Myeongjo", serif;
+    --hahmlet: "Hahmlet", sans-serif;
+    --sunflower: "Sunflower", sans-serif;
+    --gowun-batang: "Gowun Batang", serif;
+    --single-day: "Single Day", cursive;
+    --noto-sans-kr: "Noto Sans KR", sans-serif;
+    --grandiflora-one: "Grandiflora One", cursive;
+    --gowun-dodum: "Gowun Dodum", sans-serif;
 }
 
 span {

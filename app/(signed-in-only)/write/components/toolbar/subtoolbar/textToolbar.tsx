@@ -39,16 +39,8 @@ const TextToolbar = () => {
         >
           <Ligature className="h-6 w-6" />
           <p className="text-xs">글씨체</p>
-          <div className="fixed top-[-100px]">
+          <div className="fixed top-[-200px]">
             <div className="rounded-xl bg-white shadow-lg">
-              <div
-                onClick={() =>
-                  editor.chain().focus().setFontFamily('Inter').run()
-                }
-              >
-                Inter
-              </div>
-              {/* 나머지 폰트 추가 및 setFontFamily 버전업 필요 */}
               <div
                 onClick={() =>
                   editor
@@ -75,17 +67,79 @@ const TextToolbar = () => {
               </div>
               <div
                 onClick={() =>
-                  editor.chain().focus().setFontFamily('Open Sans').run()
+                  editor.chain().focus().setFontFamily('var(--hahmlet)').run()
                 }
+                style={{ fontFamily: 'var(--hahmlet)' }}
               >
-                Open Sans
+                함렛
               </div>
               <div
                 onClick={() =>
-                  editor.chain().focus().setFontFamily('Montserrat').run()
+                  editor.chain().focus().setFontFamily('var(--sunflower)').run()
                 }
+                style={{ fontFamily: 'var(--sunflower)' }}
               >
-                Montserrat
+                해바라기
+              </div>
+              <div
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .setFontFamily('var(--gowun-batang)')
+                    .run()
+                }
+                style={{ fontFamily: 'var(--gowun-batang)' }}
+              >
+                고운 바탕
+              </div>
+              <div
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .setFontFamily('var(--single-day)')
+                    .run()
+                }
+                style={{ fontFamily: 'var(--single-day)' }}
+              >
+                싱글데이
+              </div>
+              <div
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .setFontFamily('var(--noto-sans-kr)')
+                    .run()
+                }
+                style={{ fontFamily: 'var(--noto-sans-kr)' }}
+              >
+                Noto Sans KR
+              </div>
+              <div
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .setFontFamily('var(--grandiflora-one)')
+                    .run()
+                }
+                style={{ fontFamily: 'var(--grandiflora-one)' }}
+              >
+                능소화
+              </div>
+              <div
+                onClick={() =>
+                  editor
+                    .chain()
+                    .focus()
+                    .setFontFamily('var(--gowun-dodum)')
+                    .run()
+                }
+                style={{ fontFamily: 'var(--gowun-dodum)' }}
+              >
+                고운 돋움
               </div>
             </div>
           </div>
@@ -97,7 +151,7 @@ const TextToolbar = () => {
         >
           <Type className="h-6 w-6" />
           <p className="text-xs">크기</p>
-          <div className="fixed top-[-100px]">
+          <div className="fixed top-[-200px]">
             <div className="rounded-xl bg-white shadow-lg">
               <div
                 onClick={() => editor.chain().focus().setFontSize('12').run()}
@@ -105,24 +159,29 @@ const TextToolbar = () => {
                 12px
               </div>
               <div
-                onClick={() => editor.chain().focus().setFontSize('14').run()}
-              >
-                14px
-              </div>
-              <div
                 onClick={() => editor.chain().focus().setFontSize('16').run()}
               >
                 16px
               </div>
               <div
-                onClick={() => editor.chain().focus().setFontSize('18').run()}
-              >
-                18px
-              </div>
-              <div
                 onClick={() => editor.chain().focus().setFontSize('20').run()}
               >
                 20px
+              </div>
+              <div
+                onClick={() => editor.chain().focus().setFontSize('24').run()}
+              >
+                24px
+              </div>
+              <div
+                onClick={() => editor.chain().focus().setFontSize('28').run()}
+              >
+                28px
+              </div>
+              <div
+                onClick={() => editor.chain().focus().setFontSize('32').run()}
+              >
+                32px
               </div>
             </div>
           </div>
