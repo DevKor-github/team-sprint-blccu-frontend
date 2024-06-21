@@ -134,15 +134,10 @@ const PublishPostForm = () => {
         return;
       }
       await setCaptureMode(true);
-      const dataUrl = await capture(mainContainerElement);
 
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'capture.png';
-      link.click();
+      const dataUrl = await capture(mainContainerElement);
       const file = base64ToFile(dataUrl, 'capture.png');
       const image_url = await imgUrlMutation.mutateAsync({ file: file });
-      console.log(image_url); // TODO: dataUrl -> File -> 서버에 업로드한 뒤 url을 받아온 뒤 image_url에 넣기
 
       mutate({
         ...values,
@@ -183,7 +178,8 @@ const PublishPostForm = () => {
         <div className="flex flex-col gap-4 pt-16">
           <section className="w-full px-4">
             <div className="flex gap-4 rounded-3xl bg-blccu-white p-4 shadow-blccu-secondary">
-              <div className="h-24 w-24 rounded-2xl bg-blccu-neutral-400" />
+              {/* TODO: 대표 이미지 미리보기 */}
+              {/* <div className="h-24 w-24 rounded-2xl bg-blccu-neutral-400" /> */}
               <div className="flex flex-1 flex-col gap-2">
                 <FormField
                   control={form.control}
