@@ -78,9 +78,9 @@ const AllPostSection = () => {
                 key={post.id}
               >
                 <Image
-                  src={post.main_image_url}
+                  src={post.image_url}
                   alt="photo"
-                  className="rounded-md"
+                  className="rounded-md shadow-sm transition-shadow hover:shadow-blccu-secondary"
                   width={300}
                   height={300}
                   loading="lazy"
