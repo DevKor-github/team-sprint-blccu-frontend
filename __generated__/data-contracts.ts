@@ -846,6 +846,8 @@ export interface FetchNotiResponse {
    * @format date-time
    */
   date_deleted: string;
+  /** 알림이 발생한 게시글 id(nullable) */
+  postId: number;
   user: PickTypeClass;
 }
 

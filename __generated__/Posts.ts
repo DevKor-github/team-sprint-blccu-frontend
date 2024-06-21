@@ -290,6 +290,7 @@ export class Posts<
    * @name PostsControllerFetchFriendsCursor
    * @summary [cursor]친구 게시글 조회 API
    * @request GET:/posts/cursor/friends
+   * @secure
    */
   postsControllerFetchFriendsCursor = (
     query: PostsControllerFetchFriendsCursorParams,
@@ -299,6 +300,7 @@ export class Posts<
       path: `/posts/cursor/friends`,
       method: 'GET',
       query: query,
+      secure: true,
       ...params,
     });
   /**
