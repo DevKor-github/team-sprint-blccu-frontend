@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import StickerPost from '@/app/(signed-in-only)/write/components/stickerPost';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
@@ -67,7 +69,7 @@ const StickerBottomSheet = () => {
     const id = Number((e.target as HTMLElement).getAttribute('id'));
     const stickerProps = {
       ...dummyStickerData[id - 1],
-      clientId: Math.floor(Math.random() * 1000000).toString(),
+      clientId: uuidv4(),
     };
     addSticker(
       // 스티커 정보 추가

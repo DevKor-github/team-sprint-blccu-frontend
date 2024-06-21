@@ -3,8 +3,12 @@ import Image from 'next/image';
 import { Scrollbar } from '@radix-ui/react-scroll-area';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { v4 as uuidv4 } from 'uuid';
 
-import { type ImageUploadDto } from '@/__generated__/data-contracts';
+import {
+  type ImageUploadDto,
+  type UpdateStickerInput,
+} from '@/__generated__/data-contracts';
 import { StickerCategoryContent } from '@/app/(signed-in-only)/write/components/sheet/sticker-category-content';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 import { FileUploader } from '@/components/ui-unstable/file-uploader';
@@ -16,6 +20,11 @@ import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
+type PatchStickerProps = {
+  id: number;
+  dto: UpdateStickerInput;
+};
+
 const StickerContent = () => {
   const { data: publicStickerCategoriesData } = useQuery(
     queries.stickers.categories,
@@ -25,12 +34,28 @@ const StickerContent = () => {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: (dto: ImageUploadDto) =>
-      api.stickers.stickersControllerCreatePrivateSticker(dto),
+  const { mutate: patchStickerMutate } = useMutation({
+    mutationFn: ({ id, dto }: PatchStickerProps) =>
+      api.stickers.stickersControllerPatchSticker(id, dto),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queries.stickers.private.queryKey,
+      });
+    },
+
+    onError: () => {
+      toast.error(TOAST_MESSAGES.PATCH_STICKER_FAIL);
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: (dto: ImageUploadDto) =>
+      api.stickers.stickersControllerCreatePrivateSticker(dto),
+    onSuccess: ({ data }) => {
+      // FIXME: 원 기획과 다릅니다. 자동 재사용 설정을 하지 않습니다.
+      patchStickerMutate({
+        id: data.id,
+        dto: { isReusable: true },
       });
     },
     onError: () => {
@@ -68,31 +93,27 @@ const StickerContent = () => {
       <TabsContent value="my-sticker">
         <ScrollArea className="h-60">
           <div className="flex flex-wrap justify-between gap-1">
-            {privateStickersData?.data.map(
-              (
-                sticker: any, // FIXME: any?
-              ) => (
-                <SheetClose key={sticker.id}>
-                  <Image
-                    className="h-28 w-28"
-                    src={sticker.image_url}
-                    width={500}
-                    height={500}
-                    alt="스티커"
-                    onClick={() =>
-                      addSticker({
-                        clientId: sticker.id,
-                        src: sticker.sticker.image_url,
-                        x: 100,
-                        y: 100,
-                        scale: 1,
-                        angle: 0,
-                      })
-                    }
-                  />
-                </SheetClose>
-              ),
-            )}
+            {privateStickersData?.data.map((sticker) => (
+              <SheetClose key={sticker.id}>
+                <Image
+                  className="h-28 w-28"
+                  src={sticker.image_url}
+                  width={500}
+                  height={500}
+                  alt="스티커"
+                  onClick={() =>
+                    addSticker({
+                      clientId: uuidv4(),
+                      src: sticker.image_url,
+                      x: 100,
+                      y: 100,
+                      scale: 1,
+                      angle: 0,
+                    })
+                  }
+                />
+              </SheetClose>
+            ))}
           </div>
         </ScrollArea>
       </TabsContent>

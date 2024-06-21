@@ -39,6 +39,7 @@ const TOAST_MESSAGES = {
   NOTIFICATION_CONNECT_FAIL: '알림 서버와 연결이 끊겼습니다.',
   WELCOME: '블꾸에 오신 것을 환영합니다 🎉',
   UPLOAD_STICKER_FAIL: '스티커 업로드에 실패했습니다.',
+  PATCH_STICKER_FAIL: '스티커 설정 변경에 실패했습니다.',
 } as const;
 
 export { TOAST_MESSAGES };

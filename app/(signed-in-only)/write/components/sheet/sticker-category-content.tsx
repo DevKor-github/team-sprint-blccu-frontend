@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { useQuery } from '@tanstack/react-query';
+import { v4 as uuidv4 } from 'uuid';
 
 import { type StickerCategory } from '@/__generated__/data-contracts';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
@@ -26,27 +27,31 @@ const StickerCategoryContent = ({
     <TabsContent value={String(id)}>
       <ScrollArea className="h-60">
         <div className="flex flex-wrap justify-between gap-1">
-          {stickers.map((sticker: any) => (
-            <SheetClose key={sticker.stickerId}>
-              <Image
-                className="h-28 w-28"
-                src={sticker.sticker.image_url}
-                width={500}
-                height={500}
-                alt="스티커"
-                onClick={() =>
-                  addSticker({
-                    clientId: sticker.stickerId,
-                    src: sticker.sticker.image_url,
-                    x: 100,
-                    y: 100,
-                    scale: 1,
-                    angle: 0,
-                  })
-                }
-              />
-            </SheetClose>
-          ))}
+          {stickers.map(
+            (
+              sticker: any, // FIXME: any ?
+            ) => (
+              <SheetClose key={sticker.stickerId}>
+                <Image
+                  className="h-28 w-28"
+                  src={sticker.sticker.image_url}
+                  width={500}
+                  height={500}
+                  alt="스티커"
+                  onClick={() =>
+                    addSticker({
+                      clientId: uuidv4(),
+                      src: sticker.sticker.image_url,
+                      x: 100,
+                      y: 100,
+                      scale: 1,
+                      angle: 0,
+                    })
+                  }
+                />
+              </SheetClose>
+            ),
+          )}
         </div>
       </ScrollArea>
     </TabsContent>
