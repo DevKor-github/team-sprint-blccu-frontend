@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import { Scrollbar } from '@radix-ui/react-scroll-area';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { X } from 'lucide-react';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,6 +14,7 @@ import { StickerCategoryContent } from '@/app/(signed-in-only)/write/components/
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 import { FileUploader } from '@/components/ui-unstable/file-uploader';
 import { Button } from '@/components/ui/button';
+import { IconButton } from '@/components/ui/icon-button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SheetClose } from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -63,6 +65,19 @@ const StickerContent = () => {
     },
   });
 
+  const { mutate: deleteStickerMutate } = useMutation({
+    mutationFn: (id: number) =>
+      api.stickers.stickersControllerDeleteSticker(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queries.stickers.private.queryKey,
+      });
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.DELETE_STICKER_FAIL);
+    },
+  });
+
   const { addSticker } = useStickersStore((state) => state);
 
   const categories = publicStickerCategoriesData?.data ?? [];
@@ -94,25 +109,33 @@ const StickerContent = () => {
         <ScrollArea className="h-60">
           <div className="flex flex-wrap justify-between gap-1">
             {privateStickersData?.data.map((sticker) => (
-              <SheetClose key={sticker.id}>
-                <Image
-                  className="h-28 w-28"
-                  src={sticker.image_url}
-                  width={500}
-                  height={500}
-                  alt="스티커"
-                  onClick={() =>
-                    addSticker({
-                      clientId: uuidv4(),
-                      src: sticker.image_url,
-                      x: 100,
-                      y: 100,
-                      scale: 1,
-                      angle: 0,
-                    })
-                  }
-                />
-              </SheetClose>
+              <div key={sticker.id} className="relative">
+                <IconButton
+                  className="absolute -right-2 top-0 z-50 rounded-md bg-blccu-neutral-100"
+                  onClick={() => deleteStickerMutate(sticker.id)}
+                >
+                  <X className="h-4 w-4" />
+                </IconButton>
+                <SheetClose asChild>
+                  <Image
+                    className="h-28 w-28"
+                    src={sticker.image_url}
+                    width={500}
+                    height={500}
+                    alt="스티커"
+                    onClick={() =>
+                      addSticker({
+                        clientId: uuidv4(),
+                        src: sticker.image_url,
+                        x: 100,
+                        y: 100,
+                        scale: 1,
+                        angle: 0,
+                      })
+                    }
+                  />
+                </SheetClose>
+              </div>
             ))}
           </div>
         </ScrollArea>
