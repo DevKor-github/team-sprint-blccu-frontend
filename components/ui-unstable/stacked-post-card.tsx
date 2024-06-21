@@ -14,7 +14,7 @@ type StackedPostCardProps = {
 };
 
 const StackedPostCard = ({
-  post: { user, main_image_url, content, date_created, title },
+  post: { user, main_image_url, main_description, date_created, title },
 }: StackedPostCardProps) => {
   const formattedDate = format(date_created, 'yyyy. MM. dd.');
 
@@ -24,7 +24,7 @@ const StackedPostCard = ({
         <div className="flex flex-col gap-1">
           <h3 className="line-clamp-1 text-sm font-medium">{title}</h3>
           <p className="line-clamp-2 text-xs text-blccu-neutral-500">
-            {content}
+            {main_description}
           </p>
         </div>
         <div className="flex items-center gap-2">
