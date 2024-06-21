@@ -124,10 +124,12 @@ const PublishPostForm = () => {
   const { form, onSubmit } = usePublishPostForm({
     defaultValues: {
       title: stripHtml(titleContents),
+      main_description: stripHtml(bodyContents),
       allow_comment: PUBLISH_POST_ALLOW_COMMENT_TYPE.TRUE,
       scope: PUBLISH_POST_SCOPE_TYPE.PUBLIC,
     },
     onSubmit: async (values) => {
+      values.main_description = stripHtml(bodyContents);
       if (mainContainerElement === null) {
         return;
       }

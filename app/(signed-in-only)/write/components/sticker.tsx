@@ -5,6 +5,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useModeStore from '@/app/(signed-in-only)/write/store/mode';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 
+import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
+
 interface StickerProps {
   clientId: string;
 }
@@ -28,6 +30,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
 
   const focused = useStickersStore((state: any) => state.focused);
   const setFocused = useStickersStore((state: any) => state.setFocused);
+  const captureMode = useCaptureModeStore((state: any) => state.captureMode);
 
   const mode = useModeStore((state: any) => state.mode);
 
@@ -212,7 +215,8 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           transform: `rotate(${transform.angle}deg) scale(${transform.scale})`,
           transformOrigin: 'center',
           transition: 'transform 0.1s ease',
-          border: focused === clientId ? '2px solid black' : 'none',
+          border:
+            focused === clientId && !captureMode ? '2px solid black' : 'none',
           pointerEvents: freeze(),
         }}
         className={zIndex()}
@@ -226,7 +230,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           className="h-full w-full object-contain"
           crossOrigin="anonymous"
         />
-        {focused === clientId && (
+        {focused === clientId && !captureMode ? (
           <div
             id="resize-control"
             style={{
@@ -238,7 +242,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
             onMouseDown={handleResizeMouseDown}
             onTouchStart={handleResizeTouchStart}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );
