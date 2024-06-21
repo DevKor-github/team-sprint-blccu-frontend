@@ -1,25 +1,22 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
-
-const backgroundImage =
-  'https://images.unsplash.com/photo-1619455061893-0e650d1baab9';
+import banner_type3 from '@/public/images/banner_type3.png';
 
 const BannerNotSignedIn = () => {
   return (
-    <div
-      className="mt-4 flex h-52 flex-col items-center justify-center gap-4 bg-cover bg-center p-4"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-      }}
-    >
-      <p className="text-center text-xl font-bold text-blccu-white">
-        블로그도 이제
-        <br />
-        <span className="text-3xl">'블꾸'</span> 하세요!
-      </p>
-      <Button size="lg-wide" radius="full" asChild>
+    <div className="relative mt-4 flex h-52 flex-col items-center justify-end gap-4 p-4">
+      <Image
+        src={banner_type3}
+        alt="Banner Background"
+        layout="fill"
+        objectFit="cover"
+        quality={100}
+        className="z-0"
+      />
+      <Button size="lg-wide" radius="full" asChild className="relative z-10">
         <Link href={ROUTES.SIGN_IN}>지금 시작하기</Link>
       </Button>
     </div>
