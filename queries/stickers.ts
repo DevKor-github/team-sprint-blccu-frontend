@@ -12,6 +12,10 @@ const stickers = createQueryKeys('stickers', {
     queryFn: () =>
       api.stickers.stickerCategoriesControllerFetchStickersByCategoryName(id),
   }),
+  private: {
+    queryKey: null,
+    queryFn: () => api.stickers.stickersControllerFetchPrivateStickers(),
+  },
 });
 
 export { stickers };

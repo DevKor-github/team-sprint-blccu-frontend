@@ -29,7 +29,7 @@ const StickerCategoryContent = ({
           {stickers.map((sticker: any) => (
             <SheetClose key={sticker.stickerId}>
               <Image
-                className="h-32 w-32"
+                className="h-28 w-28"
                 src={sticker.sticker.image_url}
                 width={500}
                 height={500}
