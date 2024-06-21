@@ -26,7 +26,7 @@ const MainContent = () => {
       <Top />
       <div
         ref={mainContentRef}
-        className="min-h-dvh bg-contain bg-repeat-y"
+        className="min-h-dvh bg-cover bg-repeat-y"
         style={{
           backgroundImage:
             background !== null ? `url(${background.image_url})` : 'none',
