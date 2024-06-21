@@ -5,3 +5,8 @@
   height: 0;
   pointer-events: none;
 }
+
+/* editor focus outline-none */
+.ProseMirror:focus {
+  outline: none;
+}
