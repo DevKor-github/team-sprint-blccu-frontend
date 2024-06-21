@@ -15,9 +15,9 @@ const StickerContent = () => {
 
   return (
     <Tabs defaultValue="my-sticker">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between">
         <TabsList className="mb-4">
-          <ScrollArea className="w-[200px] whitespace-nowrap">
+          <ScrollArea className="max-w-[calc(100vw-48px)] whitespace-nowrap">
             <TabsTrigger value="my-sticker">내 스티커</TabsTrigger>
             {categories.map((category) => (
               <TabsTrigger key={category.id} value={String(category.id)}>

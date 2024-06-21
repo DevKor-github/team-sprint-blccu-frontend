@@ -25,11 +25,11 @@ const StickerCategoryContent = ({
   return (
     <TabsContent value={String(id)}>
       <ScrollArea className="h-60">
-        <div className="flex flex-wrap justify-between gap-2">
+        <div className="flex flex-wrap justify-between gap-1">
           {stickers.map((sticker: any) => (
             <SheetClose key={sticker.stickerId}>
               <Image
-                className="h-20 w-20"
+                className="h-32 w-32"
                 src={sticker.sticker.image_url}
                 width={500}
                 height={500}
