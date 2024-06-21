@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type PublishPostInput } from '@/__generated__/data-contracts';
+import {
+  type ImageUploadDto,
+  type PublishPostInput,
+} from '@/__generated__/data-contracts';
 import {
   PUBLISH_POST_ALLOW_COMMENT_TYPE,
   PUBLISH_POST_NAME,
@@ -71,6 +74,20 @@ const PublishPostForm = () => {
     return doc.body.textContent || '';
   };
 
+  const base64ToFile = (data: string, fileName: string) => {
+    const arr = data.split(',');
+    const mime = arr[0]?.match(/:(.*?);/)?.[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], fileName, { type: mime });
+  };
+
   const router = useRouter();
 
   const { mutate } = useMutation({
@@ -90,6 +107,20 @@ const PublishPostForm = () => {
     },
   });
 
+  const imgUrlMutation = useMutation({
+    mutationFn: async (file: ImageUploadDto) => {
+      const response =
+        await api.posts.postsControllerCreatePrivateSticker(file);
+      return response.data.image_url;
+    },
+    onSuccess: async (image_url) => {
+      console.log(image_url);
+    },
+    onError: () => {
+      toast.error('이미지 업로드에 실패했습니다.');
+    },
+  });
+
   const { form, onSubmit } = usePublishPostForm({
     defaultValues: {
       title: stripHtml(titleContents),
@@ -100,16 +131,16 @@ const PublishPostForm = () => {
       if (mainContainerElement === null) {
         return;
       }
-
       await setCaptureMode(true);
-
       const dataUrl = await capture(mainContainerElement);
 
       const link = document.createElement('a');
       link.href = dataUrl;
       link.download = 'capture.png';
       link.click();
-      console.log(dataUrl); // TODO: dataUrl -> File -> 서버에 업로드한 뒤 url을 받아온 뒤 image_url에 넣기
+      const file = base64ToFile(dataUrl, 'capture.png');
+      const image_url = await imgUrlMutation.mutateAsync({ file: file });
+      console.log(image_url); // TODO: dataUrl -> File -> 서버에 업로드한 뒤 url을 받아온 뒤 image_url에 넣기
 
       mutate({
         ...values,
@@ -118,7 +149,7 @@ const PublishPostForm = () => {
         postBackgroundId: background?.id ?? '', // FIXME: 빈 내지일 경우 현재 에러 발생
         title_html: titleContents,
         content: bodyContents,
-        image_url: '', // TODO: capture upload 이미지
+        image_url: image_url, // TODO: capture upload 이미지
         main_image_url: reprImageSrc,
       });
     },
