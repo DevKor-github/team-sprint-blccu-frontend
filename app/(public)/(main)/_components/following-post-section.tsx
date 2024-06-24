@@ -19,7 +19,7 @@ const FollowingPostSection = () => {
   const { isSignedIn } = useMeQuery();
   const { isLoading, data } = useQuery(queries.posts.following);
 
-  const posts = data?.data.items ?? [];
+  const posts = data?.data.data ?? [];
 
   if (!isSignedIn) {
     return null;

@@ -19,8 +19,10 @@ const posts = createQueryKeys('posts', {
   following: {
     queryKey: null,
     queryFn: () =>
-      api.posts.postsControllerFetchFriendsPosts({
-        pageSize: 10,
+      api.posts.postsControllerFetchFriendsCursor({
+        sort: 'DESC',
+        take: 10,
+        date_created: 'MONTH',
       }),
   },
   userTrending: (userId: number) => ({
