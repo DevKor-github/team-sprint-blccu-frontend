@@ -7,10 +7,12 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 const ModeSelector = () => {
   const switchMode = useModeStore((state: any) => state.switchMode);
   const setFocused = useFocusedStore((state: any) => state.setFocused);
+  const setSubFocused = useFocusedStore((state: any) => state.setSubFocused);
 
   const handleValueChange = (value: string) => {
     switchMode(value);
     setFocused('init');
+    setSubFocused('init');
   };
 
   return (

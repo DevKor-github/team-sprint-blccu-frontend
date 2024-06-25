@@ -17,6 +17,7 @@ import { api } from '@/lib/api';
 const EditorToolbar = () => {
   const focused = useFocusedStore((state: any) => state.focused);
   const setFocused = useFocusedStore((state: any) => state.setFocused);
+  const setSubFocused = useFocusedStore((state: any) => state.setSubFocused);
 
   const selectedEditor = useSelectedEditorStore(
     (state: any) => state.selectedEditor,
@@ -52,6 +53,7 @@ const EditorToolbar = () => {
 
   const handleImageButtonClick = () => {
     setFocused('image');
+    setSubFocused('init');
     document.getElementById('imageInput')?.click();
   };
 
@@ -84,7 +86,10 @@ const EditorToolbar = () => {
       <EditorBottomNavBarItem>
         <EditorBottomNavBarItemButton
           isSelected={focused === 'text'}
-          onClick={() => setFocused('text')}
+          onClick={() => {
+            setFocused('text');
+            setSubFocused('init');
+          }}
         >
           <Type className="h-6 w-6" />
           <p className="text-xs">텍스트</p>
@@ -93,7 +98,10 @@ const EditorToolbar = () => {
       <EditorBottomNavBarItem>
         <EditorBottomNavBarItemButton
           isSelected={focused === 'align'}
-          onClick={() => setFocused('align')}
+          onClick={() => {
+            setFocused('align');
+            setSubFocused('init');
+          }}
         >
           <AlignLeft className="h-6 w-6" />
           <p className="text-xs">정렬</p>
@@ -102,7 +110,10 @@ const EditorToolbar = () => {
       <EditorBottomNavBarItem>
         <EditorBottomNavBarItemButton
           isSelected={focused === 'save'}
-          onClick={() => setFocused('save')}
+          onClick={() => {
+            setFocused('save');
+            setSubFocused('init');
+          }}
         >
           <ArrowDownToLine className="h-6 w-6" />
           <p className="text-xs">임시 저장</p>
