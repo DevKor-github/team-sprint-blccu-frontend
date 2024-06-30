@@ -2,10 +2,9 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
 import useModeStore from '@/app/(signed-in-only)/write/store/mode';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
-
-import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
 
 interface StickerProps {
   clientId: string;
@@ -27,6 +26,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
 
   const editPosition = useStickersStore((state: any) => state.editPosition);
   const editSize = useStickersStore((state: any) => state.editSize);
+  const deleteSticker = useStickersStore((state: any) => state.deleteSticker);
 
   const focused = useStickersStore((state: any) => state.focused);
   const setFocused = useStickersStore((state: any) => state.setFocused);
@@ -202,6 +202,16 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
     cursor: 'pointer',
   };
 
+  const deleteControlStyle = {
+    position: 'absolute',
+    width: '30px',
+    height: '30px',
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    touchAction: 'none',
+    cursor: 'pointer',
+  };
+
   return (
     <div>
       <div
@@ -231,17 +241,31 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           crossOrigin="anonymous"
         />
         {focused === clientId && !captureMode ? (
-          <div
-            id="resize-control"
-            style={{
-              ...resizeControlStyle,
-              position: 'absolute',
-              bottom: '-15px',
-              right: '-15px',
-            }}
-            onMouseDown={handleResizeMouseDown}
-            onTouchStart={handleResizeTouchStart}
-          />
+          <>
+            <div
+              id="resize-control"
+              style={{
+                ...resizeControlStyle,
+                position: 'absolute',
+                bottom: '-15px',
+                right: '-15px',
+              }}
+              onMouseDown={handleResizeMouseDown}
+              onTouchStart={handleResizeTouchStart}
+            />
+            <div
+              id="delete-control"
+              style={{
+                ...deleteControlStyle,
+                position: 'absolute',
+                top: '-15px',
+                right: '-15px',
+              }}
+              onClick={() => {
+                deleteSticker(stickerProps);
+              }}
+            />
+          </>
         ) : null}
       </div>
     </div>
