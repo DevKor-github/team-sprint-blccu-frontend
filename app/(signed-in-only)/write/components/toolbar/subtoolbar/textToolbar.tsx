@@ -10,14 +10,13 @@ import {
   Underline,
 } from 'lucide-react';
 
+import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import useSelectedEditor from '@/app/(signed-in-only)/write/store/selectedEditor';
 import {
   EditorBottomSubNavBar,
   EditorBottomSubNavBarItem,
   EditorBottomSubNavBarItemButton,
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
-
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 
 const TextToolbar = () => {
   const editor = useSelectedEditor((state: any) => state.selectedEditor);
