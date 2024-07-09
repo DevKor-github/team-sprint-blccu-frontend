@@ -60,6 +60,11 @@ const posts = createQueryKeys('posts', {
     queryKey: null,
     queryFn: () => api.posts.postBackgroundsControllerFetchAll(),
   },
+
+  tempPosts: {
+    queryKey: null,
+    queryFn: () => api.posts.postsControllerFetchTempPosts(),
+  },
 });
 
 export { posts };
