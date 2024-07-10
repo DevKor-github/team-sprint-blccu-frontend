@@ -2,12 +2,12 @@ import Link from 'next/link';
 
 import { type ReactNode } from 'react';
 
-import { type UserDto } from '@/__generated__/data-contracts';
+import { type UserPrimaryResponseDto } from '@/__generated__/data-contracts';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ROUTES } from '@/constants/routes';
 
 type StackedUserCardProps = {
-  user: UserDto;
+  user: UserPrimaryResponseDto;
   right?: ReactNode;
 };
 

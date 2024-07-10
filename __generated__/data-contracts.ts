@@ -58,6 +58,11 @@ export interface UserFollowingResponseDto {
    */
   username: string;
   /**
+   * 유저 설명
+   * @default ""
+   */
+  description: string;
+  /**
    * 프로필 이미지 url
    * @default ""
    */
@@ -611,6 +616,11 @@ export interface UserPrimaryResponseDto {
    * @uniqueItems true
    */
   username: string;
+  /**
+   * 유저 설명
+   * @default ""
+   */
+  description: string;
   /**
    * 프로필 이미지 url
    * @default ""
