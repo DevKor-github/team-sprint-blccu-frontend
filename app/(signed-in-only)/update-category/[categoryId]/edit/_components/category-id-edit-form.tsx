@@ -8,8 +8,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import {
-  type FetchPostCategoryDto,
-  type PatchPostCategoryDto,
+  type ArticleCategoryDto,
+  type ArticleCategoryPatchRequestDto,
 } from '@/__generated__/data-contracts';
 import {
   PATCH_CATEGORY_NAME,
@@ -31,12 +31,12 @@ import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
 type PatchPostCategoryProps = {
-  categoryId: string;
-  patchPostCategoryDto: PatchPostCategoryDto;
+  categoryId: number;
+  articleCategoryPatchRequestDto: ArticleCategoryPatchRequestDto;
 };
 
 type CategoryIdEditFormProps = {
-  category: FetchPostCategoryDto;
+  category: ArticleCategoryDto;
   defaultValues: UseFormProps<PatchCategoryFormValues>['defaultValues'];
 };
 
@@ -51,7 +51,7 @@ const CategoryIdEditForm = ({
     onSubmit: (values) =>
       mutate({
         categoryId: category.id,
-        patchPostCategoryDto: values,
+        articleCategoryPatchRequestDto: values,
       }),
   });
 
@@ -62,14 +62,14 @@ const CategoryIdEditForm = ({
   const { mutate } = useMutation({
     mutationFn: ({
       categoryId,
-      patchPostCategoryDto,
+      articleCategoryPatchRequestDto,
     }: PatchPostCategoryProps) =>
-      api.users.postCategoriesControllerPatchCategory(
+      api.users.articleCategoriesControllerPatchArticleCategory(
         categoryId,
-        patchPostCategoryDto,
+        articleCategoryPatchRequestDto,
       ),
     onSuccess: () => {
-      queryClient.invalidateQueries(queries.users.categories(me?.kakaoId));
+      queryClient.invalidateQueries(queries.users.categories(me?.id));
 
       toast.success(TOAST_MESSAGES.PATCH_CATEGORY_SUCCESS);
 

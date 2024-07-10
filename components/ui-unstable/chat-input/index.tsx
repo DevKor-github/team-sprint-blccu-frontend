@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Send } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { type CreateCommentInput } from '@/__generated__/data-contracts';
+import { type CommentCreateRequestDto } from '@/__generated__/data-contracts';
 import {
   INSERT_COMMENT_NAME,
   useInsertCommentForm,
@@ -17,34 +17,37 @@ import { cn } from '@/lib/utils';
 import { queries } from '@/queries';
 
 type InsertCommentProps = {
-  postId: number;
-  createCommentInput: CreateCommentInput;
+  articleId: number;
+  commentCreateRequestDto: CommentCreateRequestDto;
 };
 
 type ChatInputProps = {
-  postId: number;
+  articleId: number;
   parentId?: number;
 };
 
-const ChatInput = ({ postId, parentId }: ChatInputProps) => {
+const ChatInput = ({ articleId, parentId }: ChatInputProps) => {
   const { form, onSubmit } = useInsertCommentForm({
     defaultValues: {
       content: '',
     },
     onSubmit: (values) =>
-      mutate({ postId, createCommentInput: { ...values, parentId } }),
+      mutate({ articleId, commentCreateRequestDto: { ...values, parentId } }),
   });
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: ({ postId, createCommentInput }: InsertCommentProps) =>
-      api.posts.commentsControllerInsertComment(postId, createCommentInput),
+    mutationFn: ({ articleId, commentCreateRequestDto }: InsertCommentProps) =>
+      api.articles.commentsControllerCreateComment(
+        articleId,
+        commentCreateRequestDto,
+      ),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.COMMENT_POST_SUCCESS);
 
       queryClient.invalidateQueries({
-        queryKey: queries.posts.comments(postId).queryKey,
+        queryKey: queries.articles.comments(articleId).queryKey,
       });
 
       form.reset();

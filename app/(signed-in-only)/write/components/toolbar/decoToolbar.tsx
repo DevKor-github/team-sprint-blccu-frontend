@@ -2,7 +2,7 @@
 
 import { ArrowDownToLine, File, Smile } from 'lucide-react';
 
-import { EditPostBackgroundSheet } from '@/app/(signed-in-only)/write/components/sheet/edit-post-background-sheet';
+import { EditArticleBackgroundSheet } from '@/app/(signed-in-only)/write/components/sheet/edit-article-background-sheet';
 import { StickerSheet } from '@/app/(signed-in-only)/write/components/sheet/sticker-sheet';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import {
@@ -28,7 +28,7 @@ const DecoToolbar = () => {
         />
       </EditorBottomNavBarItem>
       <EditorBottomNavBarItem>
-        <EditPostBackgroundSheet
+        <EditArticleBackgroundSheet
           trigger={
             <EditorBottomNavBarItemButton>
               <File className="h-6 w-6" />

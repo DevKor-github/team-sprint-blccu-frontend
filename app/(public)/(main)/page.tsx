@@ -1,8 +1,8 @@
-import { AllPostSection } from '@/app/(public)/(main)/_components/all-post-section';
+import { AllArticleSection } from '@/app/(public)/(main)/_components/all-article-section';
 import { Banner } from '@/app/(public)/(main)/_components/banner';
-import { FollowingPostSection } from '@/app/(public)/(main)/_components/following-post-section';
+import { FollowingArticleSection } from '@/app/(public)/(main)/_components/following-article-section';
 import { RootPageHeader } from '@/app/(public)/(main)/_components/root-page-header';
-import { TrendingPostSection } from '@/app/(public)/(main)/_components/trending-post-section';
+import { TrendingArticleSection } from '@/app/(public)/(main)/_components/trending-article-section';
 
 const RootPage = () => {
   return (
@@ -10,9 +10,9 @@ const RootPage = () => {
       <RootPageHeader />
       <div className="flex flex-col gap-3">
         <Banner />
-        <TrendingPostSection />
-        <FollowingPostSection />
-        <AllPostSection />
+        <TrendingArticleSection />
+        <FollowingArticleSection />
+        <AllArticleSection />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type CreateReportInput } from '@/__generated__/data-contracts';
+import { type ReportCreateRequestDto } from '@/__generated__/data-contracts';
 import {
   REPORT_COMMENT_NAME,
   REPORT_COMMENT_TYPE,
@@ -31,7 +31,7 @@ import { api } from '@/lib/api';
 
 type ReportCommentProps = {
   commentId: number;
-  createReportInput: CreateReportInput;
+  reportCreateRequestDto: ReportCreateRequestDto;
 };
 
 type ReportCommentIdPageProps = {
@@ -53,16 +53,16 @@ const ReportCommentIdPage = ({
     onSubmit: (values) =>
       mutate({
         commentId,
-        createReportInput: {
-          ...values,
-          url: '',
-        },
+        reportCreateRequestDto: values,
       }),
   });
 
   const { mutate } = useMutation({
-    mutationFn: ({ commentId, createReportInput }: ReportCommentProps) =>
-      api.posts.reportsControllerReportComment(commentId, createReportInput),
+    mutationFn: ({ commentId, reportCreateRequestDto }: ReportCommentProps) =>
+      api.articles.reportsControllerReportComment(
+        commentId,
+        reportCreateRequestDto,
+      ),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.REPORT_COMMENT_SUCCESS);
 

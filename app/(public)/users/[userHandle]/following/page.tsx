@@ -26,7 +26,7 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
   const { isSignedIn, me } = useMeQuery();
 
   const { data: followingsData } = useQuery({
-    ...queries.users.followings(user?.kakaoId),
+    ...queries.users.followings(user?.id),
     enabled: isExist,
   });
 
@@ -34,7 +34,7 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
 
   const invalidateQueries = () => {
     queryClient.invalidateQueries({
-      queryKey: queries.users.followings(user?.kakaoId).queryKey,
+      queryKey: queries.users.followings(user?.id).queryKey,
     });
   };
 
@@ -59,7 +59,7 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
       <div className="pt-14">
         <div className="mt-4 flex flex-col gap-2 px-4">
           {users.map(({ isFollowing, ...user }, index) => {
-            const isMe = me?.kakaoId === user.kakaoId;
+            const isMe = me?.id === user.id;
 
             return (
               <StackedUserCard
@@ -75,7 +75,7 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
                           size="sm"
                           radius="full"
                           disabled={isUnfollowPending}
-                          onClick={() => unfollowMutate(user.kakaoId)}
+                          onClick={() => unfollowMutate(user.id)}
                         >
                           팔로잉
                         </Button>
@@ -84,7 +84,7 @@ const FollowingPage = ({ params: { userHandle } }: FollowingPageProps) => {
                           size="sm"
                           radius="full"
                           disabled={isFollowPending}
-                          onClick={() => followMutate(user.kakaoId)}
+                          onClick={() => followMutate(user.id)}
                         >
                           팔로우
                         </Button>

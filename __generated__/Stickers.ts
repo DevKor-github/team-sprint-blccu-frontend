@@ -11,15 +11,15 @@
  * ---------------------------------------------------------------
  */
 import {
-  ImageUploadDto,
+  ImageUploadRequestDto,
   StickerCategoriesControllerFetchCategoriesData,
   StickerCategoriesControllerFetchStickersByCategoryNameData,
+  StickerPatchRequestDto,
   StickersControllerCreatePrivateStickerData,
   StickersControllerDeleteStickerData,
   StickersControllerFetchPrivateStickersData,
   StickersControllerFetchPublicStickersData,
   StickersControllerPatchStickerData,
-  UpdateStickerInput,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -36,7 +36,7 @@ export class Stickers<
    * @secure
    */
   stickersControllerCreatePrivateSticker = (
-    data: ImageUploadDto,
+    data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<StickersControllerCreatePrivateStickerData, any>({
@@ -69,16 +69,16 @@ export class Stickers<
    * @tags 스티커 API
    * @name StickersControllerPatchSticker
    * @summary 스티커의 image_url 혹은 재사용 여부를 설정한다.
-   * @request PATCH:/stickers/{id}
+   * @request PATCH:/stickers/{stickerId}
    * @secure
    */
   stickersControllerPatchSticker = (
-    id: number,
-    data: UpdateStickerInput,
+    stickerId: number,
+    data: StickerPatchRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<StickersControllerPatchStickerData, any>({
-      path: `/stickers/${id}`,
+      path: `/stickers/${stickerId}`,
       method: 'PATCH',
       body: data,
       secure: true,
@@ -91,12 +91,15 @@ export class Stickers<
    * @tags 스티커 API
    * @name StickersControllerDeleteSticker
    * @summary 스티커 삭제
-   * @request DELETE:/stickers/{id}
+   * @request DELETE:/stickers/{stickerId}
    * @secure
    */
-  stickersControllerDeleteSticker = (id: number, params: RequestParams = {}) =>
+  stickersControllerDeleteSticker = (
+    stickerId: number,
+    params: RequestParams = {},
+  ) =>
     this.request<StickersControllerDeleteStickerData, any>({
-      path: `/stickers/${id}`,
+      path: `/stickers/${stickerId}`,
       method: 'DELETE',
       secure: true,
       ...params,
@@ -135,17 +138,17 @@ export class Stickers<
    * @tags 스티커 API
    * @name StickerCategoriesControllerFetchStickersByCategoryName
    * @summary 카테고리 id에 해당하는 스티커를 fetchAll
-   * @request GET:/stickers/categories/{id}
+   * @request GET:/stickers/categories/{stickerCategoryId}
    */
   stickerCategoriesControllerFetchStickersByCategoryName = (
-    id: number,
+    stickerCategoryId: number,
     params: RequestParams = {},
   ) =>
     this.request<
       StickerCategoriesControllerFetchStickersByCategoryNameData,
       any
     >({
-      path: `/stickers/categories/${id}`,
+      path: `/stickers/categories/${stickerCategoryId}`,
       method: 'GET',
       ...params,
     });

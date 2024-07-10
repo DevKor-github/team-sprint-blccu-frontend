@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type CreateFeedbackInput } from '@/__generated__/data-contracts';
+import { type FeedbackCreateRequestDto } from '@/__generated__/data-contracts';
 import {
   CREATE_FEEDBACK_NAME,
   useCreateFeedbackForm,
@@ -29,7 +29,7 @@ const CreateFeedbackForm = () => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (dto: CreateFeedbackInput) =>
+    mutationFn: (dto: FeedbackCreateRequestDto) =>
       api.users.feedbacksControllerCreateFeedback(dto),
     onSuccess: () => {
       form.reset();

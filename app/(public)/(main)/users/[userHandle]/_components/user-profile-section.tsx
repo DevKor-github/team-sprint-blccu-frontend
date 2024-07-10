@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { List } from 'lucide-react';
 
-import { type UserResponseDto } from '@/__generated__/data-contracts';
+import { type UserDto } from '@/__generated__/data-contracts';
 import { EditUserProfileSheet } from '@/app/(public)/(main)/users/[userHandle]/_components/edit-user-profile-sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -21,19 +21,19 @@ import {
 import { queries } from '@/queries';
 
 type UserProfileSectionProps = {
-  user: UserResponseDto;
+  user: UserDto;
 };
 
 const UserProfileSection = ({
   user: {
     username,
-    kakaoId,
+    id,
     handle,
     description,
-    profile_image,
-    background_image,
-    follower_count,
-    following_count,
+    profileImage,
+    backgroundImage,
+    followerCount,
+    followingCount,
   },
 }: UserProfileSectionProps) => {
   const { open } = useModalStore();
@@ -41,7 +41,7 @@ const UserProfileSection = ({
   const { isLoading: isMeLoading, me, isSignedIn } = useMeQuery();
 
   const { data: followerData } = useQuery({
-    ...queries.users.follower(kakaoId),
+    ...queries.users.follower(id),
     enabled: isSignedIn,
   });
 
@@ -49,7 +49,7 @@ const UserProfileSection = ({
 
   const invalidateQueries = () => {
     queryClient.invalidateQueries({
-      queryKey: queries.users.follower(kakaoId).queryKey,
+      queryKey: queries.users.follower(id).queryKey,
     });
 
     queryClient.invalidateQueries({
@@ -71,11 +71,11 @@ const UserProfileSection = ({
 
   const isFollowing = followerData?.data ?? false;
 
-  const followerDescriptor = getFollowerDescriptor(follower_count);
-  const followingDescriptor = getFollowingDescriptor(following_count);
+  const followerDescriptor = getFollowerDescriptor(followerCount);
+  const followingDescriptor = getFollowingDescriptor(followingCount);
 
   const handleUnfollowButtonClick = () => {
-    unfollowMutate(kakaoId);
+    unfollowMutate(id);
   };
 
   const handleFollowButtonClick = () => {
@@ -84,7 +84,7 @@ const UserProfileSection = ({
       return;
     }
 
-    followMutate(kakaoId);
+    followMutate(id);
   };
 
   if (isMeLoading) {
@@ -96,11 +96,11 @@ const UserProfileSection = ({
       <div
         className="absolute top-0 h-32 w-full max-w-screen-sm bg-blccu-black bg-cover bg-center"
         style={{
-          backgroundImage: `url(${background_image})`,
+          backgroundImage: `url(${backgroundImage})`,
         }}
       />
       <Avatar size="xl" className="mt-[42px]">
-        <AvatarImage src={profile_image} />
+        <AvatarImage src={profileImage} />
         <AvatarFallback className="bg-blccu-neutral-400" />
       </Avatar>
       <div className="flex flex-col items-center gap-4">

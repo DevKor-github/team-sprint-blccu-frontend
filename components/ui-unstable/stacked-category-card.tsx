@@ -1,13 +1,13 @@
-import { type FetchPostCategoriesDto } from '@/__generated__/data-contracts';
+import { type ArticleCategoriesResponseDto } from '@/__generated__/data-contracts';
 import { cn } from '@/lib/utils';
 
 type StackedCategoryCardProps = {
-  category: FetchPostCategoriesDto;
+  category: ArticleCategoriesResponseDto;
   disabled?: boolean;
 };
 
 const StackedCategoryCard = ({
-  category: { categoryName, postCount },
+  category: { categoryName, articleCount },
   disabled,
 }: StackedCategoryCardProps) => {
   return (
@@ -18,7 +18,7 @@ const StackedCategoryCard = ({
       )}
     >
       <p className="font-medium">{categoryName}</p>
-      <p className="text-sm">{postCount.toLocaleString()}</p>
+      <p className="text-sm">{articleCount.toLocaleString()}</p>
     </div>
   );
 };

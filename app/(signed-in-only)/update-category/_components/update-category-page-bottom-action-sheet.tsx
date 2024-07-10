@@ -19,7 +19,7 @@ import { queries } from '@/queries';
 import { type PropsWithTrigger } from '@/types/util';
 
 type UpdateCategoryPageBottomActionSheetProps = {
-  id: string;
+  id: number;
 } & PropsWithTrigger;
 
 const UpdateCategoryPageBottomActionSheet = ({
@@ -31,13 +31,13 @@ const UpdateCategoryPageBottomActionSheet = ({
   const { me } = useMeQuery();
 
   const { mutate } = useMutation({
-    mutationFn: (categoryId: string) =>
-      api.users.postCategoriesControllerDeletePostCategory(categoryId),
+    mutationFn: (categoryId: number) =>
+      api.users.articleCategoriesControllerDeleteArticleCategory(categoryId),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.DELETE_CATEGORY_SUCCESS);
 
       queryClient.invalidateQueries({
-        queryKey: queries.users.categories(me?.kakaoId).queryKey,
+        queryKey: queries.users.categories(me?.id).queryKey,
       });
     },
     onError: () => {

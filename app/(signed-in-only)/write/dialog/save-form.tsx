@@ -2,12 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import { AppBarBack } from '@/components/ui-unstable/app-bar';
 import { DialogClose } from '@/components/ui/dialog';
-import { api } from '@/lib/api';
 import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
 const SaveForm = () => {
-  const { isLoading, data } = useQuery(queries.posts.tempPosts);
+  const { isLoading, data } = useQuery(queries.articles.tempPosts);
 
   const tempPosts = data?.data ?? [];
 
@@ -24,7 +23,7 @@ const SaveForm = () => {
         return (
           <div key={temp.id}>
             <p>{temp.title}</p>
-            <p>{temp.date_updated}</p>
+            <p>{temp.dateUpdated}</p>
           </div>
         );
       })}

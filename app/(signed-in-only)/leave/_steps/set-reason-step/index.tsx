@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type DeleteUserInput } from '@/__generated__/data-contracts';
+import { type UserDeleteRequestDto } from '@/__generated__/data-contracts';
 import { LeaveAlertDialog } from '@/app/(signed-in-only)/leave/_steps/set-reason-step/components/leave-alert-dialog';
 import {
   LEAVE_REASON_NAME,
@@ -44,8 +44,8 @@ const SetReasonStep = ({ onNext }: PropsWithOnNext) => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (dto: DeleteUserInput) =>
-      api.users.usersControllerDeleteUser(dto),
+    mutationFn: (dto: UserDeleteRequestDto) =>
+      api.users.usersDeleteControllerDeleteUser(dto),
     onSuccess: () => {
       toast.success(TOAST_MESSAGES.LEAVE_USER_SUCCESS);
 

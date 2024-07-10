@@ -1,15 +1,15 @@
 import { format } from 'date-fns';
 
-import { type AnnouncementResponseDto } from '@/__generated__/data-contracts';
+import { type AnnouncementDto } from '@/__generated__/data-contracts';
 
 type StackedAnnouncementCardProps = {
-  announcement: AnnouncementResponseDto;
+  announcement: AnnouncementDto;
 };
 
 const StackedAnnouncementCard = ({
-  announcement: { title, content, date_updated },
+  announcement: { title, content, dateUpdated },
 }: StackedAnnouncementCardProps) => {
-  const formattedDate = format(date_updated, 'yyyy.MM.dd.');
+  const formattedDate = format(dateUpdated, 'yyyy.MM.dd.');
 
   return (
     <div className="flex flex-col gap-1 rounded-lg bg-blccu-neutral-200 p-4">

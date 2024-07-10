@@ -60,7 +60,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
   return (
     <div className="mt-4 flex flex-col gap-2 px-4">
       {users.map(({ isFollowing, ...user }, index) => {
-        const isMe = me?.kakaoId === user.kakaoId;
+        const isMe = me?.id === user.id;
 
         return (
           <StackedUserCard
@@ -74,7 +74,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
                     size="sm"
                     radius="full"
                     disabled={isUnfollowPending}
-                    onClick={() => handleUnfollowButtonClick(user.kakaoId)}
+                    onClick={() => handleUnfollowButtonClick(user.id)}
                   >
                     팔로잉
                   </Button>
@@ -83,7 +83,7 @@ const UserSearchResult = ({ search }: UserSearchResultProps) => {
                     size="sm"
                     radius="full"
                     disabled={isFollowPending || isMe}
-                    onClick={() => handleFollowButtonClick(user.kakaoId)}
+                    onClick={() => handleFollowButtonClick(user.id)}
                   >
                     팔로우
                   </Button>

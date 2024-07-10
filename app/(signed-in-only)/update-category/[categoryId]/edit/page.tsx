@@ -12,7 +12,7 @@ import { queries } from '@/queries';
 
 type CategoryIdEditPageProps = {
   params: {
-    categoryId: string;
+    categoryId: number;
   };
 };
 

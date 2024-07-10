@@ -6,8 +6,8 @@ const notifications = createQueryKeys('notifications', {
   all: {
     queryKey: null,
     queryFn: () =>
-      api.notifications.notificationsControllerFetchNoti({
-        is_checked: true,
+      api.notifications.notificationsControllerGetNotifications({
+        isChecked: true,
       }),
   },
 });

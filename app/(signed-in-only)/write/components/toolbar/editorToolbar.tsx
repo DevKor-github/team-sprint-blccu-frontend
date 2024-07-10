@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { AlignLeft, ArrowDownToLine, Image, Type } from 'lucide-react';
 
-import { type ImageUploadDto } from '@/__generated__/data-contracts';
+import { type ImageUploadRequestDto } from '@/__generated__/data-contracts';
 import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import useCurrentImageIdStore from '@/app/(signed-in-only)/write/store/imageId';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
@@ -31,8 +31,10 @@ const EditorToolbar = () => {
     (state: any) => state.increaseImageId,
   );
 
-  const uploadImage = async (file: ImageUploadDto) => {
-    return await api.posts.postsControllerCreatePrivateSticker(file);
+  const uploadImage = async (file: ImageUploadRequestDto) => {
+    return await api.articles.articlesCreateControllerCreatePrivateSticker(
+      file,
+    );
   };
 
   const mutation = useMutation({
@@ -41,7 +43,7 @@ const EditorToolbar = () => {
       await selectedEditor
         ?.chain()
         .focus()
-        .setImage({ src: data.image_url, alt: '이미지', id: currentImageId })
+        .setImage({ src: data.imageUrl, alt: '이미지', id: currentImageId })
         .run();
       selectedEditor.commands.createParagraphNear();
       increaseImageId();

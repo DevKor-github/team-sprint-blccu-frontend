@@ -5,19 +5,19 @@ import { api } from '@/lib/api';
 const users = createQueryKeys('users', {
   me: {
     queryKey: null,
-    queryFn: api.users.usersControllerFetchUser,
+    queryFn: api.users.usersReadControllerGetMyProfile,
   },
   agreements: {
     queryKey: null,
     queryFn: api.users.agreementsControllerFetchAgreements,
   },
-  detailByKakaoId: (kakaoId: number) => ({
-    queryKey: [kakaoId],
-    queryFn: () => api.users.usersControllerFindUserByKakaoId(kakaoId),
+  detailById: (userId: number) => ({
+    queryKey: [userId],
+    queryFn: () => api.users.usersReadControllerGetUserById(userId),
   }),
   detailByHandle: (handle: string) => ({
     queryKey: [handle],
-    queryFn: () => api.users.usersControllerFindUserByHandle(handle),
+    queryFn: () => api.users.usersReadControllerGetUserByHandle(handle),
   }),
   follower: (id: number | undefined) => ({
     queryKey: [id],
@@ -49,29 +49,33 @@ const users = createQueryKeys('users', {
       return api.users.followsControllerGetFollows(id);
     },
   }),
-  categories: (id: number | undefined) => ({
-    queryKey: [id],
+  categories: (userId: number | undefined) => ({
+    queryKey: [userId],
     queryFn: () => {
-      if (id === undefined) {
+      if (userId === undefined) {
         return Promise.reject(new Error('User ID is undefined'));
       }
 
-      return api.users.postCategoriesControllerFetchPostCategories(id);
+      return api.users.articleCategoriesControllerFetchArticleCategories(
+        userId,
+      );
     },
   }),
-  category: (categoryId: string | undefined) => ({
-    queryKey: [categoryId],
+  category: (articleCategoryId: number | undefined) => ({
+    queryKey: [articleCategoryId],
     queryFn: () => {
-      if (categoryId === undefined) {
+      if (articleCategoryId === undefined) {
         return Promise.reject(new Error('Category ID is undefined'));
       }
 
-      return api.users.postCategoriesControllerFetchMyCategory(categoryId);
+      return api.users.articleCategoriesControllerFetchMyCategory(
+        articleCategoryId,
+      );
     },
   }),
   search: (search: string) => ({
     queryKey: [search],
-    queryFn: () => api.users.usersControllerFindUsersByName(search),
+    queryFn: () => api.users.usersReadControllerGetUsersByName(search),
   }),
 });
 

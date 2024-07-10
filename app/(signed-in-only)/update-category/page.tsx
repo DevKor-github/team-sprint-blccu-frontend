@@ -20,18 +20,18 @@ const UpdateCategoryPage = () => {
   const { isSignedIn, me } = useMeQuery();
 
   const { data: categoriesData } = useQuery({
-    ...queries.users.categories(me?.kakaoId),
+    ...queries.users.categories(me?.id),
     enabled: isSignedIn,
   });
 
   const categories = categoriesData?.data ?? [];
 
   const sortedCategoriesDesc = categories.sort(
-    (a, b) => b.postCount - a.postCount,
+    (a, b) => b.articleCount - a.articleCount,
   );
 
   const total = sortedCategoriesDesc.reduce(
-    (acc, { postCount }) => acc + postCount,
+    (acc, { articleCount }) => acc + articleCount,
     0,
   );
 
@@ -51,9 +51,9 @@ const UpdateCategoryPage = () => {
           <div className="px-4">
             <StackedCategoryCard
               category={{
-                categoryId: '',
+                categoryId: 0, // FIXME: dummy
                 categoryName: '전체글',
-                postCount: total,
+                articleCount: total,
               }}
               disabled
             />

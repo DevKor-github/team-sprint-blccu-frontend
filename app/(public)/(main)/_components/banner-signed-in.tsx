@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { type UserResponseDto } from '@/__generated__/data-contracts';
+import { type UserDto } from '@/__generated__/data-contracts';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import banner_type1 from '@/public/images/banner_type1.png';
 
 type BannerSignedInProps = {
-  user: UserResponseDto;
+  user: UserDto;
 };
 
 const BannerSignedIn = ({ user: { username: _ } }: BannerSignedInProps) => {

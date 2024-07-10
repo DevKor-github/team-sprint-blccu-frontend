@@ -29,7 +29,7 @@ const MainContent = () => {
         className="min-h-dvh bg-cover bg-repeat-y"
         style={{
           backgroundImage:
-            background !== null ? `url(${background.image_url})` : 'none',
+            background !== null ? `url(${background.imageUrl})` : 'none',
         }}
       >
         <StickerContainer />

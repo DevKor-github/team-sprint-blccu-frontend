@@ -3,17 +3,17 @@ import { type AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
 import {
-  type PatchUserInput,
-  type UserResponseDto,
+  type UserDto,
+  type UserPatchRequestDto,
 } from '@/__generated__/data-contracts';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 
 type UsePatchUserMutationProps = Omit<
   UseMutationOptions<
-    AxiosResponse<UserResponseDto, any>,
+    AxiosResponse<UserDto, any>,
     Error,
-    PatchUserInput,
+    UserPatchRequestDto,
     unknown
   >,
   'mutationFn'
@@ -25,8 +25,8 @@ const usePatchUserMutation = ({
   ...rest
 }: UsePatchUserMutationProps = {}) => {
   return useMutation({
-    mutationFn: (dto: PatchUserInput) =>
-      api.users.usersControllerPatchUser(dto),
+    mutationFn: (dto: UserPatchRequestDto) =>
+      api.users.usersUpdateControllerPatchUser(dto),
     onSuccess: (...props) => {
       onSuccess?.(...props);
     },

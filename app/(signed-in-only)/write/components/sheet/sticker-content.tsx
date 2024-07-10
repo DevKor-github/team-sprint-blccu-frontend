@@ -7,8 +7,8 @@ import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
-  type ImageUploadDto,
-  type UpdateStickerInput,
+  type ImageUploadRequestDto,
+  type StickerPatchRequestDto,
 } from '@/__generated__/data-contracts';
 import { StickerCategoryContent } from '@/app/(signed-in-only)/write/components/sheet/sticker-category-content';
 import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
@@ -24,7 +24,7 @@ import { queries } from '@/queries';
 
 type PatchStickerProps = {
   id: number;
-  dto: UpdateStickerInput;
+  dto: StickerPatchRequestDto;
 };
 
 const StickerContent = () => {
@@ -51,7 +51,7 @@ const StickerContent = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: (dto: ImageUploadDto) =>
+    mutationFn: (dto: ImageUploadRequestDto) =>
       api.stickers.stickersControllerCreatePrivateSticker(dto),
     onSuccess: ({ data }) => {
       // FIXME: 원 기획과 다릅니다. 자동 재사용 설정을 하지 않습니다.
@@ -119,14 +119,14 @@ const StickerContent = () => {
                 <SheetClose asChild>
                   <Image
                     className="h-28 w-28"
-                    src={sticker.image_url}
+                    src={sticker.imageUrl}
                     width={500}
                     height={500}
                     alt="스티커"
                     onClick={() =>
                       addSticker({
                         clientId: uuidv4(),
-                        src: sticker.image_url,
+                        src: sticker.imageUrl,
                         x: 100,
                         y: 100,
                         scale: 1,

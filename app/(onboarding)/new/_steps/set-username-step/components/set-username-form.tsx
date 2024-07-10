@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type CreateAgreementsInput } from '@/__generated__/data-contracts';
+import { type AgreementCreateRequestDto } from '@/__generated__/data-contracts';
 import {
   SET_USERNAME_FORM_NAME,
   useSetUsernameForm,
@@ -82,7 +82,7 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
   });
 
   const { mutate: agreeMutate } = useMutation({
-    mutationFn: (dto: CreateAgreementsInput) =>
+    mutationFn: (dto: AgreementCreateRequestDto) =>
       api.users.agreementsControllerAgree(dto),
     onSuccess: async () => {
       await queryClient.invalidateQueries({

@@ -37,7 +37,7 @@ const ManageAccountPage = () => {
   const signUpMethod = 'kakao';
 
   const signUpMethodDescriptor = getSignUpMethodDescriptor(signUpMethod);
-  const formattedDate = format(me.date_created, 'yyyy.MM.dd');
+  const formattedDate = format(me.dateCreated, 'yyyy.MM.dd');
 
   /**
    * @note

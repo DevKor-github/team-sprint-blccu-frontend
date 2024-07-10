@@ -3,7 +3,7 @@ import { type AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
 import {
-  type ImageUploadDto,
+  type ImageUploadRequestDto,
   type ImageUploadResponseDto,
 } from '@/__generated__/data-contracts';
 import { TOAST_MESSAGES } from '@/constants/messages';
@@ -13,7 +13,7 @@ type UseUploadBackgroundImageMutationProps = Omit<
   UseMutationOptions<
     AxiosResponse<ImageUploadResponseDto, any>,
     Error,
-    ImageUploadDto,
+    ImageUploadRequestDto,
     unknown
   >,
   'mutationFn'
@@ -25,8 +25,8 @@ const useUploadBackgroundImageMutation = ({
   ...rest
 }: UseUploadBackgroundImageMutationProps = {}) => {
   return useMutation({
-    mutationFn: (dto: ImageUploadDto) =>
-      api.users.usersControllerUploadBackgroundImage(dto),
+    mutationFn: (dto: ImageUploadRequestDto) =>
+      api.users.usersUpdateControllerUploadBackgroundImage(dto),
     onSuccess: (...props) => {
       onSuccess?.(...props);
 

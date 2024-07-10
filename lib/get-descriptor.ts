@@ -1,4 +1,4 @@
-import { type FetchNotiResponse } from '@/__generated__/data-contracts';
+import { type NotificationsGetResponseDto } from '@/__generated__/data-contracts';
 
 const getFollowerDescriptor = (followerCount: number | undefined) => {
   if (followerCount === 0 || followerCount === undefined) {
@@ -29,17 +29,19 @@ const getBannerSignedInUsernameDescriptor = (username: string) => {
   return `${username}님`;
 };
 
-const getUserHandlePageTrendingPostSectionTitleDescriptor = (
+const getUserHandlePageTrendingArticleSectionTitleDescriptor = (
   username: string,
 ) => {
   return `${username}님의 인기글`;
 };
 
-const getPostPageAllPostSectionTitleDescriptor = (username: string) => {
+const getArticlePageAllArticleSectionTitleDescriptor = (username: string) => {
   return `${username}님의 전체글`;
 };
 
-const getNotificationTypeDescriptor = (type: FetchNotiResponse['type']) => {
+const getNotificationTypeDescriptor = (
+  type: NotificationsGetResponseDto['type'],
+) => {
   switch (type) {
     case 'COMMENT':
       return '님이 내 게시물에 댓글을 남겼습니다.';
@@ -59,11 +61,11 @@ const getNotificationTypeDescriptor = (type: FetchNotiResponse['type']) => {
 };
 
 export {
+  getArticlePageAllArticleSectionTitleDescriptor,
   getBannerSignedInUsernameDescriptor,
   getFollowerDescriptor,
   getFollowingDescriptor,
   getNotificationTypeDescriptor,
-  getPostPageAllPostSectionTitleDescriptor,
   getSignUpMethodDescriptor,
-  getUserHandlePageTrendingPostSectionTitleDescriptor,
+  getUserHandlePageTrendingArticleSectionTitleDescriptor,
 };

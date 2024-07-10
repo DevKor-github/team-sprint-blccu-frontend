@@ -30,22 +30,22 @@ const SelectCategoryPage = ({
   const { me } = useMeQuery();
 
   const { data: categoriesData } = useQuery({
-    ...queries.users.categories(user?.kakaoId),
+    ...queries.users.categories(user?.id),
     enabled: isExist,
   });
 
   const categories = categoriesData?.data ?? [];
 
   const sortedCategoriesDesc = categories.sort(
-    (a, b) => b.postCount - a.postCount,
+    (a, b) => b.articleCount - a.articleCount,
   );
 
   const total = sortedCategoriesDesc.reduce(
-    (acc, { postCount }) => acc + postCount,
+    (acc, { articleCount }) => acc + articleCount,
     0,
   );
 
-  const isMe = me?.kakaoId === user?.kakaoId;
+  const isMe = me?.id === user?.id;
 
   return (
     <div>
@@ -66,9 +66,9 @@ const SelectCategoryPage = ({
             <div className="px-4">
               <StackedCategoryCard
                 category={{
-                  categoryId: '',
+                  categoryId: 0, // FIXME: dummy
                   categoryName: '전체글',
-                  postCount: total,
+                  articleCount: total,
                 }}
               />
             </div>

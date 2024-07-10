@@ -1,6 +1,5 @@
 import ModeSelector from '@/app/(signed-in-only)/write/components/modeSelector';
-import { PublishPostDialog } from '@/app/(signed-in-only)/write/dialog/publish-post-dialog';
-import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
+import { PublishArticleDialog } from '@/app/(signed-in-only)/write/dialog/publish-article-dialog';
 import {
   AppBar,
   AppBarBack,
@@ -15,7 +14,7 @@ const Top = () => {
       <AppBarTitle align="center">
         <ModeSelector />
       </AppBarTitle>
-      <PublishPostDialog trigger={<Button variant="ghost">완료</Button>} />
+      <PublishArticleDialog trigger={<Button variant="ghost">완료</Button>} />
     </AppBar>
   );
 };

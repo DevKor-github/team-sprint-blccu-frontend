@@ -2,12 +2,12 @@ import { type UseMutationOptions, useMutation } from '@tanstack/react-query';
 import { type AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
-import { type FollowUserDto } from '@/__generated__/data-contracts';
+import { type FollowDto } from '@/__generated__/data-contracts';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 
 type UseFollowMutationProps = Omit<
-  UseMutationOptions<AxiosResponse<FollowUserDto, any>, Error, number, unknown>,
+  UseMutationOptions<AxiosResponse<FollowDto, any>, Error, number, unknown>,
   'mutationFn'
 >;
 

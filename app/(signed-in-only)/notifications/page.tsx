@@ -23,13 +23,13 @@ const NotificationsPage = () => {
 
   const sortedNotificationsRecentFirst = [...notifications].sort(
     (a, b) =>
-      new Date(b.date_created).getTime() - new Date(a.date_created).getTime(),
+      new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime(),
   );
 
   const sortedNotificationFirstYesterdayIndex =
     sortedNotificationsRecentFirst.findIndex(
-      ({ date_created }) =>
-        new Date(date_created) < new Date(Date.now() - MILLISECONDS_IN_DAY),
+      ({ dateCreated }) =>
+        new Date(dateCreated) < new Date(Date.now() - MILLISECONDS_IN_DAY),
     );
 
   const todayNotifications = sortedNotificationsRecentFirst.slice(

@@ -3,7 +3,7 @@ import { type UseFormProps } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type UserResponseDto } from '@/__generated__/data-contracts';
+import { type UserDto } from '@/__generated__/data-contracts';
 import {
   PATCH_USER_PROFILE_NAME,
   type PatchUserProfileFormValues,
@@ -21,7 +21,7 @@ import { useUploadProfileImageMutation } from '@/hooks/mutations/use-upload-prof
 import { queries } from '@/queries';
 
 type EditUserProfileFormProps = {
-  user: UserResponseDto;
+  user: UserDto;
   defaultValues: UseFormProps<PatchUserProfileFormValues>['defaultValues'];
 };
 
@@ -76,7 +76,7 @@ const EditUserProfileForm = ({
               <div
                 className="absolute h-32 w-full cursor-pointer rounded-2xl bg-blccu-neutral-400"
                 style={{
-                  backgroundImage: `url(${user.background_image})`,
+                  backgroundImage: `url(${user.backgroundImage})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
@@ -88,7 +88,7 @@ const EditUserProfileForm = ({
               uploadMutation={uploadProfileImageMutation}
               trigger={
                 <Avatar size="xl" className="mx-auto cursor-pointer">
-                  <AvatarImage src={user.profile_image} />
+                  <AvatarImage src={user.profileImage} />
                   <AvatarFallback className="bg-blccu-neutral-600" />
                 </Avatar>
               }

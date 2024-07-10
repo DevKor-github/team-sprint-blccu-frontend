@@ -12,9 +12,9 @@
  */
 import {
   NotificationsControllerConnectUserData,
-  NotificationsControllerFetchNotiData,
-  NotificationsControllerFetchNotiParams,
-  NotificationsControllerReadNotiData,
+  NotificationsControllerGetNotificationsData,
+  NotificationsControllerGetNotificationsParams,
+  NotificationsControllerReadNotificationData,
 } from './data-contracts';
 import { HttpClient, RequestParams } from './http-client';
 
@@ -41,16 +41,16 @@ export class Notifications<
    * @description 로그인된 유저들에게 보내진 알림들을 조회한다. query를 통해 알림 조회 옵션 설정. sse 연결 이전 이니셜 데이터 fetch 시 사용
    *
    * @tags 알림 API
-   * @name NotificationsControllerFetchNoti
+   * @name NotificationsControllerGetNotifications
    * @summary 알림 조회
    * @request GET:/notifications
    * @secure
    */
-  notificationsControllerFetchNoti = (
-    query: NotificationsControllerFetchNotiParams,
+  notificationsControllerGetNotifications = (
+    query: NotificationsControllerGetNotificationsParams,
     params: RequestParams = {},
   ) =>
-    this.request<NotificationsControllerFetchNotiData, any>({
+    this.request<NotificationsControllerGetNotificationsData, any>({
       path: `/notifications`,
       method: 'GET',
       query: query,
@@ -61,14 +61,17 @@ export class Notifications<
    * @description 알림을 읽음 처리한다.
    *
    * @tags 알림 API
-   * @name NotificationsControllerReadNoti
+   * @name NotificationsControllerReadNotification
    * @summary 알림 읽기
-   * @request POST:/notifications/{id}/read
+   * @request POST:/notifications/{notificationId}/read
    * @secure
    */
-  notificationsControllerReadNoti = (id: number, params: RequestParams = {}) =>
-    this.request<NotificationsControllerReadNotiData, any>({
-      path: `/notifications/${id}/read`,
+  notificationsControllerReadNotification = (
+    notificationId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<NotificationsControllerReadNotificationData, any>({
+      path: `/notifications/${notificationId}/read`,
       method: 'POST',
       secure: true,
       ...params,

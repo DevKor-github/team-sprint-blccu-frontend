@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { type CreatePostCategoryDto } from '@/__generated__/data-contracts';
+import { type ArticleCategoryCreateRequestDto } from '@/__generated__/data-contracts';
 import {
   CREATE_CATEGORY_NAME,
   useCreateCategoryForm,
@@ -36,10 +36,10 @@ const CreateCategoryForm = () => {
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationFn: (dto: CreatePostCategoryDto) =>
-      api.users.postCategoriesControllerCreatePostCategory(dto),
+    mutationFn: (dto: ArticleCategoryCreateRequestDto) =>
+      api.users.articleCategoriesControllerCreateArticleCategory(dto),
     onSuccess: () => {
-      queryClient.invalidateQueries(queries.users.categories(me?.kakaoId));
+      queryClient.invalidateQueries(queries.users.categories(me?.id));
 
       toast.success(TOAST_MESSAGES.CREATE_CATEGORY_SUCCESS);
 

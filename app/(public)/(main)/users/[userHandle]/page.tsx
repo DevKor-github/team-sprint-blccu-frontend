@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 
 import { Settings, Share2 } from 'lucide-react';
 
-import { PostByCategorySection } from '@/app/(public)/(main)/users/[userHandle]/_components/post-by-category-section';
-import { UserHandlePageTrendingPostSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-handle-page-trending-post-section';
+import { ArticleByCategorySection } from '@/app/(public)/(main)/users/[userHandle]/_components/article-by-category-section';
+import { UserHandlePageTrendingArticleSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-handle-page-trending-article-section';
 import { UserProfileSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-profile-section';
 import {
   AppBar,
@@ -49,7 +49,7 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
     return null;
   }
 
-  const isMe = me?.kakaoId === user.kakaoId;
+  const isMe = me?.id === user.id;
 
   return (
     <div>
@@ -69,7 +69,7 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
               className="flex items-center gap-3"
             >
               <Avatar size="xs">
-                <AvatarImage src={user.profile_image} />
+                <AvatarImage src={user.profileImage} />
                 <AvatarFallback className="bg-blccu-neutral-400" />
               </Avatar>
               <p className="text-sm font-medium">{user.username}</p>
@@ -92,8 +92,8 @@ const UserHandlePage = ({ params: { userHandle } }: UserHandlePageProps) => {
         </div>
       </AppBar>
       <UserProfileSection user={user} />
-      <UserHandlePageTrendingPostSection user={user} />
-      <PostByCategorySection user={user} />
+      <UserHandlePageTrendingArticleSection user={user} />
+      <ArticleByCategorySection user={user} />
     </div>
   );
 };

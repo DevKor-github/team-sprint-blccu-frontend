@@ -11,22 +11,29 @@
  * ---------------------------------------------------------------
  */
 import {
+  AgreementCreateRequestDto,
+  AgreementPatchRequestDto,
   AgreementsControllerAgreeData,
   AgreementsControllerFetchAgreementAdminData,
   AgreementsControllerFetchAgreementsData,
-  AgreementsControllerFetchContractData,
-  AgreementsControllerFetchContractParams,
+  AgreementsControllerGetContractData,
+  AgreementsControllerGetContractParams,
   AgreementsControllerPatchAgreementData,
+  AnnouncementCreateRequestDto,
+  AnnouncementPatchRequestDto,
   AnnouncementsControllerCreateAnmtData,
   AnnouncementsControllerPatchAnmtData,
   AnnouncementsControllerRemoveAnmtData,
-  BulkMapCategoryDto,
-  CreateAgreementsInput,
-  CreateAnouncementInput,
-  CreateFeedbackInput,
-  CreatePostCategoryDto,
-  CreateStickerCategoryInput,
-  DeleteUserInput,
+  ArticleBackgroundsControllerCreateArticleBackgroundData,
+  ArticleBackgroundsControllerDeleteData,
+  ArticleCategoriesControllerCreateArticleCategoryData,
+  ArticleCategoriesControllerDeleteArticleCategoryData,
+  ArticleCategoriesControllerFetchArticleCategoriesData,
+  ArticleCategoriesControllerFetchMyCategoryData,
+  ArticleCategoriesControllerPatchArticleCategoryData,
+  ArticleCategoryCreateRequestDto,
+  ArticleCategoryPatchRequestDto,
+  FeedbackCreateRequestDto,
   FeedbacksControllerCreateFeedbackData,
   FeedbacksControllerGetFeedbacksData,
   FollowsControllerCheckFollowerData,
@@ -35,31 +42,23 @@ import {
   FollowsControllerGetFollowersData,
   FollowsControllerGetFollowsData,
   FollowsControllerUnfollowUserData,
-  ImageUploadDto,
-  PatchAgreementInput,
-  PatchAnnouncementInput,
-  PatchPostCategoryDto,
-  PatchUserInput,
-  PostBackgroundsControllerDeleteData,
-  PostBackgroundsControllerUploadImageData,
-  PostCategoriesControllerCreatePostCategoryData,
-  PostCategoriesControllerDeletePostCategoryData,
-  PostCategoriesControllerFetchMyCategoryData,
-  PostCategoriesControllerFetchPostCategoriesData,
-  PostCategoriesControllerPatchCategoryData,
+  ImageUploadRequestDto,
   ReportsControllerFetchAllData,
   StickerCategoriesControllerCreateCategoryData,
   StickerCategoriesControllerMapCategoryData,
+  StickerCategoriesMapDto,
+  StickerCategoryCreateRequestDto,
   StickersControllerCreatePublicStickerData,
-  UsersControllerDeleteUserData,
-  UsersControllerFetchUserData,
-  UsersControllerFindAllUsersData,
-  UsersControllerFindUserByHandleData,
-  UsersControllerFindUserByKakaoIdData,
-  UsersControllerFindUsersByNameData,
-  UsersControllerPatchUserData,
-  UsersControllerUploadBackgroundImageData,
-  UsersControllerUploadProfileImageData,
+  UserDeleteRequestDto,
+  UserPatchRequestDto,
+  UsersDeleteControllerDeleteUserData,
+  UsersReadControllerGetMyProfileData,
+  UsersReadControllerGetUserByHandleData,
+  UsersReadControllerGetUserByIdData,
+  UsersReadControllerGetUsersByNameData,
+  UsersUpdateControllerPatchUserData,
+  UsersUpdateControllerPostProfileImageData,
+  UsersUpdateControllerUploadBackgroundImageData,
 } from './data-contracts';
 import { ContentType, HttpClient, RequestParams } from './http-client';
 
@@ -76,7 +75,7 @@ export class Users<
    * @secure
    */
   announcementsControllerCreateAnmt = (
-    data: CreateAnouncementInput,
+    data: AnnouncementCreateRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<AnnouncementsControllerCreateAnmtData, any>({
@@ -93,16 +92,16 @@ export class Users<
    * @tags 공지 API, 어드민 API
    * @name AnnouncementsControllerPatchAnmt
    * @summary [어드민용] 공지사항 수정
-   * @request PATCH:/users/admin/anmts/{id}
+   * @request PATCH:/users/admin/anmts/{announcementId}
    * @secure
    */
   announcementsControllerPatchAnmt = (
-    id: number,
-    data: PatchAnnouncementInput,
+    announcementId: number,
+    data: AnnouncementPatchRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<AnnouncementsControllerPatchAnmtData, any>({
-      path: `/users/admin/anmts/${id}`,
+      path: `/users/admin/anmts/${announcementId}`,
       method: 'PATCH',
       body: data,
       secure: true,
@@ -115,46 +114,32 @@ export class Users<
    * @tags 공지 API, 어드민 API
    * @name AnnouncementsControllerRemoveAnmt
    * @summary [어드민용] 공지사항 삭제
-   * @request DELETE:/users/admin/anmts/{id}
+   * @request DELETE:/users/admin/anmts/{announcementId}
    * @secure
    */
   announcementsControllerRemoveAnmt = (
-    id: number,
+    announcementId: number,
     params: RequestParams = {},
   ) =>
     this.request<AnnouncementsControllerRemoveAnmtData, any>({
-      path: `/users/admin/anmts/${id}`,
+      path: `/users/admin/anmts/${announcementId}`,
       method: 'DELETE',
       secure: true,
-      ...params,
-    });
-  /**
-   * @description 배포 때 삭제할 거임. 개발 및 테스트용
-   *
-   * @tags 유저 API
-   * @name UsersControllerFindAllUsers
-   * @summary [ONLY FOR DEV] 모든 유저의 정보를 조회한다
-   * @request GET:/users/all
-   */
-  usersControllerFindAllUsers = (params: RequestParams = {}) =>
-    this.request<UsersControllerFindAllUsersData, any>({
-      path: `/users/all`,
-      method: 'GET',
       ...params,
     });
   /**
    * @description 이름에 username이 포함된 유저를 검색한다.
    *
    * @tags 유저 API
-   * @name UsersControllerFindUsersByName
+   * @name UsersReadControllerGetUsersByName
    * @summary 이름이 포함된 유저 검색
    * @request GET:/users/username/{username}
    */
-  usersControllerFindUsersByName = (
+  usersReadControllerGetUsersByName = (
     username: string,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerFindUsersByNameData, any>({
+    this.request<UsersReadControllerGetUsersByNameData, any>({
       path: `/users/username/${username}`,
       method: 'GET',
       ...params,
@@ -163,15 +148,15 @@ export class Users<
    * @description id가 일치하는 유저 프로필을 조회한다.
    *
    * @tags 유저 API
-   * @name UsersControllerFindUserByKakaoId
+   * @name UsersReadControllerGetUserById
    * @summary 특정 유저 프로필 조회(id)
    * @request GET:/users/profile/id/{userId}
    */
-  usersControllerFindUserByKakaoId = (
+  usersReadControllerGetUserById = (
     userId: number,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerFindUserByKakaoIdData, any>({
+    this.request<UsersReadControllerGetUserByIdData, any>({
       path: `/users/profile/id/${userId}`,
       method: 'GET',
       ...params,
@@ -180,15 +165,15 @@ export class Users<
    * @description handle이 일치하는 유저 프로필을 조회한다.
    *
    * @tags 유저 API
-   * @name UsersControllerFindUserByHandle
+   * @name UsersReadControllerGetUserByHandle
    * @summary 특정 유저 프로필 조회(handle)
    * @request GET:/users/profile/handle/{handle}
    */
-  usersControllerFindUserByHandle = (
+  usersReadControllerGetUserByHandle = (
     handle: string,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerFindUserByHandleData, any>({
+    this.request<UsersReadControllerGetUserByHandleData, any>({
       path: `/users/profile/handle/${handle}`,
       method: 'GET',
       ...params,
@@ -197,13 +182,13 @@ export class Users<
    * @description 로그인된 유저의 프로필을 불러온다.
    *
    * @tags 유저 API
-   * @name UsersControllerFetchUser
+   * @name UsersReadControllerGetMyProfile
    * @summary 로그인된 유저의 프로필 불러오기
    * @request GET:/users/me
    * @secure
    */
-  usersControllerFetchUser = (params: RequestParams = {}) =>
-    this.request<UsersControllerFetchUserData, any>({
+  usersReadControllerGetMyProfile = (params: RequestParams = {}) =>
+    this.request<UsersReadControllerGetMyProfileData, any>({
       path: `/users/me`,
       method: 'GET',
       secure: true,
@@ -213,16 +198,16 @@ export class Users<
    * @description 로그인된 유저의 이름이나 설명, 핸들, 혹은 모두를 변경한다.
    *
    * @tags 유저 API
-   * @name UsersControllerPatchUser
+   * @name UsersUpdateControllerPatchUser
    * @summary 로그인된 유저의 이름이나 설명, 핸들을 변경
    * @request PATCH:/users/me
    * @secure
    */
-  usersControllerPatchUser = (
-    data: PatchUserInput,
+  usersUpdateControllerPatchUser = (
+    data: UserPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerPatchUserData, any>({
+    this.request<UsersUpdateControllerPatchUserData, any>({
       path: `/users/me`,
       method: 'PATCH',
       body: data,
@@ -234,16 +219,16 @@ export class Users<
    * @description 회원을 탈퇴하고 연동된 게시글과 댓글을 soft delete한다.
    *
    * @tags 유저 API
-   * @name UsersControllerDeleteUser
+   * @name UsersDeleteControllerDeleteUser
    * @summary 회원 탈퇴(soft delete)
    * @request DELETE:/users/me
    * @secure
    */
-  usersControllerDeleteUser = (
-    data: DeleteUserInput,
+  usersDeleteControllerDeleteUser = (
+    data: UserDeleteRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerDeleteUserData, any>({
+    this.request<UsersDeleteControllerDeleteUserData, any>({
       path: `/users/me`,
       method: 'DELETE',
       body: data,
@@ -255,16 +240,16 @@ export class Users<
    * @description 스토리지에 프로필 사진을 업로드하고 변경한다.
    *
    * @tags 유저 API
-   * @name UsersControllerUploadProfileImage
+   * @name UsersUpdateControllerPostProfileImage
    * @summary 로그인된 유저의 프로필 이미지를 변경
    * @request POST:/users/me/profile-image
    * @secure
    */
-  usersControllerUploadProfileImage = (
-    data: ImageUploadDto,
+  usersUpdateControllerPostProfileImage = (
+    data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerUploadProfileImageData, any>({
+    this.request<UsersUpdateControllerPostProfileImageData, any>({
       path: `/users/me/profile-image`,
       method: 'POST',
       body: data,
@@ -276,16 +261,16 @@ export class Users<
    * @description 스토리지에 배경 사진을 업로드하고 변경한다.
    *
    * @tags 유저 API
-   * @name UsersControllerUploadBackgroundImage
+   * @name UsersUpdateControllerUploadBackgroundImage
    * @summary 로그인된 유저의 배경 이미지를 변경
    * @request POST:/users/me/background-image
    * @secure
    */
-  usersControllerUploadBackgroundImage = (
-    data: ImageUploadDto,
+  usersUpdateControllerUploadBackgroundImage = (
+    data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersControllerUploadBackgroundImageData, any>({
+    this.request<UsersUpdateControllerUploadBackgroundImageData, any>({
       path: `/users/me/background-image`,
       method: 'POST',
       body: data,
@@ -297,15 +282,15 @@ export class Users<
    * No description
    *
    * @tags 유저 API
-   * @name AgreementsControllerFetchContract
+   * @name AgreementsControllerGetContract
    * @summary contract fetch
    * @request GET:/users/contracts
    */
-  agreementsControllerFetchContract = (
-    query: AgreementsControllerFetchContractParams,
+  agreementsControllerGetContract = (
+    query: AgreementsControllerGetContractParams,
     params: RequestParams = {},
   ) =>
-    this.request<AgreementsControllerFetchContractData, any>({
+    this.request<AgreementsControllerGetContractData, any>({
       path: `/users/contracts`,
       method: 'GET',
       query: query,
@@ -321,7 +306,7 @@ export class Users<
    * @secure
    */
   agreementsControllerAgree = (
-    data: CreateAgreementsInput,
+    data: AgreementCreateRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<AgreementsControllerAgreeData, any>({
@@ -378,7 +363,7 @@ export class Users<
    */
   agreementsControllerPatchAgreement = (
     agreementId: number,
-    data: PatchAgreementInput,
+    data: AgreementPatchRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<AgreementsControllerPatchAgreementData, any>({
@@ -399,7 +384,7 @@ export class Users<
    * @secure
    */
   feedbacksControllerCreateFeedback = (
-    data: CreateFeedbackInput,
+    data: FeedbackCreateRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<FeedbacksControllerCreateFeedbackData, any>({
@@ -436,7 +421,7 @@ export class Users<
    * @secure
    */
   stickersControllerCreatePublicSticker = (
-    data: ImageUploadDto,
+    data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<StickersControllerCreatePublicStickerData, any>({
@@ -457,7 +442,7 @@ export class Users<
    * @secure
    */
   stickerCategoriesControllerCreateCategory = (
-    data: CreateStickerCategoryInput,
+    data: StickerCategoryCreateRequestDto,
     params: RequestParams = {},
   ) =>
     this.request<StickerCategoriesControllerCreateCategoryData, any>({
@@ -478,7 +463,7 @@ export class Users<
    * @secure
    */
   stickerCategoriesControllerMapCategory = (
-    data: BulkMapCategoryDto,
+    data: StickerCategoriesMapDto,
     params: RequestParams = {},
   ) =>
     this.request<StickerCategoriesControllerMapCategoryData, any>({
@@ -597,15 +582,15 @@ export class Users<
    * @description 특정 유저가 생성한 카테고리의 이름과 id, 게시글 개수를 조회한다.
    *
    * @tags 유저 API
-   * @name PostCategoriesControllerFetchPostCategories
+   * @name ArticleCategoriesControllerFetchArticleCategories
    * @summary 특정 유저의 카테고리 전체 조회
    * @request GET:/users/{userId}/categories
    */
-  postCategoriesControllerFetchPostCategories = (
+  articleCategoriesControllerFetchArticleCategories = (
     userId: number,
     params: RequestParams = {},
   ) =>
-    this.request<PostCategoriesControllerFetchPostCategoriesData, any>({
+    this.request<ArticleCategoriesControllerFetchArticleCategoriesData, any>({
       path: `/users/${userId}/categories`,
       method: 'GET',
       ...params,
@@ -614,16 +599,16 @@ export class Users<
    * @description id에 해당하는 카테고리를 조회한다.
    *
    * @tags 유저 API
-   * @name PostCategoriesControllerFetchMyCategory
+   * @name ArticleCategoriesControllerFetchMyCategory
    * @summary 특정 카테고리 조회
-   * @request GET:/users/categories/{categoryId}
+   * @request GET:/users/categories/{articleCategoryId}
    */
-  postCategoriesControllerFetchMyCategory = (
-    categoryId: string,
+  articleCategoriesControllerFetchMyCategory = (
+    articleCategoryId: number,
     params: RequestParams = {},
   ) =>
-    this.request<PostCategoriesControllerFetchMyCategoryData, any>({
-      path: `/users/categories/${categoryId}`,
+    this.request<ArticleCategoriesControllerFetchMyCategoryData, any>({
+      path: `/users/categories/${articleCategoryId}`,
       method: 'GET',
       ...params,
     });
@@ -631,16 +616,16 @@ export class Users<
    * @description 로그인된 유저와 연결된 카테고리를 생성한다.
    *
    * @tags 유저 API
-   * @name PostCategoriesControllerCreatePostCategory
+   * @name ArticleCategoriesControllerCreateArticleCategory
    * @summary 게시글 카테고리 생성
    * @request POST:/users/me/categories
    * @secure
    */
-  postCategoriesControllerCreatePostCategory = (
-    data: CreatePostCategoryDto,
+  articleCategoriesControllerCreateArticleCategory = (
+    data: ArticleCategoryCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<PostCategoriesControllerCreatePostCategoryData, any>({
+    this.request<ArticleCategoriesControllerCreateArticleCategoryData, any>({
       path: `/users/me/categories`,
       method: 'POST',
       body: data,
@@ -652,18 +637,18 @@ export class Users<
    * No description
    *
    * @tags 유저 API
-   * @name PostCategoriesControllerPatchCategory
+   * @name ArticleCategoriesControllerPatchArticleCategory
    * @summary 로그인된 유저의 특정 카테고리 수정
-   * @request PATCH:/users/me/categories/{categoryId}
+   * @request PATCH:/users/me/categories/{articleCategoryId}
    * @secure
    */
-  postCategoriesControllerPatchCategory = (
-    categoryId: string,
-    data: PatchPostCategoryDto,
+  articleCategoriesControllerPatchArticleCategory = (
+    articleCategoryId: number,
+    data: ArticleCategoryPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<PostCategoriesControllerPatchCategoryData, any>({
-      path: `/users/me/categories/${categoryId}`,
+    this.request<ArticleCategoriesControllerPatchArticleCategoryData, any>({
+      path: `/users/me/categories/${articleCategoryId}`,
       method: 'PATCH',
       body: data,
       secure: true,
@@ -671,20 +656,20 @@ export class Users<
       ...params,
     });
   /**
-   * @description 로그인된 유저의 카테고리 중 categoryId 일치하는 카테고리를 삭제한다
+   * @description 로그인된 유저의 카테고리 중 articleCategoryId 일치하는 카테고리를 삭제한다
    *
    * @tags 유저 API
-   * @name PostCategoriesControllerDeletePostCategory
+   * @name ArticleCategoriesControllerDeleteArticleCategory
    * @summary 유저의 지정 카테고리 삭제하기
-   * @request DELETE:/users/me/categories/{categoryId}
+   * @request DELETE:/users/me/categories/{articleCategoryId}
    * @secure
    */
-  postCategoriesControllerDeletePostCategory = (
-    categoryId: string,
+  articleCategoriesControllerDeleteArticleCategory = (
+    articleCategoryId: number,
     params: RequestParams = {},
   ) =>
-    this.request<PostCategoriesControllerDeletePostCategoryData, any>({
-      path: `/users/me/categories/${categoryId}`,
+    this.request<ArticleCategoriesControllerDeleteArticleCategoryData, any>({
+      path: `/users/me/categories/${articleCategoryId}`,
       method: 'DELETE',
       secure: true,
       ...params,
@@ -693,18 +678,20 @@ export class Users<
    * No description
    *
    * @tags 어드민 API
-   * @name PostBackgroundsControllerUploadImage
+   * @name ArticleBackgroundsControllerCreateArticleBackground
    * @summary 내지 업로드
-   * @request POST:/users/admin/posts/background
+   * @request POST:/users/admin/article/background
+   * @secure
    */
-  postBackgroundsControllerUploadImage = (
-    data: ImageUploadDto,
+  articleBackgroundsControllerCreateArticleBackground = (
+    data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<PostBackgroundsControllerUploadImageData, any>({
-      path: `/users/admin/posts/background`,
+    this.request<ArticleBackgroundsControllerCreateArticleBackgroundData, any>({
+      path: `/users/admin/article/background`,
       method: 'POST',
       body: data,
+      secure: true,
       type: ContentType.FormData,
       ...params,
     });
@@ -712,14 +699,19 @@ export class Users<
    * No description
    *
    * @tags 어드민 API
-   * @name PostBackgroundsControllerDelete
+   * @name ArticleBackgroundsControllerDelete
    * @summary 내지 삭제하기
-   * @request DELETE:/users/admin/posts/background/{id}
+   * @request DELETE:/users/admin/articles/background/{articleBackgroundId}
+   * @secure
    */
-  postBackgroundsControllerDelete = (id: string, params: RequestParams = {}) =>
-    this.request<PostBackgroundsControllerDeleteData, any>({
-      path: `/users/admin/posts/background/${id}`,
+  articleBackgroundsControllerDelete = (
+    articleBackgroundId: string,
+    params: RequestParams = {},
+  ) =>
+    this.request<ArticleBackgroundsControllerDeleteData, any>({
+      path: `/users/admin/articles/background/${articleBackgroundId}`,
       method: 'DELETE',
+      secure: true,
       ...params,
     });
   /**
