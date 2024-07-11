@@ -3,15 +3,14 @@ import { Download, Save } from 'lucide-react';
 
 import { type ArticleCreateDraftRequestDto } from '@/__generated__/data-contracts';
 import { SaveDialog } from '@/app/(signed-in-only)/write/dialog/save-dialog';
+import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
+import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 import {
   EditorBottomSubNavBar,
   EditorBottomSubNavBarItem,
   EditorBottomSubNavBarItemButton,
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
 import { api } from '@/lib/api';
-
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 
 const SaveToolbar = () => {
   const numberOfSaveFiles = 5;
@@ -31,11 +30,17 @@ const SaveToolbar = () => {
     useEditorContentsStore((state) => state);
   const stickerBlocks = useStickersStore((state) => state.stickers);
 
+  const stickerBlocksArray = Object.keys(stickerBlocks).map((key) => {
+    const { src, ...rest } = stickerBlocks[key];
+    return rest;
+  });
+
   const handleSaveButtonClick = async () => {
     mutate({
       title: titleContents,
       content: bodyContents,
-      articleBackgroundId: background?.id ?? 0,
+      articleBackgroundId: background?.id ?? null,
+      stickerBlocks: stickerBlocksArray,
     });
   };
 

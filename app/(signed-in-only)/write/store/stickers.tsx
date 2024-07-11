@@ -5,9 +5,9 @@ type Sticker = {
   src: string;
   posX: number;
   posY: number;
-  scale?: number;
-  angle?: number;
-  zindex?: number;
+  scale: number;
+  angle: number;
+  zindex: number;
   clientId: string;
 };
 
