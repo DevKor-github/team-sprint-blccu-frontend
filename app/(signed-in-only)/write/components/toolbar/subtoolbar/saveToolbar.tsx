@@ -1,17 +1,42 @@
+import { useMutation } from '@tanstack/react-query';
 import { Download, Save } from 'lucide-react';
 
+import { type ArticleCreateDraftRequestDto } from '@/__generated__/data-contracts';
 import { SaveDialog } from '@/app/(signed-in-only)/write/dialog/save-dialog';
 import {
   EditorBottomSubNavBar,
   EditorBottomSubNavBarItem,
   EditorBottomSubNavBarItemButton,
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
+import { api } from '@/lib/api';
+
+import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
+import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
 
 const SaveToolbar = () => {
   const numberOfSaveFiles = 5;
 
-  const handleSaveButtonClick = () => {
-    console.log('save');
+  const { mutate } = useMutation({
+    mutationFn: (dto: ArticleCreateDraftRequestDto) =>
+      api.articles.articlesCreateControllerCreateDraft(dto),
+    onSuccess: () => {
+      console.log('success');
+    },
+    onError: () => {
+      console.log('error');
+    },
+  });
+
+  const { background, titleContents, bodyContents, mainContainerElement } =
+    useEditorContentsStore((state) => state);
+  const stickerBlocks = useStickersStore((state) => state.stickers);
+
+  const handleSaveButtonClick = async () => {
+    mutate({
+      title: titleContents,
+      content: bodyContents,
+      articleBackgroundId: background?.id ?? 0,
+    });
   };
 
   return (

@@ -131,8 +131,8 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
     transformRef.current = transform;
     editPosition({
       clientId,
-      x: transform.posX,
-      y: transform.posY,
+      posX: transform.posX,
+      posY: transform.posY,
     });
     editSize({
       clientId,

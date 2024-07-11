@@ -37,12 +37,14 @@ const StickerCategoryContent = ({
                 alt="스티커"
                 onClick={() =>
                   addSticker({
+                    stickerId: sticker.stickerId,
                     clientId: uuidv4(),
                     src: sticker.sticker.imageUrl,
-                    x: 100,
-                    y: 100,
+                    posX: 100,
+                    posY: 100,
                     scale: 1,
                     angle: 0,
+                    zindex: 0,
                   })
                 }
               />

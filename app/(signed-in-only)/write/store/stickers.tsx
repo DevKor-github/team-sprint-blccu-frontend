@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 
 type Sticker = {
-  clientId: string;
+  stickerId: number;
   src: string;
-  x: number;
-  y: number;
+  posX: number;
+  posY: number;
   scale?: number;
   angle?: number;
+  zindex?: number;
+  clientId: string;
 };
 
 type StickersState = {
@@ -15,7 +17,11 @@ type StickersState = {
   setFocused: (focused: string | null) => void;
   addSticker: (sticker: Sticker) => void;
   deleteSticker: (sticker: Sticker) => void;
-  editPosition: (params: { clientId: string; x: number; y: number }) => void;
+  editPosition: (params: {
+    clientId: string;
+    posX: number;
+    posY: number;
+  }) => void;
   editSize: (params: {
     clientId: string;
     scale: number;
@@ -36,12 +42,12 @@ const useStickersStore = create<StickersState>((set) => ({
       delete newStickers[sticker.clientId];
       return { stickers: newStickers };
     }),
-  editPosition: ({ clientId, x, y }) =>
+  editPosition: ({ clientId, posX, posY }) =>
     set((state) => {
       const newStickers = { ...state.stickers };
       if (newStickers[clientId]) {
-        newStickers[clientId].x = x;
-        newStickers[clientId].y = y;
+        newStickers[clientId].posX = posX;
+        newStickers[clientId].posY = posY;
       }
       return { stickers: newStickers };
     }),
