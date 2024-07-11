@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Download, Save } from 'lucide-react';
 
 import { type ArticleCreateDraftRequestDto } from '@/__generated__/data-contracts';
@@ -11,9 +12,11 @@ import {
   EditorBottomSubNavBarItemButton,
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
 import { api } from '@/lib/api';
+import { queries } from '@/queries';
 
 const SaveToolbar = () => {
-  const numberOfSaveFiles = 5;
+  const { data } = useQuery(queries.articles.tempPosts);
+  const numberOfSaveFiles = data?.data?.length ?? 0;
 
   const { mutate } = useMutation({
     mutationFn: (dto: ArticleCreateDraftRequestDto) =>
@@ -35,9 +38,15 @@ const SaveToolbar = () => {
     return rest;
   });
 
+  const stripHtml = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
+  };
+
   const handleSaveButtonClick = async () => {
     mutate({
-      title: titleContents,
+      title: stripHtml(titleContents),
+      htmlTitle: titleContents,
       content: bodyContents,
       articleBackgroundId: background?.id ?? null,
       stickerBlocks: stickerBlocksArray,

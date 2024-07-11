@@ -11,8 +11,11 @@ const SaveForm = () => {
   const { isLoading, data } = useQuery(queries.articles.tempPosts);
 
   const tempPosts = data?.data ?? [];
-  const { setTitleContents, setBodyContents } = useEditorContentsStore(
-    (state) => state,
+  const setTitleContents = useEditorContentsStore(
+    (state) => state.setTitleContents,
+  );
+  const setBodyContents = useEditorContentsStore(
+    (state) => state.setBodyContents,
   );
 
   const onClickHandler = async (temp: ArticleDto) => {
