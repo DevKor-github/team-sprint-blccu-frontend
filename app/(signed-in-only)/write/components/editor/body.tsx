@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import Bold from '@tiptap/extension-bold';
 import Color from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';
@@ -28,6 +30,7 @@ import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode'
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
+import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
 import { FontSize } from '@/app/(signed-in-only)/write/utils/setFontSize';
 
 import './font.css';
@@ -39,6 +42,10 @@ const Body = () => {
   const setSelectedEditor = useSelectedEditorStore(
     (state: any) => state.setSelectedEditor,
   );
+
+  const tempLoad = useTempLoadStore((state: any) => state.tempLoad);
+
+  const setTempLoad = useTempLoadStore((state: any) => state.setTempLoad);
 
   const CustomImageComponent = (props: any) => {
     const reprImageId = useReprImageStore((state: any) => state.reprImageId);
@@ -126,6 +133,15 @@ const Body = () => {
       setBodyContents(json);
     },
   });
+
+  const bodyContents = useEditorContentsStore((state) => state.bodyContents);
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(bodyContents);
+    }
+    setTempLoad(false);
+  }, [tempLoad]);
 
   return (
     <div className="pt-[2%]">

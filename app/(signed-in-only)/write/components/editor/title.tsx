@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import Bold from '@tiptap/extension-bold';
 import Color from '@tiptap/extension-color';
 import Document from '@tiptap/extension-document';
@@ -19,6 +21,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
 import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
+import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
 import { FontSize } from '@/app/(signed-in-only)/write/utils/setFontSize';
 
 import './font.css';
@@ -30,6 +33,10 @@ const Title = () => {
   const setSelectedEditor = useSelectedEditorStore(
     (state: any) => state.setSelectedEditor,
   );
+
+  const tempLoad = useTempLoadStore((state: any) => state.tempLoad);
+
+  const setTempLoad = useTempLoadStore((state: any) => state.setTempLoad);
 
   const editor = useEditor({
     extensions: [
@@ -55,6 +62,15 @@ const Title = () => {
       setTitleContents(json);
     },
   });
+
+  const titleContents = useEditorContentsStore((state) => state.titleContents);
+
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(titleContents);
+    }
+    setTempLoad(false);
+  }, [tempLoad]);
 
   return (
     <EditorContent

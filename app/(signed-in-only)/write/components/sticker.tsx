@@ -49,6 +49,18 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
     posX: 100,
     posY: 100,
   });
+
+  useEffect(() => {
+    if (stickerProps) {
+      setTransform({
+        scale: stickerProps.scale,
+        angle: stickerProps.angle,
+        posX: stickerProps.posX,
+        posY: stickerProps.posY,
+      });
+    }
+  }, []);
+
   const transformRef = useRef<Transform>(transform);
   const containerRef = useRef<HTMLDivElement>(null);
   const resizingRef = useRef(false);

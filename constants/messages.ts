@@ -41,6 +41,8 @@ const TOAST_MESSAGES = {
   UPLOAD_STICKER_FAIL: '스티커 업로드에 실패했습니다.',
   PATCH_STICKER_FAIL: '스티커 설정 변경에 실패했습니다.',
   DELETE_STICKER_FAIL: '스티커 삭제에 실패했습니다.',
+  SUCCESS_TEMP: '임시 저장에 성공했습니다.',
+  FAIL_TEMP: '임시 저장에 실패했습니다.',
 } as const;
 
 export { TOAST_MESSAGES };

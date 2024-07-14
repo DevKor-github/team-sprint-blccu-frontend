@@ -15,6 +15,7 @@ type StickersState = {
   stickers: { [key: string]: Sticker };
   focused: string | null;
   setFocused: (focused: string | null) => void;
+  setStickers: (stickers: { [key: string]: Sticker }) => void;
   addSticker: (sticker: Sticker) => void;
   deleteSticker: (sticker: Sticker) => void;
   editPosition: (params: {
@@ -32,6 +33,7 @@ const useStickersStore = create<StickersState>((set) => ({
   stickers: {},
   focused: null,
   setFocused: (focused) => set({ focused }),
+  setStickers: (stickers) => set({ stickers }),
   addSticker: (sticker) =>
     set((state) => ({
       stickers: { ...state.stickers, [sticker.clientId]: sticker },

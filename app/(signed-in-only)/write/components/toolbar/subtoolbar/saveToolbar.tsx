@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { Download, Save } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { type ArticleCreateDraftRequestDto } from '@/__generated__/data-contracts';
 import { SaveDialog } from '@/app/(signed-in-only)/write/dialog/save-dialog';
@@ -11,6 +12,7 @@ import {
   EditorBottomSubNavBarItem,
   EditorBottomSubNavBarItemButton,
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
+import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
@@ -22,10 +24,10 @@ const SaveToolbar = () => {
     mutationFn: (dto: ArticleCreateDraftRequestDto) =>
       api.articles.articlesCreateControllerCreateDraft(dto),
     onSuccess: () => {
-      console.log('success');
+      toast.success(TOAST_MESSAGES.SUCCESS_TEMP);
     },
     onError: () => {
-      console.log('error');
+      toast.error(TOAST_MESSAGES.FAIL_TEMP);
     },
   });
 

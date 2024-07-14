@@ -66,6 +66,10 @@ const articles = createQueryKeys('articles', {
     queryKey: null,
     queryFn: () => api.articles.articlesReadControllerFetchTempArticles(),
   },
+  stickers: (articleId: number) => ({
+    queryKey: [articleId],
+    queryFn: () => api.articles.articlesReadControllerFetchArticle(articleId),
+  }),
 });
 
 export { articles };

@@ -439,6 +439,7 @@ export interface StickerBlockDto {
   zindex: number;
   /** 스티커의 clientId */
   clientId: string;
+  sticker: StickerDto;
 }
 
 export interface ArticleCreateRequestDto {
