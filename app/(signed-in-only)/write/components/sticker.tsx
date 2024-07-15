@@ -205,8 +205,9 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
 
   const resizeControlStyle = {
     position: 'absolute',
-    width: '30px',
-    height: '30px',
+    width: '24px',
+    height: '24px',
+    transform: `scale(${1 / transform.scale})`,
     border: '2px solid black',
     backgroundColor: 'white',
     borderRadius: '50%',
@@ -216,8 +217,9 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
 
   const deleteControlStyle = {
     position: 'absolute',
-    width: '30px',
-    height: '30px',
+    width: '24px',
+    height: '24px',
+    transform: `scale(${1 / transform.scale})`,
     backgroundColor: 'red',
     borderRadius: '50%',
     touchAction: 'none',
@@ -259,8 +261,8 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
               style={{
                 ...resizeControlStyle,
                 position: 'absolute',
-                bottom: '-15px',
-                right: '-15px',
+                bottom: '-12px',
+                right: '-12px',
               }}
               onMouseDown={handleResizeMouseDown}
               onTouchStart={handleResizeTouchStart}
@@ -270,8 +272,8 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
               style={{
                 ...deleteControlStyle,
                 position: 'absolute',
-                top: '-15px',
-                right: '-15px',
+                top: '-12px',
+                right: '-12px',
               }}
               onClick={() => {
                 deleteSticker(stickerProps);
