@@ -2,13 +2,12 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { type ArticleDto } from '@/__generated__/data-contracts';
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
+import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
 import { AppBarBack } from '@/components/ui-unstable/app-bar';
 import { DialogClose } from '@/components/ui/dialog';
 import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
-
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
-import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
 
 const SaveForm = () => {
   const queryClient = useQueryClient();
@@ -23,11 +22,13 @@ const SaveForm = () => {
     (state) => state.setBodyContents,
   );
 
+  const setBackground = useEditorContentsStore((state) => state.setBackground);
+
   const setStickers = useStickersStore((state) => state.setStickers);
 
   const setTempLoad = useTempLoadStore((state) => state.setTempLoad);
 
-  const onClickHandler = async (temp: ArticleDto) => {
+  const onClickHandler = async (temp: any) => {
     const { data: tempData } = await queryClient.fetchQuery(
       queries.articles.stickers(temp.id),
     );
@@ -54,6 +55,7 @@ const SaveForm = () => {
     setStickers(stickerBlocks);
     setTitleContents(temp.title);
     setBodyContents(temp.content || '');
+    setBackground(temp.articleBackground);
     setTempLoad(true);
     noop;
   };
