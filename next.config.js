@@ -1,3 +1,7 @@
+const withPWA = require('next-pwa')({
+  dest: 'public',
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
@@ -59,4 +63,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = withPWA(nextConfig); // ?
