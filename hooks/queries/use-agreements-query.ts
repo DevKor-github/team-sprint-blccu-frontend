@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { checkIsAgree } from '@/lib/utils';
 import { queries } from '@/queries';
 
 const useAgreementsQuery = () => {
@@ -20,15 +21,15 @@ const useAgreementsQuery = () => {
     };
   }
 
-  const isAgreeWithTermsOfServiceAgreement =
-    agreements.find(
-      (agreement) => agreement.agreementType === 'TERMS_OF_SERVICE',
-    ) !== undefined;
+  const isAgreeWithTermsOfServiceAgreement = checkIsAgree(
+    agreements,
+    'TERMS_OF_SERVICE',
+  );
 
-  const isAgreeWithPrivacyPolicyAgreement =
-    agreements.find(
-      (agreement) => agreement.agreementType === 'PRIVACY_POLICY',
-    ) !== undefined;
+  const isAgreeWithPrivacyPolicyAgreement = checkIsAgree(
+    agreements,
+    'PRIVACY_POLICY',
+  );
 
   const isInitialUser =
     !isAgreeWithTermsOfServiceAgreement || !isAgreeWithPrivacyPolicyAgreement;
