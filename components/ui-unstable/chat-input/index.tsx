@@ -23,17 +23,24 @@ type InsertCommentProps = {
 
 type ChatInputProps = {
   articleId: number;
-  parentId?: number;
+  selectedCommentId?: number;
   disabled?: boolean;
 };
 
-const ChatInput = ({ articleId, parentId, disabled }: ChatInputProps) => {
+const ChatInput = ({
+  articleId,
+  selectedCommentId,
+  disabled,
+}: ChatInputProps) => {
   const { form, onSubmit } = useInsertCommentForm({
     defaultValues: {
       content: '',
     },
     onSubmit: (values) =>
-      mutate({ articleId, commentCreateRequestDto: { ...values, parentId } }),
+      mutate({
+        articleId,
+        commentCreateRequestDto: { ...values, parentId: selectedCommentId },
+      }),
   });
 
   const queryClient = useQueryClient();

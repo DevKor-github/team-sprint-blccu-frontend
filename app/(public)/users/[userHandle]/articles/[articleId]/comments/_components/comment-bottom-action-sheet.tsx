@@ -23,12 +23,14 @@ type CommentBottomActionSheetProps = {
   id: number;
   postId: number;
   isMe: boolean;
+  onReplyItemClick?: () => void;
 } & PropsWithTrigger;
 
 const CommentBottomActionSheet = ({
   id,
   postId,
   isMe,
+  onReplyItemClick,
   trigger,
 }: CommentBottomActionSheetProps) => {
   const queryClient = useQueryClient();
@@ -54,17 +56,21 @@ const CommentBottomActionSheet = ({
       <BottomActionSheetTrigger asChild>{trigger}</BottomActionSheetTrigger>
       <BottomActionSheetContent>
         <BottomActionSheetGroup>
-          {isMe ? (
+          {onReplyItemClick !== undefined && (
             <>
-              <BottomActionSheetItem>수정하기</BottomActionSheetItem>
-              <BottomActionSheetSeparator />
-              <BottomActionSheetItem
-                className="text-blccu-red"
-                onClick={() => mutate(id)}
-              >
-                삭제하기
+              <BottomActionSheetItem onClick={onReplyItemClick}>
+                답글 달기
               </BottomActionSheetItem>
+              <BottomActionSheetSeparator />
             </>
+          )}
+          {isMe ? (
+            <BottomActionSheetItem
+              className="text-blccu-red"
+              onClick={() => mutate(id)}
+            >
+              삭제하기
+            </BottomActionSheetItem>
           ) : (
             <Link href={ROUTES.REPORT_COMMENT_ID_OF(id)}>
               <BottomActionSheetItem className="text-blccu-red">

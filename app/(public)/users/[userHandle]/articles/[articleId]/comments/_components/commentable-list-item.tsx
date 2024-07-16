@@ -1,7 +1,5 @@
 import Link from 'next/link';
 
-import { type MouseEventHandler } from 'react';
-
 import { EllipsisVertical } from 'lucide-react';
 
 import {
@@ -18,14 +16,14 @@ type CommentableListItemProps = {
   comment: CommentChildrenDto;
   me: UserDto | undefined;
   isSelected?: boolean;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onReplyItemClick?: () => void;
 };
 
 const CommentableListItem = ({
   comment: { id, user, content, articleId, dateDeleted },
   me,
   isSelected,
-  onClick,
+  onReplyItemClick,
 }: CommentableListItemProps) => {
   const isSignedIn = me !== undefined;
   const isMe = me?.id === user.id;
@@ -44,7 +42,6 @@ const CommentableListItem = ({
             'flex flex-col gap-1 rounded-lg px-3 py-2',
             isSelected && 'shadow-blccu-secondary',
           )}
-          onClick={onClick}
         >
           <div className="flex items-center justify-between">
             <Link href={ROUTES.USER_HANDLE_OF(user.handle)}>
@@ -61,6 +58,7 @@ const CommentableListItem = ({
                 id={id}
                 postId={articleId}
                 isMe={isMe}
+                onReplyItemClick={onReplyItemClick}
                 trigger={
                   <IconButton>
                     <EllipsisVertical className="h-4 w-4 text-blccu-neutral-400" />

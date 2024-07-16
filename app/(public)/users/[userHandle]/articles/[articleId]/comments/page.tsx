@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, type MouseEventHandler, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { CornerDownRight } from 'lucide-react';
@@ -36,14 +36,12 @@ const CommentsPage = ({
   const [selectedComment, setSelectedComment] = useState<CommentDto | null>(
     null,
   );
-
-  const getHandleCommentClick = (comment: CommentDto | null) => {
-    const handleCommentClick: MouseEventHandler<HTMLDivElement> = (event) => {
-      event.stopPropagation();
+  const getHandleReplyItemClick = (comment: CommentDto | null) => {
+    const handleReplyItemClick = () => {
       setSelectedComment(comment);
     };
 
-    return handleCommentClick;
+    return handleReplyItemClick;
   };
 
   return (
@@ -61,7 +59,7 @@ const CommentsPage = ({
               isSelected={
                 selectedComment !== null && selectedComment.id === comment.id
               }
-              onClick={getHandleCommentClick(comment)}
+              onReplyItemClick={getHandleReplyItemClick(comment)}
             />
             <div className="relative ml-7 flex flex-col">
               {comment.children.map((child, index) => (
@@ -69,11 +67,7 @@ const CommentsPage = ({
                   {index === 0 && (
                     <CornerDownRight className="absolute -left-3 top-3 h-4 w-4 text-blccu-neutral-400" />
                   )}
-                  <CommentableListItem
-                    comment={child}
-                    me={me}
-                    onClick={getHandleCommentClick(comment)}
-                  />
+                  <CommentableListItem comment={child} me={me} />
                 </Fragment>
               ))}
             </div>
@@ -81,7 +75,7 @@ const CommentsPage = ({
         ))}
       </div>
       <div className="fixed bottom-0 mx-auto w-full max-w-screen-sm bg-blccu-white/80 backdrop-blur">
-        {selectedComment && (
+        {selectedComment !== null && (
           <div className="flex items-center justify-between px-4 pt-1">
             <p className="text-sm font-medium text-blccu-neutral-600">
               <span className="rounded-lg bg-blccu-neutral-200 px-1">
@@ -100,7 +94,7 @@ const CommentsPage = ({
         <div className="h-16 w-full">
           <ChatInput
             articleId={articleId}
-            parentId={selectedComment?.id ?? undefined}
+            selectedCommentId={selectedComment?.id ?? undefined}
             disabled={!isSignedIn}
           />
         </div>
