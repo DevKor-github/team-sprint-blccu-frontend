@@ -11,7 +11,7 @@
     "lint:fix": "next lint --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "sta": "sta -p https://api.blccu.com/api-docs-json -o __generated__ --modular --axios --extract-request-params --extract-request-body --extract-response-body --extract-response-error",
+    "sta": "sta -p https://staging.api.blccu.com/api-docs-json -o __generated__ --modular --axios --extract-request-params --extract-request-body --extract-response-body --extract-response-error",
     "chromatic": "npx chromatic --project-token=chpt_1234567890",
     "update-deps": "ncu -u && pnpm i",
     "prepare": "is-ci || husky"
