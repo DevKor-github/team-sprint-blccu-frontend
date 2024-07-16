@@ -1124,14 +1124,6 @@ export interface CommentsGetResponseDto {
   children: CommentChildrenDto[];
 }
 
-export interface CommentPatchRequestDto {
-  /**
-   * 내용 정보
-   * @maxLength 1500
-   */
-  content: string;
-}
-
 export interface CommentDto {
   /**
    * 생성된 날짜
@@ -1166,6 +1158,14 @@ export interface CommentDto {
   reportCount: number;
   /** 루트 댓글 아이디 */
   parentId: number;
+}
+
+export interface CommentPatchRequestDto {
+  /**
+   * 내용 정보
+   * @maxLength 1500
+   */
+  content: string;
 }
 
 export interface LikesGetResponseDto {
@@ -1301,7 +1301,8 @@ export type ArticlesCreateControllerPublishArticleData =
 
 export type ArticlesCreateControllerCreateDraftData = ArticleCreateResponseDto;
 
-export type ArticlesReadControllerFetchTempArticlesData = ArticleDto[];
+export type ArticlesReadControllerFetchTempArticlesData =
+  ArticleDetailResponseDto[];
 
 export type ArticlesCreateControllerCreatePrivateStickerData =
   ImageUploadResponseDto;
@@ -1450,6 +1451,8 @@ export type ArticleBackgroundsControllerDeleteData = any;
 export type CommentsControllerCreateCommentData = CommentChildrenDto;
 
 export type CommentsControllerFetchCommentsData = CommentsGetResponseDto[];
+
+export type CommentsControllerFetchUserCommentsData = CommentDto[];
 
 export type CommentsControllerPatchCommentData = CommentDto;
 

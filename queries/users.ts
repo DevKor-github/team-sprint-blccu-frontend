@@ -77,6 +77,10 @@ const users = createQueryKeys('users', {
     queryKey: [search],
     queryFn: () => api.users.usersReadControllerGetUsersByName(search),
   }),
+  comments: {
+    queryKey: null,
+    queryFn: api.users.commentsControllerFetchUserComments,
+  },
 });
 
 export { users };

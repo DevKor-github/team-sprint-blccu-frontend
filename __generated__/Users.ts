@@ -33,6 +33,7 @@ import {
   ArticleCategoriesControllerPatchArticleCategoryData,
   ArticleCategoryCreateRequestDto,
   ArticleCategoryPatchRequestDto,
+  CommentsControllerFetchUserCommentsData,
   FeedbackCreateRequestDto,
   FeedbacksControllerCreateFeedbackData,
   FeedbacksControllerGetFeedbacksData,
@@ -711,6 +712,22 @@ export class Users<
     this.request<ArticleBackgroundsControllerDeleteData, any>({
       path: `/users/admin/articles/background/${articleBackgroundId}`,
       method: 'DELETE',
+      secure: true,
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags 유저 API
+   * @name CommentsControllerFetchUserComments
+   * @summary 자신의 최근 댓글 10개 조회
+   * @request GET:/users/me/comments
+   * @secure
+   */
+  commentsControllerFetchUserComments = (params: RequestParams = {}) =>
+    this.request<CommentsControllerFetchUserCommentsData, any>({
+      path: `/users/me/comments`,
+      method: 'GET',
       secure: true,
       ...params,
     });

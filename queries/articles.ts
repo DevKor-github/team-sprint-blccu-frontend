@@ -35,6 +35,21 @@ const articles = createQueryKeys('articles', {
         order: 'VIEW',
       }),
   }),
+  userLatest: (userId: number | undefined) => ({
+    queryKey: [userId],
+    queryFn: () => {
+      if (userId === undefined) {
+        return Promise.reject(new Error('User ID is undefined'));
+      }
+
+      return api.articles.articlesReadControllerFetchUserArticles({
+        userId,
+        sort: 'DESC',
+        take: 10,
+        order: 'DATE',
+      });
+    },
+  }),
   userByCategory: (userId: number, categoryId?: number) => ({
     queryKey: [userId, categoryId],
   }),
