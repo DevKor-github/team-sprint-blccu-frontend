@@ -138,7 +138,7 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
                   <FormItem>
                     <div className="flex items-center gap-2">
                       <FormLabel>
-                        유저 핸들<span className="ml-1 text-red-500">*</span>
+                        유저 아이디<span className="ml-1 text-red-500">*</span>
                       </FormLabel>
                       <FormFieldValidLabel isValid={isValidHandle}>
                         2 ~ 20자의 영숫자, 특수문자(-, _)
