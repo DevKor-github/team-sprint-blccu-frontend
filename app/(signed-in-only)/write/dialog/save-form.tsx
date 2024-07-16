@@ -2,7 +2,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { type ArticleDto } from '@/__generated__/data-contracts';
 import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+import useStickersStore, {
+  type Sticker,
+} from '@/app/(signed-in-only)/write/store/stickers';
 import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
 import { AppBarBack } from '@/components/ui-unstable/app-bar';
 import { DialogClose } from '@/components/ui/dialog';
@@ -14,7 +16,7 @@ const SaveForm = () => {
 
   const { isLoading, data } = useQuery(queries.articles.tempPosts);
 
-  const tempPosts = data?.data ?? [];
+  const tempArticles = data?.data ?? [];
   const setTitleContents = useEditorContentsStore(
     (state) => state.setTitleContents,
   );
@@ -28,34 +30,28 @@ const SaveForm = () => {
 
   const setTempLoad = useTempLoadStore((state) => state.setTempLoad);
 
-  const onClickHandler = async (temp: any) => {
+  const onClickHandler = async (tempArticle: ArticleDto) => {
     const { data: tempData } = await queryClient.fetchQuery(
-      queries.articles.stickers(temp.id),
+      queries.articles.stickers(tempArticle.id),
     );
 
     const rawStickerBlocks = tempData?.stickerBlocks;
 
     const stickerBlocks = rawStickerBlocks?.reduce(
-      (acc: { [key: string]: any }, block) => {
-        acc[block.clientId] = {
-          stickerId: block.stickerId,
-          src: block.sticker.imageUrl,
-          posX: block.posX,
-          posY: block.posY,
-          scale: block.scale,
-          angle: block.angle,
-          zindex: block.zindex,
-          clientId: block.clientId,
-        };
+      (acc, { clientId, sticker, ...rest }) => {
+        acc[clientId] = { src: sticker.imageUrl, ...rest, clientId };
+
         return acc;
       },
-      {},
+      {} as Record<string, Sticker>, // tmp
     );
 
     setStickers(stickerBlocks);
-    setTitleContents(temp.title);
-    setBodyContents(temp.content || '');
-    setBackground(temp.articleBackground);
+    setTitleContents(tempArticle.title);
+    setBodyContents(tempArticle.content ?? '');
+
+    //@ts-ignore
+    setBackground(tempArticle.articleBackground); // FIXME: swagger update가 아직 안되었음. background join 해서 넘겨줌.
     setTempLoad(true);
     noop;
   };
@@ -63,18 +59,17 @@ const SaveForm = () => {
   return (
     <div>
       <DialogClose>
-        <AppBarBack
-          onClick={() => {
-            noop;
-          }}
-        />
+        <AppBarBack onClick={noop} />
       </DialogClose>
       <div className="flex-col">
-        {tempPosts.map((temp) => {
+        {tempArticles.map((tempArticle) => {
           return (
-            <div key={temp.id} onClick={() => onClickHandler(temp)}>
-              <div>{temp.title}</div>
-              <div>{temp.dateUpdated}</div>
+            <div
+              key={tempArticle.id}
+              onClick={() => onClickHandler(tempArticle)}
+            >
+              <div>{tempArticle.title}</div>
+              <div>{tempArticle.dateUpdated}</div>
             </div>
           );
         })}

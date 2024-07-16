@@ -439,7 +439,6 @@ export interface StickerBlockDto {
   zindex: number;
   /** 스티커의 clientId */
   clientId: string;
-  sticker: StickerDto;
 }
 
 export interface ArticleCreateRequestDto {
@@ -763,9 +762,46 @@ export interface ArticleDetailResponseDto {
   articleBackground: ArticleBackgroundDto;
 }
 
+export interface StickerBlocksWithStickerResponseDto {
+  /**
+   * 생성된 날짜
+   * @format date-time
+   */
+  dateCreated: string;
+  /**
+   * 수정된 날짜
+   * @format date-time
+   */
+  dateUpdated: string;
+  /**
+   * 삭제된 날짜
+   * @format date-time
+   */
+  dateDeleted: string;
+  /** PK: A_I_ */
+  id: number;
+  /** 참조하는 스티커의 아이디 */
+  stickerId: number;
+  /** 참조하는 포스트 아이디 */
+  articleId: number;
+  /** 스티커의 posX */
+  posX: number;
+  /** 스티커의 posY */
+  posY: number;
+  /** 스티커의 scale */
+  scale: number;
+  /** 스티커의 angle */
+  angle: number;
+  /** 스티커의 zindex */
+  zindex: number;
+  /** 스티커의 clientId */
+  clientId: string;
+  sticker: StickerDto;
+}
+
 export interface ArticleDetailForUpdateResponseDto {
   article: ArticleDetailResponseDto;
-  stickerBlocks: StickerBlockDto[];
+  stickerBlocks: StickerBlocksWithStickerResponseDto[];
 }
 
 export interface ArticleWithUserDto {

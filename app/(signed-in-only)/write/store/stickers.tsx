@@ -65,3 +65,4 @@ const useStickersStore = create<StickersState>((set) => ({
 }));
 
 export default useStickersStore;
+export type { Sticker };
