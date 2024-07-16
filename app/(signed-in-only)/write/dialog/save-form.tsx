@@ -6,7 +6,11 @@ import useStickersStore, {
   type Sticker,
 } from '@/app/(signed-in-only)/write/store/stickers';
 import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
-import { AppBarBack } from '@/components/ui-unstable/app-bar';
+import {
+  AppBar,
+  AppBarBack,
+  AppBarTitle,
+} from '@/components/ui-unstable/app-bar';
 import { DialogClose } from '@/components/ui/dialog';
 import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
@@ -58,18 +62,22 @@ const SaveForm = () => {
 
   return (
     <div>
-      <DialogClose>
-        <AppBarBack onClick={noop} />
-      </DialogClose>
-      <div className="flex-col">
+      <AppBar className="justify-between border-none bg-transparent">
+        <DialogClose>
+          <AppBarBack onClick={noop} />
+        </DialogClose>
+        <AppBarTitle>임시저장글</AppBarTitle>
+      </AppBar>
+      <div className="flex-col gap-4 pt-16">
         {tempArticles.map((tempArticle) => {
           return (
             <div
               key={tempArticle.id}
               onClick={() => onClickHandler(tempArticle)}
+              className="cursor-pointer hover:bg-blccu-neutral-100"
             >
-              <div>{tempArticle.title}</div>
-              <div>{tempArticle.dateUpdated}</div>
+              <div className="text-lg">{tempArticle.title}</div>
+              <div className="text-sm">{tempArticle.dateUpdated}</div>
             </div>
           );
         })}
