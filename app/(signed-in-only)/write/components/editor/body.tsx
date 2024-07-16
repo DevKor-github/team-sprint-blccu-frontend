@@ -33,6 +33,7 @@ import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedE
 import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
 import { FontSize } from '@/app/(signed-in-only)/write/utils/setFontSize';
 
+import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import './font.css';
 import './placeholder.css';
 
@@ -57,6 +58,8 @@ const Body = () => {
       (state: any) => state.setReprImageSrc,
     );
 
+    const setFocused = useFocusedStore((state: any) => state.setFocused);
+
     const captureMode = useCaptureModeStore((state: any) => state.captureMode);
 
     const { src, alt, id } = props.node.attrs;
@@ -66,7 +69,12 @@ const Body = () => {
     return (
       <NodeViewWrapper className="grid place-items-center">
         <div className="relative">
-          <img src={src} alt={alt} id={id} />
+          <img
+            src={src}
+            alt={alt}
+            id={id}
+            onClick={() => setFocused('image')}
+          />
           {captureMode || (
             <button
               onClick={() => {
