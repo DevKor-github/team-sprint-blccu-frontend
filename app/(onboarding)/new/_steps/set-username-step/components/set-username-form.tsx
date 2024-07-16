@@ -37,12 +37,11 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
     onSubmit: ({
       username,
       handle,
-      description,
       termsOfService,
       privacyPolicy,
       marketingConsent,
     }) => {
-      patchUserMutate({ username, handle, description });
+      patchUserMutate({ username, handle });
 
       if (termsOfService === true) {
         agreeMutate({
@@ -108,8 +107,6 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
   const isValidUsername = !getFieldState(SET_USERNAME_FORM_NAME.USERNAME)
     .invalid;
   const isValidHandle = !getFieldState(SET_USERNAME_FORM_NAME.HANDLE).invalid;
-  const isValidDescription = !getFieldState(SET_USERNAME_FORM_NAME.DESCRIPTION)
-    .invalid;
 
   return (
     <Form {...form}>
@@ -147,24 +144,9 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
                         2 ~ 20자의 영숫자, 특수문자(-, _)
                       </FormFieldValidLabel>
                     </div>
-                    <Input {...field} placeholder="유저 핸들을 입력해주세요." />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={SET_USERNAME_FORM_NAME.DESCRIPTION}
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex items-center gap-2">
-                      <FormLabel>상태 메세지 (선택)</FormLabel>
-                      <FormFieldValidLabel isValid={isValidDescription}>
-                        80자 이하
-                      </FormFieldValidLabel>
-                    </div>
                     <Input
                       {...field}
-                      placeholder="상태 메세지를 입력해주세요."
+                      placeholder="유저 아이디를 입력해주세요."
                     />
                   </FormItem>
                 )}

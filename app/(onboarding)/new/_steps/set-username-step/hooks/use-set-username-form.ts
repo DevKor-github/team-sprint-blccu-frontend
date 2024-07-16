@@ -10,7 +10,6 @@ const setUsernameFormSchema = z.object({
     .min(2)
     .max(20)
     .regex(/^[a-zA-Z0-9-_]+$/),
-  description: z.string().max(80).optional(),
   termsOfService: z.literal(true),
   privacyPolicy: z.literal(true),
   marketingConsent: z.boolean(),
@@ -24,7 +23,6 @@ type SetUsernameFormValues = z.infer<typeof setUsernameFormSchema>;
 const SET_USERNAME_FORM_NAME = {
   USERNAME: 'username',
   HANDLE: 'handle',
-  DESCRIPTION: 'description',
   TERMS_OF_SERVICE: 'termsOfService',
   PRIVACY_POLICY: 'privacyPolicy',
   MARKETING_CONSENT: 'marketingConsent',
