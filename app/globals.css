@@ -92,6 +92,7 @@
 @layer base {
   * {
     @apply border-border;
+    @apply tracking-tight;
   }
   body {
     @apply bg-blccu-background text-blccu-foreground;
