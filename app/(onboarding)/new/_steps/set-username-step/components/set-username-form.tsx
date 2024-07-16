@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
+import { type CheckedState } from '@radix-ui/react-checkbox';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { type AgreementCreateRequestDto } from '@/__generated__/data-contracts';
+import { AgreePrivacyPolicySheet } from '@/app/(onboarding)/new/_steps/set-username-step/components/agree-privacy-policy-sheet';
+import { AgreeTermsOfServiceSheet } from '@/app/(onboarding)/new/_steps/set-username-step/components/agree-terms-of-service-sheet';
 import {
   SET_USERNAME_FORM_NAME,
   useSetUsernameForm,
@@ -19,6 +22,7 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
+import { IconButton } from '@/components/ui/icon-button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TOAST_MESSAGES } from '@/constants/messages';
@@ -98,11 +102,40 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
     formState: { isSubmitting, isValid },
     trigger,
     getFieldState,
+    setValue,
+    watch,
   } = form;
+
+  const [agreeAll, setAgreeAll] = useState<CheckedState>(false);
+
+  const termsOfService = watch(SET_USERNAME_FORM_NAME.TERMS_OF_SERVICE);
+  const privacyPolicy = watch(SET_USERNAME_FORM_NAME.PRIVACY_POLICY);
+
+  useEffect(() => {
+    if (!termsOfService && !privacyPolicy) {
+      setAgreeAll(false);
+      return;
+    }
+
+    if (termsOfService && privacyPolicy) {
+      setAgreeAll(true);
+      return;
+    }
+
+    setAgreeAll('indeterminate');
+  }, [termsOfService, privacyPolicy]);
+
+  const handleAgreeAllChange = (value: boolean) => {
+    setValue(SET_USERNAME_FORM_NAME.TERMS_OF_SERVICE, value);
+    setValue(SET_USERNAME_FORM_NAME.PRIVACY_POLICY, value);
+    setAgreeAll(value);
+  };
 
   useEffect(() => {
     trigger();
   }, []);
+
+  const isValidWithAgreeAll = isValid && agreeAll === true;
 
   const isValidUsername = !getFieldState(SET_USERNAME_FORM_NAME.USERNAME)
     .invalid;
@@ -156,9 +189,12 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-1">
               <FormItem className="flex items-center justify-between p-2">
-                <FormLabel>필수 사항 전체 동의</FormLabel>
+                <FormLabel>필수 항목 전체 동의하기</FormLabel>
                 <FormControl>
-                  <Checkbox />
+                  <Checkbox
+                    checked={agreeAll}
+                    onCheckedChange={handleAgreeAllChange}
+                  />
                 </FormControl>
               </FormItem>
               <div className="border-t border-blccu-neutral-200" />
@@ -172,7 +208,13 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
                         <FormLabel className="font-normal">
                           이용약관 동의 (필수)
                         </FormLabel>
-                        <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                        <AgreeTermsOfServiceSheet
+                          trigger={
+                            <IconButton>
+                              <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                            </IconButton>
+                          }
+                        />
                       </div>
                       <FormControl>
                         <Checkbox
@@ -192,7 +234,13 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
                         <FormLabel className="font-normal">
                           개인정보 수집 및 이용동의 (필수)
                         </FormLabel>
-                        <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                        <AgreePrivacyPolicySheet
+                          trigger={
+                            <IconButton>
+                              <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                            </IconButton>
+                          }
+                        />
                       </div>
                       <FormControl>
                         <Checkbox
@@ -212,7 +260,7 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
                         <FormLabel className="font-normal">
                           광고성 정보 수신 동의 (선택)
                         </FormLabel>
-                        <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                        {/* <ChevronRight className="h-4 w-4 text-blccu-neutral-600" /> */}
                       </div>
                       <FormControl>
                         <Checkbox
@@ -227,7 +275,7 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
             </div>
             <Button
               size="lg"
-              disabled={!isValid || isSubmitting}
+              disabled={!isValidWithAgreeAll || isSubmitting}
               className="mb-4"
             >
               블꾸 시작하기

@@ -10,8 +10,8 @@ const setUsernameFormSchema = z.object({
     .min(2)
     .max(20)
     .regex(/^[a-zA-Z0-9-_]+$/),
-  termsOfService: z.literal(true),
-  privacyPolicy: z.literal(true),
+  termsOfService: z.boolean(),
+  privacyPolicy: z.boolean(),
   marketingConsent: z.boolean(),
 });
 
