@@ -48,7 +48,6 @@ const ROUTES = {
   LEGAL: '/settings/legal',
   TERMS_OF_USE: '/settings/legal/terms-of-use',
   PRIVACY_POLICY: '/settings/legal/privacy-policy',
-  DESIGN_LICENSE: '/settings/legal/design-license',
   MANAGE_ACCOUNT: '/settings/manage-account',
 
   LEAVE: '/leave',
