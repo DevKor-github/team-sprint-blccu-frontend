@@ -62,21 +62,22 @@ const SaveForm = () => {
 
   return (
     <div>
-      <AppBar className="justify-between border-none bg-transparent">
+      <AppBar className="flex justify-between" shadow>
         <DialogClose>
           <AppBarBack onClick={noop} />
         </DialogClose>
-        <AppBarTitle>임시저장글</AppBarTitle>
+        <AppBarTitle align="center">임시저장글</AppBarTitle>
+        <div>dummy</div>
       </AppBar>
-      <div className="flex-col gap-4 pt-16">
+      <div className="flex flex-col pt-16">
         {tempArticles.map((tempArticle) => {
           return (
             <div
               key={tempArticle.id}
               onClick={() => onClickHandler(tempArticle)}
-              className="cursor-pointer hover:bg-blccu-neutral-100"
+              className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 hover:bg-blccu-neutral-100"
             >
-              <div className="text-lg">{tempArticle.title}</div>
+              <div className="font-medium">{tempArticle.title}</div>
               <div className="text-sm">{tempArticle.dateUpdated}</div>
             </div>
           );
