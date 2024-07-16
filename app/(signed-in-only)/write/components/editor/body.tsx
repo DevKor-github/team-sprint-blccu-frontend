@@ -61,7 +61,7 @@ const Body = () => {
 
     const { src, alt, id } = props.node.attrs;
 
-    const buttonStyle = `${reprImageId === id ? 'bg-[#1A1A1A] text-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#1A1A1A]'} absolute top-2 left-2 p-1`;
+    const buttonStyle = `${reprImageId === id ? 'bg-[#1A1A1A] text-[#FFFFFF] border-2 border-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#1A1A1A] opacity-60 border-2 border-[#1A1A1A]'} absolute top-2 left-2 p-1`;
 
     return (
       <NodeViewWrapper className="grid place-items-center">
