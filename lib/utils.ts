@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { type AgreementDto } from '@/__generated__/data-contracts';
+
 const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
@@ -23,4 +25,16 @@ const truncate = (str: string, num: number) => {
   return str.slice(0, num) + '...';
 };
 
-export { cn, copyCurrentUrl, getValues, noop, truncate };
+const checkIsAgree = (agreements: AgreementDto[], agreementType: string) => {
+  const agreement = agreements.find(
+    (agreement) => agreement.agreementType === agreementType,
+  );
+
+  if (agreement === undefined) {
+    return false;
+  }
+
+  return agreement.isAgreed;
+};
+
+export { checkIsAgree, cn, copyCurrentUrl, getValues, noop, truncate };
