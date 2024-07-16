@@ -32,25 +32,20 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      /* for development only */
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      /* for development only - images with fixed width & height */
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-      },
       /* s3 bucket */
       {
         protocol: 'https',
         hostname: 's3.ap-northeast-2.amazonaws.com',
       },
-      /* cloudfront */
+      /* cloudfront - development */
       {
         protocol: 'https',
         hostname: 'd60yoiev654ed.cloudfront.net',
+      },
+      /* cloudfront - production */
+      {
+        protocol: 'https',
+        hostname: 'd3w41c7os2c6vd.cloudfront.net',
       },
     ],
   },
