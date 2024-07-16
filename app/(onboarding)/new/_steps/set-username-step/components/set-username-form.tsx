@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { type AgreementCreateRequestDto } from '@/__generated__/data-contracts';
@@ -171,61 +172,77 @@ const SetUsernameForm = ({ onNext }: SetUsernameFormProps) => {
             </div>
           </ScrollArea>
           <div className="flex flex-col gap-10">
-            <section>
-              <FormField
-                control={form.control}
-                name={SET_USERNAME_FORM_NAME.TERMS_OF_SERVICE}
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between py-2">
-                    <FormLabel className="font-normal">
-                      이용약관 동의
-                      <span className="ml-1 text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={SET_USERNAME_FORM_NAME.PRIVACY_POLICY}
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between py-2">
-                    <FormLabel className="font-normal">
-                      개인정보 수집 및 이용동의
-                      <span className="ml-1 text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name={SET_USERNAME_FORM_NAME.MARKETING_CONSENT}
-                render={({ field }) => (
-                  <FormItem className="flex items-center justify-between py-2">
-                    <FormLabel className="font-normal">
-                      광고성 정보 수신 동의 (선택)
-                    </FormLabel>
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </section>
+            <div className="flex flex-col gap-1">
+              <FormItem className="flex items-center justify-between p-2">
+                <FormLabel>필수 사항 전체 동의</FormLabel>
+                <FormControl>
+                  <Checkbox />
+                </FormControl>
+              </FormItem>
+              <div className="border-t border-blccu-neutral-200" />
+              <section>
+                <FormField
+                  control={form.control}
+                  name={SET_USERNAME_FORM_NAME.TERMS_OF_SERVICE}
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between p-2">
+                      <div className="flex items-center gap-4">
+                        <FormLabel className="font-normal">
+                          이용약관 동의 (필수)
+                        </FormLabel>
+                        <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                      </div>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={SET_USERNAME_FORM_NAME.PRIVACY_POLICY}
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between p-2">
+                      <div className="flex items-center gap-4">
+                        <FormLabel className="font-normal">
+                          개인정보 수집 및 이용동의 (필수)
+                        </FormLabel>
+                        <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                      </div>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={SET_USERNAME_FORM_NAME.MARKETING_CONSENT}
+                  render={({ field }) => (
+                    <FormItem className="flex items-center justify-between p-2">
+                      <div className="flex items-center gap-4">
+                        <FormLabel className="font-normal">
+                          광고성 정보 수신 동의 (선택)
+                        </FormLabel>
+                        <ChevronRight className="h-4 w-4 text-blccu-neutral-600" />
+                      </div>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </section>
+            </div>
             <Button
               size="lg"
               disabled={!isValid || isSubmitting}
