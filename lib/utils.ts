@@ -26,15 +26,15 @@ const truncate = (str: string, num: number) => {
 };
 
 const checkIsAgree = (agreements: AgreementDto[], agreementType: string) => {
-  const agreement = agreements.find(
+  const filteredAgreements = agreements.filter(
     (agreement) => agreement.agreementType === agreementType,
   );
 
-  if (agreement === undefined) {
+  if (filteredAgreements.length === 0) {
     return false;
   }
 
-  return agreement.isAgreed;
+  return filteredAgreements.some((agreement) => agreement.isAgreed);
 };
 
 export { checkIsAgree, cn, copyCurrentUrl, getValues, noop, truncate };
