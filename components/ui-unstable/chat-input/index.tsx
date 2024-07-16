@@ -24,9 +24,10 @@ type InsertCommentProps = {
 type ChatInputProps = {
   articleId: number;
   parentId?: number;
+  disabled?: boolean;
 };
 
-const ChatInput = ({ articleId, parentId }: ChatInputProps) => {
+const ChatInput = ({ articleId, parentId, disabled }: ChatInputProps) => {
   const { form, onSubmit } = useInsertCommentForm({
     defaultValues: {
       content: '',
@@ -77,8 +78,10 @@ const ChatInput = ({ articleId, parentId }: ChatInputProps) => {
                   'w-full bg-transparent',
                   'focus:outline-none',
                   'placeholder:text-blccu-neutral-500',
+                  'disabled:cursor-not-allowed disabled:opacity-50',
                 )}
                 placeholder="댓글을 작성하세요"
+                disabled={disabled}
                 {...field}
               />
             )}

@@ -27,7 +27,7 @@ type CommentsPageProps = {
 const CommentsPage = ({
   params: { userHandle: _, articleId },
 }: CommentsPageProps) => {
-  const { me } = useMeQuery();
+  const { isSignedIn, me } = useMeQuery();
 
   const { data } = useQuery(queries.articles.comments(articleId));
 
@@ -101,6 +101,7 @@ const CommentsPage = ({
           <ChatInput
             articleId={articleId}
             parentId={selectedComment?.id ?? undefined}
+            disabled={!isSignedIn}
           />
         </div>
       </div>

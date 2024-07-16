@@ -86,7 +86,7 @@ const ArticlePage = ({
           >
             <p className="font-medium">댓글 더보기</p>
           </Link>
-          <ChatInput articleId={article.id} />
+          <ChatInput articleId={article.id} disabled={!isSignedIn} />
         </div>
         <ArticlePageAuthorProfileSection userId={user.id} />
         <UserHandlePageTrendingArticleSection user={user} />
