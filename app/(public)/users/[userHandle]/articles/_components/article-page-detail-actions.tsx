@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { EllipsisVertical, Heart, Share2 } from 'lucide-react';
 
-import { ReportArticleBottomActionSheet } from '@/app/(public)/users/[userHandle]/articles/_components/report-article-bottom-action-sheet';
+import { ArticleBottomActionSheet } from '@/app/(public)/users/[userHandle]/articles/_components/article-bottom-action-sheet';
 import { CopyCurrentPageTrigger } from '@/components/ui-unstable/copy-current-page-trigger';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
@@ -74,7 +74,7 @@ const ArticlePageDetailActions = ({
     <div className="flex items-center justify-between p-4">
       <div className="flex items-center gap-4">
         {isSignedIn && (
-          <ReportArticleBottomActionSheet
+          <ArticleBottomActionSheet
             id={id}
             me={me}
             isMe={isMe}

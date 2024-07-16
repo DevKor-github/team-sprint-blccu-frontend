@@ -7,11 +7,11 @@ import { useQuery } from '@tanstack/react-query';
 import { EllipsisVertical } from 'lucide-react';
 
 import { UserHandlePageTrendingArticleSection } from '@/app/(public)/(main)/users/[userHandle]/_components/user-handle-page-trending-article-section';
+import { ArticleBottomActionSheet } from '@/app/(public)/users/[userHandle]/articles/_components/article-bottom-action-sheet';
 import { ArticlePageAllArticleSection } from '@/app/(public)/users/[userHandle]/articles/_components/article-page-all-article-section';
 import { ArticlePageAuthorProfileSection } from '@/app/(public)/users/[userHandle]/articles/_components/article-page-author-profile-section';
 import { ArticlePageBottomBar } from '@/app/(public)/users/[userHandle]/articles/_components/article-page-bottom-bar';
 import { ArticlePageDetailActions } from '@/app/(public)/users/[userHandle]/articles/_components/article-page-detail-actions';
-import { ReportArticleBottomActionSheet } from '@/app/(public)/users/[userHandle]/articles/_components/report-article-bottom-action-sheet';
 import {
   AppBar,
   AppBarBack,
@@ -63,7 +63,7 @@ const ArticlePage = ({
             </Link>
           </AppBarTitle>
           {isSignedIn && (
-            <ReportArticleBottomActionSheet
+            <ArticleBottomActionSheet
               id={id}
               me={me}
               isMe={isMe}
