@@ -110,8 +110,8 @@ const SaveForm = () => {
 
           const format = 'YYYY-MM-DD HH:mm:ss';
           const formatedDate = formatDate(tempArticle.dateUpdated, format);
-          const krDate = dayjs(formatedDate);
-          krDate.add(9, 'hour');
+          const date = dayjs(formatedDate);
+          const krDate = date.add(9, 'hour');
 
           return (
             <div
