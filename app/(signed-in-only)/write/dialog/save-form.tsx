@@ -1,4 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { toast } from 'sonner';
 
 import { type ArticleDto } from '@/__generated__/data-contracts';
@@ -14,6 +16,7 @@ import {
 } from '@/components/ui-unstable/app-bar';
 import { DialogClose } from '@/components/ui/dialog';
 import { TOAST_MESSAGES } from '@/constants/messages';
+import { api } from '@/lib/api';
 import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
@@ -63,6 +66,21 @@ const SaveForm = () => {
     noop;
   };
 
+  const { mutate } = useMutation({
+    mutationFn: (articleId: number) =>
+      api.articles.articlesDeleteControllerSoftDelete(articleId, {}),
+    onSuccess: () => {
+      toast.success(TOAST_MESSAGES.DELETE_POST_SUCCESS);
+    },
+    onError: () => {
+      toast.error(TOAST_MESSAGES.DELETE_POST_FAIL);
+    },
+  });
+
+  const deleteTempArticle = async (tempArticleId: number) => {
+    mutate(tempArticleId);
+  };
+
   return (
     <div>
       <AppBar className="flex justify-between" shadow>
@@ -70,20 +88,51 @@ const SaveForm = () => {
           <AppBarBack onClick={noop} />
         </DialogClose>
         <AppBarTitle align="center">임시저장글</AppBarTitle>
-        <div>dummy</div>
       </AppBar>
       <div className="flex flex-col pt-16">
         {tempArticles.map((tempArticle) => {
+          const formatDate = (date: string, format: string): string => {
+            const dateObj = new Date(date);
+
+            const map: { [key: string]: string | number } = {
+              YYYY: dateObj.getFullYear(),
+              MM: ('0' + (dateObj.getMonth() + 1)).slice(-2),
+              DD: ('0' + dateObj.getDate()).slice(-2),
+              HH: ('0' + dateObj.getHours()).slice(-2),
+              mm: ('0' + dateObj.getMinutes()).slice(-2),
+              ss: ('0' + dateObj.getSeconds()).slice(-2),
+            };
+
+            return format.replace(/YYYY|MM|DD|HH|mm|ss/g, (matched: string) =>
+              String(map[matched]),
+            );
+          };
+
+          const format = 'YYYY-MM-DD HH:mm:ss';
+          const formatedDate = formatDate(tempArticle.dateUpdated, format);
+          const krDate = dayjs(formatedDate);
+          krDate.add(9, 'hour');
+
           return (
             <div
               key={tempArticle.id}
               onClick={() => onClickHandler(tempArticle)}
               className="flex cursor-pointer items-center justify-between gap-2 px-3 py-2 hover:bg-blccu-neutral-100"
             >
-              <div className="font-medium">
-                {tempArticle.title === '' ? '제목 없음' : tempArticle.title}
+              <div className="flex-col">
+                <div className="font-medium">
+                  {tempArticle.title === '' ? '제목 없음' : tempArticle.title}
+                </div>
+                <div className="text-sm">
+                  {krDate.format('YYYY.MM.DD. HH:mm')}
+                </div>
               </div>
-              <div className="text-sm">{tempArticle.dateUpdated}</div>
+              <div
+                className="text-sm"
+                onClick={() => deleteTempArticle(tempArticle.id)}
+              >
+                삭제
+              </div>
             </div>
           );
         })}
