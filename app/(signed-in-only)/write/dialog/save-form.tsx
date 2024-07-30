@@ -1,14 +1,14 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useMutation } from '@tanstack/react-query';
-import dayjs from 'dayjs';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { format } from 'date-fns';
 import { toast } from 'sonner';
 
 import { type ArticleDto } from '@/__generated__/data-contracts';
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useStickersStore, {
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
+import {
   type Sticker,
+  useStickersStore,
 } from '@/app/(signed-in-only)/write/store/stickers';
-import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
+import { useTempLoadStore } from '@/app/(signed-in-only)/write/store/tempLoad';
 import {
   AppBar,
   AppBarBack,
@@ -21,23 +21,16 @@ import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
 const SaveForm = () => {
+  const { setTitleContents, setBodyContents, setBackground } =
+    useEditorContentsStore();
+  const { setStickers } = useStickersStore();
+  const { setTempLoad } = useTempLoadStore();
+
   const queryClient = useQueryClient();
 
-  const { isLoading, data } = useQuery(queries.articles.tempPosts);
+  const { data } = useQuery(queries.articles.tempPosts);
 
   const tempArticles = data?.data ?? [];
-  const setTitleContents = useEditorContentsStore(
-    (state) => state.setTitleContents,
-  );
-  const setBodyContents = useEditorContentsStore(
-    (state) => state.setBodyContents,
-  );
-
-  const setBackground = useEditorContentsStore((state) => state.setBackground);
-
-  const setStickers = useStickersStore((state) => state.setStickers);
-
-  const setTempLoad = useTempLoadStore((state) => state.setTempLoad);
 
   const onClickHandler = async (tempArticle: ArticleDto) => {
     const { data: tempData } = await queryClient.fetchQuery(
@@ -91,27 +84,10 @@ const SaveForm = () => {
       </AppBar>
       <div className="flex flex-col pt-16">
         {tempArticles.map((tempArticle) => {
-          const formatDate = (date: string, format: string): string => {
-            const dateObj = new Date(date);
-
-            const map: { [key: string]: string | number } = {
-              YYYY: dateObj.getFullYear(),
-              MM: ('0' + (dateObj.getMonth() + 1)).slice(-2),
-              DD: ('0' + dateObj.getDate()).slice(-2),
-              HH: ('0' + dateObj.getHours()).slice(-2),
-              mm: ('0' + dateObj.getMinutes()).slice(-2),
-              ss: ('0' + dateObj.getSeconds()).slice(-2),
-            };
-
-            return format.replace(/YYYY|MM|DD|HH|mm|ss/g, (matched: string) =>
-              String(map[matched]),
-            );
-          };
-
-          const format = 'YYYY-MM-DD HH:mm:ss';
-          const formatedDate = formatDate(tempArticle.dateUpdated, format);
-          const date = dayjs(formatedDate);
-          const krDate = date.add(9, 'hour');
+          const formattedDate = format(
+            tempArticle.dateUpdated,
+            'yyyy.MM.dd HH:mm',
+          );
 
           return (
             <div
@@ -123,9 +99,7 @@ const SaveForm = () => {
                 <div className="font-medium">
                   {tempArticle.title === '' ? '제목 없음' : tempArticle.title}
                 </div>
-                <div className="text-sm">
-                  {krDate.format('YYYY.MM.DD. HH:mm')}
-                </div>
+                <div className="text-sm">{formattedDate}</div>
               </div>
               <div
                 className="text-sm"
