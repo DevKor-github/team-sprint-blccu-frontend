@@ -446,6 +446,8 @@ export interface ArticleCreateRequestDto {
   articleCategoryId: number | null;
   /** 연결된 내지 fk */
   articleBackgroundId: number | null;
+  /** 현재 이미지 라벨링 정보 */
+  currrentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -504,6 +506,8 @@ export interface ArticleDto {
   articleBackgroundId: number | null;
   /** 작성한 유저 fk */
   userId: number;
+  /** 현재 이미지 라벨링 정보 */
+  currrentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -572,6 +576,8 @@ export interface ArticleCreateDraftRequestDto {
   articleCategoryId?: number | null;
   /** 연결된 내지 fk */
   articleBackgroundId?: number | null;
+  /** 현재 이미지 라벨링 정보 */
+  currrentImageId?: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -698,6 +704,8 @@ export interface ArticleDetailResponseDto {
   articleBackgroundId: number | null;
   /** 작성한 유저 fk */
   userId: number;
+  /** 현재 이미지 라벨링 정보 */
+  currrentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -828,6 +836,8 @@ export interface ArticleWithUserDto {
   articleBackgroundId: number | null;
   /** 작성한 유저 fk */
   userId: number;
+  /** 현재 이미지 라벨링 정보 */
+  currrentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -909,6 +919,8 @@ export interface ArticlePatchRequestDto {
   articleCategoryId?: number | null;
   /** 연결된 내지 fk */
   articleBackgroundId?: number | null;
+  /** 현재 이미지 라벨링 정보 */
+  currrentImageId?: number | null;
   /**
    * 제목(최대 100자)
    * @default ""

@@ -17,6 +17,7 @@ import {
 } from '@/app/(signed-in-only)/write/_hooks/use-publish-article-form';
 import { capture } from '@/app/(signed-in-only)/write/_lib/utils';
 import { useCaptureModeStore } from '@/app/(signed-in-only)/write/_store/use-capture-mode-store';
+import { useCurrentImageIdStore } from '@/app/(signed-in-only)/write/_store/use-current-image-id-store';
 import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
 import { useReprImageStore } from '@/app/(signed-in-only)/write/_store/use-repr-image-store';
 import {
@@ -60,6 +61,7 @@ const PublishArticleForm = () => {
   const { setCaptureMode } = useCaptureModeStore();
   const { background, titleContents, bodyContents, mainContainerElement } =
     useEditorContentsStore();
+  const { currentImageId } = useCurrentImageIdStore(); // FIXME: wip
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.id),
@@ -145,6 +147,7 @@ const PublishArticleForm = () => {
         content: bodyContents,
         imageUrl, // TODO: capture upload 이미지
         mainImageUrl: reprImageSrc,
+        currrentImageId: currentImageId,
         stickerBlocks: [], // wip
       });
     },
