@@ -1,4 +1,4 @@
-import ModeSelector from '@/app/(signed-in-only)/write/components/modeSelector';
+import { ModeSelector } from '@/app/(signed-in-only)/write/components/modeSelector';
 import { PublishArticleDialog } from '@/app/(signed-in-only)/write/dialog/publish-article-dialog';
 import {
   AppBar,
@@ -19,4 +19,4 @@ const Top = () => {
   );
 };
 
-export default Top;
+export { Top };

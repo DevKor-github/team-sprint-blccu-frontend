@@ -15,9 +15,9 @@ import {
   PUBLISH_POST_SCOPE_TYPE,
   usePublishArticleForm,
 } from '@/app/(signed-in-only)/write/hooks/use-publish-article-form';
-import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
+import { useCaptureModeStore } from '@/app/(signed-in-only)/write/store/captureMode';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
+import { useReprImageStore } from '@/app/(signed-in-only)/write/store/reprImage';
 import { capture } from '@/app/(signed-in-only)/write/utils/capture';
 import {
   AppBar,
@@ -52,12 +52,14 @@ import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
 const PublishArticleForm = () => {
+  const router = useRouter();
+
   const { isSignedIn, me } = useMeQuery();
 
-  const reprImageSrc = useReprImageStore((state: any) => state.reprImageSrc);
-  const setCaptureMode = useCaptureModeStore(
-    (state: any) => state.setCaptureMode,
-  );
+  const { reprImageSrc } = useReprImageStore();
+  const { setCaptureMode } = useCaptureModeStore();
+  const { background, titleContents, bodyContents, mainContainerElement } =
+    useEditorContentsStore();
 
   const { data: categoriesData } = useQuery({
     ...queries.users.categories(me?.id),
@@ -65,9 +67,6 @@ const PublishArticleForm = () => {
   });
 
   const categories = categoriesData?.data ?? [];
-
-  const { background, titleContents, bodyContents, mainContainerElement } =
-    useEditorContentsStore((state) => state);
 
   const stripHtml = (html: string) => {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -87,8 +86,6 @@ const PublishArticleForm = () => {
 
     return new File([u8arr], fileName, { type: mime });
   };
-
-  const router = useRouter();
 
   const { mutate } = useMutation({
     mutationFn: (dto: ArticleCreateRequestDto) =>

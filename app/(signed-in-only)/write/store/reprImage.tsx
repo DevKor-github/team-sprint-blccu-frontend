@@ -1,12 +1,17 @@
 import { create } from 'zustand';
 
-const useReprImageStore = create((set) => ({
+type ReprImageState = {
+  reprImageId: number | null;
+  reprImageSrc: string | null;
+  setReprImageId: (newReprImageId: number) => void;
+  setReprImageSrc: (newReprImageSrc: string) => void;
+};
+
+const useReprImageStore = create<ReprImageState>()((set) => ({
   reprImageId: null,
   reprImageSrc: null,
-  setReprImageId: (newReprImageId: number) =>
-    set({ reprImageId: newReprImageId }),
-  setReprImageSrc: (newReprImageSrc: string) =>
-    set({ reprImageSrc: newReprImageSrc }),
+  setReprImageId: (reprImageId: number) => set({ reprImageId }),
+  setReprImageSrc: (reprImageSrc: string) => set({ reprImageSrc }),
 }));
 
-export default useReprImageStore;
+export { useReprImageStore };

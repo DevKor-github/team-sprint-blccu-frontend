@@ -1,16 +1,18 @@
 'use client';
 
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
-import useModeStore from '@/app/(signed-in-only)/write/store/mode';
+import { useFocusedStore } from '@/app/(signed-in-only)/write/store/focused';
+import {
+  type EditorMode,
+  useEditorModeStore,
+} from '@/app/(signed-in-only)/write/store/mode';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const ModeSelector = () => {
-  const switchMode = useModeStore((state: any) => state.switchMode);
-  const setFocused = useFocusedStore((state: any) => state.setFocused);
-  const setSubFocused = useFocusedStore((state: any) => state.setSubFocused);
+  const { setEditorMode } = useEditorModeStore();
+  const { setFocused, setSubFocused } = useFocusedStore();
 
   const handleValueChange = (value: string) => {
-    switchMode(value);
+    setEditorMode(value as EditorMode); // assertion
     setFocused('init');
     setSubFocused('init');
   };
@@ -25,4 +27,4 @@ const ModeSelector = () => {
   );
 };
 
-export default ModeSelector;
+export { ModeSelector };

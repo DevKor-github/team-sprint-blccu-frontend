@@ -4,6 +4,7 @@ import { removeBackground } from '@imgly/background-removal';
 
 const StickerPost = () => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -58,4 +59,4 @@ const StickerPost = () => {
   );
 };
 
-export default StickerPost;
+export { StickerPost };

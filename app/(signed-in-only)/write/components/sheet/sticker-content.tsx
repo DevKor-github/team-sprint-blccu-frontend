@@ -11,7 +11,7 @@ import {
   type StickerPatchRequestDto,
 } from '@/__generated__/data-contracts';
 import { StickerCategoryContent } from '@/app/(signed-in-only)/write/components/sheet/sticker-category-content';
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+import { useStickersStore } from '@/app/(signed-in-only)/write/store/stickers';
 import { FileUploader } from '@/components/ui-unstable/file-uploader';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
@@ -78,7 +78,7 @@ const StickerContent = () => {
     },
   });
 
-  const { addSticker } = useStickersStore((state) => state);
+  const { addSticker } = useStickersStore();
 
   const categories = publicStickerCategoriesData?.data ?? [];
 

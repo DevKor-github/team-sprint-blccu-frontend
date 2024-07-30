@@ -1,24 +1,22 @@
 'use client';
 
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
-
-import AlignToolbar from './alignToolbar';
-import ImageToolbar from './imageToolbar';
-import SaveToolbar from './saveToolbar';
-import TextToolbar from './textToolbar';
+import { AlignToolbar } from '@/app/(signed-in-only)/write/components/toolbar/subtoolbar/alignToolbar';
+import { ImageToolbar } from '@/app/(signed-in-only)/write/components/toolbar/subtoolbar/imageToolbar';
+import { SaveToolbar } from '@/app/(signed-in-only)/write/components/toolbar/subtoolbar/saveToolbar';
+import { TextToolbar } from '@/app/(signed-in-only)/write/components/toolbar/subtoolbar/textToolbar';
+import { useFocusedStore } from '@/app/(signed-in-only)/write/store/focused';
 
 const SubToolbar = () => {
-  const focused = useFocusedStore((state: any) => state.focused);
-  if (focused === 'image') {
-    return <ImageToolbar />;
-  } else if (focused === 'text') {
-    return <TextToolbar />;
-  } else if (focused === 'align') {
-    return <AlignToolbar />;
-  } else if (focused === 'save') {
-    return <SaveToolbar />;
-  }
-  return null;
+  const { focused } = useFocusedStore();
+
+  return (
+    <>
+      {focused === 'image' && <ImageToolbar />}
+      {focused === 'text' && <TextToolbar />}
+      {focused === 'align' && <AlignToolbar />}
+      {focused === 'save' && <SaveToolbar />}
+    </>
+  );
 };
 
-export default SubToolbar;
+export { SubToolbar };

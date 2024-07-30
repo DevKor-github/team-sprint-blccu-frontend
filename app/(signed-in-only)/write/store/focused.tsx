@@ -1,10 +1,17 @@
 import { create } from 'zustand';
 
-const useFocusedStore = create((set) => ({
+type FocusedState = {
+  focused: string;
+  subFocused: string;
+  setFocused: (focused: string) => void;
+  setSubFocused: (subFocused: string) => void;
+};
+
+const useFocusedStore = create<FocusedState>()((set) => ({
   focused: 'init',
   subFocused: 'init',
-  setFocused: (newFocused: string) => set({ focused: newFocused }),
-  setSubFocused: (newSubFocused: string) => set({ subFocused: newSubFocused }),
+  setFocused: (focused: string) => set({ focused }),
+  setSubFocused: (subFocused: string) => set({ subFocused }),
 }));
 
-export default useFocusedStore;
+export { useFocusedStore };

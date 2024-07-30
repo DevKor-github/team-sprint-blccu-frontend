@@ -10,8 +10,8 @@ import {
   Underline,
 } from 'lucide-react';
 
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
-import useSelectedEditor from '@/app/(signed-in-only)/write/store/selectedEditor';
+import { useFocusedStore } from '@/app/(signed-in-only)/write/store/focused';
+import { useSelectedEditorStore } from '@/app/(signed-in-only)/write/store/selectedEditor';
 import {
   EditorBottomSubNavBar,
   EditorBottomSubNavBarItem,
@@ -19,14 +19,12 @@ import {
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
 
 const TextToolbar = () => {
-  const editor = useSelectedEditor((state: any) => state.selectedEditor);
-  const subFocused = useFocusedStore((state: any) => state.subFocused);
-  const setSubFocused = useFocusedStore((state: any) => state.setSubFocused);
+  const { selectedEditor } = useSelectedEditorStore();
+  const { subFocused, setSubFocused } = useFocusedStore();
+
+  // FIXME: type this
   const colorInput = (e: any) => {
-    if (!editor) {
-      return;
-    }
-    editor
+    selectedEditor
       ?.chain()
       .focus()
       .setColor((e.target as HTMLInputElement).value)
@@ -44,8 +42,8 @@ const TextToolbar = () => {
               <div className="rounded-xl bg-white shadow-lg">
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--nanum-gothic)')
                       .run()
@@ -56,8 +54,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--nanum-myeongjo)')
                       .run()
@@ -68,7 +66,11 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor.chain().focus().setFontFamily('var(--hahmlet)').run()
+                    selectedEditor
+                      ?.chain()
+                      .focus()
+                      .setFontFamily('var(--hahmlet)')
+                      .run()
                   }
                   style={{ fontFamily: 'var(--hahmlet)' }}
                 >
@@ -76,8 +78,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--sunflower)')
                       .run()
@@ -88,8 +90,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--gowun-batang)')
                       .run()
@@ -100,8 +102,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--single-day)')
                       .run()
@@ -112,8 +114,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--noto-sans-kr)')
                       .run()
@@ -124,8 +126,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--grandiflora-one)')
                       .run()
@@ -136,8 +138,8 @@ const TextToolbar = () => {
                 </div>
                 <div
                   onClick={() =>
-                    editor
-                      .chain()
+                    selectedEditor
+                      ?.chain()
                       .focus()
                       .setFontFamily('var(--gowun-dodum)')
                       .run()
@@ -159,32 +161,44 @@ const TextToolbar = () => {
             <div className="fixed top-[-140px]">
               <div className="rounded-xl bg-white shadow-lg">
                 <div
-                  onClick={() => editor.chain().focus().setFontSize('12').run()}
+                  onClick={() =>
+                    selectedEditor?.chain().focus().setFontSize('12').run()
+                  }
                 >
                   12px
                 </div>
                 <div
-                  onClick={() => editor.chain().focus().setFontSize('16').run()}
+                  onClick={() =>
+                    selectedEditor?.chain().focus().setFontSize('16').run()
+                  }
                 >
                   16px
                 </div>
                 <div
-                  onClick={() => editor.chain().focus().setFontSize('20').run()}
+                  onClick={() =>
+                    selectedEditor?.chain().focus().setFontSize('20').run()
+                  }
                 >
                   20px
                 </div>
                 <div
-                  onClick={() => editor.chain().focus().setFontSize('24').run()}
+                  onClick={() =>
+                    selectedEditor?.chain().focus().setFontSize('24').run()
+                  }
                 >
                   24px
                 </div>
                 <div
-                  onClick={() => editor.chain().focus().setFontSize('28').run()}
+                  onClick={() =>
+                    selectedEditor?.chain().focus().setFontSize('28').run()
+                  }
                 >
                   28px
                 </div>
                 <div
-                  onClick={() => editor.chain().focus().setFontSize('32').run()}
+                  onClick={() =>
+                    selectedEditor?.chain().focus().setFontSize('32').run()
+                  }
                 >
                   32px
                 </div>
@@ -209,7 +223,7 @@ const TextToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onClick={() => selectedEditor?.chain().focus().toggleBold().run()}
         >
           <Bold className="h-6 w-6" />
           <p className="text-xs">굵게</p>
@@ -217,7 +231,9 @@ const TextToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          onClick={() =>
+            selectedEditor?.chain().focus().toggleUnderline().run()
+          }
         >
           <Underline className="h-6 w-6" />
           <p className="text-xs">밑줄</p>
@@ -225,7 +241,7 @@ const TextToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().toggleStrike().run()}
+          onClick={() => selectedEditor?.chain().focus().toggleStrike().run()}
         >
           <Strikethrough className="h-6 w-6" />
           <p className="text-xs">취소선</p>
@@ -233,7 +249,7 @@ const TextToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor?.chain().focus().toggleItalic().run()}
+          onClick={() => selectedEditor?.chain().focus().toggleItalic().run()}
         >
           <Italic className="h-6 w-6" />
           <p className="text-xs">기울이기</p>
@@ -243,4 +259,4 @@ const TextToolbar = () => {
   );
 };
 
-export default TextToolbar;
+export { TextToolbar };

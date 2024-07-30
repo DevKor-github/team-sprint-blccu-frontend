@@ -19,24 +19,18 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
-import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
+import { useSelectedEditorStore } from '@/app/(signed-in-only)/write/store/selectedEditor';
+import { useTempLoadStore } from '@/app/(signed-in-only)/write/store/tempLoad';
 import { FontSize } from '@/app/(signed-in-only)/write/utils/setFontSize';
 
 import './font.css';
 import './placeholder.css';
 
 const Title = () => {
-  const { setTitleContents } = useEditorContentsStore((state) => state);
-
-  const setSelectedEditor = useSelectedEditorStore(
-    (state: any) => state.setSelectedEditor,
-  );
-
-  const tempLoad = useTempLoadStore((state: any) => state.tempLoad);
-
-  const setTempLoad = useTempLoadStore((state: any) => state.setTempLoad);
+  const { titleContents, setTitleContents } = useEditorContentsStore();
+  const { setSelectedEditor } = useSelectedEditorStore();
+  const { tempLoad, setTempLoad } = useTempLoadStore();
 
   const editor = useEditor({
     extensions: [
@@ -63,12 +57,11 @@ const Title = () => {
     },
   });
 
-  const titleContents = useEditorContentsStore((state) => state.titleContents);
-
   useEffect(() => {
     if (editor) {
       editor.commands.setContent(titleContents);
     }
+
     setTempLoad(false);
   }, [tempLoad]);
 
@@ -82,4 +75,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export { Title };

@@ -5,9 +5,9 @@ type TempLoadState = {
   setTempLoad: (tempLoad: boolean) => void;
 };
 
-const useTempLoadStore = create<TempLoadState>((set) => ({
+const useTempLoadStore = create<TempLoadState>()((set) => ({
   tempLoad: false,
-  setTempLoad: (newTempLoad: boolean) => set({ tempLoad: newTempLoad }),
+  setTempLoad: (tempLoad: boolean) => set({ tempLoad }),
 }));
 
-export default useTempLoadStore;
+export { useTempLoadStore };

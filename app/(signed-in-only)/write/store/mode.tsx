@@ -1,8 +1,16 @@
 import { create } from 'zustand';
 
-const useModeStore = create((set) => ({
-  mode: 'write',
-  switchMode: (newMode: string) => set({ mode: newMode }),
+type EditorMode = 'write' | 'deco';
+
+type EditorModeState = {
+  editorMode: EditorMode;
+  setEditorMode: (editorMode: EditorMode) => void;
+};
+
+const useEditorModeStore = create<EditorModeState>()((set) => ({
+  editorMode: 'write',
+  setEditorMode: (editorMode: EditorMode) => set({ editorMode }),
 }));
 
-export default useModeStore;
+export { useEditorModeStore };
+export type { EditorMode };

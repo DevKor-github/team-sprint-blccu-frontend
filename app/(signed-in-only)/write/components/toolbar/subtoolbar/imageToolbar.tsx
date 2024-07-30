@@ -37,4 +37,4 @@ const ImageToolbar = () => {
   );
 };
 
-export default ImageToolbar;
+export { ImageToolbar };

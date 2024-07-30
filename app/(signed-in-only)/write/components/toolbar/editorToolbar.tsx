@@ -4,9 +4,9 @@ import { useMutation } from '@tanstack/react-query';
 import { AlignLeft, ArrowDownToLine, Image, Type } from 'lucide-react';
 
 import { type ImageUploadRequestDto } from '@/__generated__/data-contracts';
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
-import useCurrentImageIdStore from '@/app/(signed-in-only)/write/store/imageId';
-import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
+import { useFocusedStore } from '@/app/(signed-in-only)/write/store/focused';
+import { useCurrentImageIdStore } from '@/app/(signed-in-only)/write/store/imageId';
+import { useSelectedEditorStore } from '@/app/(signed-in-only)/write/store/selectedEditor';
 import {
   EditorBottomNavBar,
   EditorBottomNavBarItem,
@@ -15,21 +15,9 @@ import {
 import { api } from '@/lib/api';
 
 const EditorToolbar = () => {
-  const focused = useFocusedStore((state: any) => state.focused);
-  const setFocused = useFocusedStore((state: any) => state.setFocused);
-  const setSubFocused = useFocusedStore((state: any) => state.setSubFocused);
-
-  const selectedEditor = useSelectedEditorStore(
-    (state: any) => state.selectedEditor,
-  );
-
-  const currentImageId = useCurrentImageIdStore(
-    (state: any) => state.currentImageId,
-  );
-
-  const increaseImageId = useCurrentImageIdStore(
-    (state: any) => state.increaseImageId,
-  );
+  const { focused, setFocused, setSubFocused } = useFocusedStore();
+  const { selectedEditor } = useSelectedEditorStore();
+  const { currentImageId, increaseImageId } = useCurrentImageIdStore();
 
   const uploadImage = async (file: ImageUploadRequestDto) => {
     return await api.articles.articlesCreateControllerCreatePrivateSticker(
@@ -43,9 +31,14 @@ const EditorToolbar = () => {
       await selectedEditor
         ?.chain()
         .focus()
-        .setImage({ src: data.imageUrl, alt: '이미지', id: currentImageId })
+        .setImage({
+          src: data.imageUrl,
+          alt: '이미지',
+          //@ts-ignore
+          id: currentImageId, // ???
+        })
         .run();
-      selectedEditor.commands.createParagraphNear();
+      selectedEditor?.commands.createParagraphNear();
       increaseImageId();
     },
     onError: () => {
@@ -125,4 +118,4 @@ const EditorToolbar = () => {
   );
 };
 
-export default EditorToolbar;
+export { EditorToolbar };

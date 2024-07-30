@@ -20,76 +20,24 @@ import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import {
   EditorContent,
-  NodeViewWrapper,
   ReactNodeViewRenderer,
   mergeAttributes,
   useEditor,
 } from '@tiptap/react';
 
-import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useReprImageStore from '@/app/(signed-in-only)/write/store/reprImage';
-import useSelectedEditorStore from '@/app/(signed-in-only)/write/store/selectedEditor';
-import useTempLoadStore from '@/app/(signed-in-only)/write/store/tempLoad';
+import { CustomImageComponent } from '@/app/(signed-in-only)/write/components/editor/custom-image-component';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
+import { useSelectedEditorStore } from '@/app/(signed-in-only)/write/store/selectedEditor';
+import { useTempLoadStore } from '@/app/(signed-in-only)/write/store/tempLoad';
 import { FontSize } from '@/app/(signed-in-only)/write/utils/setFontSize';
 
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
 import './font.css';
 import './placeholder.css';
 
 const Body = () => {
-  const { setBodyContents } = useEditorContentsStore((state) => state);
-
-  const setSelectedEditor = useSelectedEditorStore(
-    (state: any) => state.setSelectedEditor,
-  );
-
-  const tempLoad = useTempLoadStore((state: any) => state.tempLoad);
-
-  const setTempLoad = useTempLoadStore((state: any) => state.setTempLoad);
-
-  const CustomImageComponent = (props: any) => {
-    const reprImageId = useReprImageStore((state: any) => state.reprImageId);
-    const setReprImageId = useReprImageStore(
-      (state: any) => state.setReprImageId,
-    );
-
-    const setReprImageSrc = useReprImageStore(
-      (state: any) => state.setReprImageSrc,
-    );
-
-    const setFocused = useFocusedStore((state: any) => state.setFocused);
-
-    const captureMode = useCaptureModeStore((state: any) => state.captureMode);
-
-    const { src, alt, id } = props.node.attrs;
-
-    const buttonStyle = `${reprImageId === id ? 'bg-[#1A1A1A] text-[#FFFFFF] border-2 border-[#FFFFFF]' : 'bg-[#FFFFFF] text-[#1A1A1A] opacity-60 border-2 border-[#1A1A1A]'} absolute top-2 left-2 p-1`;
-
-    return (
-      <NodeViewWrapper className="grid place-items-center">
-        <div className="relative">
-          <img
-            src={src}
-            alt={alt}
-            id={id}
-            onClick={() => setFocused('image')}
-          />
-          {captureMode || (
-            <button
-              onClick={() => {
-                setReprImageId(id);
-                setReprImageSrc(src);
-              }}
-              className={buttonStyle}
-            >
-              대표 이미지
-            </button>
-          )}
-        </div>
-      </NodeViewWrapper>
-    );
-  };
+  const { bodyContents, setBodyContents } = useEditorContentsStore();
+  const { setSelectedEditor } = useSelectedEditorStore();
+  const { tempLoad, setTempLoad } = useTempLoadStore();
 
   const CustomImage = Image.extend({
     addAttributes() {
@@ -142,12 +90,11 @@ const Body = () => {
     },
   });
 
-  const bodyContents = useEditorContentsStore((state) => state.bodyContents);
-
   useEffect(() => {
     if (editor) {
       editor.commands.setContent(bodyContents);
     }
+
     setTempLoad(false);
   }, [tempLoad]);
 
@@ -163,4 +110,4 @@ const Body = () => {
   );
 };
 
-export default Body;
+export { Body };

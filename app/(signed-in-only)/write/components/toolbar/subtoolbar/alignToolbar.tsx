@@ -1,6 +1,6 @@
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from 'lucide-react';
 
-import useSelectedEditor from '@/app/(signed-in-only)/write/store/selectedEditor';
+import { useSelectedEditorStore } from '@/app/(signed-in-only)/write/store/selectedEditor';
 import {
   EditorBottomSubNavBar,
   EditorBottomSubNavBarItem,
@@ -8,13 +8,15 @@ import {
 } from '@/components/ui-unstable/editor-bottom-sub-nav-bar';
 
 const AlignToolbar = () => {
-  const editor = useSelectedEditor((state: any) => state.selectedEditor);
+  const { selectedEditor } = useSelectedEditorStore();
 
   return (
     <EditorBottomSubNavBar>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().setTextAlign('left').run()}
+          onClick={() =>
+            selectedEditor?.chain().focus().setTextAlign('left').run()
+          }
         >
           <AlignLeft className="h-6 w-6" />
           <p className="text-xs">좌측</p>
@@ -22,7 +24,9 @@ const AlignToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().setTextAlign('center').run()}
+          onClick={() =>
+            selectedEditor?.chain().focus().setTextAlign('center').run()
+          }
         >
           <AlignCenter className="h-6 w-6" />
           <p className="text-xs">중앙</p>
@@ -30,7 +34,9 @@ const AlignToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().setTextAlign('right').run()}
+          onClick={() =>
+            selectedEditor?.chain().focus().setTextAlign('right').run()
+          }
         >
           <AlignRight className="h-6 w-6" />
           <p className="text-xs">우측</p>
@@ -38,7 +44,9 @@ const AlignToolbar = () => {
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
         <EditorBottomSubNavBarItemButton
-          onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+          onClick={() =>
+            selectedEditor?.chain().focus().setTextAlign('justify').run()
+          }
         >
           <AlignJustify className="h-6 w-6" />
           <p className="text-xs">배분</p>
@@ -48,4 +56,4 @@ const AlignToolbar = () => {
   );
 };
 
-export default AlignToolbar;
+export { AlignToolbar };

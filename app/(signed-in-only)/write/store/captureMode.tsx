@@ -5,10 +5,9 @@ type CaptureModeState = {
   setCaptureMode: (captureMode: boolean) => void;
 };
 
-const useCaptureModeStore = create<CaptureModeState>((set) => ({
+const useCaptureModeStore = create<CaptureModeState>()((set) => ({
   captureMode: false,
-  setCaptureMode: (newCaptureMode: boolean) =>
-    set({ captureMode: newCaptureMode }),
+  setCaptureMode: (captureMode: boolean) => set({ captureMode }),
 }));
 
-export default useCaptureModeStore;
+export { useCaptureModeStore };
