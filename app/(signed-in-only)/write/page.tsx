@@ -1,11 +1,11 @@
-import { MainContent } from '@/app/(signed-in-only)/write/components/mainContent';
-import { MainToolbar } from '@/app/(signed-in-only)/write/components/toolbar/mainToolbar';
-import { SubToolbar } from '@/app/(signed-in-only)/write/components/toolbar/subtoolbar/subToolbar';
+import { MainToolbar } from '@/app/(signed-in-only)/write/_components/toolbar/main-toolbar';
+import { SubToolbar } from '@/app/(signed-in-only)/write/_components/toolbar/sub-toolbar';
+import { WritePageContent } from '@/app/(signed-in-only)/write/_components/write-page-content';
 
 const WritePage = () => {
   return (
     <div className="min-h-dvh">
-      <MainContent />
+      <WritePageContent />
       <MainToolbar />
       <SubToolbar />
     </div>

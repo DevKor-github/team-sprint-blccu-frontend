@@ -1,0 +1,39 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
+import { EditorLayer } from '@/app/(signed-in-only)/write/_components/editor-layer';
+import { StickerLayer } from '@/app/(signed-in-only)/write/_components/sticker-layer';
+import { WritePageAppBar } from '@/app/(signed-in-only)/write/_components/write-page-app-bar';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
+
+const WritePageContent = () => {
+  const mainContentRef = useRef(null);
+
+  const { background, setMainContainerElement } = useEditorContentsStore();
+
+  useEffect(() => {
+    if (mainContentRef.current !== null) {
+      setMainContainerElement(mainContentRef.current);
+    }
+  }, [mainContentRef.current, setMainContainerElement]);
+
+  return (
+    <div>
+      <WritePageAppBar />
+      <div
+        ref={mainContentRef}
+        className="min-h-dvh bg-cover bg-repeat-y"
+        style={{
+          backgroundImage:
+            background !== null ? `url(${background.imageUrl})` : 'none',
+        }}
+      >
+        <StickerLayer />
+        <EditorLayer />
+      </div>
+    </div>
+  );
+};
+
+export { WritePageContent };
