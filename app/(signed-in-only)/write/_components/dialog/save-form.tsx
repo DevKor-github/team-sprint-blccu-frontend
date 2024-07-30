@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 
 import { type ArticleDto } from '@/__generated__/data-contracts';
+import { useCurrentImageIdStore } from '@/app/(signed-in-only)/write/_store/use-current-image-id-store';
 import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
 import {
   type Sticker,
@@ -25,6 +26,7 @@ const SaveForm = () => {
     useEditorContentsStore();
   const { setStickers } = useStickersStore();
   const { setTempLoad } = useTempLoadStore();
+  const { setCurrentImageId } = useCurrentImageIdStore();
 
   const queryClient = useQueryClient();
 
@@ -51,12 +53,12 @@ const SaveForm = () => {
     setStickers(stickerBlocks);
     setTitleContents(tempArticle.title);
     setBodyContents(tempArticle.content ?? '');
+    setCurrentImageId(tempArticle.currentImageId ?? 0);
 
     //@ts-ignore
     setBackground(tempArticle.articleBackground); // FIXME: swagger update가 아직 안되었음. background join 해서 넘겨줌.
     setTempLoad(true);
     toast.success(TOAST_MESSAGES.TEMP_LOAD_SUCCESS);
-    noop;
   };
 
   const { mutate } = useMutation({

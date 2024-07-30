@@ -17,9 +17,8 @@ import {
   ArticleDeleteRequestDto,
   ArticlePatchRequestDto,
   ArticlesCreateControllerCreateDraftData,
-  ArticlesCreateControllerCreatePrivateStickerData,
   ArticlesCreateControllerPublishArticleData,
-  ArticlesDeleteControllerSoftDeleteData,
+  ArticlesCreateControllerUploadImageData,
   ArticlesReadControllerFetchArticleData,
   ArticlesReadControllerFetchArticleDetailData,
   ArticlesReadControllerFetchCursorData,
@@ -66,7 +65,7 @@ export class Articles<
     data: StickerBlocksCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<StickerBlocksControllerCreateStickerBlocksData, any>({
+    this.request<StickerBlocksControllerCreateStickerBlocksData, void>({
       path: `/articles/${articleId}/stickers/bulk`,
       method: 'POST',
       body: data,
@@ -87,7 +86,7 @@ export class Articles<
     data: ArticleCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesCreateControllerPublishArticleData, any>({
+    this.request<ArticlesCreateControllerPublishArticleData, void>({
       path: `/articles`,
       method: 'POST',
       body: data,
@@ -108,7 +107,7 @@ export class Articles<
     data: ArticleCreateDraftRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesCreateControllerCreateDraftData, any>({
+    this.request<ArticlesCreateControllerCreateDraftData, void>({
       path: `/articles/temp`,
       method: 'POST',
       body: data,
@@ -136,20 +135,18 @@ export class Articles<
    * @description 이미지를 서버에 업로드한다. url을 반환 받는다. 게시글 내부 이미지 업로드 및 캡처 이미지 업로드용. max_width=1280px
    *
    * @tags 게시글 API
-   * @name ArticlesCreateControllerCreatePrivateSticker
+   * @name ArticlesCreateControllerUploadImage
    * @summary 이미지 업로드
    * @request POST:/articles/image
-   * @secure
    */
-  articlesCreateControllerCreatePrivateSticker = (
+  articlesCreateControllerUploadImage = (
     data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesCreateControllerCreatePrivateStickerData, any>({
+    this.request<ArticlesCreateControllerUploadImageData, void>({
       path: `/articles/image`,
       method: 'POST',
       body: data,
-      secure: true,
       type: ContentType.FormData,
       ...params,
     });
@@ -165,7 +162,7 @@ export class Articles<
     articleId: number,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesReadControllerFetchArticleDetailData, any>({
+    this.request<ArticlesReadControllerFetchArticleDetailData, void>({
       path: `/articles/detail/${articleId}`,
       method: 'GET',
       ...params,
@@ -183,7 +180,7 @@ export class Articles<
     articleId: number,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesReadControllerFetchArticleData, any>({
+    this.request<ArticlesReadControllerFetchArticleData, void>({
       path: `/articles/update/${articleId}`,
       method: 'GET',
       secure: true,
@@ -220,7 +217,7 @@ export class Articles<
     query: ArticlesReadControllerFetchFriendsCursorParams,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesReadControllerFetchFriendsCursorData, any>({
+    this.request<ArticlesReadControllerFetchFriendsCursorData, void>({
       path: `/articles/cursor/friends`,
       method: 'GET',
       query: query,
@@ -259,7 +256,7 @@ export class Articles<
     data: ArticlePatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesUpdateControllerPatchArticleData, any>({
+    this.request<ArticlesUpdateControllerPatchArticleData, void>({
       path: `/articles/${articleId}`,
       method: 'PATCH',
       body: data,
@@ -281,7 +278,7 @@ export class Articles<
     data: ArticleDeleteRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticlesDeleteControllerSoftDeleteData, any>({
+    this.request<any, void>({
       path: `/articles/${articleId}`,
       method: 'DELETE',
       body: data,

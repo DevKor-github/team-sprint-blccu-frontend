@@ -447,7 +447,7 @@ export interface ArticleCreateRequestDto {
   /** 연결된 내지 fk */
   articleBackgroundId: number | null;
   /** 현재 이미지 라벨링 정보 */
-  currrentImageId: number | null;
+  currentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -507,7 +507,7 @@ export interface ArticleDto {
   /** 작성한 유저 fk */
   userId: number;
   /** 현재 이미지 라벨링 정보 */
-  currrentImageId: number | null;
+  currentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -577,7 +577,7 @@ export interface ArticleCreateDraftRequestDto {
   /** 연결된 내지 fk */
   articleBackgroundId?: number | null;
   /** 현재 이미지 라벨링 정보 */
-  currrentImageId?: number | null;
+  currentImageId?: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -705,7 +705,7 @@ export interface ArticleDetailResponseDto {
   /** 작성한 유저 fk */
   userId: number;
   /** 현재 이미지 라벨링 정보 */
-  currrentImageId: number | null;
+  currentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -837,7 +837,7 @@ export interface ArticleWithUserDto {
   /** 작성한 유저 fk */
   userId: number;
   /** 현재 이미지 라벨링 정보 */
-  currrentImageId: number | null;
+  currentImageId: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -920,7 +920,7 @@ export interface ArticlePatchRequestDto {
   /** 연결된 내지 fk */
   articleBackgroundId?: number | null;
   /** 현재 이미지 라벨링 정보 */
-  currrentImageId?: number | null;
+  currentImageId?: number | null;
   /**
    * 제목(최대 100자)
    * @default ""
@@ -1234,13 +1234,13 @@ export type AppControllerHealthCheckData = any;
 
 export type PrometheusControllerIndexData = any;
 
-export type AnnouncementsControllerCreateAnmtData = AnnouncementDto;
+export type AnnouncementsControllerCreateAnnouncementData = AnnouncementDto;
 
-export type AnnouncementsControllerFetchAnmtsData = AnnouncementDto[];
+export type AnnouncementsControllerGetAnnouncementsData = AnnouncementDto[];
 
-export type AnnouncementsControllerPatchAnmtData = AnnouncementDto;
+export type AnnouncementsControllerPatchAnnouncementData = AnnouncementDto;
 
-export type AnnouncementsControllerRemoveAnmtData = AnnouncementDto;
+export type AnnouncementsControllerRemoveAnnouncementData = AnnouncementDto;
 
 export type UsersReadControllerGetUsersByNameData = UserFollowingResponseDto[];
 
@@ -1316,8 +1316,7 @@ export type ArticlesCreateControllerCreateDraftData = ArticleCreateResponseDto;
 export type ArticlesReadControllerFetchTempArticlesData =
   ArticleDetailResponseDto[];
 
-export type ArticlesCreateControllerCreatePrivateStickerData =
-  ImageUploadResponseDto;
+export type ArticlesCreateControllerUploadImageData = ImageUploadResponseDto;
 
 export type ArticlesReadControllerFetchArticleDetailData =
   ArticleDetailResponseDto;
@@ -1404,8 +1403,6 @@ export type ArticlesReadControllerFetchUserArticlesData =
 
 export type ArticlesUpdateControllerPatchArticleData = ArticleDto;
 
-export type ArticlesDeleteControllerSoftDeleteData = any;
-
 export type FollowsControllerFollowUserData = FollowDto;
 
 export type FollowsControllerUnfollowUserData = any;
@@ -1450,15 +1447,11 @@ export type ArticleCategoriesControllerCreateArticleCategoryData =
 export type ArticleCategoriesControllerPatchArticleCategoryData =
   ArticleCategoryDto;
 
-export type ArticleCategoriesControllerDeleteArticleCategoryData = any;
-
 export type ArticleBackgroundsControllerCreateArticleBackgroundData =
   ImageUploadResponseDto;
 
 export type ArticleBackgroundsControllerGetArticleBackgroundsData =
   ArticleBackgroundDto[];
-
-export type ArticleBackgroundsControllerDeleteData = any;
 
 export type CommentsControllerCreateCommentData = CommentChildrenDto;
 

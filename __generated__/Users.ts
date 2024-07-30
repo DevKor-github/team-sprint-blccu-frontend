@@ -21,13 +21,11 @@ import {
   AgreementsControllerPatchAgreementData,
   AnnouncementCreateRequestDto,
   AnnouncementPatchRequestDto,
-  AnnouncementsControllerCreateAnmtData,
-  AnnouncementsControllerPatchAnmtData,
-  AnnouncementsControllerRemoveAnmtData,
+  AnnouncementsControllerCreateAnnouncementData,
+  AnnouncementsControllerPatchAnnouncementData,
+  AnnouncementsControllerRemoveAnnouncementData,
   ArticleBackgroundsControllerCreateArticleBackgroundData,
-  ArticleBackgroundsControllerDeleteData,
   ArticleCategoriesControllerCreateArticleCategoryData,
-  ArticleCategoriesControllerDeleteArticleCategoryData,
   ArticleCategoriesControllerFetchArticleCategoriesData,
   ArticleCategoriesControllerFetchMyCategoryData,
   ArticleCategoriesControllerPatchArticleCategoryData,
@@ -70,16 +68,16 @@ export class Users<
    * No description
    *
    * @tags 공지 API, 어드민 API
-   * @name AnnouncementsControllerCreateAnmt
+   * @name AnnouncementsControllerCreateAnnouncement
    * @summary [어드민용] 공지사항 작성
    * @request POST:/users/admin/anmts
    * @secure
    */
-  announcementsControllerCreateAnmt = (
+  announcementsControllerCreateAnnouncement = (
     data: AnnouncementCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<AnnouncementsControllerCreateAnmtData, any>({
+    this.request<AnnouncementsControllerCreateAnnouncementData, void>({
       path: `/users/admin/anmts`,
       method: 'POST',
       body: data,
@@ -91,17 +89,17 @@ export class Users<
    * No description
    *
    * @tags 공지 API, 어드민 API
-   * @name AnnouncementsControllerPatchAnmt
+   * @name AnnouncementsControllerPatchAnnouncement
    * @summary [어드민용] 공지사항 수정
    * @request PATCH:/users/admin/anmts/{announcementId}
    * @secure
    */
-  announcementsControllerPatchAnmt = (
+  announcementsControllerPatchAnnouncement = (
     announcementId: number,
     data: AnnouncementPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<AnnouncementsControllerPatchAnmtData, any>({
+    this.request<AnnouncementsControllerPatchAnnouncementData, void>({
       path: `/users/admin/anmts/${announcementId}`,
       method: 'PATCH',
       body: data,
@@ -113,16 +111,16 @@ export class Users<
    * @description id에 해당하는 공지사항 삭제, 삭제된 공지사항을 반환
    *
    * @tags 공지 API, 어드민 API
-   * @name AnnouncementsControllerRemoveAnmt
+   * @name AnnouncementsControllerRemoveAnnouncement
    * @summary [어드민용] 공지사항 삭제
    * @request DELETE:/users/admin/anmts/{announcementId}
    * @secure
    */
-  announcementsControllerRemoveAnmt = (
+  announcementsControllerRemoveAnnouncement = (
     announcementId: number,
     params: RequestParams = {},
   ) =>
-    this.request<AnnouncementsControllerRemoveAnmtData, any>({
+    this.request<AnnouncementsControllerRemoveAnnouncementData, void>({
       path: `/users/admin/anmts/${announcementId}`,
       method: 'DELETE',
       secure: true,
@@ -208,7 +206,7 @@ export class Users<
     data: UserPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersUpdateControllerPatchUserData, any>({
+    this.request<UsersUpdateControllerPatchUserData, void>({
       path: `/users/me`,
       method: 'PATCH',
       body: data,
@@ -367,7 +365,7 @@ export class Users<
     data: AgreementPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<AgreementsControllerPatchAgreementData, any>({
+    this.request<AgreementsControllerPatchAgreementData, void>({
       path: `/users/me/agreement/${agreementId}`,
       method: 'PATCH',
       body: data,
@@ -425,7 +423,7 @@ export class Users<
     data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<StickersControllerCreatePublicStickerData, any>({
+    this.request<StickersControllerCreatePublicStickerData, void>({
       path: `/users/admin/stickers`,
       method: 'POST',
       body: data,
@@ -446,7 +444,7 @@ export class Users<
     data: StickerCategoryCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<StickerCategoriesControllerCreateCategoryData, any>({
+    this.request<StickerCategoriesControllerCreateCategoryData, void>({
       path: `/users/admin/stickers/categories`,
       method: 'POST',
       body: data,
@@ -467,7 +465,7 @@ export class Users<
     data: StickerCategoriesMapDto,
     params: RequestParams = {},
   ) =>
-    this.request<StickerCategoriesControllerMapCategoryData, any>({
+    this.request<StickerCategoriesControllerMapCategoryData, void>({
       path: `/users/admin/stickers/map`,
       method: 'POST',
       body: data,
@@ -626,7 +624,7 @@ export class Users<
     data: ArticleCategoryCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticleCategoriesControllerCreateArticleCategoryData, any>({
+    this.request<ArticleCategoriesControllerCreateArticleCategoryData, void>({
       path: `/users/me/categories`,
       method: 'POST',
       body: data,
@@ -648,7 +646,7 @@ export class Users<
     data: ArticleCategoryPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticleCategoriesControllerPatchArticleCategoryData, any>({
+    this.request<ArticleCategoriesControllerPatchArticleCategoryData, void>({
       path: `/users/me/categories/${articleCategoryId}`,
       method: 'PATCH',
       body: data,
@@ -669,7 +667,7 @@ export class Users<
     articleCategoryId: number,
     params: RequestParams = {},
   ) =>
-    this.request<ArticleCategoriesControllerDeleteArticleCategoryData, any>({
+    this.request<any, void>({
       path: `/users/me/categories/${articleCategoryId}`,
       method: 'DELETE',
       secure: true,
@@ -688,14 +686,16 @@ export class Users<
     data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ArticleBackgroundsControllerCreateArticleBackgroundData, any>({
-      path: `/users/admin/article/background`,
-      method: 'POST',
-      body: data,
-      secure: true,
-      type: ContentType.FormData,
-      ...params,
-    });
+    this.request<ArticleBackgroundsControllerCreateArticleBackgroundData, void>(
+      {
+        path: `/users/admin/article/background`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.FormData,
+        ...params,
+      },
+    );
   /**
    * No description
    *
@@ -709,7 +709,7 @@ export class Users<
     articleBackgroundId: string,
     params: RequestParams = {},
   ) =>
-    this.request<ArticleBackgroundsControllerDeleteData, any>({
+    this.request<any, void>({
       path: `/users/admin/articles/background/${articleBackgroundId}`,
       method: 'DELETE',
       secure: true,

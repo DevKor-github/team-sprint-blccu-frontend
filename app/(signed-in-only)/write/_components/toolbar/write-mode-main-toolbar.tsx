@@ -20,9 +20,7 @@ const WriteModeMainToolbar = () => {
   const { currentImageId, increaseImageId } = useCurrentImageIdStore();
 
   const uploadImage = async (file: ImageUploadRequestDto) => {
-    return await api.articles.articlesCreateControllerCreatePrivateSticker(
-      file,
-    );
+    return await api.stickers.stickersControllerCreatePrivateSticker(file);
   };
 
   const mutation = useMutation({

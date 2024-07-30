@@ -39,7 +39,7 @@ export class Stickers<
     data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<StickersControllerCreatePrivateStickerData, any>({
+    this.request<StickersControllerCreatePrivateStickerData, void>({
       path: `/stickers/private`,
       method: 'POST',
       body: data,
@@ -77,7 +77,7 @@ export class Stickers<
     data: StickerPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<StickersControllerPatchStickerData, any>({
+    this.request<StickersControllerPatchStickerData, void>({
       path: `/stickers/${stickerId}`,
       method: 'PATCH',
       body: data,
@@ -98,7 +98,7 @@ export class Stickers<
     stickerId: number,
     params: RequestParams = {},
   ) =>
-    this.request<StickersControllerDeleteStickerData, any>({
+    this.request<StickersControllerDeleteStickerData, void>({
       path: `/stickers/${stickerId}`,
       method: 'DELETE',
       secure: true,
@@ -146,7 +146,7 @@ export class Stickers<
   ) =>
     this.request<
       StickerCategoriesControllerFetchStickersByCategoryNameData,
-      any
+      void
     >({
       path: `/stickers/categories/${stickerCategoryId}`,
       method: 'GET',
