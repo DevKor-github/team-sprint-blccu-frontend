@@ -1,16 +1,19 @@
 'use client';
 
-import useModeStore from '@/app/(signed-in-only)/write/store/mode';
-
-import Body from './body';
-import Title from './title';
+import { Body } from '@/app/(signed-in-only)/write/components/editor/body';
+import { Title } from '@/app/(signed-in-only)/write/components/editor/title';
+import { useEditorModeStore } from '@/app/(signed-in-only)/write/store/mode';
+import { cn } from '@/lib/utils';
 
 const Editor = () => {
-  const mode = useModeStore((state: any) => state.mode);
+  const { editorMode } = useEditorModeStore();
+
   return (
     <div
-      className="flex-1 px-[5%] pb-[25%] pt-[20%]"
-      style={{ pointerEvents: mode === 'write' ? 'auto' : 'none' }}
+      className={cn(
+        'flex-1 px-[5%] pb-[25%] pt-[20%]',
+        editorMode === 'write' ? 'pointer-events-auto' : 'pointer-events-none',
+      )}
     >
       <Title />
       <Body />
@@ -18,4 +21,4 @@ const Editor = () => {
   );
 };
 
-export default Editor;
+export { Editor };

@@ -10,10 +10,10 @@ type EditorContentsState = {
   setTitleContents: (titleContents: string) => void;
   setBodyContents: (bodyContents: string) => void;
   setBackground: (background: ArticleBackgroundDto | null) => void;
-  setMainContainerElement: (element: HTMLElement) => void;
+  setMainContainerElement: (mainContainerElement: HTMLElement) => void;
 };
 
-const useEditorContentsStore = create<EditorContentsState>((set) => ({
+const useEditorContentsStore = create<EditorContentsState>()((set) => ({
   titleContents: '',
   bodyContents: '',
   background: null,
@@ -22,8 +22,8 @@ const useEditorContentsStore = create<EditorContentsState>((set) => ({
   setBodyContents: (bodyContents: string) => set({ bodyContents }),
   setBackground: (background: ArticleBackgroundDto | null) =>
     set({ background }),
-  setMainContainerElement: (element: HTMLElement) =>
-    set({ mainContainerElement: element }),
+  setMainContainerElement: (mainContainerElement: HTMLElement) =>
+    set({ mainContainerElement }),
 }));
 
-export default useEditorContentsStore;
+export { useEditorContentsStore };

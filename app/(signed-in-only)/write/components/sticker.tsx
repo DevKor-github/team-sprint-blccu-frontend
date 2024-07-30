@@ -2,9 +2,10 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import useCaptureModeStore from '@/app/(signed-in-only)/write/store/captureMode';
-import useModeStore from '@/app/(signed-in-only)/write/store/mode';
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+import { useCaptureModeStore } from '@/app/(signed-in-only)/write/store/captureMode';
+import { useEditorModeStore } from '@/app/(signed-in-only)/write/store/mode';
+import { useStickersStore } from '@/app/(signed-in-only)/write/store/stickers';
+import { cn } from '@/lib/utils';
 
 interface StickerProps {
   clientId: string;
@@ -17,31 +18,21 @@ interface Transform {
   posY: number;
 }
 
-const Sticker: React.FC<StickerProps> = ({ clientId }) => {
+const Sticker = ({ clientId }: StickerProps) => {
   // DB에서 가져온 이미지 정보를 이용해 스티커를 생성하는 컴포넌트
 
-  const stickerProps = useStickersStore(
-    (state: any) => state.stickers[clientId],
-  );
+  const {
+    stickers,
+    focused,
+    setFocused,
+    editPosition,
+    editSize,
+    deleteSticker,
+  } = useStickersStore();
+  const { captureMode } = useCaptureModeStore();
+  const { editorMode } = useEditorModeStore();
 
-  const editPosition = useStickersStore((state: any) => state.editPosition);
-  const editSize = useStickersStore((state: any) => state.editSize);
-  const deleteSticker = useStickersStore((state: any) => state.deleteSticker);
-
-  const focused = useStickersStore((state: any) => state.focused);
-  const setFocused = useStickersStore((state: any) => state.setFocused);
-  const captureMode = useCaptureModeStore((state: any) => state.captureMode);
-
-  const mode = useModeStore((state: any) => state.mode);
-
-  const freeze = () => {
-    if (mode === 'write') return 'none';
-    return;
-  };
-  const zIndex = () => {
-    if (mode === 'write') return 'z-0';
-    return 'z-10';
-  };
+  const stickerProps = stickers[clientId];
 
   const [transform, setTransform] = useState<Transform>({
     scale: 1,
@@ -68,6 +59,7 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
   const lastPositionRef = useRef<{ x: number; y: number } | null>(null);
   const throttleTimeoutRef = useRef<number | null>(null);
 
+  // TODO: type this
   const throttle = (func: (...args: any[]) => void, delay: number) => {
     return (...args: any[]) => {
       if (throttleTimeoutRef.current === null) {
@@ -241,9 +233,10 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
           transition: 'transform 0.1s ease',
           border:
             focused === clientId && !captureMode ? '2px solid black' : 'none',
-          pointerEvents: freeze(),
         }}
-        className={zIndex()}
+        className={cn(
+          editorMode === 'write' ? 'pointer-events-none z-0' : 'z-10',
+        )}
         id={stickerProps.clientId.toString()}
         onTouchStart={handleTouchStart}
         onMouseDown={handleMouseDown}
@@ -286,4 +279,4 @@ const Sticker: React.FC<StickerProps> = ({ clientId }) => {
   );
 };
 
-export default Sticker;
+export { Sticker };

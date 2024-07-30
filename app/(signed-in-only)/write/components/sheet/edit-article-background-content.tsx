@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { useQuery } from '@tanstack/react-query';
 
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SheetClose } from '@/components/ui/sheet';
 import { queries } from '@/queries';
@@ -12,7 +12,7 @@ import { queries } from '@/queries';
 const EditArticleBackgroundContent = () => {
   const { data } = useQuery(queries.articles.background);
 
-  const { setBackground } = useEditorContentsStore((state) => state);
+  const { setBackground } = useEditorContentsStore();
 
   const backgrounds = data?.data ?? [];
 

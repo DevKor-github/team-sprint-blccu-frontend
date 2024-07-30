@@ -1,10 +1,14 @@
 import { type Editor } from '@tiptap/react';
 import { create } from 'zustand';
 
-const useSelectedEditorStore = create((set) => ({
+type SelectedEditorState = {
+  selectedEditor: Editor | null;
+  setSelectedEditor: (newSelectedEditor: Editor | null) => void;
+};
+
+const useSelectedEditorStore = create<SelectedEditorState>()((set) => ({
   selectedEditor: null,
-  setSelectedEditor: (newSelectedEditor: Editor) =>
-    set({ selectedEditor: newSelectedEditor }),
+  setSelectedEditor: (selectedEditor: Editor | null) => set({ selectedEditor }),
 }));
 
-export default useSelectedEditorStore;
+export { useSelectedEditorStore };

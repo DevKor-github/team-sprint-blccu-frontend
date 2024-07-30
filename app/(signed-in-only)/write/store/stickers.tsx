@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 
+// XXX
 type Sticker = {
   stickerId: number;
   src: string;
@@ -29,7 +30,7 @@ type StickersState = {
     angle: number;
   }) => void;
 };
-const useStickersStore = create<StickersState>((set) => ({
+const useStickersStore = create<StickersState>()((set) => ({
   stickers: {},
   focused: null,
   setFocused: (focused) => set({ focused }),
@@ -64,5 +65,5 @@ const useStickersStore = create<StickersState>((set) => ({
     }),
 }));
 
-export default useStickersStore;
+export { useStickersStore };
 export type { Sticker };

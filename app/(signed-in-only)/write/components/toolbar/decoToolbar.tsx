@@ -4,7 +4,7 @@ import { ArrowDownToLine, File, Smile } from 'lucide-react';
 
 import { EditArticleBackgroundSheet } from '@/app/(signed-in-only)/write/components/sheet/edit-article-background-sheet';
 import { StickerSheet } from '@/app/(signed-in-only)/write/components/sheet/sticker-sheet';
-import useFocusedStore from '@/app/(signed-in-only)/write/store/focused';
+import { useFocusedStore } from '@/app/(signed-in-only)/write/store/focused';
 import {
   EditorBottomNavBar,
   EditorBottomNavBarItem,
@@ -12,8 +12,7 @@ import {
 } from '@/components/ui-unstable/editor-bottom-nav-bar';
 
 const DecoToolbar = () => {
-  const focused = useFocusedStore((state: any) => state.focused);
-  const setFocused = useFocusedStore((state: any) => state.setFocused);
+  const { focused, setFocused } = useFocusedStore();
 
   return (
     <EditorBottomNavBar>
@@ -50,4 +49,4 @@ const DecoToolbar = () => {
   );
 };
 
-export default DecoToolbar;
+export { DecoToolbar };

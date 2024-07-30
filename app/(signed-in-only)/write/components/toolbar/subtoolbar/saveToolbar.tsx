@@ -1,12 +1,11 @@
-import { useMutation } from '@tanstack/react-query';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Download, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { type ArticleCreateDraftRequestDto } from '@/__generated__/data-contracts';
 import { SaveDialog } from '@/app/(signed-in-only)/write/dialog/save-dialog';
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
+import { useStickersStore } from '@/app/(signed-in-only)/write/store/stickers';
 import {
   EditorBottomSubNavBar,
   EditorBottomSubNavBarItem,
@@ -17,6 +16,10 @@ import { api } from '@/lib/api';
 import { queries } from '@/queries';
 
 const SaveToolbar = () => {
+  const { background, titleContents, bodyContents, mainContainerElement } =
+    useEditorContentsStore();
+  const { stickers } = useStickersStore();
+
   const { data } = useQuery(queries.articles.tempPosts);
   const numberOfSaveFiles = data?.data?.length ?? 0;
 
@@ -31,12 +34,8 @@ const SaveToolbar = () => {
     },
   });
 
-  const { background, titleContents, bodyContents, mainContainerElement } =
-    useEditorContentsStore((state) => state);
-  const stickerBlocks = useStickersStore((state) => state.stickers);
-
-  const stickerBlocksArray = Object.keys(stickerBlocks).map((key) => {
-    const { src, ...rest } = stickerBlocks[key];
+  const stickerBlocksArray = Object.keys(stickers).map((key) => {
+    const { src, ...rest } = stickers[key];
     return rest;
   });
 
@@ -75,4 +74,4 @@ const SaveToolbar = () => {
   );
 };
 
-export default SaveToolbar;
+export { SaveToolbar };

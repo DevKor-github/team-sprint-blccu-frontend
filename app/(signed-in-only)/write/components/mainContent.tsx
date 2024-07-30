@@ -2,18 +2,15 @@
 
 import { useEffect, useRef } from 'react';
 
-import useEditorContentsStore from '@/app/(signed-in-only)/write/store/editorContents';
-
-import Editor from './editor/editor';
-import StickerContainer from './stickerContainer';
-import Top from './top';
+import { Editor } from '@/app/(signed-in-only)/write/components/editor/editor';
+import { StickerContainer } from '@/app/(signed-in-only)/write/components/stickerContainer';
+import { Top } from '@/app/(signed-in-only)/write/components/top';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/store/editorContents';
 
 const MainContent = () => {
   const mainContentRef = useRef(null);
 
-  const { background, setMainContainerElement } = useEditorContentsStore(
-    (state) => state,
-  );
+  const { background, setMainContainerElement } = useEditorContentsStore();
 
   useEffect(() => {
     if (mainContentRef.current !== null) {
@@ -39,4 +36,4 @@ const MainContent = () => {
   );
 };
 
-export default MainContent;
+export { MainContent };

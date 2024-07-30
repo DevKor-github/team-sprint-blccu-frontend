@@ -1,14 +1,14 @@
 'use client';
 
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
-
-import Sticker from './sticker';
+import { Sticker } from '@/app/(signed-in-only)/write/components/sticker';
+import { useStickersStore } from '@/app/(signed-in-only)/write/store/stickers';
 
 const StickerContainer = () => {
-  const stickers = useStickersStore((state: any) => state.stickers);
+  const { stickers } = useStickersStore();
+
   return (
     <div className="absolute">
-      {Object.values(stickers).map((sticker: any) => (
+      {Object.values(stickers).map((sticker) => (
         <Sticker
           key={sticker.clientId}
           clientId={sticker.clientId.toString()}
@@ -18,4 +18,4 @@ const StickerContainer = () => {
   );
 };
 
-export default StickerContainer;
+export { StickerContainer };

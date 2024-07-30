@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { v4 as uuidv4 } from 'uuid';
 
 import { type StickerCategoryDto } from '@/__generated__/data-contracts';
-import useStickersStore from '@/app/(signed-in-only)/write/store/stickers';
+import { useStickersStore } from '@/app/(signed-in-only)/write/store/stickers';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SheetClose } from '@/components/ui/sheet';
 import { TabsContent } from '@/components/ui/tabs';
@@ -19,7 +19,7 @@ const StickerCategoryContent = ({
 }: StickerCategoryContentProps) => {
   const { data } = useQuery(queries.stickers.category(id));
 
-  const { addSticker } = useStickersStore((state) => state);
+  const { addSticker } = useStickersStore();
 
   const stickers = data?.data ?? [];
 
