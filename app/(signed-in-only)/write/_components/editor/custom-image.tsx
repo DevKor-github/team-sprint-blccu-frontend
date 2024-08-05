@@ -12,6 +12,9 @@ import {
 import { useCaptureModeStore } from '@/app/(signed-in-only)/write/_store/use-capture-mode-store';
 import { useFocusedStore } from '@/app/(signed-in-only)/write/_store/use-focused-store';
 import { useReprImageStore } from '@/app/(signed-in-only)/write/_store/use-repr-image-store';
+import AlignCenter from '@/assets/svg/align-center.svg';
+import AlignLeft from '@/assets/svg/align-left.svg';
+import AlignRight from '@/assets/svg/align-right.svg';
 import { cn } from '@/lib/utils';
 
 import './font.css';
@@ -32,13 +35,14 @@ const CustomImageComponent = (props: any) => {
     const imgElement = imgRef.current;
     if (!imgElement) return;
 
-    const handleResize = (e: MouseEvent, direction: string) => {
+    const handleResize = (e: MouseEvent | TouchEvent, direction: string) => {
       e.preventDefault();
-      let startX = e.clientX;
+      let startX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
       let startWidth = imgElement.offsetWidth;
 
-      const onMouseMove = (e: MouseEvent) => {
-        let deltaX = e.clientX - startX;
+      const onMove = (e: MouseEvent | TouchEvent) => {
+        let clientX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
+        let deltaX = clientX - startX;
         if (
           direction === 'left' ||
           direction === 'left-0 top-0' ||
@@ -49,13 +53,17 @@ const CustomImageComponent = (props: any) => {
         imgElement.style.width = `${startWidth + deltaX}px`;
       };
 
-      const onMouseUp = () => {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
+      const onEnd = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onEnd);
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onEnd);
       };
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+      document.addEventListener('touchmove', onMove);
+      document.addEventListener('touchend', onEnd);
     };
 
     const addResizeHandlers = () => {
@@ -69,6 +77,7 @@ const CustomImageComponent = (props: any) => {
         const resizeHandle = document.createElement('div');
         resizeHandle.className = `absolute w-3 h-3 bg-gray-500 ${direction}`;
         resizeHandle.style.cursor = `${direction.includes('left') ? 'nwse-resize' : 'nesw-resize'}`;
+        resizeHandle.ontouchstart = (e) => handleResize(e, direction);
         resizeHandle.onmousedown = (e) => handleResize(e, direction);
         imgElement.parentElement?.appendChild(resizeHandle);
       });
@@ -119,7 +128,10 @@ const CustomImageComponent = (props: any) => {
 
   return (
     <NodeViewWrapper className="grid h-auto w-auto" style={{ ...style }}>
-      <div className="relative h-auto w-auto" ref={containerRef}>
+      <div
+        className="relative mb-0 ml-0 mr-auto mt-0 h-auto w-auto"
+        ref={containerRef}
+      >
         <img
           src={src}
           alt={alt}
@@ -145,18 +157,15 @@ const CustomImageComponent = (props: any) => {
               대표 이미지
             </button>
             <div className="absolute left-1/2 top-0 flex -translate-x-1/2 transform space-x-2">
-              <img
-                src="left-align-icon-url"
+              <AlignLeft
                 className="cursor-pointer"
                 onClick={() => handlePosition('left')}
               />
-              <img
-                src="center-align-icon-url"
+              <AlignCenter
                 className="cursor-pointer"
                 onClick={() => handlePosition('center')}
               />
-              <img
-                src="right-align-icon-url"
+              <AlignRight
                 className="cursor-pointer"
                 onClick={() => handlePosition('right')}
               />
