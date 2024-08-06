@@ -8,7 +8,7 @@ import { WritePageAppBar } from '@/app/(signed-in-only)/write/_components/write-
 import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
 
 const WritePageContent = () => {
-  const mainContentRef = useRef(null);
+  const mainContentRef = useRef<HTMLDivElement>(null);
 
   const { background, setMainContainerElement } = useEditorContentsStore();
 
@@ -29,7 +29,7 @@ const WritePageContent = () => {
             background !== null ? `url(${background.imageUrl})` : 'none',
         }}
       >
-        <StickerLayer />
+        <StickerLayer height={mainContentRef.current?.clientHeight ?? 0} />
         <EditorLayer />
       </div>
     </div>
