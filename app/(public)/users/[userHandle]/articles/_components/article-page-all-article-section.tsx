@@ -65,6 +65,10 @@ const ArticlePageAllArticleSection = ({
 
   const articles = articleData?.pages.flatMap((page) => page.data.data) ?? [];
 
+  if (articles.length === 0) {
+    return null;
+  }
+
   return (
     <Section>
       <SectionTitle className="mx-4">{titleDescriptor}</SectionTitle>

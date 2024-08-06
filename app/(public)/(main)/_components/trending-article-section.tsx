@@ -20,6 +20,10 @@ const TrendingArticleSection = () => {
 
   const articles = data?.data.data ?? [];
 
+  if (articles.length === 0) {
+    return null;
+  }
+
   return (
     <Section className="pl-4">
       <SectionTitle>인기글</SectionTitle>

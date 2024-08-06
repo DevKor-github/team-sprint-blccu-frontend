@@ -51,6 +51,10 @@ const AllArticleSection = () => {
 
   const articles = data?.pages.flatMap((page) => page.data.data) ?? [];
 
+  if (articles.length === 0) {
+    return null;
+  }
+
   return (
     <Section className="px-4">
       <SectionTitle>전체글</SectionTitle>

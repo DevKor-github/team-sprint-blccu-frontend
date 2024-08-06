@@ -31,6 +31,10 @@ const UserHandlePageTrendingArticleSection = ({
 
   const articles = data?.data.data ?? [];
 
+  if (articles.length === 0) {
+    return null;
+  }
+
   return (
     <Section className="pb-6 pl-4">
       <SectionTitle>{titleDescriptor}</SectionTitle>
