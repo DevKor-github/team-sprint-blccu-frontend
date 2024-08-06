@@ -45,7 +45,6 @@ const WriteModeMainToolbar = () => {
   });
 
   const handleImageButtonClick = () => {
-    setFocused('image');
     setSubFocused('init');
     document.getElementById('imageInput')?.click();
   };
@@ -61,10 +60,7 @@ const WriteModeMainToolbar = () => {
   return (
     <EditorBottomNavBar>
       <EditorBottomNavBarItem>
-        <EditorBottomNavBarItemButton
-          isSelected={focused === 'image'}
-          onClick={handleImageButtonClick}
-        >
+        <EditorBottomNavBarItemButton onClick={handleImageButtonClick}>
           <Image className="h-6 w-6" />
           <p className="text-xs">사진</p>
           <input
