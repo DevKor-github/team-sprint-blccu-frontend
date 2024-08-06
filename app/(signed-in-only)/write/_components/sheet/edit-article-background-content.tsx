@@ -26,9 +26,9 @@ const EditArticleBackgroundContent = () => {
         <div className="grid grid-cols-2 gap-2">
           <SheetClose>
             <div
-              className="h-32 w-full rounded-3xl"
+              className="h-32 w-full rounded-lg shadow-blccu-secondary transition-transform active:scale-95"
               onClick={() => setBackground(null)}
-            ></div>
+            />
           </SheetClose>
           {backgrounds.map((background) => (
             <SheetClose key={background.id}>
@@ -36,7 +36,7 @@ const EditArticleBackgroundContent = () => {
                 key={background.id}
                 src={background.imageUrl}
                 alt="내지"
-                className="h-32 w-full rounded-lg object-cover shadow-blccu-secondary"
+                className="h-32 w-full rounded-lg object-cover shadow-blccu-secondary transition-transform active:scale-95"
                 width={500}
                 height={500}
                 onClick={() => setBackground(background)}
