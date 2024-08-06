@@ -48,32 +48,37 @@ const NotificationsPage = () => {
         <AppBarTitle>알림</AppBarTitle>
       </AppBar>
       <div className="pb-6 pt-14">
-        <Section className="px-4">
-          <SectionTitle>오늘 알림</SectionTitle>
-          <SectionContent>
-            <div className="flex flex-col gap-4 rounded-lg p-4 shadow-blccu-secondary">
-              {todayNotifications.map((notification, index) => (
-                <StackedNotificationCard
-                  key={index}
-                  notification={notification}
-                />
-              ))}
-            </div>
-          </SectionContent>
-        </Section>
-        <Section className="px-4">
-          <SectionTitle>지난 알림</SectionTitle>
-          <SectionContent>
-            <div className="flex flex-col gap-4 rounded-lg p-4 shadow-blccu-secondary">
-              {pastNotifications.map((notification, index) => (
-                <StackedNotificationCard
-                  key={index}
-                  notification={notification}
-                />
-              ))}
-            </div>
-          </SectionContent>
-        </Section>
+        {todayNotifications.length > 0 && (
+          <Section className="px-4">
+            <SectionTitle>오늘 알림</SectionTitle>
+            <SectionContent>
+              <div className="flex flex-col gap-4 rounded-lg p-4 shadow-blccu-secondary">
+                {todayNotifications.map((notification, index) => (
+                  <StackedNotificationCard
+                    key={index}
+                    notification={notification}
+                  />
+                ))}
+              </div>
+            </SectionContent>
+          </Section>
+        )}
+
+        {pastNotifications.length > 0 && (
+          <Section className="px-4">
+            <SectionTitle>지난 알림</SectionTitle>
+            <SectionContent>
+              <div className="flex flex-col gap-4 rounded-lg p-4 shadow-blccu-secondary">
+                {pastNotifications.map((notification, index) => (
+                  <StackedNotificationCard
+                    key={index}
+                    notification={notification}
+                  />
+                ))}
+              </div>
+            </SectionContent>
+          </Section>
+        )}
       </div>
     </>
   );
