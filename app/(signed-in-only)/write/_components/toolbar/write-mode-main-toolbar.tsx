@@ -76,6 +76,12 @@ const WriteModeMainToolbar = () => {
         <EditorBottomNavBarItemButton
           isSelected={focused === 'text'}
           onClick={() => {
+            if (focused === 'text') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
             setFocused('text');
             setSubFocused('init');
           }}
@@ -88,6 +94,12 @@ const WriteModeMainToolbar = () => {
         <EditorBottomNavBarItemButton
           isSelected={focused === 'align'}
           onClick={() => {
+            if (focused === 'align') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
             setFocused('align');
             setSubFocused('init');
           }}
@@ -100,6 +112,12 @@ const WriteModeMainToolbar = () => {
         <EditorBottomNavBarItemButton
           isSelected={focused === 'save'}
           onClick={() => {
+            if (focused === 'save') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
             setFocused('save');
             setSubFocused('init');
           }}
