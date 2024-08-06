@@ -43,6 +43,7 @@ const MainLayoutBottomNavBar = () => {
               className={cn(
                 'fixed bottom-[30px] left-1/2 -translate-x-1/2',
                 'rounded-full bg-blccu-black p-4 text-white',
+                'transition-transform active:scale-90',
               )}
             >
               <Pencil className="h-6 w-6" />
