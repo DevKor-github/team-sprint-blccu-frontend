@@ -11,7 +11,7 @@ const buttonVariants = cva(
     'text-sm font-medium',
     'transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blccu-ring focus-visible:ring-offset-2',
     'disabled:cursor-not-allowed disabled:opacity-50',
-    'active:scale-90 transition-transform',
+    'active:scale-90 disabled:active:scale-100 transition-transform',
   ),
   {
     variants: {
