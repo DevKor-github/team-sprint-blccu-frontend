@@ -12,7 +12,7 @@ import {
 } from '@/components/ui-unstable/editor-bottom-nav-bar';
 
 const DecoModeMainToolbar = () => {
-  const { focused, setFocused } = useFocusedStore();
+  const { focused, setFocused, setSubFocused } = useFocusedStore();
 
   return (
     <EditorBottomNavBar>
@@ -39,7 +39,16 @@ const DecoModeMainToolbar = () => {
       <EditorBottomNavBarItem>
         <EditorBottomNavBarItemButton
           isSelected={focused === 'save'}
-          onClick={() => setFocused('save')}
+          onClick={() => {
+            if (focused === 'save') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
+            setFocused('save');
+            setSubFocused('init');
+          }}
         >
           <ArrowDownToLine className="h-6 w-6" />
           <p className="text-xs">임시 저장</p>

@@ -20,9 +20,7 @@ const WriteModeMainToolbar = () => {
   const { currentImageId, increaseImageId } = useCurrentImageIdStore();
 
   const uploadImage = async (file: ImageUploadRequestDto) => {
-    return await api.articles.articlesCreateControllerCreatePrivateSticker(
-      file,
-    );
+    return await api.stickers.stickersControllerCreatePrivateSticker(file);
   };
 
   const mutation = useMutation({
@@ -47,7 +45,6 @@ const WriteModeMainToolbar = () => {
   });
 
   const handleImageButtonClick = () => {
-    setFocused('image');
     setSubFocused('init');
     document.getElementById('imageInput')?.click();
   };
@@ -63,10 +60,7 @@ const WriteModeMainToolbar = () => {
   return (
     <EditorBottomNavBar>
       <EditorBottomNavBarItem>
-        <EditorBottomNavBarItemButton
-          isSelected={focused === 'image'}
-          onClick={handleImageButtonClick}
-        >
+        <EditorBottomNavBarItemButton onClick={handleImageButtonClick}>
           <Image className="h-6 w-6" />
           <p className="text-xs">사진</p>
           <input
@@ -82,6 +76,12 @@ const WriteModeMainToolbar = () => {
         <EditorBottomNavBarItemButton
           isSelected={focused === 'text'}
           onClick={() => {
+            if (focused === 'text') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
             setFocused('text');
             setSubFocused('init');
           }}
@@ -94,6 +94,12 @@ const WriteModeMainToolbar = () => {
         <EditorBottomNavBarItemButton
           isSelected={focused === 'align'}
           onClick={() => {
+            if (focused === 'align') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
             setFocused('align');
             setSubFocused('init');
           }}
@@ -106,6 +112,12 @@ const WriteModeMainToolbar = () => {
         <EditorBottomNavBarItemButton
           isSelected={focused === 'save'}
           onClick={() => {
+            if (focused === 'save') {
+              setFocused('init');
+              setSubFocused('init');
+              return;
+            }
+
             setFocused('save');
             setSubFocused('init');
           }}

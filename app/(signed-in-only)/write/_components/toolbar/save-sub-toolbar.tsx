@@ -62,12 +62,14 @@ const SaveSubToolbar = () => {
         </EditorBottomSubNavBarItemButton>
       </EditorBottomSubNavBarItem>
       <EditorBottomSubNavBarItem>
-        <EditorBottomSubNavBarItemButton>
-          <Download className="h-6 w-6" />
-          <SaveDialog
-            trigger={<p className="text-xs">불러오기 | {numberOfSaveFiles}</p>}
-          ></SaveDialog>
-        </EditorBottomSubNavBarItemButton>
+        <SaveDialog
+          trigger={
+            <EditorBottomSubNavBarItemButton>
+              <Download className="h-6 w-6" />
+              <p className="text-xs">불러오기 | {numberOfSaveFiles}</p>
+            </EditorBottomSubNavBarItemButton>
+          }
+        />
       </EditorBottomSubNavBarItem>
     </EditorBottomSubNavBar>
   );

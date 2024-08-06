@@ -109,7 +109,7 @@ const PublishArticleForm = () => {
   const imgUrlMutation = useMutation({
     mutationFn: async (file: ImageUploadRequestDto) => {
       const response =
-        await api.articles.articlesCreateControllerCreatePrivateSticker(file);
+        await api.stickers.stickersControllerCreatePrivateSticker(file);
       return response.data.imageUrl;
     },
     onSuccess: async (imageUrl) => {
@@ -147,7 +147,7 @@ const PublishArticleForm = () => {
         content: bodyContents,
         imageUrl, // TODO: capture upload 이미지
         mainImageUrl: reprImageSrc,
-        currrentImageId: currentImageId,
+        currentImageId,
         stickerBlocks: [], // wip
       });
     },

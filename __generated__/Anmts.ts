@@ -10,7 +10,7 @@
  * ## SOURCE: https://github.com/acacode/swagger-typescript-api ##
  * ---------------------------------------------------------------
  */
-import { AnnouncementsControllerFetchAnmtsData } from './data-contracts';
+import { AnnouncementsControllerGetAnnouncementsData } from './data-contracts';
 import { HttpClient, RequestParams } from './http-client';
 
 export class Anmts<
@@ -20,12 +20,12 @@ export class Anmts<
    * No description
    *
    * @tags 공지 API
-   * @name AnnouncementsControllerFetchAnmts
+   * @name AnnouncementsControllerGetAnnouncements
    * @summary 공지사항 조회
    * @request GET:/anmts
    */
-  announcementsControllerFetchAnmts = (params: RequestParams = {}) =>
-    this.request<AnnouncementsControllerFetchAnmtsData, any>({
+  announcementsControllerGetAnnouncements = (params: RequestParams = {}) =>
+    this.request<AnnouncementsControllerGetAnnouncementsData, any>({
       path: `/anmts`,
       method: 'GET',
       ...params,

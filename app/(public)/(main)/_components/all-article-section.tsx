@@ -51,6 +51,10 @@ const AllArticleSection = () => {
 
   const articles = data?.pages.flatMap((page) => page.data.data) ?? [];
 
+  if (articles.length === 0) {
+    return null;
+  }
+
   return (
     <Section className="px-4">
       <SectionTitle>전체글</SectionTitle>
@@ -59,8 +63,7 @@ const AllArticleSection = () => {
           columnsCountBreakPoints={{
             0: 1,
             240: 2,
-            360: 3,
-            540: 4,
+            540: 3,
           }}
         >
           <Masonry gutter="10px">
@@ -80,7 +83,7 @@ const AllArticleSection = () => {
                 <Image
                   src={article.imageUrl}
                   alt="photo"
-                  className="rounded-md shadow-sm transition-shadow hover:shadow-blccu-secondary"
+                  className="rounded-md shadow-blccu-secondary transition-transform active:scale-95"
                   width={300}
                   height={300}
                   loading="lazy"

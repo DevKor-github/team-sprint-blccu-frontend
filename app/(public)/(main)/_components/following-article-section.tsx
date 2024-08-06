@@ -25,6 +25,10 @@ const FollowingArticleSection = () => {
     return null;
   }
 
+  if (articles.length === 0) {
+    return null;
+  }
+
   return (
     <Section>
       <SectionTitle className="mx-4">팔로잉 최신글</SectionTitle>

@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { toast } from 'sonner';
 
 import { type ArticleDto } from '@/__generated__/data-contracts';
+import { useCurrentImageIdStore } from '@/app/(signed-in-only)/write/_store/use-current-image-id-store';
 import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
 import {
   type Sticker,
@@ -17,14 +18,18 @@ import {
 import { DialogClose } from '@/components/ui/dialog';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
-import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
-const SaveForm = () => {
+type SaveFormProps = {
+  setDialogOpen: (open: boolean) => void;
+};
+
+const SaveForm = ({ setDialogOpen }: SaveFormProps) => {
   const { setTitleContents, setBodyContents, setBackground } =
     useEditorContentsStore();
   const { setStickers } = useStickersStore();
   const { setTempLoad } = useTempLoadStore();
+  const { setCurrentImageId } = useCurrentImageIdStore();
 
   const queryClient = useQueryClient();
 
@@ -51,12 +56,14 @@ const SaveForm = () => {
     setStickers(stickerBlocks);
     setTitleContents(tempArticle.title);
     setBodyContents(tempArticle.content ?? '');
+    setCurrentImageId(tempArticle.currentImageId ?? 0);
 
     //@ts-ignore
     setBackground(tempArticle.articleBackground); // FIXME: swagger update가 아직 안되었음. background join 해서 넘겨줌.
     setTempLoad(true);
     toast.success(TOAST_MESSAGES.TEMP_LOAD_SUCCESS);
-    noop;
+
+    setDialogOpen(false);
   };
 
   const { mutate } = useMutation({
@@ -78,9 +85,9 @@ const SaveForm = () => {
     <div>
       <AppBar className="flex justify-between" shadow>
         <DialogClose>
-          <AppBarBack onClick={noop} />
+          <AppBarBack onClick={() => setDialogOpen(false)} />
         </DialogClose>
-        <AppBarTitle align="center">임시저장글</AppBarTitle>
+        <AppBarTitle align="center">임시 저장된 글</AppBarTitle>
       </AppBar>
       <div className="flex flex-col pt-16">
         {tempArticles.map((tempArticle) => {

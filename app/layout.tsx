@@ -26,7 +26,7 @@ const metadata: Metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="ko-KR">
-      <body className={cn(notoSansKr.className, 'bg-gray-50')}>
+      <body className={cn(notoSansKr.className, 'select-none bg-gray-50')}>
         <QueryProvider>
           <div className="mx-auto min-h-dvh max-w-screen-sm bg-white shadow-xl">
             {children}
