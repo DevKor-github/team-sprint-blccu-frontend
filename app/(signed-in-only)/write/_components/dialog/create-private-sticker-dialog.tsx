@@ -33,6 +33,8 @@ const CreatePrivateStickerDialog = ({
 }: CreatePrivateStickerDialogProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [fileForUpload, setFileForUpload] = useState<File | null>(null);
+  const [isRemoveBackgroundLoading, setIsRemoveBackgroundLoading] =
+    useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
@@ -71,6 +73,8 @@ const CreatePrivateStickerDialog = ({
     }
     const img = new Image();
     img.src = imageUrl;
+
+    setIsRemoveBackgroundLoading(true);
     const blob = await removeBackground(img.src);
 
     const newImageUrl = URL.createObjectURL(blob);
@@ -78,6 +82,7 @@ const CreatePrivateStickerDialog = ({
 
     const newFileForUpload = new File([blob], 'sticker-remove-bg.png');
     setFileForUpload(newFileForUpload);
+    setIsRemoveBackgroundLoading(false);
   };
 
   useEffect(() => {
@@ -122,8 +127,12 @@ const CreatePrivateStickerDialog = ({
         </div>
         <div className="flex justify-evenly pb-10">
           <Button disabled>사각형 자르기</Button>
-          <Button variant="secondary" onClick={handleRemoveBackground}>
-            외곽선 자르기
+          <Button
+            variant="secondary"
+            onClick={handleRemoveBackground}
+            disabled={isRemoveBackgroundLoading}
+          >
+            {isRemoveBackgroundLoading ? '제거 중...' : '외곽선 자르기'}
           </Button>
         </div>
       </DialogContent>
