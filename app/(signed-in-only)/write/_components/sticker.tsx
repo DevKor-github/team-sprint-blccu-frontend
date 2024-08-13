@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Image, Transformer } from 'react-konva';
 
 import type Konva from 'konva';
@@ -14,11 +14,21 @@ type StickerProps = {
   onChange: (newAttrs: StickerType) => void;
 };
 
+const calculateRatio = (width?: number, height?: number) => {
+  if (width && height) {
+    return width / height;
+  }
+
+  return 1;
+};
+
 const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
   const shapeRef = useRef<Konva.Image>(null);
   const trRef = useRef<Konva.Transformer>(null);
 
   const [image] = useImage(sticker.src, 'anonymous');
+
+  const [ratio, setRatio] = useState<number>(1);
 
   const { captureMode } = useCaptureModeStore();
 
@@ -34,10 +44,18 @@ const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
     }
   }, [isSelected, shapeRef, trRef]);
 
+  useEffect(() => {
+    setRatio(calculateRatio(image?.width, image?.height));
+  }, [image]);
+
   return (
     <>
       <Image
         image={image}
+        width={100 * ratio}
+        height={100}
+        x={sticker.posX}
+        y={sticker.posY}
         onClick={onSelect}
         onTap={onSelect}
         ref={shapeRef}
