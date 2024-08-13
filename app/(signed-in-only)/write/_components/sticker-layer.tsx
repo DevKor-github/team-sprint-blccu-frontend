@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 
 import type Konva from 'konva';
 
 import { Sticker } from '@/app/(signed-in-only)/write/_components/sticker';
+import { useCaptureModeStore } from '@/app/(signed-in-only)/write/_store/use-capture-mode-store';
+import { useEditorModeStore } from '@/app/(signed-in-only)/write/_store/use-editor-mode-store';
 import {
   type Sticker as StickerType,
   useStickersStore,
@@ -18,7 +20,32 @@ type StickerLayerProps = {
 const StickerLayer = ({ height }: StickerLayerProps) => {
   const { stickers, setStickers } = useStickersStore();
 
+  const { editorMode } = useEditorModeStore();
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubscribeEditorMode = useEditorModeStore.subscribe(
+      ({ editorMode }) => {
+        if (editorMode === 'write') {
+          setSelectedId(null);
+        }
+      },
+    );
+
+    const unsubscribeCaptureMode = useCaptureModeStore.subscribe(
+      ({ captureMode }) => {
+        if (captureMode) {
+          setSelectedId(null);
+        }
+      },
+    );
+
+    return () => {
+      unsubscribeEditorMode();
+      unsubscribeCaptureMode();
+    };
+  });
 
   const checkDeselect = (
     e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>,
@@ -38,7 +65,7 @@ const StickerLayer = ({ height }: StickerLayerProps) => {
       onTouchStart={checkDeselect}
       className="absolute"
     >
-      <Layer>
+      <Layer listening={editorMode === 'deco'}>
         {Object.values(stickers).map((sticker) => (
           <Sticker
             key={sticker.clientId}
