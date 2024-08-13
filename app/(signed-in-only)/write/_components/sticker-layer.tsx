@@ -12,6 +12,7 @@ import {
   type Sticker as StickerType,
   useStickersStore,
 } from '@/app/(signed-in-only)/write/_store/use-stickers-store';
+import { cn } from '@/lib/utils';
 
 type StickerLayerProps = {
   height: number;
@@ -63,7 +64,7 @@ const StickerLayer = ({ height }: StickerLayerProps) => {
       height={height}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
-      className="absolute"
+      className={cn('absolute', editorMode === 'deco' && 'z-10')}
     >
       <Layer listening={editorMode === 'deco'}>
         {Object.values(stickers).map((sticker) => (

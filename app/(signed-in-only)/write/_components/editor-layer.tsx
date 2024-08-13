@@ -13,6 +13,7 @@ const EditorLayer = () => {
       className={cn(
         'flex-1 px-[5%] pb-[25%] pt-[20%]',
         editorMode === 'write' ? 'pointer-events-auto' : 'pointer-events-none',
+        editorMode === 'write' && 'z-10',
       )}
     >
       <TitleEditor />

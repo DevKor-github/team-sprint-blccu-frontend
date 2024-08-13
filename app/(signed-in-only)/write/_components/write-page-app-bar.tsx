@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 
 const WritePageAppBar = () => {
   return (
-    <AppBar className="justify-between border-none bg-transparent">
+    <AppBar className="z-30 justify-between border-none bg-transparent">
       <AppBarBack />
       <AppBarTitle align="center">
         <ModeSelect />
