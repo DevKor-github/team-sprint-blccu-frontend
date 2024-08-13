@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Image, Transformer } from 'react-konva';
+import { Circle, Image, Transformer } from 'react-konva';
 
 import type Konva from 'konva';
 import useImage from 'use-image';
@@ -12,6 +12,7 @@ type StickerProps = {
   isSelected: boolean;
   onSelect: () => void;
   onChange: (newAttrs: StickerType) => void;
+  onDelete: () => void;
 };
 
 const calculateRatio = (width?: number, height?: number) => {
@@ -22,9 +23,16 @@ const calculateRatio = (width?: number, height?: number) => {
   return 1;
 };
 
-const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
+const Sticker = ({
+  sticker,
+  isSelected,
+  onSelect,
+  onChange,
+  onDelete,
+}: StickerProps) => {
   const shapeRef = useRef<Konva.Image>(null);
   const trRef = useRef<Konva.Transformer>(null);
+  const deleteButtonRef = useRef<Konva.Circle>(null);
 
   const [image] = useImage(sticker.src, 'anonymous');
 
@@ -105,7 +113,16 @@ const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
             }
             return newBox;
           }}
-        />
+        >
+          <Circle
+            radius={8}
+            fill="#eeeeee"
+            x={-12}
+            y={-12}
+            ref={deleteButtonRef}
+            onClick={onDelete}
+          />
+        </Transformer>
       )}
     </>
   );

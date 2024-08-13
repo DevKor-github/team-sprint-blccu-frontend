@@ -56,6 +56,13 @@ const StickerLayer = ({ height }: StickerLayerProps) => {
 
               setStickers(newStickers);
             }}
+            onDelete={() => {
+              const newStickers = { ...stickers };
+
+              delete newStickers[sticker.clientId];
+
+              setStickers(newStickers);
+            }}
           />
         ))}
       </Layer>
