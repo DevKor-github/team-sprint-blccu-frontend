@@ -38,6 +38,9 @@ const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
     }
 
     if (isSelected) {
+      // Move the sticker to the top when selected
+      shapeRef.current.moveToTop();
+
       // we need to attach transformer manually
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer()?.batchDraw();
@@ -56,10 +59,20 @@ const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
         height={100}
         x={sticker.posX}
         y={sticker.posY}
-        onClick={onSelect}
-        onTap={onSelect}
+        onClick={() => {
+          onSelect();
+          shapeRef.current?.moveToTop();
+        }}
+        onTap={() => {
+          onSelect();
+          shapeRef.current?.moveToTop();
+        }}
         ref={shapeRef}
         draggable
+        onDragStart={() => {
+          onSelect();
+          shapeRef.current?.moveToTop();
+        }}
         onDragEnd={(e) => {
           onChange({
             ...sticker,
