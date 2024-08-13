@@ -49,7 +49,6 @@ import { TOAST_MESSAGES } from '@/constants/messages';
 import { ROUTES } from '@/constants/routes';
 import { useMeQuery } from '@/hooks/queries/use-me-query';
 import { api } from '@/lib/api';
-import { noop } from '@/lib/utils';
 import { queries } from '@/queries';
 
 const PublishArticleForm = () => {
@@ -160,12 +159,7 @@ const PublishArticleForm = () => {
       <form onSubmit={onSubmit}>
         <AppBar className="justify-between border-none bg-transparent">
           <DialogClose>
-            <AppBarBack
-              onClick={() => {
-                noop;
-                setCaptureMode(false);
-              }}
-            />
+            <AppBarBack onClick={() => setCaptureMode(false)} />
           </DialogClose>
           <AppBarTitle align="center">글 게시</AppBarTitle>
           <Button

@@ -1,18 +1,16 @@
 import Image from 'next/image';
 
+import { type ChangeEventHandler, useRef, useState } from 'react';
+
 import { Scrollbar } from '@radix-ui/react-scroll-area';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 
-import {
-  type ImageUploadRequestDto,
-  type StickerPatchRequestDto,
-} from '@/__generated__/data-contracts';
+import { CreatePrivateStickerDialog } from '@/app/(signed-in-only)/write/_components/dialog/create-private-sticker-dialog';
 import { StickerCategoryContent } from '@/app/(signed-in-only)/write/_components/sheet/sticker-category-content';
 import { useStickersStore } from '@/app/(signed-in-only)/write/_store/use-stickers-store';
-import { FileUploader } from '@/components/ui-unstable/file-uploader';
 import { Button } from '@/components/ui/button';
 import { IconButton } from '@/components/ui/icon-button';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -21,11 +19,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TOAST_MESSAGES } from '@/constants/messages';
 import { api } from '@/lib/api';
 import { queries } from '@/queries';
-
-type PatchStickerProps = {
-  id: number;
-  dto: StickerPatchRequestDto;
-};
 
 const StickerContent = () => {
   const { data: publicStickerCategoriesData } = useQuery(
@@ -36,34 +29,24 @@ const StickerContent = () => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: patchStickerMutate } = useMutation({
-    mutationFn: ({ id, dto }: PatchStickerProps) =>
-      api.stickers.stickersControllerPatchSticker(id, dto),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: queries.stickers.private.queryKey,
-      });
-    },
+  const [
+    isCreatePrivateStickerDialogOpen,
+    setIsCreatePrivateStickerDialogOpen,
+  ] = useState<boolean>(false);
+  const [file, setFile] = useState<File | null>(null);
 
-    onError: () => {
-      toast.error(TOAST_MESSAGES.PATCH_STICKER_FAIL);
-    },
-  });
+  const ref = useRef<HTMLInputElement>(null);
 
-  const mutation = useMutation({
-    mutationFn: (dto: ImageUploadRequestDto) =>
-      api.stickers.stickersControllerCreatePrivateSticker(dto),
-    onSuccess: ({ data }) => {
-      // FIXME: 원 기획과 다릅니다. 자동 재사용 설정을 하지 않습니다.
-      patchStickerMutate({
-        id: data.id,
-        dto: { isReusable: true },
-      });
-    },
-    onError: () => {
-      toast.error(TOAST_MESSAGES.UPLOAD_STICKER_FAIL);
-    },
-  });
+  const handleUpload: ChangeEventHandler<HTMLInputElement> = (evt) => {
+    const file = evt.target.files?.[0];
+
+    if (file === undefined) {
+      return;
+    }
+
+    setIsCreatePrivateStickerDialogOpen(true);
+    setFile(file);
+  };
 
   const { mutate: deleteStickerMutate } = useMutation({
     mutationFn: (id: number) =>
@@ -96,13 +79,24 @@ const StickerContent = () => {
             <Scrollbar orientation="horizontal" />
           </ScrollArea>
         </TabsList>
-        <FileUploader
-          uploadMutation={mutation}
-          trigger={
-            <Button radius="full" size="sm" className="mb-4">
-              스티커 추가
-            </Button>
-          }
+        <Button
+          radius="full"
+          size="sm"
+          className="mb-4"
+          onClick={() => ref.current?.click()}
+        >
+          스티커 추가
+        </Button>
+        <input
+          ref={ref}
+          type="file"
+          className="hidden"
+          onChange={handleUpload}
+        />
+        <CreatePrivateStickerDialog
+          isOpen={isCreatePrivateStickerDialogOpen}
+          setIsOpen={setIsCreatePrivateStickerDialogOpen}
+          file={file}
         />
       </div>
       <TabsContent value="my-sticker">
