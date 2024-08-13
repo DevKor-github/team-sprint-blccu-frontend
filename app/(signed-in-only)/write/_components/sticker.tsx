@@ -38,8 +38,6 @@ const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
     <>
       <Image
         image={image}
-        width={300}
-        height={300}
         onClick={onSelect}
         onTap={onSelect}
         ref={shapeRef}
@@ -56,9 +54,22 @@ const Sticker = ({ sticker, isSelected, onSelect, onChange }: StickerProps) => {
         <Transformer
           ref={trRef}
           flipEnabled={false}
+          keepRatio
+          enabledAnchors={[
+            'top-left',
+            'top-right',
+            'bottom-left',
+            'bottom-right',
+          ]}
+          borderStroke="#dddddd"
+          anchorStroke="#dddddd"
+          anchorCornerRadius={5}
+          rotateAnchorCursor="pointer"
+          rotateAnchorOffset={20}
+          padding={12}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
-            if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
+            if (Math.abs(newBox.width) < 20 || Math.abs(newBox.height) < 20) {
               return oldBox;
             }
             return newBox;
