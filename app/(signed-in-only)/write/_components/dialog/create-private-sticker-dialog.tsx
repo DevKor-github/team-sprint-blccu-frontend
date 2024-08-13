@@ -74,15 +74,22 @@ const CreatePrivateStickerDialog = ({
     const img = new Image();
     img.src = imageUrl;
 
-    setIsRemoveBackgroundLoading(true);
-    const blob = await removeBackground(img.src);
+    try {
+      setIsRemoveBackgroundLoading(true);
+      const blob = await removeBackground(img.src);
 
-    const newImageUrl = URL.createObjectURL(blob);
-    setImageUrl(newImageUrl);
+      const newImageUrl = URL.createObjectURL(blob);
+      setImageUrl(newImageUrl);
 
-    const newFileForUpload = new File([blob], 'sticker-remove-bg.png');
-    setFileForUpload(newFileForUpload);
-    setIsRemoveBackgroundLoading(false);
+      const newFileForUpload = new File([blob], 'sticker-remove-bg.png');
+      setFileForUpload(newFileForUpload);
+    } catch (err) {
+      toast.error(TOAST_MESSAGES.REMOVE_BACKGROUND_FAIL);
+
+      console.error(err); // wip
+    } finally {
+      setIsRemoveBackgroundLoading(false);
+    }
   };
 
   useEffect(() => {

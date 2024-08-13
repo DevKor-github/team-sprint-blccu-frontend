@@ -44,6 +44,7 @@ const TOAST_MESSAGES = {
   SUCCESS_TEMP: '임시 저장에 성공했습니다.',
   FAIL_TEMP: '임시 저장에 실패했습니다.',
   TEMP_LOAD_SUCCESS: '불러오기에 성공했습니다.',
+  REMOVE_BACKGROUND_FAIL: '배경 제거에 실패했습니다.',
 } as const;
 
 export { TOAST_MESSAGES };
