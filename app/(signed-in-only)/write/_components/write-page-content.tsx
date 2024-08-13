@@ -23,7 +23,7 @@ const WritePageContent = () => {
       <WritePageAppBar />
       <div
         ref={mainContentRef}
-        className="min-h-dvh bg-repeat-y"
+        className="min-h-dvh bg-contain bg-repeat-y"
         style={{
           backgroundImage:
             background !== null ? `url(${background.imageUrl})` : 'none',
