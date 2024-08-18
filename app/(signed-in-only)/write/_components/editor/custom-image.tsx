@@ -4,38 +4,44 @@ import { useEffect, useRef } from 'react';
 
 import Image from '@tiptap/extension-image';
 import {
+  type NodeViewProps,
   NodeViewWrapper,
   ReactNodeViewRenderer,
   mergeAttributes,
 } from '@tiptap/react';
 
 import { useCaptureModeStore } from '@/app/(signed-in-only)/write/_store/use-capture-mode-store';
-import { useFocusedStore } from '@/app/(signed-in-only)/write/_store/use-focused-store';
 import { useReprImageStore } from '@/app/(signed-in-only)/write/_store/use-repr-image-store';
 import AlignCenter from '@/assets/svg/align-center.svg';
 import AlignLeft from '@/assets/svg/align-left.svg';
 import AlignRight from '@/assets/svg/align-right.svg';
+import Delete from '@/assets/svg/delete.svg';
+import ImageResizer from '@/assets/svg/image-resizer.svg';
 import { cn } from '@/lib/utils';
 
+import { useCustomImageFocusStore } from '@/app/(signed-in-only)/write/_store/use-custom-image-focus-store';
 import './font.css';
 import './placeholder.css';
 
-// FIXME: props type any
-const CustomImageComponent = (props: any) => {
+const CustomImageComponent = (props: NodeViewProps) => {
   const { reprImageId, setReprImageId, setReprImageSrc } = useReprImageStore();
-  const { setFocused } = useFocusedStore();
   const { captureMode } = useCaptureModeStore();
+  const { focusedCustomImage, setFocusedCustomImage } =
+    useCustomImageFocusStore();
 
   const { src, alt, id, style } = props.node.attrs;
+  const isFocusedCustomImage = focusedCustomImage === id;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const resizerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const imgElement = imgRef.current;
-    if (!imgElement) return;
+    const resizeHandle = resizerRef.current;
+    if (!imgElement || !resizeHandle) return;
 
-    const handleResize = (e: MouseEvent | TouchEvent, direction: string) => {
+    const handleResize = (e: MouseEvent | TouchEvent) => {
       e.preventDefault();
       let startX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
       let startWidth = imgElement.offsetWidth;
@@ -43,13 +49,6 @@ const CustomImageComponent = (props: any) => {
       const onMove = (e: MouseEvent | TouchEvent) => {
         let clientX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
         let deltaX = clientX - startX;
-        if (
-          direction === 'left' ||
-          direction === 'left-0 top-0' ||
-          direction === 'bottom-0 left-0'
-        ) {
-          deltaX = -deltaX;
-        }
         imgElement.style.width = `${startWidth + deltaX}px`;
       };
 
@@ -66,47 +65,14 @@ const CustomImageComponent = (props: any) => {
       document.addEventListener('touchend', onEnd);
     };
 
-    const addResizeHandlers = () => {
-      const resizeDirections = [
-        'left-0 top-0',
-        'right-0 top-0',
-        'bottom-0 left-0',
-        'bottom-0 right-0',
-      ];
-      resizeDirections.forEach((direction) => {
-        const resizeHandle = document.createElement('div');
-        resizeHandle.className = `absolute w-3 h-3 bg-gray-500 ${direction}`;
-        resizeHandle.style.cursor = `${direction.includes('left') ? 'nwse-resize' : 'nesw-resize'}`;
-        resizeHandle.ontouchstart = (e) => handleResize(e, direction);
-        resizeHandle.onmousedown = (e) => handleResize(e, direction);
-        imgElement.parentElement?.appendChild(resizeHandle);
-      });
-    };
+    resizeHandle.ontouchstart = (e) => handleResize(e);
+    resizeHandle.onmousedown = (e) => handleResize(e);
 
-    const removeResizeHandlers = () => {
-      const resizeHandles = imgElement.parentElement?.querySelectorAll(
-        '.absolute.w-3.h-3.bg-gray-500',
-      );
-      resizeHandles?.forEach((handle) => handle.remove());
-    };
-
-    const handleClick = () => {
-      if (
-        imgElement.parentElement?.querySelectorAll(
-          '.absolute.w-3.h-3.bg-gray-500',
-        ).length
-      ) {
-        removeResizeHandlers();
-      } else {
-        addResizeHandlers();
-      }
-    };
-
-    imgElement.addEventListener('click', handleClick);
     return () => {
-      imgElement.removeEventListener('click', handleClick);
+      resizeHandle.removeEventListener('mousedown', handleResize);
+      resizeHandle.removeEventListener('touchstart', handleResize);
     };
-  }, []);
+  }, [focusedCustomImage, id, setFocusedCustomImage]);
 
   const handlePosition = (position: string) => {
     if (containerRef.current) {
@@ -126,10 +92,14 @@ const CustomImageComponent = (props: any) => {
     }
   };
 
+  const deleteImage = () => {
+    props.deleteNode();
+  };
+
   return (
     <NodeViewWrapper className="grid h-auto w-auto" style={{ ...style }}>
       <div
-        className="relative mb-0 ml-0 mr-auto mt-0 h-auto w-auto"
+        className={`relative mb-0 ml-0 mr-auto mt-0 h-auto w-auto ${isFocusedCustomImage && !captureMode ? 'border-2 border-[#1A1A1A]' : ''}`}
         ref={containerRef}
       >
         <img
@@ -138,9 +108,9 @@ const CustomImageComponent = (props: any) => {
           id={id}
           ref={imgRef}
           style={style}
-          onClick={() => setFocused('image')}
+          onClick={() => setFocusedCustomImage(id)}
         />
-        {captureMode || (
+        {!captureMode && isFocusedCustomImage && (
           <>
             <button
               onClick={() => {
@@ -156,19 +126,28 @@ const CustomImageComponent = (props: any) => {
             >
               대표 이미지
             </button>
-            <div className="absolute left-1/2 top-0 flex -translate-x-1/2 transform space-x-2">
-              <AlignLeft
-                className="cursor-pointer"
-                onClick={() => handlePosition('left')}
-              />
-              <AlignCenter
-                className="cursor-pointer"
-                onClick={() => handlePosition('center')}
-              />
-              <AlignRight
-                className="cursor-pointer"
-                onClick={() => handlePosition('right')}
-              />
+            <div className="absolute left-1/2 top-[-50px] h-[40px] w-1/2 -translate-x-1/2 transform content-center justify-center space-x-2 rounded-full bg-blccu-white drop-shadow-md">
+              <div className="flex h-[20px] w-[100%] content-center justify-center gap-[10%]">
+                <AlignLeft
+                  className="cursor-pointer"
+                  onClick={() => handlePosition('left')}
+                />
+                <AlignCenter
+                  className="cursor-pointer"
+                  onClick={() => handlePosition('center')}
+                />
+                <AlignRight
+                  className="cursor-pointer"
+                  onClick={() => handlePosition('right')}
+                />
+                <Delete className="cursor-pointer" onClick={deleteImage} />
+              </div>
+            </div>
+            <div
+              ref={resizerRef}
+              className="absolute bottom-[-10px] right-[-10px] cursor-pointer"
+            >
+              <ImageResizer />
             </div>
           </>
         )}
