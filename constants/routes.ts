@@ -38,7 +38,7 @@ const ROUTES = {
     `/update-category/${categoryId}/edit`,
   NOTIFICATIONS: '/notifications',
   REPORT_COMMENT_ID_OF: (commentId: number) => `/report/comments/${commentId}`,
-  REPORT_ARTICLE_ID_OF: (articleId: number) => `/report/posts/${articleId}`,
+  REPORT_ARTICLE_ID_OF: (articleId: number) => `/report/articles/${articleId}`,
 
   /* settings page */
   SETTINGS: '/settings',
