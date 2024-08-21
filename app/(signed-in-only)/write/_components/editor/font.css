@@ -15,3 +15,10 @@ html {
 span {
   transform: rotate(0.04deg);
 }
+
+@font-face {
+  font-family: 'Ownglyph Ryurue';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryurue-Rg.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

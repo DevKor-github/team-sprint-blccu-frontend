@@ -73,7 +73,7 @@ const BodyEditor = () => {
   }, [tempLoad]);
 
   return (
-    <div className="body-editor pt-[2%]">
+    <div className="body-editor pt-[2%]" style={{ fontSize: '14px' }}>
       <EditorContent
         editor={editor}
         onFocus={() => {

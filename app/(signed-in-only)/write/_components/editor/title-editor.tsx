@@ -49,14 +49,14 @@ const TitleEditor = () => {
       FontFamily,
       Underline,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Placeholder.configure({ placeholder: '제목' }),
+      Placeholder.configure({ placeholder: '제목을 입력해주세요' }),
     ],
     onUpdate: ({ editor }) => {
       const json = editor.getHTML();
       setTitleContents(json);
     },
     onCreate: ({ editor }) => {
-      editor.commands.setFontFamily('var(--noto-sans-kr)');
+      editor.commands.setFontFamily('Ownglyph ryurue');
       editor.commands.setFontSize('24');
       editor.commands.setColor('#000000');
     },
