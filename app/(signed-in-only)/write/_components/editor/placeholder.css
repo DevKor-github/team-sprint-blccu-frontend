@@ -1,10 +1,21 @@
-.tiptap p.is-editor-empty:first-child::before {
+.body-editor .tiptap p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);
+  font-size: 14px;
   float: left;
   height: 0;
   pointer-events: none;
 }
+
+.title-editor .tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  font-size: 24px;
+  height: 0;
+  float: left;
+  pointer-events: none;
+}
+
 
 /* editor focus outline-none */
 .ProseMirror:focus {

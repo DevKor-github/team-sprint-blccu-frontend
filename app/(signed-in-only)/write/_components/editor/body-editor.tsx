@@ -57,6 +57,11 @@ const BodyEditor = () => {
       const json = editor.getHTML();
       setBodyContents(json);
     },
+    onCreate: ({ editor }) => {
+      editor.commands.setFontFamily('var(--noto-sans-kr)');
+      editor.commands.setFontSize('14');
+      editor.commands.setColor('#1A1A1A');
+    },
   });
 
   useEffect(() => {
@@ -68,7 +73,7 @@ const BodyEditor = () => {
   }, [tempLoad]);
 
   return (
-    <div className="pt-[2%]">
+    <div className="body-editor pt-[2%]">
       <EditorContent
         editor={editor}
         onFocus={() => {

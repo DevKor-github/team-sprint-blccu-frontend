@@ -55,6 +55,11 @@ const TitleEditor = () => {
       const json = editor.getHTML();
       setTitleContents(json);
     },
+    onCreate: ({ editor }) => {
+      editor.commands.setFontFamily('var(--noto-sans-kr)');
+      editor.commands.setFontSize('24');
+      editor.commands.setColor('#000000');
+    },
   });
 
   useEffect(() => {
@@ -66,12 +71,14 @@ const TitleEditor = () => {
   }, [tempLoad]);
 
   return (
-    <EditorContent
-      editor={editor}
-      onFocus={() => {
-        setSelectedEditor(editor);
-      }}
-    />
+    <div className="title-editor" style={{ fontSize: '24px' }}>
+      <EditorContent
+        editor={editor}
+        onFocus={() => {
+          setSelectedEditor(editor);
+        }}
+      />
+    </div>
   );
 };
 
