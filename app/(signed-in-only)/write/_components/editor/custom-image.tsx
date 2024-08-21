@@ -11,6 +11,7 @@ import {
 } from '@tiptap/react';
 
 import { useCaptureModeStore } from '@/app/(signed-in-only)/write/_store/use-capture-mode-store';
+import { useCustomImageFocusStore } from '@/app/(signed-in-only)/write/_store/use-custom-image-focus-store';
 import { useReprImageStore } from '@/app/(signed-in-only)/write/_store/use-repr-image-store';
 import AlignCenter from '@/assets/svg/align-center.svg';
 import AlignLeft from '@/assets/svg/align-left.svg';
@@ -19,7 +20,6 @@ import Delete from '@/assets/svg/delete.svg';
 import ImageResizer from '@/assets/svg/image-resizer.svg';
 import { cn } from '@/lib/utils';
 
-import { useCustomImageFocusStore } from '@/app/(signed-in-only)/write/_store/use-custom-image-focus-store';
 import './font.css';
 import './placeholder.css';
 
@@ -35,6 +35,25 @@ const CustomImageComponent = (props: NodeViewProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const resizerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setFocusedCustomImage(-1);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [setFocusedCustomImage]);
 
   useEffect(() => {
     const imgElement = imgRef.current;
