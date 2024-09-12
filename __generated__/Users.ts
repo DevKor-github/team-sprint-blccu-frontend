@@ -16,8 +16,6 @@ import {
   AgreementsControllerAgreeData,
   AgreementsControllerFetchAgreementAdminData,
   AgreementsControllerFetchAgreementsData,
-  AgreementsControllerGetContractData,
-  AgreementsControllerGetContractParams,
   AgreementsControllerPatchAgreementData,
   AnnouncementCreateRequestDto,
   AnnouncementPatchRequestDto,
@@ -227,7 +225,7 @@ export class Users<
     data: UserDeleteRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersDeleteControllerDeleteUserData, any>({
+    this.request<UsersDeleteControllerDeleteUserData, void>({
       path: `/users/me`,
       method: 'DELETE',
       body: data,
@@ -248,7 +246,7 @@ export class Users<
     data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersUpdateControllerPostProfileImageData, any>({
+    this.request<UsersUpdateControllerPostProfileImageData, void>({
       path: `/users/me/profile-image`,
       method: 'POST',
       body: data,
@@ -269,30 +267,12 @@ export class Users<
     data: ImageUploadRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<UsersUpdateControllerUploadBackgroundImageData, any>({
+    this.request<UsersUpdateControllerUploadBackgroundImageData, void>({
       path: `/users/me/background-image`,
       method: 'POST',
       body: data,
       secure: true,
       type: ContentType.FormData,
-      ...params,
-    });
-  /**
-   * No description
-   *
-   * @tags 유저 API
-   * @name AgreementsControllerGetContract
-   * @summary contract fetch
-   * @request GET:/users/contracts
-   */
-  agreementsControllerGetContract = (
-    query: AgreementsControllerGetContractParams,
-    params: RequestParams = {},
-  ) =>
-    this.request<AgreementsControllerGetContractData, any>({
-      path: `/users/contracts`,
-      method: 'GET',
-      query: query,
       ...params,
     });
   /**
@@ -404,7 +384,7 @@ export class Users<
    * @secure
    */
   feedbacksControllerGetFeedbacks = (params: RequestParams = {}) =>
-    this.request<FeedbacksControllerGetFeedbacksData, any>({
+    this.request<FeedbacksControllerGetFeedbacksData, void>({
       path: `/users/admin/feedbacks`,
       method: 'GET',
       secure: true,
@@ -734,14 +714,14 @@ export class Users<
   /**
    * No description
    *
-   * @tags 유저 API, 어드민 API
+   * @tags 어드민 API, 유저 API
    * @name ReportsControllerFetchAll
    * @summary [어드민용] 신고 내역 조회
    * @request GET:/users/admin/reports
    * @secure
    */
   reportsControllerFetchAll = (params: RequestParams = {}) =>
-    this.request<ReportsControllerFetchAllData, any>({
+    this.request<ReportsControllerFetchAllData, void>({
       path: `/users/admin/reports`,
       method: 'GET',
       secure: true,

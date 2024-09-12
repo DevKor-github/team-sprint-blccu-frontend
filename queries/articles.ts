@@ -22,7 +22,7 @@ const articles = createQueryKeys('articles', {
       api.articles.articlesReadControllerFetchFriendsCursor({
         sort: 'DESC',
         take: 10,
-        dateCreated: 'MONTH',
+        dateCreated: 'YEAR',
       }),
   },
   userTrending: (userId: number) => ({

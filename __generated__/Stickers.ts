@@ -12,8 +12,12 @@
  */
 import {
   ImageUploadRequestDto,
+  StickerCategoriesControllerDeleteCategoryData,
+  StickerCategoriesControllerDeleteCategoryMappingData,
   StickerCategoriesControllerFetchCategoriesData,
   StickerCategoriesControllerFetchStickersByCategoryNameData,
+  StickerCategoriesControllerPatchCategoryData,
+  StickerCategoryUpdateRequestDto,
   StickerPatchRequestDto,
   StickersControllerCreatePrivateStickerData,
   StickersControllerDeleteStickerData,
@@ -150,6 +154,67 @@ export class Stickers<
     >({
       path: `/stickers/categories/${stickerCategoryId}`,
       method: 'GET',
+      ...params,
+    });
+  /**
+   * @description [어드민 전용] 스티커 카테고리의 이름을 변경한다.
+   *
+   * @tags 스티커 API, 어드민 API
+   * @name StickerCategoriesControllerPatchCategory
+   * @summary [어드민용] 스티커 카테고리 이름 변경
+   * @request PATCH:/stickers/categories/{stickerCategoryId}
+   * @secure
+   */
+  stickerCategoriesControllerPatchCategory = (
+    stickerCategoryId: number,
+    data: StickerCategoryUpdateRequestDto,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickerCategoriesControllerPatchCategoryData, void>({
+      path: `/stickers/categories/${stickerCategoryId}`,
+      method: 'PATCH',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      ...params,
+    });
+  /**
+   * @description [어드민 전용] 스티커 카테고리를 삭제한다
+   *
+   * @tags 스티커 API, 어드민 API
+   * @name StickerCategoriesControllerDeleteCategory
+   * @summary [어드민용] 스티커 카테고리 삭제
+   * @request DELETE:/stickers/categories/{stickerCategoryId}
+   * @secure
+   */
+  stickerCategoriesControllerDeleteCategory = (
+    stickerCategoryId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickerCategoriesControllerDeleteCategoryData, void>({
+      path: `/stickers/categories/${stickerCategoryId}`,
+      method: 'DELETE',
+      secure: true,
+      ...params,
+    });
+  /**
+   * @description [어드민 전용] 스티커 카테고리 매핑 값을 삭제한다
+   *
+   * @tags 스티커 API, 어드민 API
+   * @name StickerCategoriesControllerDeleteCategoryMapping
+   * @summary [어드민용] 스티커 카테고리 매핑 삭제
+   * @request DELETE:/stickers/categories/{stickerCategoryId}/{stickerId}
+   * @secure
+   */
+  stickerCategoriesControllerDeleteCategoryMapping = (
+    stickerCategoryId: number,
+    stickerId: number,
+    params: RequestParams = {},
+  ) =>
+    this.request<StickerCategoriesControllerDeleteCategoryMappingData, void>({
+      path: `/stickers/categories/${stickerCategoryId}/${stickerId}`,
+      method: 'DELETE',
+      secure: true,
       ...params,
     });
 }
