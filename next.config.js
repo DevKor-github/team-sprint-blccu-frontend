@@ -44,15 +44,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 's3.ap-northeast-2.amazonaws.com',
       },
-      /* cloudfront - development */
+      /* cloudfront - development, production */
       {
         protocol: 'https',
         hostname: 'd60yoiev654ed.cloudfront.net',
-      },
-      /* cloudfront - production */
-      {
-        protocol: 'https',
-        hostname: 'd3w41c7os2c6vd.cloudfront.net',
       },
     ],
   },
