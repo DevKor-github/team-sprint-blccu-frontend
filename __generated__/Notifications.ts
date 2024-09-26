@@ -22,7 +22,7 @@ export class Notifications<
   SecurityDataType = unknown,
 > extends HttpClient<SecurityDataType> {
   /**
-   * @description [swagger 불가능, postman 권장] sse를 연결한다. 로그인된 유저를 타겟으로 하는 알림이 보내졌을경우 sse를 통해 전달받는다.
+   * @description [swagger 지원 x] sse를 연결한다. 로그인된 유저를 타겟으로 하는 알림이 보내졌을경우 sse를 통해 전달받는다.
    *
    * @tags 알림 API
    * @name NotificationsControllerConnectUser
@@ -64,16 +64,14 @@ export class Notifications<
    * @name NotificationsControllerReadNotification
    * @summary 알림 읽기
    * @request POST:/notifications/{notificationId}/read
-   * @secure
    */
   notificationsControllerReadNotification = (
     notificationId: number,
     params: RequestParams = {},
   ) =>
-    this.request<NotificationsControllerReadNotificationData, any>({
+    this.request<NotificationsControllerReadNotificationData, void>({
       path: `/notifications/${notificationId}/read`,
       method: 'POST',
-      secure: true,
       ...params,
     });
 }

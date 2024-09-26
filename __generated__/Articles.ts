@@ -316,7 +316,7 @@ export class Articles<
     data: CommentCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<CommentsControllerCreateCommentData, any>({
+    this.request<CommentsControllerCreateCommentData, void>({
       path: `/articles/${articleId}/comments`,
       method: 'POST',
       body: data,
@@ -348,7 +348,6 @@ export class Articles<
    * @name CommentsControllerPatchComment
    * @summary 특정 게시글에 대한 댓글 수정
    * @request PATCH:/articles/{articleId}/comments/{commentId}
-   * @secure
    */
   commentsControllerPatchComment = (
     articleId: number,
@@ -356,11 +355,10 @@ export class Articles<
     data: CommentPatchRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<CommentsControllerPatchCommentData, any>({
+    this.request<CommentsControllerPatchCommentData, void>({
       path: `/articles/${articleId}/comments/${commentId}`,
       method: 'PATCH',
       body: data,
-      secure: true,
       type: ContentType.Json,
       ...params,
     });
@@ -378,7 +376,7 @@ export class Articles<
     commentId: number,
     params: RequestParams = {},
   ) =>
-    this.request<CommentsControllerDeleteCommentData, any>({
+    this.request<CommentsControllerDeleteCommentData, void>({
       path: `/articles/${articleId}/comments/${commentId}`,
       method: 'DELETE',
       secure: true,
@@ -463,7 +461,7 @@ export class Articles<
     data: ReportCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ReportsControllerReportArticleData, any>({
+    this.request<ReportsControllerReportArticleData, void>({
       path: `/articles/${articleId}/report`,
       method: 'POST',
       body: data,
@@ -485,7 +483,7 @@ export class Articles<
     data: ReportCreateRequestDto,
     params: RequestParams = {},
   ) =>
-    this.request<ReportsControllerReportCommentData, any>({
+    this.request<ReportsControllerReportCommentData, void>({
       path: `/articles/comments/${commentId}/report`,
       method: 'POST',
       body: data,

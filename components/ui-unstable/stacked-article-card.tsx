@@ -1,12 +1,13 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { AspectRatio } from '@radix-ui/react-aspect-ratio';
 import { format } from 'date-fns';
 
 import { type ArticleWithUserDto } from '@/__generated__/data-contracts';
+import icon from '@/assets/png/icon.png';
+import { ImageWithFallback } from '@/components/ui-unstable/image-with-fallback';
 import { ROUTES } from '@/constants/routes';
 
 type StackedArticleCardProps = {
@@ -38,9 +39,10 @@ const StackedArticleCard = ({
       </div>
       <div className="w-20 flex-shrink-0">
         <AspectRatio ratio={1}>
-          <Image
+          <ImageWithFallback
             src={mainImageUrl}
             alt="thumbnail"
+            fallbackSrc={icon}
             fill
             sizes="100px"
             className="rounded-md object-cover"

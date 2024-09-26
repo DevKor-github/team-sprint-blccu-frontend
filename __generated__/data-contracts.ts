@@ -384,6 +384,11 @@ export interface StickerCategoryMapperDto {
   stickerCategoryId: number;
 }
 
+export interface StickerCategoryUpdateRequestDto {
+  /** 카테고리 이름 */
+  name: string;
+}
+
 export interface StickerBlocksCreateDto {
   /** 참조하는 스티커의 아이디 */
   stickerId: number;
@@ -1259,18 +1264,6 @@ export type UsersUpdateControllerPostProfileImageData = ImageUploadResponseDto;
 export type UsersUpdateControllerUploadBackgroundImageData =
   ImageUploadResponseDto;
 
-export interface AgreementsControllerGetContractParams {
-  /** 약관의 종류 */
-  agreementType:
-    | 'PRIVACY_POLICY'
-    | 'TERMS_OF_SERVICE'
-    | 'MARKETING_CONSENT'
-    | 'CUSTOM_AGREEMENT'
-    | 'DESIGN_LICENCE';
-}
-
-export type AgreementsControllerGetContractData = any;
-
 export type AgreementsControllerAgreeData = AgreementDto;
 
 export type AgreementsControllerFetchAgreementsData = AgreementDto[];
@@ -1301,10 +1294,16 @@ export type StickerCategoriesControllerFetchCategoriesData =
 export type StickerCategoriesControllerFetchStickersByCategoryNameData =
   StickersCategoryFetchStickersResponseDto[];
 
+export type StickerCategoriesControllerPatchCategoryData = StickerCategoryDto;
+
+export type StickerCategoriesControllerDeleteCategoryData = any;
+
 export type StickerCategoriesControllerCreateCategoryData = StickerCategoryDto;
 
 export type StickerCategoriesControllerMapCategoryData =
   StickerCategoryMapperDto[];
+
+export type StickerCategoriesControllerDeleteCategoryMappingData = any;
 
 export type StickerBlocksControllerCreateStickerBlocksData = StickerBlockDto[];
 
