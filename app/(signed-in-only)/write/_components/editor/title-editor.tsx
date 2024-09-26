@@ -21,6 +21,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 
 import { FontSize } from '@/app/(signed-in-only)/write/_lib/tiptap-extension/font-size';
 import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
+import { useFocusedStore } from '@/app/(signed-in-only)/write/_store/use-focused-store';
 import { useSelectedEditorStore } from '@/app/(signed-in-only)/write/_store/use-selected-editor-store';
 import { useTempLoadStore } from '@/app/(signed-in-only)/write/_store/use-temp-load-store';
 
@@ -31,6 +32,7 @@ const TitleEditor = () => {
   const { titleContents, setTitleContents } = useEditorContentsStore();
   const { setSelectedEditor } = useSelectedEditorStore();
   const { tempLoad, setTempLoad } = useTempLoadStore();
+  const { setFocused } = useFocusedStore();
 
   const editor = useEditor({
     extensions: [
@@ -76,6 +78,7 @@ const TitleEditor = () => {
         editor={editor}
         onFocus={() => {
           setSelectedEditor(editor);
+          setFocused('init');
         }}
       />
     </div>
