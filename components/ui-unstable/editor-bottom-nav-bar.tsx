@@ -1,15 +1,46 @@
 import { type PropsWithChildren } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, type ButtonProps } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const EditorBottomNavBar = ({ children }: PropsWithChildren) => {
+  const [bottomOffset, setBottomOffset] = useState(0);
+
+  useEffect(() => {
+    const updateViewport = () => {
+      if (window.visualViewport) {
+        const viewportHeight = window.visualViewport.height;
+        const windowHeight = window.innerHeight;
+        const keyboardHeight =
+          windowHeight - viewportHeight - window.visualViewport.offsetTop;
+        setBottomOffset(keyboardHeight > 0 ? keyboardHeight : 0);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateViewport);
+      window.visualViewport.addEventListener('scroll', updateViewport);
+    }
+
+    // 초기화
+    updateViewport();
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', updateViewport);
+        window.visualViewport.removeEventListener('scroll', updateViewport);
+      }
+    };
+  }, []);
+
   return (
     <nav
       className={cn(
-        'fixed bottom-0 left-1/2 w-full max-w-screen-sm -translate-x-1/2',
+        'fixed left-1/2 w-full max-w-screen-sm -translate-x-1/2',
         'z-30 bg-blccu-black text-blccu-white',
       )}
+      style={{ bottom: `${bottomOffset}px` }}
     >
       <ul className="flex h-full items-center justify-evenly">{children}</ul>
     </nav>
