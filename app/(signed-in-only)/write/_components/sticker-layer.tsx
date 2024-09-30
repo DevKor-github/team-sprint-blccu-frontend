@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/router';
+
 import { useEffect, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 
@@ -19,11 +21,24 @@ type StickerLayerProps = {
 };
 
 const StickerLayer = ({ height }: StickerLayerProps) => {
+  const router = useRouter();
+
   const { stickers, setStickers } = useStickersStore();
 
   const { editorMode } = useEditorModeStore();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setStickers({});
+    };
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router.events, setStickers]);
 
   useEffect(() => {
     const unsubscribeEditorMode = useEditorModeStore.subscribe(
