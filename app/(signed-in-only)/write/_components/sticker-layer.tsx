@@ -7,6 +7,7 @@ import type Konva from 'konva';
 
 import { Sticker } from '@/app/(signed-in-only)/write/_components/sticker';
 import { useCaptureModeStore } from '@/app/(signed-in-only)/write/_store/use-capture-mode-store';
+import { useEditorContentsStore } from '@/app/(signed-in-only)/write/_store/use-editor-contents-store';
 import { useEditorModeStore } from '@/app/(signed-in-only)/write/_store/use-editor-mode-store';
 import {
   type Sticker as StickerType,
@@ -24,6 +25,18 @@ const StickerLayer = ({ height }: StickerLayerProps) => {
   const { editorMode } = useEditorModeStore();
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  const { setBackground } = useEditorContentsStore();
+
+  useEffect(() => {
+    setStickers({});
+    setBackground(null);
+
+    return () => {
+      setStickers({});
+      setBackground(null);
+    };
+  }, [setStickers, setBackground]);
 
   useEffect(() => {
     const unsubscribeEditorMode = useEditorModeStore.subscribe(
