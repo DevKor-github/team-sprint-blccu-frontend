@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 
 import { MainToolbar } from '@/app/(signed-in-only)/write/_components/toolbar/main-toolbar';
